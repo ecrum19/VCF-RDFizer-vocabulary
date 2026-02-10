@@ -1,0 +1,72 @@
+PREFIX vcfr: <https://w3id.org/vcf-rdfizer/vocab#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+# TEMPLATE: construct vcfr:VCFRecord + vcfr:VariantCall from some staging graph
+# Replace ?chrom ?pos ?id ?ref ?alt ?qual ?filter ?infoRaw ?formatRaw ?sample etc.
+
+CONSTRUCT {
+  ?vcfFile a vcfr:VCFFile ;
+    vcfr:fileFormat ?fileFormat ;
+    vcfr:referenceGenome ?referenceGenome ;
+    vcfr:fileDate ?fileDate ;
+    vcfr:sourceSoftware ?sourceSoftware ;
+    vcfr:hasRecord ?record ;
+    vcfr:hasHeader ?header .
+
+  ?header a vcfr:VCFHeader .
+
+  ?record a vcfr:VCFRecord ;
+    vcfr:chrom ?chrom ;
+    vcfr:pos ?posInt ;
+    vcfr:recordId ?id ;
+    vcfr:ref ?ref ;
+    vcfr:alt ?alt ;
+    vcfr:hasCall ?call .
+
+  ?call a vcfr:VariantCall ;
+    vcfr:qual ?qualDec ;
+    vcfr:filter ?filter ;
+    vcfr:infoRaw ?infoRaw ;
+    vcfr:formatRaw ?formatRaw ;
+    vcfr:hasSampleCall ?sampleCall .
+
+  ?sampleCall a vcfr:SampleCall ;
+    vcfr:sampleId ?sample ;
+    vcfr:hasFormatValue ?fmtValue .
+
+  ?fmtValue a vcfr:FormatFieldValue ;
+    vcfr:fieldKey ?fmtKey ;
+    vcfr:fieldValue ?fmtVal .
+
+} WHERE {
+  # --- Your staging model goes here ---
+  # Example bindings (replace with real patterns)
+  BIND(IRI("https://example.org/vcf/file1") AS ?vcfFile)
+  BIND(IRI("https://example.org/vcf/file1#header") AS ?header)
+  BIND("VCFv4.2" AS ?fileFormat)
+  BIND("hg38" AS ?referenceGenome)
+  BIND("2020-06-15"^^xsd:date AS ?fileDate)
+  BIND("CLC Genomics Grid Worker 20.9.9" AS ?sourceSoftware)
+
+  BIND(IRI("https://example.org/vcf/file1#record/chr1-123456") AS ?record)
+  BIND("chr1" AS ?chrom)
+  BIND(123456 AS ?posInt)
+  BIND("rs123" AS ?id)
+  BIND("A" AS ?ref)
+  BIND("T" AS ?alt)
+
+  BIND(IRI("https://example.org/vcf/file1#call/chr1-123456") AS ?call)
+  BIND(52.3 AS ?qualDec)
+  BIND("PASS" AS ?filter)
+  BIND("DP=42;AF=0.2" AS ?infoRaw)
+  BIND("GT:DP:AD" AS ?formatRaw)
+
+  BIND(IRI("https://example.org/vcf/file1#sample/SAMPLE1/chr1-123456") AS ?sampleCall)
+  BIND("SAMPLE1" AS ?sample)
+
+  # Example FORMAT key/value
+  BIND(IRI("https://example.org/vcf/file1#sample/SAMPLE1/chr1-123456/fmt/GT") AS ?fmtValue)
+  BIND("GT" AS ?fmtKey)
+  BIND("0/1" AS ?fmtVal)
+}

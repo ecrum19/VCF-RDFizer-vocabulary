@@ -1,0 +1,382 @@
+@prefix vcfr:   <https://w3id.org/vcf-rdfizer/vocab#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix dcat:   <http://www.w3.org/ns/dcat#> .
+@prefix prov:   <http://www.w3.org/ns/prov#> .
+
+@prefix so:     <http://purl.obolibrary.org/obo/SO_> .
+@prefix faldo:  <http://biohackathon.org/resource/faldo#> .
+@prefix geno:   <http://purl.obolibrary.org/obo/GENO_> .
+@prefix sio:    <http://semanticscience.org/resource/SIO_> .
+
+# SB/gvar uses https://ican.fr/ as its schema URI; keep prefix for convenience.
+@prefix ican:   <https://ican.fr/> .
+
+#################################################################
+# Ontology header
+#################################################################
+
+vcfr: a owl:Ontology ;
+  rdfs:label "VCF-RDFizer Vocabulary"@en ;
+  dct:description "Vocabulary for representing VCF files, headers, records, and per-sample calls in RDF, with hooks to align to SB/gvar (variants as Linked Data) and other genomics ontologies."@en ;
+  dct:license <https://creativecommons.org/licenses/by/4.0/> ;
+  dct:creator "Elias Crum" ;
+  owl:versionIRI <https://w3id.org/vcf-rdfizer/vocab/1.0.0> ;
+  dct:issued "2026-02-10"^^xsd:date ;
+  rdfs:seeAlso <https://swat4hcls-2025-genomic-variation.github.io/genomic-variant-schema/> ;
+  rdfs:seeAlso <https://hereditary.dei.unipd.it/ontology/genomics/> .
+
+#################################################################
+# Core classes
+#################################################################
+
+vcfr:VCFFile a owl:Class ;
+  rdfs:label "VCF file"@en ;
+  rdfs:comment "A VCF file artifact (as a dataset distribution) that contains a header and a set of VCF records."@en ;
+  rdfs:subClassOf dcat:Distribution, prov:Entity .
+
+vcfr:VCFHeader a owl:Class ;
+  rdfs:label "VCF header"@en ;
+  rdfs:comment "Container for the structured header lines of a VCF file."@en .
+
+vcfr:HeaderLine a owl:Class ;
+  rdfs:label "VCF header line"@en ;
+  rdfs:comment "A structured representation of one VCF header line (e.g., ##fileformat, ##INFO=<...>)."@en .
+
+vcfr:FileFormatHeaderLine a owl:Class ; rdfs:subClassOf vcfr:HeaderLine ;
+  rdfs:label "fileformat header line"@en .
+
+vcfr:FileDateHeaderLine a owl:Class ; rdfs:subClassOf vcfr:HeaderLine ;
+  rdfs:label "fileDate header line"@en .
+
+vcfr:SourceHeaderLine a owl:Class ; rdfs:subClassOf vcfr:HeaderLine ;
+  rdfs:label "source header line"@en .
+
+vcfr:ReferenceHeaderLine a owl:Class ; rdfs:subClassOf vcfr:HeaderLine ;
+  rdfs:label "reference header line"@en .
+
+vcfr:ContigHeaderLine a owl:Class ; rdfs:subClassOf vcfr:HeaderLine ;
+  rdfs:label "contig header line"@en ;
+  rdfs:comment "Represents ##contig=<ID=...,length=...,assembly=...,...> entries."@en .
+
+vcfr:INFOHeaderLine a owl:Class ; rdfs:subClassOf vcfr:HeaderLine ;
+  rdfs:label "INFO header line"@en ;
+  rdfs:comment "Represents ##INFO=<ID=...,Number=...,Type=...,Description=...>."@en .
+
+vcfr:FORMATHeaderLine a owl:Class ; rdfs:subClassOf vcfr:HeaderLine ;
+  rdfs:label "FORMAT header line"@en ;
+  rdfs:comment "Represents ##FORMAT=<ID=...,Number=...,Type=...,Description=...>."@en .
+
+vcfr:FILTERHeaderLine a owl:Class ; rdfs:subClassOf vcfr:HeaderLine ;
+  rdfs:label "FILTER header line"@en ;
+  rdfs:comment "Represents ##FILTER=<ID=...,Description=...>."@en .
+
+vcfr:ALTHeaderLine a owl:Class ; rdfs:subClassOf vcfr:HeaderLine ;
+  rdfs:label "ALT header line"@en ;
+  rdfs:comment "Represents ##ALT=<ID=...,Description=...> used for symbolic alternate alleles."@en .
+
+vcfr:VCFRecord a owl:Class ;
+  rdfs:label "VCF record"@en ;
+  rdfs:comment "A row in a VCF (CHROM, POS, ID, REF, ALT, QUAL, FILTER, INFO, FORMAT, samples...). This is a VCF-centric view; link to a sequence alteration representation via vcfr:asSequenceAlteration."@en ;
+  rdfs:subClassOf prov:Entity .
+
+vcfr:VariantCall a owl:Class ;
+  rdfs:label "variant call"@en ;
+  rdfs:comment "Call-level representation for a record: QUAL/FILTER/INFO, plus FORMAT and per-sample fields."@en ;
+  rdfs:subClassOf prov:Entity .
+
+vcfr:SampleCall a owl:Class ;
+  rdfs:label "sample call"@en ;
+  rdfs:comment "Per-sample values for a variant call (e.g., GT, DP, AD), as declared by FORMAT header lines."@en ;
+  rdfs:subClassOf prov:Entity .
+
+vcfr:FieldDefinition a owl:Class ;
+  rdfs:label "field definition"@en ;
+  rdfs:comment "Common superclass for INFO/FORMAT/FILTER/ALT header definitions."@en ;
+  rdfs:subClassOf vcfr:HeaderLine .
+
+vcfr:InfoFieldDefinition a owl:Class ; rdfs:subClassOf vcfr:FieldDefinition, vcfr:INFOHeaderLine ;
+  rdfs:label "INFO field definition"@en .
+
+vcfr:FormatFieldDefinition a owl:Class ; rdfs:subClassOf vcfr:FieldDefinition, vcfr:FORMATHeaderLine ;
+  rdfs:label "FORMAT field definition"@en .
+
+vcfr:FilterDefinition a owl:Class ; rdfs:subClassOf vcfr:FieldDefinition, vcfr:FILTERHeaderLine ;
+  rdfs:label "FILTER definition"@en .
+
+vcfr:AltDefinition a owl:Class ; rdfs:subClassOf vcfr:FieldDefinition, vcfr:ALTHeaderLine ;
+  rdfs:label "ALT definition"@en .
+
+vcfr:InfoFieldValue a owl:Class ;
+  rdfs:label "INFO field value"@en ;
+  rdfs:comment "A structured key/value for one INFO attribute within a record/call."@en .
+
+vcfr:FormatFieldValue a owl:Class ;
+  rdfs:label "FORMAT field value"@en ;
+  rdfs:comment "A structured key/value for one FORMAT attribute within a sample call."@en .
+
+#################################################################
+# Controlled vocab / enums (lightweight)
+#################################################################
+
+vcfr:VCFValueType a owl:Class ;
+  rdfs:label "VCF value type"@en ;
+  rdfs:comment "Enumerates VCF Type values used in INFO/FORMAT definitions: Integer, Float, Flag, Character, String."@en .
+
+vcfr:IntegerType a owl:Class ; rdfs:subClassOf vcfr:VCFValueType ; rdfs:label "Integer"@en .
+vcfr:FloatType a owl:Class ; rdfs:subClassOf vcfr:VCFValueType ; rdfs:label "Float"@en .
+vcfr:FlagType a owl:Class ; rdfs:subClassOf vcfr:VCFValueType ; rdfs:label "Flag"@en .
+vcfr:CharacterType a owl:Class ; rdfs:subClassOf vcfr:VCFValueType ; rdfs:label "Character"@en .
+vcfr:StringType a owl:Class ; rdfs:subClassOf vcfr:VCFValueType ; rdfs:label "String"@en .
+
+vcfr:VCFNumberArity a owl:Class ;
+  rdfs:label "VCF Number arity"@en ;
+  rdfs:comment "Represents INFO/FORMAT Number values (e.g., 0, 1, A, R, G, .)."@en .
+
+#################################################################
+# Object properties
+#################################################################
+
+vcfr:hasHeader a owl:ObjectProperty ;
+  rdfs:label "has header"@en ;
+  rdfs:domain vcfr:VCFFile ;
+  rdfs:range vcfr:VCFHeader .
+
+vcfr:hasHeaderLine a owl:ObjectProperty ;
+  rdfs:label "has header line"@en ;
+  rdfs:domain vcfr:VCFHeader ;
+  rdfs:range vcfr:HeaderLine .
+
+vcfr:hasRecord a owl:ObjectProperty ;
+  rdfs:label "has record"@en ;
+  rdfs:domain vcfr:VCFFile ;
+  rdfs:range vcfr:VCFRecord .
+
+vcfr:hasCall a owl:ObjectProperty ;
+  rdfs:label "has call"@en ;
+  rdfs:domain vcfr:VCFRecord ;
+  rdfs:range vcfr:VariantCall .
+
+vcfr:hasSampleCall a owl:ObjectProperty ;
+  rdfs:label "has sample call"@en ;
+  rdfs:domain vcfr:VariantCall ;
+  rdfs:range vcfr:SampleCall .
+
+vcfr:hasInfoValue a owl:ObjectProperty ;
+  rdfs:label "has INFO value"@en ;
+  rdfs:domain vcfr:VariantCall ;
+  rdfs:range vcfr:InfoFieldValue .
+
+vcfr:hasFormatValue a owl:ObjectProperty ;
+  rdfs:label "has FORMAT value"@en ;
+  rdfs:domain vcfr:SampleCall ;
+  rdfs:range vcfr:FormatFieldValue .
+
+vcfr:declaredBy a owl:ObjectProperty ;
+  rdfs:label "declared by"@en ;
+  rdfs:comment "Links an INFO/FORMAT/FILTER/ALT value/usage to its header definition line."@en ;
+  rdfs:range vcfr:FieldDefinition .
+
+vcfr:chromosome a owl:ObjectProperty ;
+  rdfs:label "chromosome / contig reference"@en ;
+  rdfs:comment "Reference sequence for CHROM, preferably resolvable (e.g., INSDC/RefSeq/Ensembl). Can align to FALDO reference."@en ;
+  rdfs:range vcfr:ContigHeaderLine .
+
+vcfr:asSequenceAlteration a owl:ObjectProperty ;
+  rdfs:label "as sequence alteration"@en ;
+  rdfs:comment "Links a VCF record/call to a sequence alteration representation (e.g., SB/gvar SequenceAlteration: so:0001059)."@en ;
+  rdfs:range so:0001059 .
+
+#################################################################
+# Datatype properties (VCF metadata + record fields)
+#################################################################
+
+# Header common
+vcfr:headerKey a owl:DatatypeProperty ;
+  rdfs:label "header key"@en ;
+  rdfs:domain vcfr:HeaderLine ;
+  rdfs:range xsd:string .
+
+vcfr:headerValue a owl:DatatypeProperty ;
+  rdfs:label "header value"@en ;
+  rdfs:domain vcfr:HeaderLine ;
+  rdfs:range xsd:string .
+
+# File-level metadata (common headers)
+vcfr:fileFormat a owl:DatatypeProperty ;
+  rdfs:label "file format"@en ;
+  rdfs:domain vcfr:VCFFile ;
+  rdfs:range xsd:string .
+
+vcfr:fileDate a owl:DatatypeProperty ;
+  rdfs:label "file date"@en ;
+  rdfs:domain vcfr:VCFFile ;
+  rdfs:range xsd:date .
+
+vcfr:sourceSoftware a owl:DatatypeProperty ;
+  rdfs:label "source software"@en ;
+  rdfs:domain vcfr:VCFFile ;
+  rdfs:range xsd:string .
+
+vcfr:referenceGenome a owl:DatatypeProperty ;
+  rdfs:label "reference genome"@en ;
+  rdfs:domain vcfr:VCFFile ;
+  rdfs:range xsd:string .
+
+vcfr:contigCount a owl:DatatypeProperty ;
+  rdfs:label "contig count"@en ;
+  rdfs:domain vcfr:VCFFile ;
+  rdfs:range xsd:integer .
+
+# Contig header details
+vcfr:contigId a owl:DatatypeProperty ;
+  rdfs:label "contig ID"@en ;
+  rdfs:domain vcfr:ContigHeaderLine ;
+  rdfs:range xsd:string .
+
+vcfr:contigLength a owl:DatatypeProperty ;
+  rdfs:label "contig length"@en ;
+  rdfs:domain vcfr:ContigHeaderLine ;
+  rdfs:range xsd:integer .
+
+vcfr:contigAssembly a owl:DatatypeProperty ;
+  rdfs:label "contig assembly"@en ;
+  rdfs:domain vcfr:ContigHeaderLine ;
+  rdfs:range xsd:string .
+
+vcfr:contigMd5 a owl:DatatypeProperty ;
+  rdfs:label "contig MD5"@en ;
+  rdfs:domain vcfr:ContigHeaderLine ;
+  rdfs:range xsd:string .
+
+# INFO/FORMAT definition fields
+vcfr:fieldId a owl:DatatypeProperty ;
+  rdfs:label "field ID"@en ;
+  rdfs:domain vcfr:FieldDefinition ;
+  rdfs:range xsd:string .
+
+vcfr:fieldNumber a owl:DatatypeProperty ;
+  rdfs:label "field Number"@en ;
+  rdfs:comment "The VCF Number value as string (e.g., 0, 1, A, R, G, .)."@en ;
+  rdfs:domain vcfr:FieldDefinition ;
+  rdfs:range xsd:string .
+
+vcfr:fieldType a owl:ObjectProperty ;
+  rdfs:label "field Type"@en ;
+  rdfs:domain vcfr:FieldDefinition ;
+  rdfs:range vcfr:VCFValueType .
+
+vcfr:fieldDescription a owl:DatatypeProperty ;
+  rdfs:label "field Description"@en ;
+  rdfs:domain vcfr:FieldDefinition ;
+  rdfs:range xsd:string .
+
+# FILTER definition
+vcfr:filterId a owl:DatatypeProperty ;
+  rdfs:label "FILTER ID"@en ;
+  rdfs:domain vcfr:FilterDefinition ;
+  rdfs:range xsd:string .
+
+# ALT definition
+vcfr:altId a owl:DatatypeProperty ;
+  rdfs:label "ALT ID"@en ;
+  rdfs:domain vcfr:AltDefinition ;
+  rdfs:range xsd:string .
+
+# Record core columns
+vcfr:chrom a owl:DatatypeProperty ;
+  rdfs:label "CHROM"@en ;
+  rdfs:domain vcfr:VCFRecord ;
+  rdfs:range xsd:string .
+
+vcfr:pos a owl:DatatypeProperty ;
+  rdfs:label "POS"@en ;
+  rdfs:domain vcfr:VCFRecord ;
+  rdfs:range xsd:integer .
+
+vcfr:recordId a owl:DatatypeProperty ;
+  rdfs:label "ID"@en ;
+  rdfs:comment "VCF ID column (e.g., rsID). Use when present; otherwise omit."@en ;
+  rdfs:domain vcfr:VCFRecord ;
+  rdfs:range xsd:string .
+
+vcfr:ref a owl:DatatypeProperty ;
+  rdfs:label "REF"@en ;
+  rdfs:domain vcfr:VCFRecord ;
+  rdfs:range xsd:string .
+
+vcfr:alt a owl:DatatypeProperty ;
+  rdfs:label "ALT"@en ;
+  rdfs:comment "ALT allele string; for multiple ALT alleles you may repeat this property or use rdf:List externally."@en ;
+  rdfs:domain vcfr:VCFRecord ;
+  rdfs:range xsd:string .
+
+# Call-level columns
+vcfr:qual a owl:DatatypeProperty ;
+  rdfs:label "QUAL"@en ;
+  rdfs:domain vcfr:VariantCall ;
+  rdfs:range xsd:decimal .
+
+vcfr:filter a owl:DatatypeProperty ;
+  rdfs:label "FILTER"@en ;
+  rdfs:comment "FILTER column value (e.g., PASS, ., or semicolon-separated list). Prefer splitting into multiple vcfr:filter values."@en ;
+  rdfs:domain vcfr:VariantCall ;
+  rdfs:range xsd:string .
+
+vcfr:infoRaw a owl:DatatypeProperty ;
+  rdfs:label "INFO raw"@en ;
+  rdfs:comment "Raw INFO string as in VCF (optional). Use structured vcfr:InfoFieldValue for machine-use."@en ;
+  rdfs:domain vcfr:VariantCall ;
+  rdfs:range xsd:string .
+
+vcfr:formatRaw a owl:DatatypeProperty ;
+  rdfs:label "FORMAT raw"@en ;
+  rdfs:comment "Raw FORMAT string as in VCF (optional). Use structured vcfr:FormatFieldValue in SampleCall."@en ;
+  rdfs:domain vcfr:VariantCall ;
+  rdfs:range xsd:string .
+
+# Structured INFO/FORMAT values
+vcfr:fieldKey a owl:DatatypeProperty ;
+  rdfs:label "field key"@en ;
+  rdfs:domain rdf:Resource ;
+  rdfs:range xsd:string .
+
+vcfr:fieldValue a owl:DatatypeProperty ;
+  rdfs:label "field value"@en ;
+  rdfs:comment "Literal string value; for typed values prefer vcfr:fieldValueInteger/Decimal/Boolean when possible."@en ;
+  rdfs:domain rdf:Resource ;
+  rdfs:range xsd:string .
+
+vcfr:fieldValueInteger a owl:DatatypeProperty ;
+  rdfs:label "field value (integer)"@en ;
+  rdfs:domain rdf:Resource ;
+  rdfs:range xsd:integer .
+
+vcfr:fieldValueDecimal a owl:DatatypeProperty ;
+  rdfs:label "field value (decimal)"@en ;
+  rdfs:domain rdf:Resource ;
+  rdfs:range xsd:decimal .
+
+vcfr:fieldValueBoolean a owl:DatatypeProperty ;
+  rdfs:label "field value (boolean)"@en ;
+  rdfs:domain rdf:Resource ;
+  rdfs:range xsd:boolean .
+
+# SampleCall identity
+vcfr:sampleId a owl:DatatypeProperty ;
+  rdfs:label "sample ID"@en ;
+  rdfs:domain vcfr:SampleCall ;
+  rdfs:range xsd:string .
+
+#################################################################
+# Recommended alignments to SB/gvar (non-assertive hints)
+#################################################################
+
+# SB/gvar models sequence alteration as so:0001059 and uses FALDO/GENO/SIO slots. :contentReference[oaicite:2]{index=2}
+vcfr:recommendedSequenceAlterationClass a owl:AnnotationProperty ;
+  rdfs:label "recommended sequence alteration class"@en .
+
+vcfr:recommendedSequenceAlterationClass vcfr:recommendedSequenceAlterationClass so:0001059 .

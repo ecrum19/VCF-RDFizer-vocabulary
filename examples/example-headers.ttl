@@ -1,0 +1,69 @@
+@prefix vcfr: <https://w3id.org/vcf-rdfizer/vocab#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+<https://example.org/vcf/file1>
+  a vcfr:VCFFile ;
+  vcfr:fileFormat "VCFv4.2" ;
+  vcfr:fileDate "2020-06-15"^^xsd:date ;
+  vcfr:sourceSoftware "CLC Genomics Grid Worker 20.9.9 Beta 1 build 209900" ;
+  vcfr:referenceGenome "/CLC_References/homo_sapiens/sequence/hg38_no_alt_analysis_set/Homo_sapiens_sequence_hg38_no_alt_analysis_set" ;
+  vcfr:contigCount 25 ;
+  vcfr:hasHeader <https://example.org/vcf/file1#header> .
+
+<https://example.org/vcf/file1#header>
+  a vcfr:VCFHeader ;
+  vcfr:hasHeaderLine <https://example.org/vcf/file1#header/fileformat> ;
+  vcfr:hasHeaderLine <https://example.org/vcf/file1#header/fileDate> ;
+  vcfr:hasHeaderLine <https://example.org/vcf/file1#header/source> ;
+  vcfr:hasHeaderLine <https://example.org/vcf/file1#header/reference> ;
+  vcfr:hasHeaderLine <https://example.org/vcf/file1#header/contig/chr1> ;
+  vcfr:hasHeaderLine <https://example.org/vcf/file1#header/format/GT> ;
+  vcfr:hasHeaderLine <https://example.org/vcf/file1#header/format/DP> ;
+  vcfr:hasHeaderLine <https://example.org/vcf/file1#header/format/AD> .
+
+<https://example.org/vcf/file1#header/fileformat>
+  a vcfr:FileFormatHeaderLine ;
+  vcfr:headerKey "fileformat" ;
+  vcfr:headerValue "VCFv4.2" .
+
+<https://example.org/vcf/file1#header/fileDate>
+  a vcfr:FileDateHeaderLine ;
+  vcfr:headerKey "fileDate" ;
+  vcfr:headerValue "20200615" .
+
+<https://example.org/vcf/file1#header/source>
+  a vcfr:SourceHeaderLine ;
+  vcfr:headerKey "source" ;
+  vcfr:headerValue "CLC Genomics Grid Worker 20.9.9 Beta 1 build 209900" .
+
+<https://example.org/vcf/file1#header/reference>
+  a vcfr:ReferenceHeaderLine ;
+  vcfr:headerKey "reference" ;
+  vcfr:headerValue "/CLC_References/homo_sapiens/sequence/hg38_no_alt_analysis_set/Homo_sapiens_sequence_hg38_no_alt_analysis_set" .
+
+<https://example.org/vcf/file1#header/contig/chr1>
+  a vcfr:ContigHeaderLine ;
+  vcfr:headerKey "contig" ;
+  vcfr:contigId "chr1" ;
+  vcfr:contigLength 248956422 .
+
+# FORMAT examples
+<https://example.org/vcf/file1#header/format/GT>
+  a vcfr:FormatFieldDefinition ;
+  vcfr:fieldId "GT" ;
+  vcfr:fieldNumber "1" ;
+  vcfr:fieldDescription "Genotype" .
+
+<https://example.org/vcf/file1#header/format/DP>
+  a vcfr:FormatFieldDefinition ;
+  vcfr:fieldId "DP" ;
+  vcfr:fieldNumber "1" ;
+  vcfr:fieldDescription "Total number of filtered reads used to call variants at this position in this sample." .
+
+<https://example.org/vcf/file1#header/format/AD>
+  a vcfr:FormatFieldDefinition ;
+  vcfr:fieldId "AD" ;
+  vcfr:fieldNumber "R" ;
+  vcfr:fieldDescription "Allele depth, number of filtered reads supporting the alleles, ordered as listed in REF and ALT." .

@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+title: "VCF-RDFizer-vocabulary"
+message: "If you use this vocabulary, please cite it."
+type: software
+authors:
+  - family-names: Crum
+    given-names: Elias
+license: CC-BY-4.0
+repository-code: "https://github.com/ecrum19/VCF-RDFizer-vocabulary"
+url: "https://w3id.org/vcf-rdfizer/"
+keywords:
+  - VCF
+  - RDF
+  - genomics
+  - linked data
+  - SHACL

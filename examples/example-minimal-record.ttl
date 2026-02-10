@@ -1,0 +1,52 @@
+@prefix vcfr: <https://w3id.org/vcf-rdfizer/vocab#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix so:   <http://purl.obolibrary.org/obo/SO_> .
+
+<https://example.org/vcf/file1>
+  a vcfr:VCFFile ;
+  vcfr:fileFormat "VCFv4.2" ;
+  vcfr:hasRecord <https://example.org/vcf/file1#record/chr1-123456> .
+
+<https://example.org/vcf/file1#record/chr1-123456>
+  a vcfr:VCFRecord ;
+  vcfr:chrom "chr1" ;
+  vcfr:pos 123456 ;
+  vcfr:recordId "rs123" ;
+  vcfr:ref "A" ;
+  vcfr:alt "T" ;
+  vcfr:hasCall <https://example.org/vcf/file1#call/chr1-123456> ;
+  vcfr:asSequenceAlteration <https://example.org/gvar/sequenceAlteration/chr1-123456-A-T> .
+
+<https://example.org/vcf/file1#call/chr1-123456>
+  a vcfr:VariantCall ;
+  vcfr:qual 52.3 ;
+  vcfr:filter "PASS" ;
+  vcfr:infoRaw "DP=42;AF=0.2" ;
+  vcfr:formatRaw "GT:DP:AD" ;
+  vcfr:hasSampleCall <https://example.org/vcf/file1#sample/SAMPLE1/chr1-123456> .
+
+<https://example.org/vcf/file1#sample/SAMPLE1/chr1-123456>
+  a vcfr:SampleCall ;
+  vcfr:sampleId "SAMPLE1" ;
+  vcfr:hasFormatValue <https://example.org/vcf/file1#sample/SAMPLE1/chr1-123456/fmt/GT> ;
+  vcfr:hasFormatValue <https://example.org/vcf/file1#sample/SAMPLE1/chr1-123456/fmt/DP> ;
+  vcfr:hasFormatValue <https://example.org/vcf/file1#sample/SAMPLE1/chr1-123456/fmt/AD> .
+
+<https://example.org/vcf/file1#sample/SAMPLE1/chr1-123456/fmt/GT>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldKey "GT" ;
+  vcfr:fieldValue "0/1" .
+
+<https://example.org/vcf/file1#sample/SAMPLE1/chr1-123456/fmt/DP>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldKey "DP" ;
+  vcfr:fieldValueInteger 42 .
+
+<https://example.org/vcf/file1#sample/SAMPLE1/chr1-123456/fmt/AD>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldKey "AD" ;
+  vcfr:fieldValue "30,12" .
+
+# Placeholder: this node would be expressed using SB/gvar (SequenceAlteration is so:0001059) :contentReference[oaicite:5]{index=5}
+<https://example.org/gvar/sequenceAlteration/chr1-123456-A-T> a so:0001059 .
