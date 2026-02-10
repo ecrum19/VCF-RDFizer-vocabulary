@@ -1,22 +1,477 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
+  <meta charset="utf-8" />
   <title>VCF-RDFizer Vocabulary</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="RDF vocabulary and SHACL shapes for VCF files, headers, records, and sample calls." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f1ea;
+      --bg-alt: #edf3f7;
+      --ink: #1d1f22;
+      --muted: #5f6b7a;
+      --accent: #1f6f78;
+      --accent-strong: #13535a;
+      --card: #ffffff;
+      --border: #d6dee6;
+      --shadow: 0 24px 60px rgba(20, 32, 45, 0.12);
+      --radius-lg: 22px;
+      --radius-md: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: linear-gradient(120deg, var(--bg) 0%, var(--bg-alt) 65%, #f8f2e6 100%);
+      min-height: 100vh;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      width: 420px;
+      height: 420px;
+      background: radial-gradient(circle at top, rgba(31, 111, 120, 0.18), transparent 70%);
+      z-index: -1;
+    }
+
+    body::before {
+      top: -140px;
+      right: -120px;
+    }
+
+    body::after {
+      bottom: -180px;
+      left: -140px;
+      background: radial-gradient(circle at top, rgba(255, 188, 90, 0.2), transparent 70%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1120px, 92vw);
+      margin: 0 auto;
+      padding: 48px 0 80px;
+    }
+
+    .hero {
+      display: grid;
+      gap: 28px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      align-items: stretch;
+      margin-bottom: 48px;
+    }
+
+    .hero h1 {
+      font-family: "Space Grotesk", "IBM Plex Sans", sans-serif;
+      font-size: clamp(2.4rem, 4vw, 3.6rem);
+      margin: 0 0 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: var(--muted);
+      margin: 0 0 20px;
+    }
+
+    .hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-weight: 600;
+      border: 1px solid transparent;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(31, 111, 120, 0.18);
+    }
+
+    .btn--primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn--ghost {
+      background: rgba(255, 255, 255, 0.6);
+      border-color: var(--border);
+      color: var(--accent-strong);
+    }
+
+    .hero__panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 18px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(31, 111, 120, 0.12);
+      color: var(--accent-strong);
+      font-weight: 600;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.9rem;
+    }
+
+    .kv {
+      display: grid;
+      gap: 6px;
+    }
+
+    .kv span {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .kv code {
+      background: rgba(31, 111, 120, 0.08);
+      padding: 4px 8px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      display: inline-flex;
+    }
+
+    .section {
+      margin-bottom: 48px;
+    }
+
+    .section h2 {
+      font-family: "Space Grotesk", "IBM Plex Sans", sans-serif;
+      font-size: 1.8rem;
+      margin: 0 0 18px;
+    }
+
+    .card-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: grid;
+      gap: 12px;
+      box-shadow: 0 18px 34px rgba(25, 39, 52, 0.08);
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .card__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .viewer {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 16px;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tab {
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.65);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tab.active {
+      border-color: var(--accent);
+      color: var(--accent-strong);
+      background: rgba(31, 111, 120, 0.12);
+    }
+
+    .viewer__toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .viewer__toolbar h3 {
+      margin: 0;
+      font-size: 1.15rem;
+    }
+
+    .viewer__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .viewer__status {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    pre {
+      margin: 0;
+      background: #101821;
+      color: #e9f4ff;
+      padding: 18px;
+      border-radius: 14px;
+      overflow: auto;
+      font-size: 0.9rem;
+      line-height: 1.55;
+      min-height: 320px;
+    }
+
+    pre code {
+      font-family: "IBM Plex Mono", "SFMono-Regular", monospace;
+      white-space: pre;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      display: grid;
+      gap: 10px;
+    }
+
+    @media (max-width: 680px) {
+      .hero__actions,
+      .card__actions,
+      .viewer__actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn,
+      .tab {
+        width: 100%;
+      }
+
+      pre {
+        min-height: 240px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>VCF-RDFizer Vocabulary</h1>
-  <p>RDF vocabulary + SHACL shapes for VCF files, headers, records, and sample calls.</p>
+  <div class="container">
+    <header class="hero">
+      <div>
+        <div class="pill">VCF → RDF</div>
+        <h1>VCF-RDFizer Vocabulary</h1>
+        <p>RDF vocabulary and SHACL shapes that model VCF files, headers, records, and sample calls. Explore the ontology, validate datasets, and jump into working examples.</p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#viewer">Explore TTL</a>
+          <a class="btn btn--ghost" href="https://github.com/ecrum19/VCF-RDFizer-vocabulary" target="_blank" rel="noreferrer">GitHub Repository</a>
+        </div>
+      </div>
+      <div class="hero__panel">
+        <div class="kv">
+          <span>Namespace</span>
+          <code id="namespace">https://w3id.org/vcf-rdfizer/vocab#</code>
+        </div>
+        <div class="hero__actions">
+          <button class="btn btn--ghost" id="copy-namespace" type="button">Copy Namespace</button>
+          <a class="btn btn--ghost" href="assets/vcf-rdfizer-vocabulary.ttl" target="_blank" rel="noreferrer">Open Ontology TTL</a>
+        </div>
+        <div class="kv">
+          <span>Artifacts Included</span>
+          <strong>Ontology TTL · SHACL TTL · Example TTL</strong>
+        </div>
+      </div>
+    </header>
 
-  <h2>Artifacts</h2>
-  <ul>
-    <li><a href="../ontology/vcf-rdfizer-vocabulary.ttl">Ontology (Turtle)</a></li>
-    <li><a href="../shacl/vcf-rdfizer-vocabulary.shacl.ttl">SHACL shapes (Turtle)</a></li>
-    <li><a href="https://github.com/<ORG>/<REPO>">Git repository</a></li>
-  </ul>
+    <section class="section" aria-labelledby="artifacts">
+      <h2 id="artifacts">Artifacts</h2>
+      <div class="card-grid">
+        <div class="card">
+          <h3>Ontology (Turtle)</h3>
+          <p>Core vocabulary for representing VCF files and records.</p>
+          <div class="card__actions">
+            <a class="btn btn--primary" href="assets/vcf-rdfizer-vocabulary.ttl" target="_blank" rel="noreferrer">Open TTL</a>
+            <button class="btn btn--ghost" type="button" data-file="assets/vcf-rdfizer-vocabulary.ttl" data-label="Ontology TTL">Load in Viewer</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>SHACL Shapes (Turtle)</h3>
+          <p>Validation rules to ensure VCF-derived RDF stays consistent.</p>
+          <div class="card__actions">
+            <a class="btn btn--primary" href="assets/vcf-rdfizer-vocabulary.shacl.ttl" target="_blank" rel="noreferrer">Open TTL</a>
+            <button class="btn btn--ghost" type="button" data-file="assets/vcf-rdfizer-vocabulary.shacl.ttl" data-label="SHACL TTL">Load in Viewer</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Examples</h3>
+          <p>Sample RDF graphs for VCF headers and minimal records.</p>
+          <div class="card__actions">
+            <a class="btn btn--primary" href="assets/example-headers.ttl" target="_blank" rel="noreferrer">Headers TTL</a>
+            <a class="btn btn--ghost" href="assets/example-minimal-record.ttl" target="_blank" rel="noreferrer">Record TTL</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <h2>Namespace</h2>
-  <p><code>https://w3id.org/vcf-rdfizer/vocab#</code></p>
+    <section class="section" aria-labelledby="viewer">
+      <h2 id="viewer">Live TTL Viewer</h2>
+      <div class="viewer">
+        <div class="tabs" role="tablist">
+          <button class="tab active" type="button" data-file="assets/vcf-rdfizer-vocabulary.ttl" data-label="Ontology TTL">Ontology TTL</button>
+          <button class="tab" type="button" data-file="assets/vcf-rdfizer-vocabulary.shacl.ttl" data-label="SHACL TTL">SHACL TTL</button>
+          <button class="tab" type="button" data-file="assets/example-headers.ttl" data-label="Example Headers">Example Headers</button>
+          <button class="tab" type="button" data-file="assets/example-minimal-record.ttl" data-label="Example Record">Example Record</button>
+        </div>
+
+        <div class="viewer__toolbar">
+          <h3 id="ttl-title">Ontology TTL</h3>
+          <div class="viewer__actions">
+            <a class="btn btn--ghost" id="ttl-open" href="assets/vcf-rdfizer-vocabulary.ttl" target="_blank" rel="noreferrer">Open TTL</a>
+            <button class="btn btn--ghost" type="button" id="ttl-copy">Copy TTL</button>
+          </div>
+        </div>
+
+        <div class="viewer__status" id="ttl-status">Loaded.</div>
+        <pre aria-live="polite"><code id="ttl-content">Loading...</code></pre>
+      </div>
+    </section>
+
+    <footer>
+      <div>RDF vocabulary + SHACL shapes for VCF files, headers, records, and sample calls.</div>
+      <div>Namespace: <code>https://w3id.org/vcf-rdfizer/vocab#</code></div>
+    </footer>
+  </div>
+
+  <script>
+    const tabs = Array.from(document.querySelectorAll(".tab"));
+    const content = document.getElementById("ttl-content");
+    const status = document.getElementById("ttl-status");
+    const title = document.getElementById("ttl-title");
+    const openLink = document.getElementById("ttl-open");
+    const copyButton = document.getElementById("ttl-copy");
+    const namespaceButton = document.getElementById("copy-namespace");
+    const namespaceValue = document.getElementById("namespace");
+
+    async function loadTtl(file, label) {
+      status.textContent = "Loading " + label + "...";
+      content.textContent = "Loading...";
+      openLink.href = file;
+      title.textContent = label;
+      try {
+        const response = await fetch(file, { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error("HTTP " + response.status);
+        }
+        const text = await response.text();
+        content.textContent = text.trim();
+        status.textContent = "Loaded " + label + " · " + text.length + " characters";
+      } catch (error) {
+        content.textContent = "Unable to load " + label + ".";
+        status.textContent = "Error loading file.";
+      }
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        tabs.forEach((btn) => btn.classList.remove("active"));
+        tab.classList.add("active");
+        loadTtl(tab.dataset.file, tab.dataset.label);
+      });
+    });
+
+    document.querySelectorAll("[data-file]").forEach((button) => {
+      if (button.classList.contains("tab")) {
+        return;
+      }
+      button.addEventListener("click", () => {
+        const file = button.dataset.file;
+        const label = button.dataset.label;
+        const target = tabs.find((tab) => tab.dataset.file === file);
+        if (target) {
+          target.click();
+          document.getElementById("viewer").scrollIntoView({ behavior: "smooth" });
+          return;
+        }
+        loadTtl(file, label || "TTL");
+      });
+    });
+
+    copyButton.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(content.textContent);
+        status.textContent = "Copied to clipboard.";
+      } catch (error) {
+        status.textContent = "Copy failed. Select the text manually.";
+      }
+    });
+
+    namespaceButton.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(namespaceValue.textContent);
+        status.textContent = "Namespace copied.";
+      } catch (error) {
+        status.textContent = "Copy failed. Select the text manually.";
+      }
+    });
+
+    loadTtl("assets/vcf-rdfizer-vocabulary.ttl", "Ontology TTL");
+  </script>
 </body>
 </html>

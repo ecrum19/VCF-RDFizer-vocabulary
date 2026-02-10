@@ -24,7 +24,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # If you later build docs, do it here and output into ./docs or ./site
+      - name: Prepare docs assets
+        run: |
+          mkdir -p docs/assets
+          cp ontology/vcf-rdfizer-vocabulary.ttl docs/assets/
+          cp shacl/vcf-rdfizer-vocabulary.shacl.ttl docs/assets/
+          cp examples/example-headers.ttl docs/assets/
+          cp examples/example-minimal-record.ttl docs/assets/
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
