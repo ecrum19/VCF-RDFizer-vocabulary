@@ -25,12 +25,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Prepare docs assets
-        run: |
-          mkdir -p docs/assets
-          cp ontology/vcf-rdfizer-vocabulary.ttl docs/assets/
-          cp shacl/vcf-rdfizer-vocabulary.shacl.ttl docs/assets/
-          cp examples/example-headers.ttl docs/assets/
-          cp examples/example-minimal-record.ttl docs/assets/
+        run: ./scripts/sync-docs-assets.sh
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
