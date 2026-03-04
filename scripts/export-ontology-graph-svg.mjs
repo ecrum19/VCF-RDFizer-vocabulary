@@ -167,36 +167,40 @@ function formatN(value) {
 }
 
 function renderLegend(x, y, summary) {
-  const nodeParts = TYPE_ORDER
-    .map((type) => {
-      const count = summary.countsByType[type] || 0;
-      return `<g><rect x="0" y="-8" width="12" height="12" rx="2" fill="${TYPE_COLORS[type]}" stroke="#7a8a99"/><text x="18" y="2" font-size="12" font-family="IBM Plex Sans, sans-serif" fill="#263849">${escapeXml(type)} (${count})</text></g>`;
-    })
-    .join("");
+  const safeSummary = summary || { countsByType: {}, relationCounts: {} };
+  const countsByType = safeSummary.countsByType || {};
+  const relationCounts = safeSummary.relationCounts || {};
 
-  const relationParts = REL_ORDER
-    .map((rel) => {
-      const count = summary.relationCounts[rel] || 0;
-      return `<g><line x1="0" y1="-2" x2="14" y2="-2" stroke="${RELATION_COLORS[rel]}" stroke-width="2"/><text x="20" y="2" font-size="12" font-family="IBM Plex Sans, sans-serif" fill="#263849">${escapeXml(rel)} (${count})</text></g>`;
-    })
-    .join("");
+  const typeCellWidth = 150;
+  const relationCellWidth = 108;
+  const legendWidth = Math.max(
+    430,
+    26 + TYPE_ORDER.length * typeCellWidth,
+    26 + REL_ORDER.length * relationCellWidth
+  );
 
   let out = "";
   out += `<g transform="translate(${x}, ${y})">`;
-  out += `<rect x="0" y="0" width="430" height="82" rx="12" fill="#ffffff" stroke="#d3dfe8"/>`;
+  out += `<rect x="0" y="0" width="${legendWidth}" height="82" rx="12" fill="#ffffff" stroke="#d3dfe8"/>`;
   out += `<text x="14" y="20" font-size="14" font-family="IBM Plex Sans, sans-serif" font-weight="600" fill="#1e2f41">Legend</text>`;
 
-  let nx = 14;
-  for (const chunk of nodeParts.split("</g>").filter(Boolean)) {
-    out += `<g transform="translate(${nx}, 42)">${chunk}</g>`;
-    nx += 150;
-  }
+  TYPE_ORDER.forEach((type, index) => {
+    const count = countsByType[type] || 0;
+    const tx = 14 + index * typeCellWidth;
+    out += `<g transform="translate(${tx}, 42)">`;
+    out += `<rect x="0" y="-8" width="12" height="12" rx="2" fill="${TYPE_COLORS[type]}" stroke="#7a8a99"/>`;
+    out += `<text x="18" y="2" font-size="12" font-family="IBM Plex Sans, sans-serif" fill="#263849">${escapeXml(type)} (${count})</text>`;
+    out += `</g>`;
+  });
 
-  let rx = 14;
-  for (const chunk of relationParts.split("</g>").filter(Boolean)) {
-    out += `<g transform="translate(${rx}, 66)">${chunk}</g>`;
-    rx += 102;
-  }
+  REL_ORDER.forEach((rel, index) => {
+    const count = relationCounts[rel] || 0;
+    const tx = 14 + index * relationCellWidth;
+    out += `<g transform="translate(${tx}, 66)">`;
+    out += `<line x1="0" y1="-2" x2="14" y2="-2" stroke="${RELATION_COLORS[rel]}" stroke-width="2"/>`;
+    out += `<text x="20" y="2" font-size="12" font-family="IBM Plex Sans, sans-serif" fill="#263849">${escapeXml(rel)} (${count})</text>`;
+    out += `</g>`;
+  });
 
   out += `</g>`;
   return out;
