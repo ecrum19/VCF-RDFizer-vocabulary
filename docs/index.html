@@ -7,7 +7,7 @@
   <meta name="description" content="RDF vocabulary and SHACL shapes for VCF files, headers, records, and sample calls." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet" />
   <style>
     :root {
       color-scheme: light;
@@ -318,9 +318,11 @@
       <div>
         <div class="pill">VCF → RDF</div>
         <h1>VCF-RDFizer Vocabulary</h1>
-        <p>RDF vocabulary and SHACL shapes that model VCF files, headers, records, and sample calls. Explore the ontology, validate datasets, and jump into working examples.</p>
+        <p>RDF vocabulary and SHACL shapes that model VCF files, headers, records, and sample calls. Explore the ontology, validate datasets, inspect relationships, and jump into working examples.</p>
         <div class="hero__actions">
           <a class="btn btn--primary" href="#viewer">Explore TTL</a>
+          <a class="btn btn--ghost" href="ontology-reference.html">Ontology Reference</a>
+          <a class="btn btn--ghost" href="ontology-graph.html">Interactive Graph</a>
           <a class="btn btn--ghost" href="https://github.com/ecrum19/VCF-RDFizer-vocabulary" target="_blank" rel="noreferrer">GitHub Repository</a>
         </div>
       </div>
@@ -335,14 +337,28 @@
         </div>
         <div class="kv">
           <span>Artifacts Included</span>
-          <strong>Ontology TTL · SHACL TTL · Example TTL</strong>
+          <strong>Ontology TTL · SHACL TTL · Reference Docs · Relationship Graph · Example TTL</strong>
         </div>
       </div>
     </header>
 
     <section class="section" aria-labelledby="artifacts">
       <h2 id="artifacts">Artifacts</h2>
-      <div class="card-grid">
+        <div class="card-grid">
+        <div class="card">
+          <h3>Vocabulary Reference</h3>
+          <p>Structured documentation for classes, properties, and external ontology alignment.</p>
+          <div class="card__actions">
+            <a class="btn btn--primary" href="ontology-reference.html">Open Reference</a>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Relationship Diagram</h3>
+          <p>Interactive ontology map with class/property relationships and external alignment nodes.</p>
+          <div class="card__actions">
+            <a class="btn btn--primary" href="ontology-graph.html">Open Graph</a>
+          </div>
+        </div>
         <div class="card">
           <h3>Ontology (Turtle)</h3>
           <p>Core vocabulary for representing VCF files and records.</p>

@@ -1,0 +1,774 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>VCF-RDFizer Ontology Graph</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Interactive relationship graph for the VCF-RDFizer ontology." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/vis-network@9.1.9/styles/vis-network.min.css" />
+  <style>
+    :root {
+      --bg: #f3efe8;
+      --panel: #ffffff;
+      --ink: #1c232b;
+      --muted: #5c6874;
+      --accent: #116572;
+      --border: #d2dfe8;
+      --shadow: 0 18px 40px rgba(19, 37, 55, 0.11);
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --class: #cae8f7;
+      --obj: #d8f1db;
+      --data: #fde6c7;
+      --ann: #f9d8d8;
+      --external: #e9edf2;
+      --subclass: #246f88;
+      --domain: #2b7a3d;
+      --range: #a1621f;
+      --annotation: #9b3f3f;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top right, rgba(17, 101, 114, 0.14), transparent 42%),
+        radial-gradient(circle at bottom left, rgba(224, 169, 78, 0.15), transparent 38%),
+        var(--bg);
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .wrap {
+      width: min(1400px, 95vw);
+      margin: 0 auto;
+      padding: 28px 0 48px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .hero {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-family: "Space Grotesk", "IBM Plex Sans", sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+    }
+
+    .hero p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      line-height: 1.5;
+      max-width: 900px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 10px 15px;
+      font-weight: 600;
+      background: #fff;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .btn--primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: transparent;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 320px minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .card h2,
+    .card h3 {
+      margin: 0;
+      font-family: "Space Grotesk", "IBM Plex Sans", sans-serif;
+      font-size: 1.15rem;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 0.93rem;
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    .control-group {
+      display: grid;
+      gap: 8px;
+    }
+
+    .control-group label {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      font-size: 0.92rem;
+      color: #2c3a47;
+    }
+
+    .control-group input[type="search"] {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.95rem;
+      padding: 9px 11px;
+    }
+
+    .legend {
+      display: grid;
+      gap: 8px;
+    }
+
+    .swatch {
+      display: inline-flex;
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      border: 1px solid #c7d1db;
+      margin-right: 8px;
+      flex: 0 0 auto;
+    }
+
+    .line {
+      display: inline-flex;
+      width: 26px;
+      height: 0;
+      border-top: 2px solid;
+      margin-right: 8px;
+      flex: 0 0 auto;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+
+    #graph {
+      width: 100%;
+      height: 78vh;
+      min-height: 620px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: #fcfeff;
+    }
+
+    .stats {
+      display: grid;
+      gap: 6px;
+      font-size: 0.88rem;
+      color: #2f4458;
+    }
+
+    .detail {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      background: #f7fbfd;
+      display: grid;
+      gap: 6px;
+      max-height: 320px;
+      overflow: auto;
+    }
+
+    .detail strong {
+      font-size: 0.95rem;
+    }
+
+    .detail code {
+      font-family: "IBM Plex Mono", monospace;
+      background: rgba(17, 101, 114, 0.1);
+      color: #16555f;
+      border-radius: 6px;
+      padding: 2px 6px;
+    }
+
+    .detail-list {
+      margin: 0;
+      padding-left: 18px;
+      color: #31404f;
+      font-size: 0.88rem;
+      line-height: 1.4;
+    }
+
+    .detail-list li {
+      margin: 2px 0;
+    }
+
+    @media (max-width: 1080px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      #graph {
+        height: 64vh;
+        min-height: 520px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div>
+        <h1>Ontology Relationship Graph</h1>
+        <p>
+          Complete interactive graph of classes and properties from <code>vcfr:</code>.
+          The graph is built directly from the ontology Turtle file at load time, so it stays synchronized with term changes.
+        </p>
+      </div>
+      <div class="hero-actions">
+        <a class="btn btn--primary" href="index.html">Back to Home</a>
+        <a class="btn" href="ontology-reference.html">Term Reference</a>
+        <a class="btn" href="assets/vcf-rdfizer-vocabulary.ttl" target="_blank" rel="noreferrer">Open TTL</a>
+      </div>
+    </header>
+
+    <div class="grid">
+      <aside class="card">
+        <section class="control-group">
+          <h2>Filters</h2>
+          <p class="muted">Toggle relation types and external terms. All ontology terms are shown by default.</p>
+          <label><input id="rel-subclass" type="checkbox" checked /> Show <code>rdfs:subClassOf</code></label>
+          <label><input id="rel-domain" type="checkbox" checked /> Show <code>rdfs:domain</code></label>
+          <label><input id="rel-range" type="checkbox" checked /> Show <code>rdfs:range</code></label>
+          <label><input id="rel-annotation" type="checkbox" checked /> Show annotation links</label>
+          <label><input id="toggle-external" type="checkbox" checked /> Show external ontology nodes</label>
+        </section>
+
+        <section class="control-group">
+          <h3>Search</h3>
+          <input id="term-search" type="search" placeholder="Example: vcfr:hasCall or SampleCall" list="term-options" />
+          <datalist id="term-options"></datalist>
+          <button id="focus-term" class="btn" type="button">Focus Term</button>
+        </section>
+
+        <section>
+          <h3>Legend</h3>
+          <div class="legend">
+            <div class="legend-item"><span class="swatch" style="background: var(--class);"></span>Class</div>
+            <div class="legend-item"><span class="swatch" style="background: var(--obj);"></span>Object property</div>
+            <div class="legend-item"><span class="swatch" style="background: var(--data);"></span>Datatype property</div>
+            <div class="legend-item"><span class="swatch" style="background: var(--ann);"></span>Annotation property</div>
+            <div class="legend-item"><span class="swatch" style="background: var(--external);"></span>External term</div>
+            <div class="legend-item"><span class="line" style="border-color: var(--subclass);"></span>subClassOf</div>
+            <div class="legend-item"><span class="line" style="border-color: var(--domain);"></span>domain</div>
+            <div class="legend-item"><span class="line" style="border-color: var(--range);"></span>range</div>
+            <div class="legend-item"><span class="line" style="border-color: var(--annotation);"></span>annotation link</div>
+          </div>
+        </section>
+
+        <section>
+          <h3>Graph Stats</h3>
+          <div class="stats" id="graph-stats">
+            <div>Loading ontology...</div>
+          </div>
+        </section>
+
+        <section>
+          <h3>Term Detail</h3>
+          <div id="term-detail" class="detail">
+            <div>Select a node to inspect term metadata and connected relationships.</div>
+          </div>
+        </section>
+      </aside>
+
+      <section class="card">
+        <div id="graph" aria-label="Ontology graph"></div>
+      </section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/n3@1.17.2/browser/n3.min.js"></script>
+  <script src="https://unpkg.com/vis-network@9.1.9/dist/vis-network.min.js"></script>
+  <script>
+    const NS = {
+      vcfr: "https://w3id.org/vcf-rdfizer/vocab#",
+      owl: "http://www.w3.org/2002/07/owl#",
+      rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+      rdfs: "http://www.w3.org/2000/01/rdf-schema#",
+      xsd: "http://www.w3.org/2001/XMLSchema#",
+      dct: "http://purl.org/dc/terms/",
+      dcat: "http://www.w3.org/ns/dcat#",
+      prov: "http://www.w3.org/ns/prov#",
+      so: "http://purl.obolibrary.org/obo/SO_",
+      faldo: "http://biohackathon.org/resource/faldo#",
+      geno: "http://purl.obolibrary.org/obo/GENO_",
+      sio: "http://semanticscience.org/resource/SIO_",
+      ican: "https://ican.fr/"
+    };
+
+    const RDF_TYPE = NS.rdf + "type";
+    const RDFS_LABEL = NS.rdfs + "label";
+    const RDFS_COMMENT = NS.rdfs + "comment";
+    const RDFS_SUBCLASS = NS.rdfs + "subClassOf";
+    const RDFS_DOMAIN = NS.rdfs + "domain";
+    const RDFS_RANGE = NS.rdfs + "range";
+
+    const CLASS_TYPE = NS.owl + "Class";
+    const OBJECT_PROP_TYPE = NS.owl + "ObjectProperty";
+    const DATATYPE_PROP_TYPE = NS.owl + "DatatypeProperty";
+    const ANNOTATION_PROP_TYPE = NS.owl + "AnnotationProperty";
+
+    const nodePalette = {
+      class: "#cae8f7",
+      objectProperty: "#d8f1db",
+      datatypeProperty: "#fde6c7",
+      annotationProperty: "#f9d8d8",
+      external: "#e9edf2"
+    };
+
+    const edgeStyle = {
+      subClassOf: { color: "#246f88", dash: false },
+      domain: { color: "#2b7a3d", dash: false },
+      range: { color: "#a1621f", dash: false },
+      annotation: { color: "#9b3f3f", dash: [5, 4] }
+    };
+
+    const graphEl = document.getElementById("graph");
+    const statsEl = document.getElementById("graph-stats");
+    const detailEl = document.getElementById("term-detail");
+
+    let allNodes = [];
+    let allEdges = [];
+    let nodeMeta = new Map();
+    let network;
+
+    function qname(uri) {
+      for (const [prefix, base] of Object.entries(NS)) {
+        if (uri.startsWith(base)) {
+          return prefix + ":" + uri.slice(base.length);
+        }
+      }
+      return uri;
+    }
+
+    function localName(uri) {
+      if (uri.includes("#")) {
+        return uri.split("#").pop();
+      }
+      const slashParts = uri.split("/");
+      return slashParts[slashParts.length - 1] || uri;
+    }
+
+    function edgeTypeForPredicate(predicate, annotationPredicates) {
+      if (predicate === RDFS_SUBCLASS) {
+        return "subClassOf";
+      }
+      if (predicate === RDFS_DOMAIN) {
+        return "domain";
+      }
+      if (predicate === RDFS_RANGE) {
+        return "range";
+      }
+      if (annotationPredicates.has(predicate)) {
+        return "annotation";
+      }
+      return null;
+    }
+
+    function relationLabel(edge) {
+      if (edge.relation === "annotation") {
+        return qname(edge.predicate);
+      }
+      return edge.relation;
+    }
+
+    function addExternalNode(uri, externalNodes) {
+      if (externalNodes.has(uri)) {
+        return;
+      }
+      externalNodes.add(uri);
+      const label = qname(uri);
+      nodeMeta.set(uri, {
+        uri,
+        qname: label,
+        label: localName(uri),
+        type: "external",
+        comment: "Referenced external term"
+      });
+      allNodes.push({
+        id: uri,
+        label,
+        group: "external",
+        shape: "box",
+        margin: 9,
+        font: { size: 14, face: "IBM Plex Sans" },
+        color: {
+          background: nodePalette.external,
+          border: "#b8c4cf",
+          highlight: { background: "#f5f8fb", border: "#8b98a6" }
+        }
+      });
+    }
+
+    function buildDetail(nodeId) {
+      const term = nodeMeta.get(nodeId);
+      if (!term) {
+        detailEl.innerHTML = "<div>No metadata available.</div>";
+        return;
+      }
+
+      const incoming = allEdges.filter((edge) => edge.to === nodeId);
+      const outgoing = allEdges.filter((edge) => edge.from === nodeId);
+
+      const renderList = (items, pick) => {
+        if (!items.length) {
+          return "<li>None</li>";
+        }
+        return items
+          .slice(0, 20)
+          .map((item) => {
+            const other = pick(item);
+            const otherName = qname(other);
+            return "<li><code>" + relationLabel(item) + "</code> with " + otherName + "</li>";
+          })
+          .join("");
+      };
+
+      const typeLabelMap = {
+        class: "Class",
+        objectProperty: "Object property",
+        datatypeProperty: "Datatype property",
+        annotationProperty: "Annotation property",
+        external: "External term"
+      };
+
+      detailEl.innerHTML = "" +
+        "<strong>" + term.qname + "</strong>" +
+        "<div><code>" + term.uri + "</code></div>" +
+        "<div><strong>Type:</strong> " + (typeLabelMap[term.type] || term.type) + "</div>" +
+        "<div><strong>Label:</strong> " + (term.label || "-") + "</div>" +
+        "<div><strong>Comment:</strong> " + (term.comment || "-") + "</div>" +
+        "<div><strong>Outgoing relationships</strong></div>" +
+        "<ul class='detail-list'>" + renderList(outgoing, (item) => item.to) + "</ul>" +
+        "<div><strong>Incoming relationships</strong></div>" +
+        "<ul class='detail-list'>" + renderList(incoming, (item) => item.from) + "</ul>";
+    }
+
+    function updateGraphStats(nodes, edges) {
+      const byGroup = nodes.reduce((acc, node) => {
+        acc[node.group] = (acc[node.group] || 0) + 1;
+        return acc;
+      }, {});
+      statsEl.innerHTML = "" +
+        "<div><strong>Total visible nodes:</strong> " + nodes.length + "</div>" +
+        "<div><strong>Total visible edges:</strong> " + edges.length + "</div>" +
+        "<div>Classes: " + (byGroup.class || 0) + "</div>" +
+        "<div>Object properties: " + (byGroup.objectProperty || 0) + "</div>" +
+        "<div>Datatype properties: " + (byGroup.datatypeProperty || 0) + "</div>" +
+        "<div>Annotation properties: " + (byGroup.annotationProperty || 0) + "</div>" +
+        "<div>External terms: " + (byGroup.external || 0) + "</div>";
+    }
+
+    function applyFilters() {
+      const showSubclass = document.getElementById("rel-subclass").checked;
+      const showDomain = document.getElementById("rel-domain").checked;
+      const showRange = document.getElementById("rel-range").checked;
+      const showAnnotation = document.getElementById("rel-annotation").checked;
+      const showExternal = document.getElementById("toggle-external").checked;
+
+      const visibleRelations = new Set();
+      if (showSubclass) visibleRelations.add("subClassOf");
+      if (showDomain) visibleRelations.add("domain");
+      if (showRange) visibleRelations.add("range");
+      if (showAnnotation) visibleRelations.add("annotation");
+
+      const visibleNodeIds = new Set(
+        allNodes
+          .filter((node) => showExternal || node.group !== "external")
+          .map((node) => node.id)
+      );
+
+      const filteredEdges = allEdges.filter((edge) => {
+        if (!visibleRelations.has(edge.relation)) {
+          return false;
+        }
+        if (!visibleNodeIds.has(edge.from) || !visibleNodeIds.has(edge.to)) {
+          return false;
+        }
+        return true;
+      });
+
+      const connected = new Set();
+      filteredEdges.forEach((edge) => {
+        connected.add(edge.from);
+        connected.add(edge.to);
+      });
+
+      const filteredNodes = allNodes.filter((node) => {
+        if (!visibleNodeIds.has(node.id)) {
+          return false;
+        }
+        if (node.group === "external") {
+          return connected.has(node.id);
+        }
+        return true;
+      });
+
+      network.setData({
+        nodes: new vis.DataSet(filteredNodes),
+        edges: new vis.DataSet(filteredEdges)
+      });
+
+      updateGraphStats(filteredNodes, filteredEdges);
+    }
+
+    async function buildGraph() {
+      try {
+        const response = await fetch("assets/vcf-rdfizer-vocabulary.ttl", { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error("HTTP " + response.status);
+        }
+
+        const ttl = await response.text();
+        const parser = new N3.Parser();
+        const quads = parser.parse(ttl);
+
+        const declaredTerms = new Map();
+        const labels = new Map();
+        const comments = new Map();
+        const annotationPredicates = new Set();
+
+        quads.forEach((quad) => {
+          if (quad.predicate.value === RDFS_LABEL && quad.object.termType === "Literal") {
+            labels.set(quad.subject.value, quad.object.value);
+          }
+          if (quad.predicate.value === RDFS_COMMENT && quad.object.termType === "Literal") {
+            comments.set(quad.subject.value, quad.object.value);
+          }
+
+          if (quad.predicate.value === RDF_TYPE) {
+            const object = quad.object.value;
+            if (object === CLASS_TYPE) {
+              declaredTerms.set(quad.subject.value, "class");
+            } else if (object === OBJECT_PROP_TYPE) {
+              declaredTerms.set(quad.subject.value, "objectProperty");
+            } else if (object === DATATYPE_PROP_TYPE) {
+              declaredTerms.set(quad.subject.value, "datatypeProperty");
+            } else if (object === ANNOTATION_PROP_TYPE) {
+              declaredTerms.set(quad.subject.value, "annotationProperty");
+              annotationPredicates.add(quad.subject.value);
+            }
+          }
+        });
+
+        const sortedTerms = Array.from(declaredTerms.entries()).sort((a, b) => {
+          const qa = qname(a[0]);
+          const qb = qname(b[0]);
+          return qa.localeCompare(qb);
+        });
+
+        sortedTerms.forEach(([uri, type]) => {
+          const label = labels.get(uri) || localName(uri);
+          const prefixed = qname(uri);
+          nodeMeta.set(uri, {
+            uri,
+            qname: prefixed,
+            label,
+            type,
+            comment: comments.get(uri) || ""
+          });
+
+          allNodes.push({
+            id: uri,
+            label: prefixed,
+            group: type,
+            shape: "box",
+            margin: 9,
+            font: { size: 14, face: "IBM Plex Sans" },
+            color: {
+              background: nodePalette[type],
+              border: "#8ea2b3",
+              highlight: { background: "#ffffff", border: "#394b59" }
+            }
+          });
+        });
+
+        const externalNodes = new Set();
+
+        quads.forEach((quad, idx) => {
+          if (quad.subject.termType !== "NamedNode" || quad.object.termType !== "NamedNode") {
+            return;
+          }
+
+          const edgeType = edgeTypeForPredicate(quad.predicate.value, annotationPredicates);
+          if (!edgeType) {
+            return;
+          }
+
+          const from = quad.subject.value;
+          const to = quad.object.value;
+
+          if (!declaredTerms.has(from)) {
+            return;
+          }
+
+          if (!declaredTerms.has(to)) {
+            addExternalNode(to, externalNodes);
+          }
+
+          allEdges.push({
+            id: "e-" + idx,
+            from,
+            to,
+            relation: edgeType,
+            predicate: quad.predicate.value,
+            label: relationLabel({ relation: edgeType, predicate: quad.predicate.value }),
+            arrows: "to",
+            smooth: { enabled: true, type: "curvedCW", roundness: 0.08 },
+            width: 1.6,
+            color: { color: edgeStyle[edgeType].color, opacity: 0.9 },
+            dashes: edgeStyle[edgeType].dash,
+            font: { size: 10, align: "middle", color: "#334" }
+          });
+        });
+
+        network = new vis.Network(graphEl, {
+          nodes: new vis.DataSet(allNodes),
+          edges: new vis.DataSet(allEdges)
+        }, {
+          layout: {
+            hierarchical: {
+              enabled: true,
+              direction: "LR",
+              levelSeparation: 170,
+              nodeSpacing: 130,
+              treeSpacing: 180,
+              sortMethod: "directed"
+            }
+          },
+          interaction: {
+            hover: true,
+            navigationButtons: true,
+            keyboard: true,
+            tooltipDelay: 80
+          },
+          physics: false,
+          nodes: {
+            borderWidth: 1.2,
+            borderWidthSelected: 1.8
+          },
+          edges: {
+            selectionWidth: 2.2,
+            hoverWidth: 2,
+            arrowStrikethrough: false
+          }
+        });
+
+        network.on("selectNode", (params) => {
+          if (!params.nodes.length) {
+            return;
+          }
+          buildDetail(params.nodes[0]);
+        });
+
+        network.on("deselectNode", () => {
+          detailEl.innerHTML = "<div>Select a node to inspect term metadata and connected relationships.</div>";
+        });
+
+        document.getElementById("focus-term").addEventListener("click", () => {
+          const raw = document.getElementById("term-search").value.trim();
+          if (!raw) {
+            return;
+          }
+
+          const needle = raw.toLowerCase();
+          const matched = allNodes.find((node) => {
+            const label = String(node.label || "").toLowerCase();
+            return label === needle || label.endsWith(needle) || label.includes(needle);
+          });
+
+          if (!matched) {
+            return;
+          }
+
+          network.selectNodes([matched.id]);
+          network.focus(matched.id, {
+            scale: 1.1,
+            animation: {
+              duration: 500,
+              easingFunction: "easeInOutQuad"
+            }
+          });
+          buildDetail(matched.id);
+        });
+
+        ["rel-subclass", "rel-domain", "rel-range", "rel-annotation", "toggle-external"].forEach((id) => {
+          document.getElementById(id).addEventListener("change", applyFilters);
+        });
+
+        const optionsEl = document.getElementById("term-options");
+        allNodes
+          .filter((node) => node.group !== "external")
+          .sort((a, b) => a.label.localeCompare(b.label))
+          .forEach((node) => {
+            const option = document.createElement("option");
+            option.value = node.label;
+            optionsEl.appendChild(option);
+          });
+
+        updateGraphStats(allNodes, allEdges);
+      } catch (error) {
+        console.error(error);
+        statsEl.innerHTML = "<div>Failed to load ontology graph.</div><div class='muted'>" + error.message + "</div>";
+        detailEl.innerHTML = "<div>Check browser console for details.</div>";
+      }
+    }
+
+    buildGraph();
+  </script>
+</body>
+</html>

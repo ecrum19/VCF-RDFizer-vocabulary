@@ -54,6 +54,12 @@ SB/gvar reference:
 
 SHACL shapes are provided in `shacl/vcf-rdfizer-vocabulary.shacl.ttl`.
 
+## Documentation
+
+- Landing page (GitHub Pages): [docs/index.html](docs/index.html)
+- Vocabulary reference (classes, properties, external alignments): [docs/ontology-reference.html](docs/ontology-reference.html)
+- Interactive relationship diagram: [docs/ontology-graph.html](docs/ontology-graph.html)
+
 ## Quick example
 
 See:
