@@ -1,0 +1,2580 @@
+{
+  "generatedAt": "2026-03-04T09:28:48.066Z",
+  "source": "ontology/vcf-rdfizer-vocabulary.ttl",
+  "namespace": "https://w3id.org/vcf-rdfizer/vocab#",
+  "summary": {
+    "nodes": 81,
+    "edges": 110,
+    "countsByType": {
+      "class": 29,
+      "objectProperty": 11,
+      "datatypeProperty": 31,
+      "annotationProperty": 1,
+      "external": 9
+    },
+    "relationCounts": {
+      "subClassOf": 28,
+      "domain": 39,
+      "range": 42,
+      "annotation": 1
+    }
+  },
+  "termsByType": {
+    "class": [
+      {
+        "qname": "vcfr:AltDefinition",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#AltDefinition",
+        "label": "ALT definition",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:ALTHeaderLine",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#ALTHeaderLine",
+        "label": "ALT header line",
+        "comment": "Represents ##ALT=<ID=...,Description=...> used for symbolic alternate alleles."
+      },
+      {
+        "qname": "vcfr:CharacterType",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#CharacterType",
+        "label": "Character",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:ContigHeaderLine",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#ContigHeaderLine",
+        "label": "contig header line",
+        "comment": "Represents ##contig=<ID=...,length=...,assembly=...,...> entries."
+      },
+      {
+        "qname": "vcfr:FieldDefinition",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#FieldDefinition",
+        "label": "field definition",
+        "comment": "Common superclass for INFO/FORMAT/FILTER/ALT header definitions."
+      },
+      {
+        "qname": "vcfr:FileDateHeaderLine",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#FileDateHeaderLine",
+        "label": "fileDate header line",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:FileFormatHeaderLine",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#FileFormatHeaderLine",
+        "label": "fileformat header line",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:FilterDefinition",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#FilterDefinition",
+        "label": "FILTER definition",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:FILTERHeaderLine",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#FILTERHeaderLine",
+        "label": "FILTER header line",
+        "comment": "Represents ##FILTER=<ID=...,Description=...>."
+      },
+      {
+        "qname": "vcfr:FlagType",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#FlagType",
+        "label": "Flag",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:FloatType",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#FloatType",
+        "label": "Float",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:FormatFieldDefinition",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#FormatFieldDefinition",
+        "label": "FORMAT field definition",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:FormatFieldValue",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#FormatFieldValue",
+        "label": "FORMAT field value",
+        "comment": "A structured key/value for one FORMAT attribute within a sample call."
+      },
+      {
+        "qname": "vcfr:FORMATHeaderLine",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#FORMATHeaderLine",
+        "label": "FORMAT header line",
+        "comment": "Represents ##FORMAT=<ID=...,Number=...,Type=...,Description=...>."
+      },
+      {
+        "qname": "vcfr:HeaderLine",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#HeaderLine",
+        "label": "VCF header line",
+        "comment": "A structured representation of one VCF header line (e.g., ##fileformat, ##INFO=<...>)."
+      },
+      {
+        "qname": "vcfr:InfoFieldDefinition",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#InfoFieldDefinition",
+        "label": "INFO field definition",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:InfoFieldValue",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#InfoFieldValue",
+        "label": "INFO field value",
+        "comment": "A structured key/value for one INFO attribute within a record/call."
+      },
+      {
+        "qname": "vcfr:INFOHeaderLine",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#INFOHeaderLine",
+        "label": "INFO header line",
+        "comment": "Represents ##INFO=<ID=...,Number=...,Type=...,Description=...>."
+      },
+      {
+        "qname": "vcfr:IntegerType",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#IntegerType",
+        "label": "Integer",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:ReferenceHeaderLine",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#ReferenceHeaderLine",
+        "label": "reference header line",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:SampleCall",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#SampleCall",
+        "label": "sample call",
+        "comment": "Per-sample values for a variant call (e.g., GT, DP, AD), as declared by FORMAT header lines."
+      },
+      {
+        "qname": "vcfr:SourceHeaderLine",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#SourceHeaderLine",
+        "label": "source header line",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:StringType",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#StringType",
+        "label": "String",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:VariantCall",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#VariantCall",
+        "label": "variant call",
+        "comment": "Call-level representation for a record: QUAL/FILTER/INFO, plus FORMAT and per-sample fields."
+      },
+      {
+        "qname": "vcfr:VCFFile",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#VCFFile",
+        "label": "VCF file",
+        "comment": "A VCF file artifact (as a dataset distribution) that contains a header and a set of VCF records."
+      },
+      {
+        "qname": "vcfr:VCFHeader",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#VCFHeader",
+        "label": "VCF header",
+        "comment": "Container for the structured header lines of a VCF file."
+      },
+      {
+        "qname": "vcfr:VCFNumberArity",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#VCFNumberArity",
+        "label": "VCF Number arity",
+        "comment": "Represents INFO/FORMAT Number values (e.g., 0, 1, A, R, G, .)."
+      },
+      {
+        "qname": "vcfr:VCFRecord",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#VCFRecord",
+        "label": "VCF record",
+        "comment": "A row in a VCF (CHROM, POS, ID, REF, ALT, QUAL, FILTER, INFO, FORMAT, samples...). This is a VCF-centric view; link to a sequence alteration representation via vcfr:asSequenceAlteration."
+      },
+      {
+        "qname": "vcfr:VCFValueType",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#VCFValueType",
+        "label": "VCF value type",
+        "comment": "Enumerates VCF Type values used in INFO/FORMAT definitions: Integer, Float, Flag, Character, String."
+      }
+    ],
+    "objectProperty": [
+      {
+        "qname": "vcfr:asSequenceAlteration",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#asSequenceAlteration",
+        "label": "as sequence alteration",
+        "comment": "Links a VCF record/call to a sequence alteration representation (e.g., SB/gvar SequenceAlteration: so:0001059)."
+      },
+      {
+        "qname": "vcfr:chromosome",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#chromosome",
+        "label": "chromosome / contig reference",
+        "comment": "Reference sequence for CHROM, preferably resolvable (e.g., INSDC/RefSeq/Ensembl). Can align to FALDO reference."
+      },
+      {
+        "qname": "vcfr:declaredBy",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#declaredBy",
+        "label": "declared by",
+        "comment": "Links an INFO/FORMAT/FILTER/ALT value/usage to its header definition line."
+      },
+      {
+        "qname": "vcfr:fieldType",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#fieldType",
+        "label": "field Type",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:hasCall",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#hasCall",
+        "label": "has call",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:hasFormatValue",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#hasFormatValue",
+        "label": "has FORMAT value",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:hasHeader",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#hasHeader",
+        "label": "has header",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:hasHeaderLine",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#hasHeaderLine",
+        "label": "has header line",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:hasInfoValue",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#hasInfoValue",
+        "label": "has INFO value",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:hasRecord",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#hasRecord",
+        "label": "has record",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:hasSampleCall",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#hasSampleCall",
+        "label": "has sample call",
+        "comment": ""
+      }
+    ],
+    "datatypeProperty": [
+      {
+        "qname": "vcfr:alt",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#alt",
+        "label": "ALT",
+        "comment": "ALT allele string; for multiple ALT alleles you may repeat this property or use rdf:List externally."
+      },
+      {
+        "qname": "vcfr:altId",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#altId",
+        "label": "ALT ID",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:chrom",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#chrom",
+        "label": "CHROM",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:contigAssembly",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#contigAssembly",
+        "label": "contig assembly",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:contigCount",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#contigCount",
+        "label": "contig count",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:contigId",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#contigId",
+        "label": "contig ID",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:contigLength",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#contigLength",
+        "label": "contig length",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:contigMd5",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#contigMd5",
+        "label": "contig MD5",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:fieldDescription",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#fieldDescription",
+        "label": "field Description",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:fieldId",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#fieldId",
+        "label": "field ID",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:fieldKey",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#fieldKey",
+        "label": "field key",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:fieldNumber",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#fieldNumber",
+        "label": "field Number",
+        "comment": "The VCF Number value as string (e.g., 0, 1, A, R, G, .)."
+      },
+      {
+        "qname": "vcfr:fieldValue",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#fieldValue",
+        "label": "field value",
+        "comment": "Literal string value; for typed values prefer vcfr:fieldValueInteger/Decimal/Boolean when possible."
+      },
+      {
+        "qname": "vcfr:fieldValueBoolean",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#fieldValueBoolean",
+        "label": "field value (boolean)",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:fieldValueDecimal",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#fieldValueDecimal",
+        "label": "field value (decimal)",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:fieldValueInteger",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#fieldValueInteger",
+        "label": "field value (integer)",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:fileDate",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#fileDate",
+        "label": "file date",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:fileFormat",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#fileFormat",
+        "label": "file format",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:filter",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#filter",
+        "label": "FILTER",
+        "comment": "FILTER column value (e.g., PASS, ., or semicolon-separated list). Prefer splitting into multiple vcfr:filter values."
+      },
+      {
+        "qname": "vcfr:filterId",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#filterId",
+        "label": "FILTER ID",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:formatRaw",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#formatRaw",
+        "label": "FORMAT raw",
+        "comment": "Raw FORMAT string as in VCF (optional). Use structured vcfr:FormatFieldValue in SampleCall."
+      },
+      {
+        "qname": "vcfr:headerKey",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#headerKey",
+        "label": "header key",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:headerValue",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#headerValue",
+        "label": "header value",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:infoRaw",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#infoRaw",
+        "label": "INFO raw",
+        "comment": "Raw INFO string as in VCF (optional). Use structured vcfr:InfoFieldValue for machine-use."
+      },
+      {
+        "qname": "vcfr:pos",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#pos",
+        "label": "POS",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:qual",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#qual",
+        "label": "QUAL",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:recordId",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#recordId",
+        "label": "ID",
+        "comment": "VCF ID column (e.g., rsID). Use when present; otherwise omit."
+      },
+      {
+        "qname": "vcfr:ref",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#ref",
+        "label": "REF",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:referenceGenome",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#referenceGenome",
+        "label": "reference genome",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:sampleId",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#sampleId",
+        "label": "sample ID",
+        "comment": ""
+      },
+      {
+        "qname": "vcfr:sourceSoftware",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#sourceSoftware",
+        "label": "source software",
+        "comment": ""
+      }
+    ],
+    "annotationProperty": [
+      {
+        "qname": "vcfr:recommendedSequenceAlterationClass",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#recommendedSequenceAlterationClass",
+        "label": "recommended sequence alteration class",
+        "comment": ""
+      }
+    ]
+  },
+  "externalTerms": [
+    {
+      "qname": "dcat:Distribution",
+      "uri": "http://www.w3.org/ns/dcat#Distribution"
+    },
+    {
+      "qname": "prov:Entity",
+      "uri": "http://www.w3.org/ns/prov#Entity"
+    },
+    {
+      "qname": "rdf:Resource",
+      "uri": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Resource"
+    },
+    {
+      "qname": "so:0001059",
+      "uri": "http://purl.obolibrary.org/obo/SO_0001059"
+    },
+    {
+      "qname": "xsd:boolean",
+      "uri": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    {
+      "qname": "xsd:date",
+      "uri": "http://www.w3.org/2001/XMLSchema#date"
+    },
+    {
+      "qname": "xsd:decimal",
+      "uri": "http://www.w3.org/2001/XMLSchema#decimal"
+    },
+    {
+      "qname": "xsd:integer",
+      "uri": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    {
+      "qname": "xsd:string",
+      "uri": "http://www.w3.org/2001/XMLSchema#string"
+    }
+  ],
+  "relationshipsByType": {
+    "subClassOf": [
+      {
+        "source": "vcfr:AltDefinition",
+        "target": "vcfr:ALTHeaderLine",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:AltDefinition",
+        "target": "vcfr:FieldDefinition",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:ALTHeaderLine",
+        "target": "vcfr:HeaderLine",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:CharacterType",
+        "target": "vcfr:VCFValueType",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:ContigHeaderLine",
+        "target": "vcfr:HeaderLine",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:FieldDefinition",
+        "target": "vcfr:HeaderLine",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:FileDateHeaderLine",
+        "target": "vcfr:HeaderLine",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:FileFormatHeaderLine",
+        "target": "vcfr:HeaderLine",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:FilterDefinition",
+        "target": "vcfr:FieldDefinition",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:FilterDefinition",
+        "target": "vcfr:FILTERHeaderLine",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:FILTERHeaderLine",
+        "target": "vcfr:HeaderLine",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:FlagType",
+        "target": "vcfr:VCFValueType",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:FloatType",
+        "target": "vcfr:VCFValueType",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:FormatFieldDefinition",
+        "target": "vcfr:FieldDefinition",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:FormatFieldDefinition",
+        "target": "vcfr:FORMATHeaderLine",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:FORMATHeaderLine",
+        "target": "vcfr:HeaderLine",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:InfoFieldDefinition",
+        "target": "vcfr:FieldDefinition",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:InfoFieldDefinition",
+        "target": "vcfr:INFOHeaderLine",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:INFOHeaderLine",
+        "target": "vcfr:HeaderLine",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:IntegerType",
+        "target": "vcfr:VCFValueType",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:ReferenceHeaderLine",
+        "target": "vcfr:HeaderLine",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:SampleCall",
+        "target": "prov:Entity",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:SourceHeaderLine",
+        "target": "vcfr:HeaderLine",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:StringType",
+        "target": "vcfr:VCFValueType",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:VariantCall",
+        "target": "prov:Entity",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:VCFFile",
+        "target": "dcat:Distribution",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:VCFFile",
+        "target": "prov:Entity",
+        "predicate": "rdfs:subClassOf"
+      },
+      {
+        "source": "vcfr:VCFRecord",
+        "target": "prov:Entity",
+        "predicate": "rdfs:subClassOf"
+      }
+    ],
+    "domain": [
+      {
+        "source": "vcfr:alt",
+        "target": "vcfr:VCFRecord",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:altId",
+        "target": "vcfr:AltDefinition",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:chrom",
+        "target": "vcfr:VCFRecord",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:contigAssembly",
+        "target": "vcfr:ContigHeaderLine",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:contigCount",
+        "target": "vcfr:VCFFile",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:contigId",
+        "target": "vcfr:ContigHeaderLine",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:contigLength",
+        "target": "vcfr:ContigHeaderLine",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:contigMd5",
+        "target": "vcfr:ContigHeaderLine",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:fieldDescription",
+        "target": "vcfr:FieldDefinition",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:fieldId",
+        "target": "vcfr:FieldDefinition",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:fieldKey",
+        "target": "rdf:Resource",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:fieldNumber",
+        "target": "vcfr:FieldDefinition",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:fieldType",
+        "target": "vcfr:FieldDefinition",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:fieldValue",
+        "target": "rdf:Resource",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:fieldValueBoolean",
+        "target": "rdf:Resource",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:fieldValueDecimal",
+        "target": "rdf:Resource",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:fieldValueInteger",
+        "target": "rdf:Resource",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:fileDate",
+        "target": "vcfr:VCFFile",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:fileFormat",
+        "target": "vcfr:VCFFile",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:filter",
+        "target": "vcfr:VariantCall",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:filterId",
+        "target": "vcfr:FilterDefinition",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:formatRaw",
+        "target": "vcfr:VariantCall",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:hasCall",
+        "target": "vcfr:VCFRecord",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:hasFormatValue",
+        "target": "vcfr:SampleCall",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:hasHeader",
+        "target": "vcfr:VCFFile",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:hasHeaderLine",
+        "target": "vcfr:VCFHeader",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:hasInfoValue",
+        "target": "vcfr:VariantCall",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:hasRecord",
+        "target": "vcfr:VCFFile",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:hasSampleCall",
+        "target": "vcfr:VariantCall",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:headerKey",
+        "target": "vcfr:HeaderLine",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:headerValue",
+        "target": "vcfr:HeaderLine",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:infoRaw",
+        "target": "vcfr:VariantCall",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:pos",
+        "target": "vcfr:VCFRecord",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:qual",
+        "target": "vcfr:VariantCall",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:recordId",
+        "target": "vcfr:VCFRecord",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:ref",
+        "target": "vcfr:VCFRecord",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:referenceGenome",
+        "target": "vcfr:VCFFile",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:sampleId",
+        "target": "vcfr:SampleCall",
+        "predicate": "rdfs:domain"
+      },
+      {
+        "source": "vcfr:sourceSoftware",
+        "target": "vcfr:VCFFile",
+        "predicate": "rdfs:domain"
+      }
+    ],
+    "range": [
+      {
+        "source": "vcfr:alt",
+        "target": "xsd:string",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:altId",
+        "target": "xsd:string",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:asSequenceAlteration",
+        "target": "so:0001059",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:chrom",
+        "target": "xsd:string",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:chromosome",
+        "target": "vcfr:ContigHeaderLine",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:contigAssembly",
+        "target": "xsd:string",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:contigCount",
+        "target": "xsd:integer",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:contigId",
+        "target": "xsd:string",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:contigLength",
+        "target": "xsd:integer",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:contigMd5",
+        "target": "xsd:string",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:declaredBy",
+        "target": "vcfr:FieldDefinition",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:fieldDescription",
+        "target": "xsd:string",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:fieldId",
+        "target": "xsd:string",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:fieldKey",
+        "target": "xsd:string",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:fieldNumber",
+        "target": "xsd:string",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:fieldType",
+        "target": "vcfr:VCFValueType",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:fieldValue",
+        "target": "xsd:string",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:fieldValueBoolean",
+        "target": "xsd:boolean",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:fieldValueDecimal",
+        "target": "xsd:decimal",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:fieldValueInteger",
+        "target": "xsd:integer",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:fileDate",
+        "target": "xsd:date",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:fileFormat",
+        "target": "xsd:string",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:filter",
+        "target": "xsd:string",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:filterId",
+        "target": "xsd:string",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:formatRaw",
+        "target": "xsd:string",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:hasCall",
+        "target": "vcfr:VariantCall",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:hasFormatValue",
+        "target": "vcfr:FormatFieldValue",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:hasHeader",
+        "target": "vcfr:VCFHeader",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:hasHeaderLine",
+        "target": "vcfr:HeaderLine",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:hasInfoValue",
+        "target": "vcfr:InfoFieldValue",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:hasRecord",
+        "target": "vcfr:VCFRecord",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:hasSampleCall",
+        "target": "vcfr:SampleCall",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:headerKey",
+        "target": "xsd:string",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:headerValue",
+        "target": "xsd:string",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:infoRaw",
+        "target": "xsd:string",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:pos",
+        "target": "xsd:integer",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:qual",
+        "target": "xsd:decimal",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:recordId",
+        "target": "xsd:string",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:ref",
+        "target": "xsd:string",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:referenceGenome",
+        "target": "xsd:string",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:sampleId",
+        "target": "xsd:string",
+        "predicate": "rdfs:range"
+      },
+      {
+        "source": "vcfr:sourceSoftware",
+        "target": "xsd:string",
+        "predicate": "rdfs:range"
+      }
+    ],
+    "annotation": [
+      {
+        "source": "vcfr:recommendedSequenceAlterationClass",
+        "target": "so:0001059",
+        "predicate": "vcfr:recommendedSequenceAlterationClass"
+      }
+    ]
+  },
+  "adjacency": {
+    "vcfr:AltDefinition": {
+      "outgoing": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "vcfr:ALTHeaderLine"
+        },
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "vcfr:FieldDefinition"
+        }
+      ],
+      "incoming": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:altId"
+        }
+      ]
+    },
+    "vcfr:ALTHeaderLine": {
+      "outgoing": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "vcfr:HeaderLine"
+        }
+      ],
+      "incoming": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:AltDefinition"
+        }
+      ]
+    },
+    "vcfr:CharacterType": {
+      "outgoing": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "vcfr:VCFValueType"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:ContigHeaderLine": {
+      "outgoing": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "vcfr:HeaderLine"
+        }
+      ],
+      "incoming": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:contigAssembly"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:contigId"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:contigLength"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:contigMd5"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:chromosome"
+        }
+      ]
+    },
+    "vcfr:FieldDefinition": {
+      "outgoing": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "vcfr:HeaderLine"
+        }
+      ],
+      "incoming": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:AltDefinition"
+        },
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:FilterDefinition"
+        },
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:FormatFieldDefinition"
+        },
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:InfoFieldDefinition"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:fieldDescription"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:fieldId"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:fieldNumber"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:fieldType"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:declaredBy"
+        }
+      ]
+    },
+    "vcfr:FileDateHeaderLine": {
+      "outgoing": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "vcfr:HeaderLine"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:FileFormatHeaderLine": {
+      "outgoing": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "vcfr:HeaderLine"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:FilterDefinition": {
+      "outgoing": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "vcfr:FieldDefinition"
+        },
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "vcfr:FILTERHeaderLine"
+        }
+      ],
+      "incoming": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:filterId"
+        }
+      ]
+    },
+    "vcfr:FILTERHeaderLine": {
+      "outgoing": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "vcfr:HeaderLine"
+        }
+      ],
+      "incoming": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:FilterDefinition"
+        }
+      ]
+    },
+    "vcfr:FlagType": {
+      "outgoing": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "vcfr:VCFValueType"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:FloatType": {
+      "outgoing": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "vcfr:VCFValueType"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:FormatFieldDefinition": {
+      "outgoing": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "vcfr:FieldDefinition"
+        },
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "vcfr:FORMATHeaderLine"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:FormatFieldValue": {
+      "outgoing": [],
+      "incoming": [
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:hasFormatValue"
+        }
+      ]
+    },
+    "vcfr:FORMATHeaderLine": {
+      "outgoing": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "vcfr:HeaderLine"
+        }
+      ],
+      "incoming": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:FormatFieldDefinition"
+        }
+      ]
+    },
+    "vcfr:HeaderLine": {
+      "outgoing": [],
+      "incoming": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:ALTHeaderLine"
+        },
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:ContigHeaderLine"
+        },
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:FieldDefinition"
+        },
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:FileDateHeaderLine"
+        },
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:FileFormatHeaderLine"
+        },
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:FILTERHeaderLine"
+        },
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:FORMATHeaderLine"
+        },
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:INFOHeaderLine"
+        },
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:ReferenceHeaderLine"
+        },
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:SourceHeaderLine"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:headerKey"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:headerValue"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:hasHeaderLine"
+        }
+      ]
+    },
+    "vcfr:InfoFieldDefinition": {
+      "outgoing": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "vcfr:FieldDefinition"
+        },
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "vcfr:INFOHeaderLine"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:InfoFieldValue": {
+      "outgoing": [],
+      "incoming": [
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:hasInfoValue"
+        }
+      ]
+    },
+    "vcfr:INFOHeaderLine": {
+      "outgoing": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "vcfr:HeaderLine"
+        }
+      ],
+      "incoming": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:InfoFieldDefinition"
+        }
+      ]
+    },
+    "vcfr:IntegerType": {
+      "outgoing": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "vcfr:VCFValueType"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:ReferenceHeaderLine": {
+      "outgoing": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "vcfr:HeaderLine"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:SampleCall": {
+      "outgoing": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "prov:Entity"
+        }
+      ],
+      "incoming": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:hasFormatValue"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:sampleId"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:hasSampleCall"
+        }
+      ]
+    },
+    "vcfr:SourceHeaderLine": {
+      "outgoing": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "vcfr:HeaderLine"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:StringType": {
+      "outgoing": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "vcfr:VCFValueType"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:VariantCall": {
+      "outgoing": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "prov:Entity"
+        }
+      ],
+      "incoming": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:filter"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:formatRaw"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:hasInfoValue"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:hasSampleCall"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:infoRaw"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:qual"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:hasCall"
+        }
+      ]
+    },
+    "vcfr:VCFFile": {
+      "outgoing": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "dcat:Distribution"
+        },
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "prov:Entity"
+        }
+      ],
+      "incoming": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:contigCount"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:fileDate"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:fileFormat"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:hasHeader"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:hasRecord"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:referenceGenome"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:sourceSoftware"
+        }
+      ]
+    },
+    "vcfr:VCFHeader": {
+      "outgoing": [],
+      "incoming": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:hasHeaderLine"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:hasHeader"
+        }
+      ]
+    },
+    "vcfr:VCFNumberArity": {
+      "outgoing": [],
+      "incoming": []
+    },
+    "vcfr:VCFRecord": {
+      "outgoing": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "target": "prov:Entity"
+        }
+      ],
+      "incoming": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:alt"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:chrom"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:hasCall"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:pos"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:recordId"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:ref"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:hasRecord"
+        }
+      ]
+    },
+    "vcfr:VCFValueType": {
+      "outgoing": [],
+      "incoming": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:CharacterType"
+        },
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:FlagType"
+        },
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:FloatType"
+        },
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:IntegerType"
+        },
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:StringType"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:fieldType"
+        }
+      ]
+    },
+    "vcfr:asSequenceAlteration": {
+      "outgoing": [
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "so:0001059"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:chromosome": {
+      "outgoing": [
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "vcfr:ContigHeaderLine"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:declaredBy": {
+      "outgoing": [
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "vcfr:FieldDefinition"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:fieldType": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:FieldDefinition"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "vcfr:VCFValueType"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:hasCall": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:VCFRecord"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "vcfr:VariantCall"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:hasFormatValue": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:SampleCall"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "vcfr:FormatFieldValue"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:hasHeader": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:VCFFile"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "vcfr:VCFHeader"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:hasHeaderLine": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:VCFHeader"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "vcfr:HeaderLine"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:hasInfoValue": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:VariantCall"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "vcfr:InfoFieldValue"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:hasRecord": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:VCFFile"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "vcfr:VCFRecord"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:hasSampleCall": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:VariantCall"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "vcfr:SampleCall"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:alt": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:VCFRecord"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:string"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:altId": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:AltDefinition"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:string"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:chrom": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:VCFRecord"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:string"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:contigAssembly": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:ContigHeaderLine"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:string"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:contigCount": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:VCFFile"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:integer"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:contigId": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:ContigHeaderLine"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:string"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:contigLength": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:ContigHeaderLine"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:integer"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:contigMd5": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:ContigHeaderLine"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:string"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:fieldDescription": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:FieldDefinition"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:string"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:fieldId": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:FieldDefinition"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:string"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:fieldKey": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "rdf:Resource"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:string"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:fieldNumber": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:FieldDefinition"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:string"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:fieldValue": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "rdf:Resource"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:string"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:fieldValueBoolean": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "rdf:Resource"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:boolean"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:fieldValueDecimal": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "rdf:Resource"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:decimal"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:fieldValueInteger": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "rdf:Resource"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:integer"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:fileDate": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:VCFFile"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:date"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:fileFormat": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:VCFFile"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:string"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:filter": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:VariantCall"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:string"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:filterId": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:FilterDefinition"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:string"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:formatRaw": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:VariantCall"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:string"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:headerKey": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:HeaderLine"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:string"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:headerValue": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:HeaderLine"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:string"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:infoRaw": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:VariantCall"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:string"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:pos": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:VCFRecord"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:integer"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:qual": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:VariantCall"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:decimal"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:recordId": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:VCFRecord"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:string"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:ref": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:VCFRecord"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:string"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:referenceGenome": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:VCFFile"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:string"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:sampleId": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:SampleCall"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:string"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:sourceSoftware": {
+      "outgoing": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "target": "vcfr:VCFFile"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "target": "xsd:string"
+        }
+      ],
+      "incoming": []
+    },
+    "vcfr:recommendedSequenceAlterationClass": {
+      "outgoing": [
+        {
+          "relation": "annotation",
+          "predicate": "vcfr:recommendedSequenceAlterationClass",
+          "target": "so:0001059"
+        }
+      ],
+      "incoming": []
+    },
+    "dcat:Distribution": {
+      "outgoing": [],
+      "incoming": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:VCFFile"
+        }
+      ]
+    },
+    "prov:Entity": {
+      "outgoing": [],
+      "incoming": [
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:SampleCall"
+        },
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:VariantCall"
+        },
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:VCFFile"
+        },
+        {
+          "relation": "subClassOf",
+          "predicate": "rdfs:subClassOf",
+          "source": "vcfr:VCFRecord"
+        }
+      ]
+    },
+    "rdf:Resource": {
+      "outgoing": [],
+      "incoming": [
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:fieldKey"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:fieldValue"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:fieldValueBoolean"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:fieldValueDecimal"
+        },
+        {
+          "relation": "domain",
+          "predicate": "rdfs:domain",
+          "source": "vcfr:fieldValueInteger"
+        }
+      ]
+    },
+    "so:0001059": {
+      "outgoing": [],
+      "incoming": [
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:asSequenceAlteration"
+        },
+        {
+          "relation": "annotation",
+          "predicate": "vcfr:recommendedSequenceAlterationClass",
+          "source": "vcfr:recommendedSequenceAlterationClass"
+        }
+      ]
+    },
+    "xsd:boolean": {
+      "outgoing": [],
+      "incoming": [
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:fieldValueBoolean"
+        }
+      ]
+    },
+    "xsd:date": {
+      "outgoing": [],
+      "incoming": [
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:fileDate"
+        }
+      ]
+    },
+    "xsd:decimal": {
+      "outgoing": [],
+      "incoming": [
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:fieldValueDecimal"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:qual"
+        }
+      ]
+    },
+    "xsd:integer": {
+      "outgoing": [],
+      "incoming": [
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:contigCount"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:contigLength"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:fieldValueInteger"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:pos"
+        }
+      ]
+    },
+    "xsd:string": {
+      "outgoing": [],
+      "incoming": [
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:alt"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:altId"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:chrom"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:contigAssembly"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:contigId"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:contigMd5"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:fieldDescription"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:fieldId"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:fieldKey"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:fieldNumber"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:fieldValue"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:fileFormat"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:filter"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:filterId"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:formatRaw"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:headerKey"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:headerValue"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:infoRaw"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:recordId"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:ref"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:referenceGenome"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:sampleId"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:sourceSoftware"
+        }
+      ]
+    }
+  }
+}

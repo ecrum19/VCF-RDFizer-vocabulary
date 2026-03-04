@@ -59,6 +59,11 @@ SHACL shapes are provided in `shacl/vcf-rdfizer-vocabulary.shacl.ttl`.
 - Landing page (GitHub Pages): [docs/index.html](docs/index.html)
 - Vocabulary reference (classes, properties, external alignments): [docs/ontology-reference.html](docs/ontology-reference.html)
 - Interactive relationship diagram: [docs/ontology-graph.html](docs/ontology-graph.html)
+- Serialized graph data: [docs/assets/ontology-graph-data.json](docs/assets/ontology-graph-data.json)
+- Serialized relationship overview: [docs/assets/ontology-relationships-overview.json](docs/assets/ontology-relationships-overview.json)
+- Static graph export (SVG): [docs/assets/ontology-graph-static.svg](docs/assets/ontology-graph-static.svg)
+
+Graph and export files are generated from `ontology/vcf-rdfizer-vocabulary.ttl` by `scripts/build-ontology-graph-data.mjs` and `scripts/export-ontology-graph-svg.mjs` (both invoked by `scripts/sync-docs-assets.sh`).
 
 ## Quick example
 

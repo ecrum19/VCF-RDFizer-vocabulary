@@ -22,3 +22,6 @@ for src in "${sources[@]}"; do
   fi
   cp -f "$src" "$assets_dir/$(basename "$src")"
 done
+
+node "$repo_root/scripts/build-ontology-graph-data.mjs" "$repo_root"
+node "$repo_root/scripts/export-ontology-graph-svg.mjs" "$repo_root"
