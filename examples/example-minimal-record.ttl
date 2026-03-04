@@ -3,50 +3,63 @@
 @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
 @prefix so:   <http://purl.obolibrary.org/obo/SO_> .
 
-<https://example.org/vcf/file1>
+<https://w3id.org/vcf-rdfizer/vcf/example-file1.vcf>
   a vcfr:VCFFile ;
   vcfr:fileFormat "VCFv4.2" ;
-  vcfr:hasRecord <https://example.org/vcf/file1#record/chr1-123456> .
+  vcfr:hasRecord <https://w3id.org/vcf-rdfizer/vcf/example-file1.vcf/record/var1> .
 
-<https://example.org/vcf/file1#record/chr1-123456>
+<https://w3id.org/vcf-rdfizer/vcf/example-file1.vcf/record/var1>
   a vcfr:VCFRecord ;
   vcfr:chrom "chr1" ;
   vcfr:pos 123456 ;
   vcfr:recordId "rs123" ;
   vcfr:ref "A" ;
   vcfr:alt "T" ;
-  vcfr:hasCall <https://example.org/vcf/file1#call/chr1-123456> ;
-  vcfr:asSequenceAlteration <https://example.org/gvar/sequenceAlteration/chr1-123456-A-T> .
+  vcfr:hasCall <https://w3id.org/vcf-rdfizer/vcf/example-file1.vcf/call/var1> .
 
-<https://example.org/vcf/file1#call/chr1-123456>
+<https://w3id.org/vcf-rdfizer/vcf/example-file1.vcf/call/var1>
   a vcfr:VariantCall ;
   vcfr:qual 52.3 ;
-  vcfr:filter "PASS" ;
-  vcfr:infoRaw "DP=42;AF=0.2" ;
+  vcfr:filter "."^^vcfr:Null ;
+  vcfr:infoRaw "."^^vcfr:Null ;
   vcfr:formatRaw "GT:DP:AD" ;
-  vcfr:hasSampleCall <https://example.org/vcf/file1#sample/SAMPLE1/chr1-123456> .
+  vcfr:hasSampleCall <https://w3id.org/vcf-rdfizer/vcf/example-file1.vcf/sample/var1/SAMPLE1>, <https://w3id.org/vcf-rdfizer/vcf/example-file1.vcf/sample/var1/SAMPLE2> .
 
-<https://example.org/vcf/file1#sample/SAMPLE1/chr1-123456>
+<https://w3id.org/vcf-rdfizer/vcf/example-file1.vcf/sample/var1/SAMPLE1>
   a vcfr:SampleCall ;
   vcfr:sampleId "SAMPLE1" ;
-  vcfr:hasFormatValue <https://example.org/vcf/file1#sample/SAMPLE1/chr1-123456/fmt/GT> ;
-  vcfr:hasFormatValue <https://example.org/vcf/file1#sample/SAMPLE1/chr1-123456/fmt/DP> ;
-  vcfr:hasFormatValue <https://example.org/vcf/file1#sample/SAMPLE1/chr1-123456/fmt/AD> .
+  vcfr:hasFormatValue <https://w3id.org/vcf-rdfizer/vcf/example-file1.vcf/sample/var1/SAMPLE1/fmt/GT> ;
+  vcfr:hasFormatValue <https://w3id.org/vcf-rdfizer/vcf/example-file1.vcf/sample/var1/SAMPLE1/fmt/DP> ;
+  vcfr:hasFormatValue <https://w3id.org/vcf-rdfizer/vcf/example-file1.vcf/sample/var1/SAMPLE1/fmt/AD> .
 
-<https://example.org/vcf/file1#sample/SAMPLE1/chr1-123456/fmt/GT>
+<https://w3id.org/vcf-rdfizer/vcf/example-file1.vcf/sample/var1/SAMPLE2>
+  a vcfr:SampleCall ;
+  vcfr:sampleId "SAMPLE2" ;
+  vcfr:hasFormatValue <https://w3id.org/vcf-rdfizer/vcf/example-file1.vcf/sample/var1/SAMPLE2/fmt/GT> ;
+  vcfr:hasFormatValue <https://w3id.org/vcf-rdfizer/vcf/example-file1.vcf/sample/var1/SAMPLE2/fmt/DP> ;
+  vcfr:hasFormatValue <https://w3id.org/vcf-rdfizer/vcf/example-file1.vcf/sample/var1/SAMPLE2/fmt/AD> .
+
+
+<https://w3id.org/vcf-rdfizer/vcf/example-file1.vcf/sample/var1/SAMPLE1/fmt/GT>
   a vcfr:FormatFieldValue ;
-  vcfr:fieldKey "GT" ;
   vcfr:fieldValue "0/1" .
 
-<https://example.org/vcf/file1#sample/SAMPLE1/chr1-123456/fmt/DP>
+<https://w3id.org/vcf-rdfizer/vcf/example-file1.vcf/sample/var1/SAMPLE1/fmt/DP>
   a vcfr:FormatFieldValue ;
-  vcfr:fieldKey "DP" ;
   vcfr:fieldValueInteger 42 .
 
-<https://example.org/vcf/file1#sample/SAMPLE1/chr1-123456/fmt/AD>
+<https://w3id.org/vcf-rdfizer/vcf/example-file1.vcf/sample/var1/SAMPLE1/fmt/AD>
   a vcfr:FormatFieldValue ;
-  vcfr:fieldKey "AD" ;
   vcfr:fieldValue "30,12" .
 
-# Placeholder: this node would be expressed using SB/gvar (SequenceAlteration is so:0001059) :contentReference[oaicite:5]{index=5}
-<https://example.org/gvar/sequenceAlteration/chr1-123456-A-T> a so:0001059 .
+<https://w3id.org/vcf-rdfizer/vcf/example-file1.vcf/sample/var1/SAMPLE2/fmt/GT>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "0/1" .
+
+<https://w3id.org/vcf-rdfizer/vcf/example-file1.vcf/sample/var1/SAMPLE2/fmt/DP>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValueInteger 42 .
+
+<https://w3id.org/vcf-rdfizer/vcf/example-file1.vcf/sample/var1/SAMPLE2/fmt/AD>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "30,12" .

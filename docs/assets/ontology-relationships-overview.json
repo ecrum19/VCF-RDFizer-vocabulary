@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-03-04T12:00:28.387Z",
+  "generatedAt": "2026-03-04T17:09:59.730Z",
   "source": "ontology/vcf-rdfizer-vocabulary.ttl",
   "namespace": "https://w3id.org/vcf-rdfizer/vocab#",
   "summary": {
-    "nodes": 81,
-    "edges": 110,
+    "nodes": 83,
+    "edges": 108,
     "countsByType": {
       "class": 29,
       "objectProperty": 11,
-      "datatypeProperty": 31,
-      "annotationProperty": 1,
-      "external": 9
+      "datatypeProperty": 30,
+      "annotationProperty": 3,
+      "external": 10
     },
     "relationCounts": {
       "subClassOf": 28,
-      "domain": 39,
-      "range": 42,
+      "domain": 38,
+      "range": 41,
       "annotation": 1
     }
   },
@@ -326,12 +326,6 @@
         "comment": ""
       },
       {
-        "qname": "vcfr:fieldKey",
-        "uri": "https://w3id.org/vcf-rdfizer/vocab#fieldKey",
-        "label": "field key",
-        "comment": ""
-      },
-      {
         "qname": "vcfr:fieldNumber",
         "uri": "https://w3id.org/vcf-rdfizer/vocab#fieldNumber",
         "label": "field Number",
@@ -341,7 +335,7 @@
         "qname": "vcfr:fieldValue",
         "uri": "https://w3id.org/vcf-rdfizer/vocab#fieldValue",
         "label": "field value",
-        "comment": "Literal string value; for typed values prefer vcfr:fieldValueInteger/Decimal/Boolean when possible."
+        "comment": "Literal string value; for typed values prefer vcfr:fieldValueInteger/Decimal/Boolean when possible. For source token '.', use literal '.'^^vcfr:Null."
       },
       {
         "qname": "vcfr:fieldValueBoolean",
@@ -377,7 +371,7 @@
         "qname": "vcfr:filter",
         "uri": "https://w3id.org/vcf-rdfizer/vocab#filter",
         "label": "FILTER",
-        "comment": "FILTER column value (e.g., PASS, ., or semicolon-separated list). Prefer splitting into multiple vcfr:filter values."
+        "comment": "FILTER column value (e.g., PASS or semicolon-separated list). For source token '.', use literal '.'^^vcfr:Null."
       },
       {
         "qname": "vcfr:filterId",
@@ -407,7 +401,7 @@
         "qname": "vcfr:infoRaw",
         "uri": "https://w3id.org/vcf-rdfizer/vocab#infoRaw",
         "label": "INFO raw",
-        "comment": "Raw INFO string as in VCF (optional). Use structured vcfr:InfoFieldValue for machine-use."
+        "comment": "Raw INFO string as in VCF (optional). Use structured vcfr:InfoFieldValue for machine-use. For source token '.', use literal '.'^^vcfr:Null."
       },
       {
         "qname": "vcfr:pos",
@@ -419,13 +413,13 @@
         "qname": "vcfr:qual",
         "uri": "https://w3id.org/vcf-rdfizer/vocab#qual",
         "label": "QUAL",
-        "comment": ""
+        "comment": "QUAL column value. For source token '.', use literal '.'^^vcfr:Null."
       },
       {
         "qname": "vcfr:recordId",
         "uri": "https://w3id.org/vcf-rdfizer/vocab#recordId",
         "label": "ID",
-        "comment": "VCF ID column (e.g., rsID). Use when present; otherwise omit."
+        "comment": "VCF ID column (e.g., rsID). For source token '.', use literal '.'^^vcfr:Null."
       },
       {
         "qname": "vcfr:ref",
@@ -454,6 +448,18 @@
     ],
     "annotationProperty": [
       {
+        "qname": "vcfr:iriTemplate",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#iriTemplate",
+        "label": "IRI template",
+        "comment": "Recommended IRI minting template (RFC6570-style placeholders) for resources in this model."
+      },
+      {
+        "qname": "vcfr:missingValuePolicy",
+        "uri": "https://w3id.org/vcf-rdfizer/vocab#missingValuePolicy",
+        "label": "missing value policy",
+        "comment": "Defines how VCF missing token '.' should be represented in RDF."
+      },
+      {
         "qname": "vcfr:recommendedSequenceAlterationClass",
         "uri": "https://w3id.org/vcf-rdfizer/vocab#recommendedSequenceAlterationClass",
         "label": "recommended sequence alteration class",
@@ -473,6 +479,10 @@
     {
       "qname": "rdf:Resource",
       "uri": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Resource"
+    },
+    {
+      "qname": "rdfs:Literal",
+      "uri": "http://www.w3.org/2000/01/rdf-schema#Literal"
     },
     {
       "qname": "so:0001059",
@@ -694,11 +704,6 @@
         "predicate": "rdfs:domain"
       },
       {
-        "source": "vcfr:fieldKey",
-        "target": "rdf:Resource",
-        "predicate": "rdfs:domain"
-      },
-      {
         "source": "vcfr:fieldNumber",
         "target": "vcfr:FieldDefinition",
         "predicate": "rdfs:domain"
@@ -906,11 +911,6 @@
         "predicate": "rdfs:range"
       },
       {
-        "source": "vcfr:fieldKey",
-        "target": "xsd:string",
-        "predicate": "rdfs:range"
-      },
-      {
         "source": "vcfr:fieldNumber",
         "target": "xsd:string",
         "predicate": "rdfs:range"
@@ -922,7 +922,7 @@
       },
       {
         "source": "vcfr:fieldValue",
-        "target": "xsd:string",
+        "target": "rdfs:Literal",
         "predicate": "rdfs:range"
       },
       {
@@ -952,7 +952,7 @@
       },
       {
         "source": "vcfr:filter",
-        "target": "xsd:string",
+        "target": "rdfs:Literal",
         "predicate": "rdfs:range"
       },
       {
@@ -1012,7 +1012,7 @@
       },
       {
         "source": "vcfr:infoRaw",
-        "target": "xsd:string",
+        "target": "rdfs:Literal",
         "predicate": "rdfs:range"
       },
       {
@@ -1022,12 +1022,12 @@
       },
       {
         "source": "vcfr:qual",
-        "target": "xsd:decimal",
+        "target": "rdfs:Literal",
         "predicate": "rdfs:range"
       },
       {
         "source": "vcfr:recordId",
-        "target": "xsd:string",
+        "target": "rdfs:Literal",
         "predicate": "rdfs:range"
       },
       {
@@ -1991,21 +1991,6 @@
       ],
       "incoming": []
     },
-    "vcfr:fieldKey": {
-      "outgoing": [
-        {
-          "relation": "domain",
-          "predicate": "rdfs:domain",
-          "target": "rdf:Resource"
-        },
-        {
-          "relation": "range",
-          "predicate": "rdfs:range",
-          "target": "xsd:string"
-        }
-      ],
-      "incoming": []
-    },
     "vcfr:fieldNumber": {
       "outgoing": [
         {
@@ -2031,7 +2016,7 @@
         {
           "relation": "range",
           "predicate": "rdfs:range",
-          "target": "xsd:string"
+          "target": "rdfs:Literal"
         }
       ],
       "incoming": []
@@ -2121,7 +2106,7 @@
         {
           "relation": "range",
           "predicate": "rdfs:range",
-          "target": "xsd:string"
+          "target": "rdfs:Literal"
         }
       ],
       "incoming": []
@@ -2196,7 +2181,7 @@
         {
           "relation": "range",
           "predicate": "rdfs:range",
-          "target": "xsd:string"
+          "target": "rdfs:Literal"
         }
       ],
       "incoming": []
@@ -2226,7 +2211,7 @@
         {
           "relation": "range",
           "predicate": "rdfs:range",
-          "target": "xsd:decimal"
+          "target": "rdfs:Literal"
         }
       ],
       "incoming": []
@@ -2241,7 +2226,7 @@
         {
           "relation": "range",
           "predicate": "rdfs:range",
-          "target": "xsd:string"
+          "target": "rdfs:Literal"
         }
       ],
       "incoming": []
@@ -2306,6 +2291,14 @@
       ],
       "incoming": []
     },
+    "vcfr:iriTemplate": {
+      "outgoing": [],
+      "incoming": []
+    },
+    "vcfr:missingValuePolicy": {
+      "outgoing": [],
+      "incoming": []
+    },
     "vcfr:recommendedSequenceAlterationClass": {
       "outgoing": [
         {
@@ -2357,11 +2350,6 @@
         {
           "relation": "domain",
           "predicate": "rdfs:domain",
-          "source": "vcfr:fieldKey"
-        },
-        {
-          "relation": "domain",
-          "predicate": "rdfs:domain",
           "source": "vcfr:fieldValue"
         },
         {
@@ -2378,6 +2366,36 @@
           "relation": "domain",
           "predicate": "rdfs:domain",
           "source": "vcfr:fieldValueInteger"
+        }
+      ]
+    },
+    "rdfs:Literal": {
+      "outgoing": [],
+      "incoming": [
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:fieldValue"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:filter"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:infoRaw"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:qual"
+        },
+        {
+          "relation": "range",
+          "predicate": "rdfs:range",
+          "source": "vcfr:recordId"
         }
       ]
     },
@@ -2423,11 +2441,6 @@
           "relation": "range",
           "predicate": "rdfs:range",
           "source": "vcfr:fieldValueDecimal"
-        },
-        {
-          "relation": "range",
-          "predicate": "rdfs:range",
-          "source": "vcfr:qual"
         }
       ]
     },
@@ -2502,27 +2515,12 @@
         {
           "relation": "range",
           "predicate": "rdfs:range",
-          "source": "vcfr:fieldKey"
-        },
-        {
-          "relation": "range",
-          "predicate": "rdfs:range",
           "source": "vcfr:fieldNumber"
         },
         {
           "relation": "range",
           "predicate": "rdfs:range",
-          "source": "vcfr:fieldValue"
-        },
-        {
-          "relation": "range",
-          "predicate": "rdfs:range",
           "source": "vcfr:fileFormat"
-        },
-        {
-          "relation": "range",
-          "predicate": "rdfs:range",
-          "source": "vcfr:filter"
         },
         {
           "relation": "range",
@@ -2543,16 +2541,6 @@
           "relation": "range",
           "predicate": "rdfs:range",
           "source": "vcfr:headerValue"
-        },
-        {
-          "relation": "range",
-          "predicate": "rdfs:range",
-          "source": "vcfr:infoRaw"
-        },
-        {
-          "relation": "range",
-          "predicate": "rdfs:range",
-          "source": "vcfr:recordId"
         },
         {
           "relation": "range",

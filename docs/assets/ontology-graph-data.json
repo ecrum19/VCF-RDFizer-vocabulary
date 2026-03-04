@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-03-04T12:00:28.387Z",
+  "generatedAt": "2026-03-04T17:09:59.730Z",
   "source": "ontology/vcf-rdfizer-vocabulary.ttl",
   "namespace": "https://w3id.org/vcf-rdfizer/vocab#",
   "summary": {
-    "nodes": 81,
-    "edges": 110,
+    "nodes": 83,
+    "edges": 108,
     "countsByType": {
       "class": 29,
       "objectProperty": 11,
-      "datatypeProperty": 31,
-      "annotationProperty": 1,
-      "external": 9
+      "datatypeProperty": 30,
+      "annotationProperty": 3,
+      "external": 10
     },
     "relationCounts": {
       "subClassOf": 28,
-      "domain": 39,
-      "range": 42,
+      "domain": 38,
+      "range": 41,
       "annotation": 1
     }
   },
@@ -29,8 +29,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 3,
-      "x": -27.7712,
-      "y": -3.57569
+      "x": -49.84217,
+      "y": 2.75286
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#ALTHeaderLine",
@@ -41,8 +41,8 @@
       "comment": "Represents ##ALT=<ID=...,Description=...> used for symbolic alternate alleles.",
       "isExternal": false,
       "degree": 2,
-      "x": -31.61391,
-      "y": 11.34499
+      "x": -52.69419,
+      "y": 16.64743
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#CharacterType",
@@ -53,8 +53,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 1,
-      "x": -96.38622,
-      "y": 10.37546
+      "x": -97.09548,
+      "y": 8.4005
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#ContigHeaderLine",
@@ -65,8 +65,8 @@
       "comment": "Represents ##contig=<ID=...,length=...,assembly=...,...> entries.",
       "isExternal": false,
       "degree": 6,
-      "x": 6.02179,
-      "y": 22.87043
+      "x": -16.74966,
+      "y": 27.19454
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#FieldDefinition",
@@ -77,8 +77,8 @@
       "comment": "Common superclass for INFO/FORMAT/FILTER/ALT header definitions.",
       "isExternal": false,
       "degree": 10,
-      "x": -34.23782,
-      "y": 3.42101
+      "x": -54.57762,
+      "y": 9.16929
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#FileDateHeaderLine",
@@ -89,8 +89,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 1,
-      "x": -31.03453,
-      "y": 39.38137
+      "x": -51.71053,
+      "y": 41.71333
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#FileFormatHeaderLine",
@@ -101,8 +101,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 1,
-      "x": -26.43501,
-      "y": 40.96217
+      "x": -47.73142,
+      "y": 43.61116
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#FilterDefinition",
@@ -113,8 +113,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 3,
-      "x": -24.42835,
-      "y": 7.6962
+      "x": -47.10851,
+      "y": 13.47562
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#FILTERHeaderLine",
@@ -125,8 +125,8 @@
       "comment": "Represents ##FILTER=<ID=...,Description=...>.",
       "isExternal": false,
       "degree": 2,
-      "x": -30.30299,
-      "y": 20.23881
+      "x": -51.6507,
+      "y": 24.75331
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#FlagType",
@@ -137,8 +137,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 1,
-      "x": -99.03068,
-      "y": -11.57194
+      "x": -99.66113,
+      "y": -14.08371
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#FloatType",
@@ -149,8 +149,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 1,
-      "x": -100,
-      "y": -0.92868
+      "x": -99.84537,
+      "y": -4.33155
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#FormatFieldDefinition",
@@ -161,8 +161,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": -45.62468,
-      "y": 17.02408
+      "x": -64.90246,
+      "y": 21.49025
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#FormatFieldValue",
@@ -173,8 +173,8 @@
       "comment": "A structured key/value for one FORMAT attribute within a sample call.",
       "isExternal": false,
       "degree": 1,
-      "x": 0.26987,
-      "y": -79.97399
+      "x": -6.63289,
+      "y": -68.65887
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#FORMATHeaderLine",
@@ -185,8 +185,8 @@
       "comment": "Represents ##FORMAT=<ID=...,Number=...,Type=...,Description=...>.",
       "isExternal": false,
       "degree": 2,
-      "x": -39.60948,
-      "y": 28.08797
+      "x": -59.6514,
+      "y": 31.71045
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#HeaderLine",
@@ -197,8 +197,8 @@
       "comment": "A structured representation of one VCF header line (e.g., ##fileformat, ##INFO=<...>).",
       "isExternal": false,
       "degree": 13,
-      "x": -22.41585,
-      "y": 23.38113
+      "x": -44.11426,
+      "y": 27.65741
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#InfoFieldDefinition",
@@ -209,8 +209,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": -47.12945,
-      "y": 11.78747
+      "x": -66.03681,
+      "y": 16.6158
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#InfoFieldValue",
@@ -221,8 +221,8 @@
       "comment": "A structured key/value for one INFO attribute within a record/call.",
       "isExternal": false,
       "degree": 1,
-      "x": 3.88016,
-      "y": -69.39184
+      "x": 4.54841,
+      "y": -52.77314
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#INFOHeaderLine",
@@ -233,8 +233,8 @@
       "comment": "Represents ##INFO=<ID=...,Number=...,Type=...,Description=...>.",
       "isExternal": false,
       "degree": 2,
-      "x": -40.31716,
-      "y": 22.60251
+      "x": -60.23375,
+      "y": 26.75048
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#IntegerType",
@@ -245,8 +245,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 1,
-      "x": -99.29769,
-      "y": -6.68441
+      "x": -100,
+      "y": -9.77014
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#ReferenceHeaderLine",
@@ -257,8 +257,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 1,
-      "x": -34.68044,
-      "y": 36.05199
+      "x": -55.3328,
+      "y": 39.12364
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#SampleCall",
@@ -269,8 +269,8 @@
       "comment": "Per-sample values for a variant call (e.g., GT, DP, AD), as declared by FORMAT header lines.",
       "isExternal": false,
       "degree": 4,
-      "x": 19.8812,
-      "y": -48.83773
+      "x": 0.31862,
+      "y": -35.63953
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#SourceHeaderLine",
@@ -281,8 +281,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 1,
-      "x": -21.39864,
-      "y": 39.83415
+      "x": -43.17242,
+      "y": 42.26345
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#StringType",
@@ -293,8 +293,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 1,
-      "x": -97.66344,
-      "y": 5.1606
+      "x": -97.83968,
+      "y": 3.92534
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#VariantCall",
@@ -305,8 +305,8 @@
       "comment": "Call-level representation for a record: QUAL/FILTER/INFO, plus FORMAT and per-sample fields.",
       "isExternal": false,
       "degree": 8,
-      "x": 27.65419,
-      "y": -43.69187
+      "x": 20.558,
+      "y": -32.16987
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#VCFFile",
@@ -317,8 +317,8 @@
       "comment": "A VCF file artifact (as a dataset distribution) that contains a header and a set of VCF records.",
       "isExternal": false,
       "degree": 9,
-      "x": 41.23128,
-      "y": -0.93199
+      "x": 10.26671,
+      "y": 4.70154
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#VCFHeader",
@@ -329,8 +329,8 @@
       "comment": "Container for the structured header lines of a VCF file.",
       "isExternal": false,
       "degree": 2,
-      "x": 2.70005,
-      "y": 9.65954
+      "x": -20.19164,
+      "y": 13.35284
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#VCFNumberArity",
@@ -341,8 +341,8 @@
       "comment": "Represents INFO/FORMAT Number values (e.g., 0, 1, A, R, G, .).",
       "isExternal": false,
       "degree": 0,
-      "x": -81.88234,
-      "y": -53.43045
+      "x": -80.59271,
+      "y": -50.20785
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#VCFRecord",
@@ -353,8 +353,8 @@
       "comment": "A row in a VCF (CHROM, POS, ID, REF, ALT, QUAL, FILTER, INFO, FORMAT, samples...). This is a VCF-centric view; link to a sequence alteration representation via vcfr:asSequenceAlteration.",
       "isExternal": false,
       "degree": 8,
-      "x": 35.37151,
-      "y": -19.73574
+      "x": 13.90347,
+      "y": -11.37895
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#VCFValueType",
@@ -365,8 +365,8 @@
       "comment": "Enumerates VCF Type values used in INFO/FORMAT definitions: Integer, Float, Flag, Character, String.",
       "isExternal": false,
       "degree": 6,
-      "x": -89.44541,
-      "y": -0.63398
+      "x": -94.26908,
+      "y": -2.37907
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#asSequenceAlteration",
@@ -377,8 +377,8 @@
       "comment": "Links a VCF record/call to a sequence alteration representation (e.g., SB/gvar SequenceAlteration: so:0001059).",
       "isExternal": false,
       "degree": 1,
-      "x": 57.34668,
-      "y": 77.30109
+      "x": 47.37246,
+      "y": 69.21646
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#chromosome",
@@ -389,8 +389,8 @@
       "comment": "Reference sequence for CHROM, preferably resolvable (e.g., INSDC/RefSeq/Ensembl). Can align to FALDO reference.",
       "isExternal": false,
       "degree": 1,
-      "x": 8.2065,
-      "y": 39.6593
+      "x": -14.79048,
+      "y": 42.00769
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#declaredBy",
@@ -401,8 +401,8 @@
       "comment": "Links an INFO/FORMAT/FILTER/ALT value/usage to its header definition line.",
       "isExternal": false,
       "degree": 1,
-      "x": -49.07139,
-      "y": -2.40427
+      "x": -66.19715,
+      "y": 1.65978
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#fieldType",
@@ -413,8 +413,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": -63.9118,
-      "y": 1.10138
+      "x": -76.65804,
+      "y": 3.07638
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#hasCall",
@@ -425,8 +425,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": 38.51955,
-      "y": -37.33893
+      "x": 20.98235,
+      "y": -23.51024
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#hasFormatValue",
@@ -437,8 +437,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": 10.45296,
-      "y": -68.0213
+      "x": -4.05421,
+      "y": -54.92125
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#hasHeader",
@@ -449,8 +449,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": 24.0401,
-      "y": 9.64078
+      "x": -3.03774,
+      "y": 13.45928
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#hasHeaderLine",
@@ -461,8 +461,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": -11.66709,
-      "y": 19.43936
+      "x": -33.60825,
+      "y": 21.69565
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#hasInfoValue",
@@ -473,8 +473,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": 17.65649,
-      "y": -62.01371
+      "x": 14.77736,
+      "y": -47.05822
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#hasRecord",
@@ -485,8 +485,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": 47.81686,
-      "y": -10.00731
+      "x": 18.44649,
+      "y": -3.15814
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#hasSampleCall",
@@ -497,8 +497,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": 27.72494,
-      "y": -57.39718
+      "x": 11.54261,
+      "y": -40.53744
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#alt",
@@ -509,8 +509,8 @@
       "comment": "ALT allele string; for multiple ALT alleles you may repeat this property or use rdf:List externally.",
       "isExternal": false,
       "degree": 2,
-      "x": 24.34722,
-      "y": -19.1306
+      "x": -3.70508,
+      "y": -10.65471
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#altId",
@@ -521,8 +521,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": -10.27883,
-      "y": -12.21378
+      "x": -35.17674,
+      "y": -4.56566
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#chrom",
@@ -533,8 +533,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": 21.13516,
-      "y": -15.39165
+      "x": -0.66679,
+      "y": -5.78365
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#contigAssembly",
@@ -545,8 +545,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": 12.54602,
-      "y": 10.9703
+      "x": -14.65431,
+      "y": 17.62754
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#contigCount",
@@ -557,8 +557,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": 54.59073,
-      "y": 8.86191
+      "x": 24.77402,
+      "y": 10.56436
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#contigId",
@@ -569,8 +569,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": 10.33821,
-      "y": 7.5992
+      "x": -14.55021,
+      "y": 14.22714
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#contigLength",
@@ -581,8 +581,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": 29.93575,
-      "y": 22.46935
+      "x": 8.96552,
+      "y": 24.3075
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#contigMd5",
@@ -593,8 +593,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": 7.54631,
-      "y": 9.76028
+      "x": -18.75806,
+      "y": 16.48556
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#fieldDescription",
@@ -605,8 +605,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": -15.32485,
-      "y": -8.27726
+      "x": -39.42665,
+      "y": -0.66714
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#fieldId",
@@ -617,20 +617,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": -13.65548,
-      "y": -2.38754
-    },
-    {
-      "id": "https://w3id.org/vcf-rdfizer/vocab#fieldKey",
-      "uri": "https://w3id.org/vcf-rdfizer/vocab#fieldKey",
-      "qname": "vcfr:fieldKey",
-      "label": "field key",
-      "termType": "datatypeProperty",
-      "comment": "",
-      "isExternal": false,
-      "degree": 2,
-      "x": 37.5914,
-      "y": -11.72388
+      "x": -38.23095,
+      "y": 4.94165
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#fieldNumber",
@@ -641,8 +629,8 @@
       "comment": "The VCF Number value as string (e.g., 0, 1, A, R, G, .).",
       "isExternal": false,
       "degree": 2,
-      "x": -13.69317,
-      "y": -5.5655
+      "x": -37.82779,
+      "y": 1.85544
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#fieldValue",
@@ -650,11 +638,11 @@
       "qname": "vcfr:fieldValue",
       "label": "field value",
       "termType": "datatypeProperty",
-      "comment": "Literal string value; for typed values prefer vcfr:fieldValueInteger/Decimal/Boolean when possible.",
+      "comment": "Literal string value; for typed values prefer vcfr:fieldValueInteger/Decimal/Boolean when possible. For source token '.', use literal '.'^^vcfr:Null.",
       "isExternal": false,
       "degree": 2,
-      "x": 37.56996,
-      "y": -15.07004
+      "x": 62.40135,
+      "y": -14.03482
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#fieldValueBoolean",
@@ -665,8 +653,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": 83.67948,
-      "y": -15.1136
+      "x": 84.65451,
+      "y": 12.81072
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#fieldValueDecimal",
@@ -677,8 +665,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": 69.14974,
-      "y": -35.00607
+      "x": 87.08741,
+      "y": -0.73911
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#fieldValueInteger",
@@ -689,8 +677,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": 64.17336,
-      "y": -1.19075
+      "x": 54.51608,
+      "y": 9.80243
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#fileDate",
@@ -701,8 +689,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": 59.15527,
-      "y": 16.28584
+      "x": 21.70561,
+      "y": 21.77234
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#fileFormat",
@@ -713,8 +701,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": 25.36501,
-      "y": -2.59152
+      "x": -2.72378,
+      "y": 0.71425
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#filter",
@@ -722,11 +710,11 @@
       "qname": "vcfr:filter",
       "label": "FILTER",
       "termType": "datatypeProperty",
-      "comment": "FILTER column value (e.g., PASS, ., or semicolon-separated list). Prefer splitting into multiple vcfr:filter values.",
+      "comment": "FILTER column value (e.g., PASS or semicolon-separated list). For source token '.', use literal '.'^^vcfr:Null.",
       "isExternal": false,
       "degree": 2,
-      "x": 19.88519,
-      "y": -28.88915
+      "x": 35.45492,
+      "y": -31.89217
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#filterId",
@@ -737,8 +725,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": -7.33402,
-      "y": -0.60985
+      "x": -33.07805,
+      "y": 6.06057
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#formatRaw",
@@ -749,8 +737,8 @@
       "comment": "Raw FORMAT string as in VCF (optional). Use structured vcfr:FormatFieldValue in SampleCall.",
       "isExternal": false,
       "degree": 2,
-      "x": 17.13534,
-      "y": -31.50998
+      "x": 0.42844,
+      "y": -18.31086
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#headerKey",
@@ -761,8 +749,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": -5.5122,
-      "y": 10.16995
+      "x": -30.45652,
+      "y": 16.49322
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#headerValue",
@@ -773,8 +761,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": -7.81932,
-      "y": 7.31768
+      "x": -32.94261,
+      "y": 14.09257
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#infoRaw",
@@ -782,11 +770,11 @@
       "qname": "vcfr:infoRaw",
       "label": "INFO raw",
       "termType": "datatypeProperty",
-      "comment": "Raw INFO string as in VCF (optional). Use structured vcfr:InfoFieldValue for machine-use.",
+      "comment": "Raw INFO string as in VCF (optional). Use structured vcfr:InfoFieldValue for machine-use. For source token '.', use literal '.'^^vcfr:Null.",
       "isExternal": false,
       "degree": 2,
-      "x": 14.5172,
-      "y": -29.58814
+      "x": 37.89963,
+      "y": -34.81925
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#pos",
@@ -797,8 +785,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": 49.09891,
-      "y": -5.01342
+      "x": 27.72804,
+      "y": 0.24539
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#qual",
@@ -806,11 +794,11 @@
       "qname": "vcfr:qual",
       "label": "QUAL",
       "termType": "datatypeProperty",
-      "comment": "",
+      "comment": "QUAL column value. For source token '.', use literal '.'^^vcfr:Null.",
       "isExternal": false,
       "degree": 2,
-      "x": 47.92264,
-      "y": -52.56449
+      "x": 35.55007,
+      "y": -37.12475
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#recordId",
@@ -818,11 +806,11 @@
       "qname": "vcfr:recordId",
       "label": "ID",
       "termType": "datatypeProperty",
-      "comment": "VCF ID column (e.g., rsID). Use when present; otherwise omit.",
+      "comment": "VCF ID column (e.g., rsID). For source token '.', use literal '.'^^vcfr:Null.",
       "isExternal": false,
       "degree": 2,
-      "x": 24.98869,
-      "y": -13.38646
+      "x": 32.12467,
+      "y": -19.16032
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#ref",
@@ -833,8 +821,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": 20.14222,
-      "y": -20.13245
+      "x": -3.14092,
+      "y": -7.68931
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#referenceGenome",
@@ -845,8 +833,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": 27.26462,
-      "y": 0.62355
+      "x": -2.73122,
+      "y": 6.0337
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#sampleId",
@@ -857,8 +845,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": 9.98135,
-      "y": -32.80799
+      "x": -11.55962,
+      "y": -20.47041
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#sourceSoftware",
@@ -869,8 +857,32 @@
       "comment": "",
       "isExternal": false,
       "degree": 2,
-      "x": 28.26947,
-      "y": -5.26107
+      "x": -4.84256,
+      "y": 3.27216
+    },
+    {
+      "id": "https://w3id.org/vcf-rdfizer/vocab#iriTemplate",
+      "uri": "https://w3id.org/vcf-rdfizer/vocab#iriTemplate",
+      "qname": "vcfr:iriTemplate",
+      "label": "IRI template",
+      "termType": "annotationProperty",
+      "comment": "Recommended IRI minting template (RFC6570-style placeholders) for resources in this model.",
+      "isExternal": false,
+      "degree": 0,
+      "x": 83.22904,
+      "y": -57.92782
+    },
+    {
+      "id": "https://w3id.org/vcf-rdfizer/vocab#missingValuePolicy",
+      "uri": "https://w3id.org/vcf-rdfizer/vocab#missingValuePolicy",
+      "qname": "vcfr:missingValuePolicy",
+      "label": "missing value policy",
+      "termType": "annotationProperty",
+      "comment": "Defines how VCF missing token '.' should be represented in RDF.",
+      "isExternal": false,
+      "degree": 0,
+      "x": 64.25533,
+      "y": -75.83539
     },
     {
       "id": "https://w3id.org/vcf-rdfizer/vocab#recommendedSequenceAlterationClass",
@@ -881,8 +893,8 @@
       "comment": "",
       "isExternal": false,
       "degree": 1,
-      "x": 74.61364,
-      "y": 77.89552
+      "x": 62.25468,
+      "y": 75.83539
     },
     {
       "id": "http://www.w3.org/ns/dcat#Distribution",
@@ -893,8 +905,8 @@
       "comment": "Referenced external term",
       "isExternal": true,
       "degree": 1,
-      "x": 57.87022,
-      "y": 2.87851
+      "x": 18.86103,
+      "y": 12.98626
     },
     {
       "id": "http://www.w3.org/ns/prov#Entity",
@@ -905,8 +917,8 @@
       "comment": "Referenced external term",
       "isExternal": true,
       "degree": 4,
-      "x": 33.38891,
-      "y": -29.13653
+      "x": 11.19448,
+      "y": -19.37284
     },
     {
       "id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Resource",
@@ -916,9 +928,21 @@
       "termType": "external",
       "comment": "Referenced external term",
       "isExternal": true,
+      "degree": 4,
+      "x": 72.59036,
+      "y": 1.932
+    },
+    {
+      "id": "http://www.w3.org/2000/01/rdf-schema#Literal",
+      "uri": "http://www.w3.org/2000/01/rdf-schema#Literal",
+      "qname": "rdfs:Literal",
+      "label": "Literal",
+      "termType": "external",
+      "comment": "Referenced external term",
+      "isExternal": true,
       "degree": 5,
-      "x": 60.49197,
-      "y": -16.79803
+      "x": 45.50629,
+      "y": -26.52358
     },
     {
       "id": "http://purl.obolibrary.org/obo/SO_0001059",
@@ -929,8 +953,8 @@
       "comment": "Referenced external term",
       "isExternal": true,
       "degree": 2,
-      "x": 66.37589,
-      "y": 79.97399
+      "x": 54.9025,
+      "y": 73.4897
     },
     {
       "id": "http://www.w3.org/2001/XMLSchema#boolean",
@@ -941,8 +965,8 @@
       "comment": "Referenced external term",
       "isExternal": true,
       "degree": 1,
-      "x": 100,
-      "y": -10.90565
+      "x": 96.78018,
+      "y": 17.13043
     },
     {
       "id": "http://www.w3.org/2001/XMLSchema#date",
@@ -953,8 +977,8 @@
       "comment": "Referenced external term",
       "isExternal": true,
       "degree": 1,
-      "x": 70.46705,
-      "y": 29.13943
+      "x": 29.03368,
+      "y": 34.59009
     },
     {
       "id": "http://www.w3.org/2001/XMLSchema#decimal",
@@ -964,9 +988,9 @@
       "termType": "external",
       "comment": "Referenced external term",
       "isExternal": true,
-      "degree": 2,
-      "x": 64.58389,
-      "y": -50.01752
+      "degree": 1,
+      "x": 100,
+      "y": -2.01054
     },
     {
       "id": "http://www.w3.org/2001/XMLSchema#integer",
@@ -977,8 +1001,8 @@
       "comment": "Referenced external term",
       "isExternal": true,
       "degree": 4,
-      "x": 49.42694,
-      "y": 10.60447
+      "x": 32.129,
+      "y": 14.37012
     },
     {
       "id": "http://www.w3.org/2001/XMLSchema#string",
@@ -988,9 +1012,9 @@
       "termType": "external",
       "comment": "Referenced external term",
       "isExternal": true,
-      "degree": 23,
-      "x": 10.4182,
-      "y": -9.11986
+      "degree": 18,
+      "x": -18.36844,
+      "y": 0.61889
     }
   ],
   "edges": [
@@ -1413,17 +1437,6 @@
       "label": "domain"
     },
     {
-      "id": "rel-098",
-      "source": "https://w3id.org/vcf-rdfizer/vocab#fieldKey",
-      "target": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Resource",
-      "sourceQname": "vcfr:fieldKey",
-      "targetQname": "rdf:Resource",
-      "relation": "domain",
-      "predicateUri": "http://www.w3.org/2000/01/rdf-schema#domain",
-      "predicateQname": "rdfs:domain",
-      "label": "domain"
-    },
-    {
       "id": "rel-070",
       "source": "https://w3id.org/vcf-rdfizer/vocab#fieldNumber",
       "target": "https://w3id.org/vcf-rdfizer/vocab#FieldDefinition",
@@ -1446,7 +1459,7 @@
       "label": "domain"
     },
     {
-      "id": "rel-100",
+      "id": "rel-098",
       "source": "https://w3id.org/vcf-rdfizer/vocab#fieldValue",
       "target": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Resource",
       "sourceQname": "vcfr:fieldValue",
@@ -1457,7 +1470,7 @@
       "label": "domain"
     },
     {
-      "id": "rel-106",
+      "id": "rel-104",
       "source": "https://w3id.org/vcf-rdfizer/vocab#fieldValueBoolean",
       "target": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Resource",
       "sourceQname": "vcfr:fieldValueBoolean",
@@ -1468,7 +1481,7 @@
       "label": "domain"
     },
     {
-      "id": "rel-104",
+      "id": "rel-102",
       "source": "https://w3id.org/vcf-rdfizer/vocab#fieldValueDecimal",
       "target": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Resource",
       "sourceQname": "vcfr:fieldValueDecimal",
@@ -1479,7 +1492,7 @@
       "label": "domain"
     },
     {
-      "id": "rel-102",
+      "id": "rel-100",
       "source": "https://w3id.org/vcf-rdfizer/vocab#fieldValueInteger",
       "target": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Resource",
       "sourceQname": "vcfr:fieldValueInteger",
@@ -1710,7 +1723,7 @@
       "label": "domain"
     },
     {
-      "id": "rel-108",
+      "id": "rel-106",
       "source": "https://w3id.org/vcf-rdfizer/vocab#sampleId",
       "target": "https://w3id.org/vcf-rdfizer/vocab#SampleCall",
       "sourceQname": "vcfr:sampleId",
@@ -1875,17 +1888,6 @@
       "label": "range"
     },
     {
-      "id": "rel-099",
-      "source": "https://w3id.org/vcf-rdfizer/vocab#fieldKey",
-      "target": "http://www.w3.org/2001/XMLSchema#string",
-      "sourceQname": "vcfr:fieldKey",
-      "targetQname": "xsd:string",
-      "relation": "range",
-      "predicateUri": "http://www.w3.org/2000/01/rdf-schema#range",
-      "predicateQname": "rdfs:range",
-      "label": "range"
-    },
-    {
       "id": "rel-071",
       "source": "https://w3id.org/vcf-rdfizer/vocab#fieldNumber",
       "target": "http://www.w3.org/2001/XMLSchema#string",
@@ -1908,18 +1910,18 @@
       "label": "range"
     },
     {
-      "id": "rel-101",
+      "id": "rel-099",
       "source": "https://w3id.org/vcf-rdfizer/vocab#fieldValue",
-      "target": "http://www.w3.org/2001/XMLSchema#string",
+      "target": "http://www.w3.org/2000/01/rdf-schema#Literal",
       "sourceQname": "vcfr:fieldValue",
-      "targetQname": "xsd:string",
+      "targetQname": "rdfs:Literal",
       "relation": "range",
       "predicateUri": "http://www.w3.org/2000/01/rdf-schema#range",
       "predicateQname": "rdfs:range",
       "label": "range"
     },
     {
-      "id": "rel-107",
+      "id": "rel-105",
       "source": "https://w3id.org/vcf-rdfizer/vocab#fieldValueBoolean",
       "target": "http://www.w3.org/2001/XMLSchema#boolean",
       "sourceQname": "vcfr:fieldValueBoolean",
@@ -1930,7 +1932,7 @@
       "label": "range"
     },
     {
-      "id": "rel-105",
+      "id": "rel-103",
       "source": "https://w3id.org/vcf-rdfizer/vocab#fieldValueDecimal",
       "target": "http://www.w3.org/2001/XMLSchema#decimal",
       "sourceQname": "vcfr:fieldValueDecimal",
@@ -1941,7 +1943,7 @@
       "label": "range"
     },
     {
-      "id": "rel-103",
+      "id": "rel-101",
       "source": "https://w3id.org/vcf-rdfizer/vocab#fieldValueInteger",
       "target": "http://www.w3.org/2001/XMLSchema#integer",
       "sourceQname": "vcfr:fieldValueInteger",
@@ -1976,9 +1978,9 @@
     {
       "id": "rel-093",
       "source": "https://w3id.org/vcf-rdfizer/vocab#filter",
-      "target": "http://www.w3.org/2001/XMLSchema#string",
+      "target": "http://www.w3.org/2000/01/rdf-schema#Literal",
       "sourceQname": "vcfr:filter",
-      "targetQname": "xsd:string",
+      "targetQname": "rdfs:Literal",
       "relation": "range",
       "predicateUri": "http://www.w3.org/2000/01/rdf-schema#range",
       "predicateQname": "rdfs:range",
@@ -2108,9 +2110,9 @@
     {
       "id": "rel-095",
       "source": "https://w3id.org/vcf-rdfizer/vocab#infoRaw",
-      "target": "http://www.w3.org/2001/XMLSchema#string",
+      "target": "http://www.w3.org/2000/01/rdf-schema#Literal",
       "sourceQname": "vcfr:infoRaw",
-      "targetQname": "xsd:string",
+      "targetQname": "rdfs:Literal",
       "relation": "range",
       "predicateUri": "http://www.w3.org/2000/01/rdf-schema#range",
       "predicateQname": "rdfs:range",
@@ -2130,9 +2132,9 @@
     {
       "id": "rel-091",
       "source": "https://w3id.org/vcf-rdfizer/vocab#qual",
-      "target": "http://www.w3.org/2001/XMLSchema#decimal",
+      "target": "http://www.w3.org/2000/01/rdf-schema#Literal",
       "sourceQname": "vcfr:qual",
-      "targetQname": "xsd:decimal",
+      "targetQname": "rdfs:Literal",
       "relation": "range",
       "predicateUri": "http://www.w3.org/2000/01/rdf-schema#range",
       "predicateQname": "rdfs:range",
@@ -2141,9 +2143,9 @@
     {
       "id": "rel-085",
       "source": "https://w3id.org/vcf-rdfizer/vocab#recordId",
-      "target": "http://www.w3.org/2001/XMLSchema#string",
+      "target": "http://www.w3.org/2000/01/rdf-schema#Literal",
       "sourceQname": "vcfr:recordId",
-      "targetQname": "xsd:string",
+      "targetQname": "rdfs:Literal",
       "relation": "range",
       "predicateUri": "http://www.w3.org/2000/01/rdf-schema#range",
       "predicateQname": "rdfs:range",
@@ -2172,7 +2174,7 @@
       "label": "range"
     },
     {
-      "id": "rel-109",
+      "id": "rel-107",
       "source": "https://w3id.org/vcf-rdfizer/vocab#sampleId",
       "target": "http://www.w3.org/2001/XMLSchema#string",
       "sourceQname": "vcfr:sampleId",
@@ -2194,7 +2196,7 @@
       "label": "range"
     },
     {
-      "id": "rel-110",
+      "id": "rel-108",
       "source": "https://w3id.org/vcf-rdfizer/vocab#recommendedSequenceAlterationClass",
       "target": "http://purl.obolibrary.org/obo/SO_0001059",
       "sourceQname": "vcfr:recommendedSequenceAlterationClass",

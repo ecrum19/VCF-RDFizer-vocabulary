@@ -18,6 +18,25 @@ Target persistent namespace:
 
 (You can use it immediately; later you can register it via w3id.org and configure redirects.)
 
+## Canonical IRI Pattern
+
+Recommended base for VCF instance resources:
+
+- `https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}`
+
+Recommended templates (also formalized in ontology via `vcfr:iriTemplate`):
+
+```text
+VCFFile          https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}
+VCFHeader        https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}/header
+HeaderLine       https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}/header/line/{lineId}
+VCFRecord        https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}/record/{recordId}
+VariantCall      https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}/call/{recordId}
+SampleCall       https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}/sample/{recordId}/{sampleId}
+InfoFieldValue   https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}/call/{recordId}/info/{fieldKey}
+FormatFieldValue https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}/sample/{recordId}/{sampleId}/fmt/{fieldKey}
+```
+
 ## Key concepts
 
 ### VCF file and headers
@@ -46,6 +65,11 @@ Target persistent namespace:
 This vocabulary:
 - can link a `vcfr:VCFRecord` / `vcfr:VariantCall` to SB/gvar’s `so:0001059` (SequenceAlteration) representation using `vcfr:asSequenceAlteration`.
 
+### Missing values (`.`)
+
+- Missing VCF token `.` is modeled as a typed literal: `"."^^vcfr:Null`.
+- This avoids using plain `"."^^xsd:string` and keeps missingness explicit in RDF.
+
 SB/gvar reference:
 - Docs: https://swat4hcls-2025-genomic-variation.github.io/genomic-variant-schema/
 - Schema source: https://github.com/swat4hcls-2025-genomic-variation/genomic-variant-schema/blob/main/gvar-schema.yaml
@@ -70,7 +94,8 @@ Graph and export files are generated from `ontology/vcf-rdfizer-vocabulary.ttl` 
 See:
 - `examples/example-headers.ttl`
 - `examples/example-minimal-record.ttl`
-- `examples/example-file1.vcf`
+- `examples/example.nt`
+- `examples/example.vcf`
 
 ## Publishing
 
