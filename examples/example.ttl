@@ -1,0 +1,680 @@
+@base <https://w3id.org/vcf-rdfizer/vcf/> .
+@prefix vcfr: <https://w3id.org/vcf-rdfizer/vocab#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# This file is generated from examples/example.nt.
+
+<example.vcf>
+  a vcfr:VCFFile ;
+  vcfr:fileFormat "VCFv4.2" ;
+  vcfr:hasHeader <example.vcf/header> ;
+  vcfr:hasRecord
+    <example.vcf/record/var1>,
+    <example.vcf/record/var2>,
+    <example.vcf/record/var3>,
+    <example.vcf/record/var4>,
+    <example.vcf/record/var5>,
+    <example.vcf/record/var6>,
+    <example.vcf/record/var7>,
+    <example.vcf/record/var8>,
+    <example.vcf/record/var9>,
+    <example.vcf/record/var10> ;
+  vcfr:referenceGenome "/CLC_References/homo_sapiens/sequence/hg38_no_alt_analysis_set/Homo_sapiens_sequence_hg38_no_alt_analysis_set" ;
+  vcfr:sourceSoftware "CLC Genomics Grid Worker 20.9.9 Beta 1 build 209900" .
+
+<example.vcf/header>
+  a vcfr:VCFHeader ;
+  vcfr:hasHeaderLine
+    <example.vcf/header/line/1>,
+    <example.vcf/header/line/2>,
+    <example.vcf/header/line/3>,
+    <example.vcf/header/line/4>,
+    <example.vcf/header/line/5>,
+    <example.vcf/header/line/6>,
+    <example.vcf/header/line/7>,
+    <example.vcf/header/line/8>,
+    <example.vcf/header/line/9>,
+    <example.vcf/header/line/10>,
+    <example.vcf/header/line/11>,
+    <example.vcf/header/line/12> .
+
+<example.vcf/header/line/1>
+  a vcfr:HeaderLine ;
+  vcfr:headerKey "fileformat" ;
+  vcfr:headerValue "VCFv4.2" .
+
+<example.vcf/header/line/2>
+  a vcfr:HeaderLine ;
+  vcfr:headerKey "fileDate" ;
+  vcfr:headerValue "20200615" .
+
+<example.vcf/header/line/3>
+  a vcfr:HeaderLine ;
+  vcfr:headerKey "fileEncoding" ;
+  vcfr:headerValue "US-ASCII" .
+
+<example.vcf/header/line/4>
+  a vcfr:HeaderLine ;
+  vcfr:headerKey "fileOrigin" ;
+  vcfr:headerValue "/tmp_location/until_2020_06_01/amhein/PrecisionFDAMay2020/ForSubmission_final/PacBioFiltering_BasicIndelFilt_StrongHompolInsFilt_MinFreq15_PASS/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt" .
+
+<example.vcf/header/line/5>
+  a vcfr:HeaderLine ;
+  vcfr:headerKey "source" ;
+  vcfr:headerValue "CLC Genomics Grid Worker 20.9.9 Beta 1 build 209900" .
+
+<example.vcf/header/line/6>
+  a vcfr:HeaderLine ;
+  vcfr:headerKey "reference" ;
+  vcfr:headerValue "/CLC_References/homo_sapiens/sequence/hg38_no_alt_analysis_set/Homo_sapiens_sequence_hg38_no_alt_analysis_set" .
+
+<example.vcf/header/line/7>
+  a vcfr:HeaderLine ;
+  vcfr:headerKey "contig" ;
+  vcfr:headerValue "<ID=1,length=248956422>" .
+
+<example.vcf/header/line/8>
+  a vcfr:HeaderLine ;
+  vcfr:headerKey "contig" ;
+  vcfr:headerValue "<ID=2,length=242193529>" .
+
+<example.vcf/header/line/9>
+  a vcfr:HeaderLine ;
+  vcfr:headerKey "refOverlap" ;
+  vcfr:headerValue "true" .
+
+<example.vcf/header/line/10>
+  a vcfr:HeaderLine ;
+  vcfr:headerKey "FORMAT" ;
+  vcfr:headerValue "<ID=GT,Number=1,Type=String,Description=\"Genotype\">" .
+
+<example.vcf/header/line/11>
+  a vcfr:HeaderLine ;
+  vcfr:headerKey "FORMAT" ;
+  vcfr:headerValue "<ID=DP,Number=1,Type=Integer,Description=\"Total number of filtered reads used to call variants at this position in this sample.\">" .
+
+<example.vcf/header/line/12>
+  a vcfr:HeaderLine ;
+  vcfr:headerKey "FORMAT" ;
+  vcfr:headerValue "<ID=CLCAD2,Number=R,Type=Integer,Description=\"Allele depth, number of filtered reads supporting the alleles, ordered as listed in REF and ALT.\">" .
+
+<example.vcf/record/var1>
+  a vcfr:VCFRecord ;
+  vcfr:alt "G" ;
+  vcfr:chrom "1" ;
+  vcfr:hasCall <example.vcf/call/var1> ;
+  vcfr:pos "10013"^^xsd:integer ;
+  vcfr:recordId "." ;
+  vcfr:ref "T" .
+
+<example.vcf/call/var1>
+  a vcfr:VariantCall ;
+  vcfr:filter "." ;
+  vcfr:formatRaw "GT:CLCAD2:DP" ;
+  vcfr:hasSampleCall
+    <example.vcf/sample/var1/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt>,
+    <example.vcf/sample/var1/SAMPLE2> ;
+  vcfr:infoRaw "." .
+
+<example.vcf/sample/var1/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt>
+  a vcfr:SampleCall ;
+  vcfr:hasFormatValue
+    <example.vcf/sample/var1/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/CLCAD2>,
+    <example.vcf/sample/var1/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/DP>,
+    <example.vcf/sample/var1/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/GT> ;
+  vcfr:sampleId "HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt" .
+
+<example.vcf/sample/var1/SAMPLE2>
+  a vcfr:SampleCall ;
+  vcfr:hasFormatValue
+    <example.vcf/sample/var1/SAMPLE2/fmt/CLCAD2>,
+    <example.vcf/sample/var1/SAMPLE2/fmt/DP>,
+    <example.vcf/sample/var1/SAMPLE2/fmt/GT> ;
+  vcfr:sampleId "SAMPLE2" .
+
+<example.vcf/sample/var1/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/CLCAD2>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "3,2" .
+
+<example.vcf/sample/var1/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/DP>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "6" .
+
+<example.vcf/sample/var1/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/GT>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "0/1" .
+
+<example.vcf/sample/var1/SAMPLE2/fmt/CLCAD2>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "3,2" .
+
+<example.vcf/sample/var1/SAMPLE2/fmt/DP>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "6" .
+
+<example.vcf/sample/var1/SAMPLE2/fmt/GT>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "0/1" .
+
+<example.vcf/record/var2>
+  a vcfr:VCFRecord ;
+  vcfr:alt "A" ;
+  vcfr:chrom "1" ;
+  vcfr:hasCall <example.vcf/call/var2> ;
+  vcfr:pos "10146"^^xsd:integer ;
+  vcfr:recordId "." ;
+  vcfr:ref "AC" .
+
+<example.vcf/call/var2>
+  a vcfr:VariantCall ;
+  vcfr:filter "." ;
+  vcfr:formatRaw "GT:CLCAD2:DP" ;
+  vcfr:hasSampleCall
+    <example.vcf/sample/var2/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt>,
+    <example.vcf/sample/var2/SAMPLE2> ;
+  vcfr:infoRaw "." .
+
+<example.vcf/sample/var2/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt>
+  a vcfr:SampleCall ;
+  vcfr:hasFormatValue
+    <example.vcf/sample/var2/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/CLCAD2>,
+    <example.vcf/sample/var2/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/DP>,
+    <example.vcf/sample/var2/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/GT> ;
+  vcfr:sampleId "HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt" .
+
+<example.vcf/sample/var2/SAMPLE2>
+  a vcfr:SampleCall ;
+  vcfr:hasFormatValue
+    <example.vcf/sample/var2/SAMPLE2/fmt/CLCAD2>,
+    <example.vcf/sample/var2/SAMPLE2/fmt/DP>,
+    <example.vcf/sample/var2/SAMPLE2/fmt/GT> ;
+  vcfr:sampleId "SAMPLE2" .
+
+<example.vcf/sample/var2/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/CLCAD2>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "5,2" .
+
+<example.vcf/sample/var2/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/DP>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "8" .
+
+<example.vcf/sample/var2/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/GT>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "0/1" .
+
+<example.vcf/sample/var2/SAMPLE2/fmt/CLCAD2>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "3,2" .
+
+<example.vcf/sample/var2/SAMPLE2/fmt/DP>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "6" .
+
+<example.vcf/sample/var2/SAMPLE2/fmt/GT>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "0/1" .
+
+<example.vcf/record/var3>
+  a vcfr:VCFRecord ;
+  vcfr:alt "C" ;
+  vcfr:chrom "1" ;
+  vcfr:hasCall <example.vcf/call/var3> ;
+  vcfr:pos "10177"^^xsd:integer ;
+  vcfr:recordId "." ;
+  vcfr:ref "A" .
+
+<example.vcf/call/var3>
+  a vcfr:VariantCall ;
+  vcfr:filter "." ;
+  vcfr:formatRaw "GT:CLCAD2:DP" ;
+  vcfr:hasSampleCall
+    <example.vcf/sample/var3/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt>,
+    <example.vcf/sample/var3/SAMPLE2> ;
+  vcfr:infoRaw "." .
+
+<example.vcf/sample/var3/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt>
+  a vcfr:SampleCall ;
+  vcfr:hasFormatValue
+    <example.vcf/sample/var3/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/CLCAD2>,
+    <example.vcf/sample/var3/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/DP>,
+    <example.vcf/sample/var3/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/GT> ;
+  vcfr:sampleId "HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt" .
+
+<example.vcf/sample/var3/SAMPLE2>
+  a vcfr:SampleCall ;
+  vcfr:hasFormatValue
+    <example.vcf/sample/var3/SAMPLE2/fmt/CLCAD2>,
+    <example.vcf/sample/var3/SAMPLE2/fmt/DP>,
+    <example.vcf/sample/var3/SAMPLE2/fmt/GT> ;
+  vcfr:sampleId "SAMPLE2" .
+
+<example.vcf/sample/var3/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/CLCAD2>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "5,2" .
+
+<example.vcf/sample/var3/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/DP>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "8" .
+
+<example.vcf/sample/var3/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/GT>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "0/1" .
+
+<example.vcf/sample/var3/SAMPLE2/fmt/CLCAD2>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "3,2" .
+
+<example.vcf/sample/var3/SAMPLE2/fmt/DP>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "6" .
+
+<example.vcf/sample/var3/SAMPLE2/fmt/GT>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "0/1" .
+
+<example.vcf/record/var4>
+  a vcfr:VCFRecord ;
+  vcfr:alt "AC" ;
+  vcfr:chrom "1" ;
+  vcfr:hasCall <example.vcf/call/var4> ;
+  vcfr:pos "10177"^^xsd:integer ;
+  vcfr:recordId "." ;
+  vcfr:ref "A" .
+
+<example.vcf/call/var4>
+  a vcfr:VariantCall ;
+  vcfr:filter "." ;
+  vcfr:formatRaw "GT:CLCAD2:DP" ;
+  vcfr:hasSampleCall
+    <example.vcf/sample/var4/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt>,
+    <example.vcf/sample/var4/SAMPLE2> ;
+  vcfr:infoRaw "." .
+
+<example.vcf/sample/var4/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt>
+  a vcfr:SampleCall ;
+  vcfr:hasFormatValue
+    <example.vcf/sample/var4/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/CLCAD2>,
+    <example.vcf/sample/var4/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/DP>,
+    <example.vcf/sample/var4/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/GT> ;
+  vcfr:sampleId "HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt" .
+
+<example.vcf/sample/var4/SAMPLE2>
+  a vcfr:SampleCall ;
+  vcfr:hasFormatValue
+    <example.vcf/sample/var4/SAMPLE2/fmt/CLCAD2>,
+    <example.vcf/sample/var4/SAMPLE2/fmt/DP>,
+    <example.vcf/sample/var4/SAMPLE2/fmt/GT> ;
+  vcfr:sampleId "SAMPLE2" .
+
+<example.vcf/sample/var4/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/CLCAD2>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "4,4" .
+
+<example.vcf/sample/var4/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/DP>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "8" .
+
+<example.vcf/sample/var4/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/GT>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "0/1" .
+
+<example.vcf/sample/var4/SAMPLE2/fmt/CLCAD2>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "3,2" .
+
+<example.vcf/sample/var4/SAMPLE2/fmt/DP>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "6" .
+
+<example.vcf/sample/var4/SAMPLE2/fmt/GT>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "0/1" .
+
+<example.vcf/record/var5>
+  a vcfr:VCFRecord ;
+  vcfr:alt "GCAGGCGCAGAGAGGCGCGCCGCGCCGGCGCAGGCGCAGAGAGGCGCGCCGCGCCGGCGCAGGCGCAGAGAGGCGCGCCGCGCCGGCGCAGGCGCAGAGACACATGCTAGCGCGTCCAGGGGAGGAGGCGTGGCA" ;
+  vcfr:chrom "1" ;
+  vcfr:hasCall <example.vcf/call/var5> ;
+  vcfr:pos "10862"^^xsd:integer ;
+  vcfr:recordId "." ;
+  vcfr:ref "G" .
+
+<example.vcf/call/var5>
+  a vcfr:VariantCall ;
+  vcfr:filter "." ;
+  vcfr:formatRaw "GT:CLCAD2:DP" ;
+  vcfr:hasSampleCall
+    <example.vcf/sample/var5/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt>,
+    <example.vcf/sample/var5/SAMPLE2> ;
+  vcfr:infoRaw "." .
+
+<example.vcf/sample/var5/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt>
+  a vcfr:SampleCall ;
+  vcfr:hasFormatValue
+    <example.vcf/sample/var5/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/CLCAD2>,
+    <example.vcf/sample/var5/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/DP>,
+    <example.vcf/sample/var5/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/GT> ;
+  vcfr:sampleId "HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt" .
+
+<example.vcf/sample/var5/SAMPLE2>
+  a vcfr:SampleCall ;
+  vcfr:hasFormatValue
+    <example.vcf/sample/var5/SAMPLE2/fmt/CLCAD2>,
+    <example.vcf/sample/var5/SAMPLE2/fmt/DP>,
+    <example.vcf/sample/var5/SAMPLE2/fmt/GT> ;
+  vcfr:sampleId "SAMPLE2" .
+
+<example.vcf/sample/var5/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/CLCAD2>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "5,4" .
+
+<example.vcf/sample/var5/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/DP>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "11" .
+
+<example.vcf/sample/var5/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/GT>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "0/1" .
+
+<example.vcf/sample/var5/SAMPLE2/fmt/CLCAD2>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "3,2" .
+
+<example.vcf/sample/var5/SAMPLE2/fmt/DP>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "6" .
+
+<example.vcf/sample/var5/SAMPLE2/fmt/GT>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "0/1" .
+
+<example.vcf/record/var6>
+  a vcfr:VCFRecord ;
+  vcfr:alt "GGAAT" ;
+  vcfr:chrom "2" ;
+  vcfr:hasCall <example.vcf/call/var6> ;
+  vcfr:pos "90402020"^^xsd:integer ;
+  vcfr:recordId "." ;
+  vcfr:ref "G" .
+
+<example.vcf/call/var6>
+  a vcfr:VariantCall ;
+  vcfr:filter "." ;
+  vcfr:formatRaw "GT:CLCAD2:DP" ;
+  vcfr:hasSampleCall
+    <example.vcf/sample/var6/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt>,
+    <example.vcf/sample/var6/SAMPLE2> ;
+  vcfr:infoRaw "." .
+
+<example.vcf/sample/var6/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt>
+  a vcfr:SampleCall ;
+  vcfr:hasFormatValue
+    <example.vcf/sample/var6/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/CLCAD2>,
+    <example.vcf/sample/var6/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/DP>,
+    <example.vcf/sample/var6/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/GT> ;
+  vcfr:sampleId "HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt" .
+
+<example.vcf/sample/var6/SAMPLE2>
+  a vcfr:SampleCall ;
+  vcfr:hasFormatValue
+    <example.vcf/sample/var6/SAMPLE2/fmt/CLCAD2>,
+    <example.vcf/sample/var6/SAMPLE2/fmt/DP>,
+    <example.vcf/sample/var6/SAMPLE2/fmt/GT> ;
+  vcfr:sampleId "SAMPLE2" .
+
+<example.vcf/sample/var6/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/CLCAD2>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "342,104" .
+
+<example.vcf/sample/var6/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/DP>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "446" .
+
+<example.vcf/sample/var6/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/GT>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "0/1" .
+
+<example.vcf/sample/var6/SAMPLE2/fmt/CLCAD2>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "3,2" .
+
+<example.vcf/sample/var6/SAMPLE2/fmt/DP>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "6" .
+
+<example.vcf/sample/var6/SAMPLE2/fmt/GT>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "0/1" .
+
+<example.vcf/record/var7>
+  a vcfr:VCFRecord ;
+  vcfr:alt "AATCAT" ;
+  vcfr:chrom "2" ;
+  vcfr:hasCall <example.vcf/call/var7> ;
+  vcfr:pos "91407002"^^xsd:integer ;
+  vcfr:recordId "." ;
+  vcfr:ref "A" .
+
+<example.vcf/call/var7>
+  a vcfr:VariantCall ;
+  vcfr:filter "." ;
+  vcfr:formatRaw "GT:CLCAD2:DP" ;
+  vcfr:hasSampleCall
+    <example.vcf/sample/var7/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt>,
+    <example.vcf/sample/var7/SAMPLE2> ;
+  vcfr:infoRaw "." .
+
+<example.vcf/sample/var7/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt>
+  a vcfr:SampleCall ;
+  vcfr:hasFormatValue
+    <example.vcf/sample/var7/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/CLCAD2>,
+    <example.vcf/sample/var7/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/DP>,
+    <example.vcf/sample/var7/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/GT> ;
+  vcfr:sampleId "HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt" .
+
+<example.vcf/sample/var7/SAMPLE2>
+  a vcfr:SampleCall ;
+  vcfr:hasFormatValue
+    <example.vcf/sample/var7/SAMPLE2/fmt/CLCAD2>,
+    <example.vcf/sample/var7/SAMPLE2/fmt/DP>,
+    <example.vcf/sample/var7/SAMPLE2/fmt/GT> ;
+  vcfr:sampleId "SAMPLE2" .
+
+<example.vcf/sample/var7/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/CLCAD2>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "23,20" .
+
+<example.vcf/sample/var7/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/DP>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "43" .
+
+<example.vcf/sample/var7/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/GT>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "0/1" .
+
+<example.vcf/sample/var7/SAMPLE2/fmt/CLCAD2>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "3,2" .
+
+<example.vcf/sample/var7/SAMPLE2/fmt/DP>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "6" .
+
+<example.vcf/sample/var7/SAMPLE2/fmt/GT>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "0/1" .
+
+<example.vcf/record/var8>
+  a vcfr:VCFRecord ;
+  vcfr:alt "G" ;
+  vcfr:chrom "2" ;
+  vcfr:hasCall <example.vcf/call/var8> ;
+  vcfr:pos "91407621"^^xsd:integer ;
+  vcfr:recordId "." ;
+  vcfr:ref "C" .
+
+<example.vcf/call/var8>
+  a vcfr:VariantCall ;
+  vcfr:filter "." ;
+  vcfr:formatRaw "GT:CLCAD2:DP" ;
+  vcfr:hasSampleCall
+    <example.vcf/sample/var8/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt>,
+    <example.vcf/sample/var8/SAMPLE2> ;
+  vcfr:infoRaw "." .
+
+<example.vcf/sample/var8/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt>
+  a vcfr:SampleCall ;
+  vcfr:hasFormatValue
+    <example.vcf/sample/var8/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/CLCAD2>,
+    <example.vcf/sample/var8/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/DP>,
+    <example.vcf/sample/var8/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/GT> ;
+  vcfr:sampleId "HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt" .
+
+<example.vcf/sample/var8/SAMPLE2>
+  a vcfr:SampleCall ;
+  vcfr:hasFormatValue
+    <example.vcf/sample/var8/SAMPLE2/fmt/CLCAD2>,
+    <example.vcf/sample/var8/SAMPLE2/fmt/DP>,
+    <example.vcf/sample/var8/SAMPLE2/fmt/GT> ;
+  vcfr:sampleId "SAMPLE2" .
+
+<example.vcf/sample/var8/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/CLCAD2>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "27,20" .
+
+<example.vcf/sample/var8/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/DP>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "47" .
+
+<example.vcf/sample/var8/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/GT>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "0/1" .
+
+<example.vcf/sample/var8/SAMPLE2/fmt/CLCAD2>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "3,2" .
+
+<example.vcf/sample/var8/SAMPLE2/fmt/DP>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "6" .
+
+<example.vcf/sample/var8/SAMPLE2/fmt/GT>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "0/1" .
+
+<example.vcf/record/var9>
+  a vcfr:VCFRecord ;
+  vcfr:alt "A" ;
+  vcfr:chrom "2" ;
+  vcfr:hasCall <example.vcf/call/var9> ;
+  vcfr:pos "91409588"^^xsd:integer ;
+  vcfr:recordId "." ;
+  vcfr:ref "ATGGAATCTTCGAATAGACTCAAAAGCAATCATCGAATGGAC" .
+
+<example.vcf/call/var9>
+  a vcfr:VariantCall ;
+  vcfr:filter "." ;
+  vcfr:formatRaw "GT:CLCAD2:DP" ;
+  vcfr:hasSampleCall
+    <example.vcf/sample/var9/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt>,
+    <example.vcf/sample/var9/SAMPLE2> ;
+  vcfr:infoRaw "." .
+
+<example.vcf/sample/var9/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt>
+  a vcfr:SampleCall ;
+  vcfr:hasFormatValue
+    <example.vcf/sample/var9/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/CLCAD2>,
+    <example.vcf/sample/var9/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/DP>,
+    <example.vcf/sample/var9/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/GT> ;
+  vcfr:sampleId "HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt" .
+
+<example.vcf/sample/var9/SAMPLE2>
+  a vcfr:SampleCall ;
+  vcfr:hasFormatValue
+    <example.vcf/sample/var9/SAMPLE2/fmt/CLCAD2>,
+    <example.vcf/sample/var9/SAMPLE2/fmt/DP>,
+    <example.vcf/sample/var9/SAMPLE2/fmt/GT> ;
+  vcfr:sampleId "SAMPLE2" .
+
+<example.vcf/sample/var9/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/CLCAD2>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "37,13" .
+
+<example.vcf/sample/var9/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/DP>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "56" .
+
+<example.vcf/sample/var9/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/GT>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "0/1" .
+
+<example.vcf/sample/var9/SAMPLE2/fmt/CLCAD2>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "3,2" .
+
+<example.vcf/sample/var9/SAMPLE2/fmt/DP>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "6" .
+
+<example.vcf/sample/var9/SAMPLE2/fmt/GT>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "0/1" .
+
+<example.vcf/record/var10>
+  a vcfr:VCFRecord ;
+  vcfr:alt "G" ;
+  vcfr:chrom "2" ;
+  vcfr:hasCall <example.vcf/call/var10> ;
+  vcfr:pos "91409683"^^xsd:integer ;
+  vcfr:recordId "." ;
+  vcfr:ref "A" .
+
+<example.vcf/call/var10>
+  a vcfr:VariantCall ;
+  vcfr:filter "." ;
+  vcfr:formatRaw "GT:CLCAD2:DP" ;
+  vcfr:hasSampleCall
+    <example.vcf/sample/var10/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt>,
+    <example.vcf/sample/var10/SAMPLE2> ;
+  vcfr:infoRaw "." .
+
+<example.vcf/sample/var10/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt>
+  a vcfr:SampleCall ;
+  vcfr:hasFormatValue
+    <example.vcf/sample/var10/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/CLCAD2>,
+    <example.vcf/sample/var10/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/DP>,
+    <example.vcf/sample/var10/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/GT> ;
+  vcfr:sampleId "HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt" .
+
+<example.vcf/sample/var10/SAMPLE2>
+  a vcfr:SampleCall ;
+  vcfr:hasFormatValue
+    <example.vcf/sample/var10/SAMPLE2/fmt/CLCAD2>,
+    <example.vcf/sample/var10/SAMPLE2/fmt/DP>,
+    <example.vcf/sample/var10/SAMPLE2/fmt/GT> ;
+  vcfr:sampleId "SAMPLE2" .
+
+<example.vcf/sample/var10/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/CLCAD2>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "32,16" .
+
+<example.vcf/sample/var10/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/DP>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "56" .
+
+<example.vcf/sample/var10/HG002_PacBio_Clc_OTS_PASS_Hg38_no_alt/fmt/GT>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "0/1" .
+
+<example.vcf/sample/var10/SAMPLE2/fmt/CLCAD2>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "3,2" .
+
+<example.vcf/sample/var10/SAMPLE2/fmt/DP>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "6" .
+
+<example.vcf/sample/var10/SAMPLE2/fmt/GT>
+  a vcfr:FormatFieldValue ;
+  vcfr:fieldValue "0/1" .

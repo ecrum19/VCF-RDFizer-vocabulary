@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VCF-RDFizer Term Pages</title>
+  <style>
+    :root {
+      --bg: #f3efe8;
+      --panel: #ffffff;
+      --ink: #1b2229;
+      --muted: #5c6a78;
+      --accent: #0f6772;
+      --border: #d5e1eb;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "IBM Plex Sans", "Segoe UI", sans-serif; color: var(--ink); background: var(--bg); }
+    .container { width: min(1160px, 94vw); margin: 0 auto; padding: 30px 0 56px; display: grid; gap: 14px; }
+    .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 18px; }
+    h1 { margin: 0 0 8px; font-size: 2rem; }
+    p { margin: 0; color: var(--muted); line-height: 1.55; }
+    .actions { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 10px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 8px 12px; border: 1px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--accent); background: #fff; font-weight: 600; font-size: 0.9rem; }
+    .table-wrap { overflow: auto; border: 1px solid var(--border); border-radius: 12px; margin-top: 10px; }
+    table { width: 100%; border-collapse: collapse; min-width: 760px; background: #fff; }
+    th, td { border-bottom: 1px solid var(--border); padding: 8px 10px; font-size: 0.9rem; text-align: left; vertical-align: top; line-height: 1.4; }
+    th { background: #edf5f8; }
+    code { font-family: "IBM Plex Mono", "SFMono-Regular", monospace; background: #eff6f8; border-radius: 6px; padding: 2px 6px; color: #174950; font-size: 0.88rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="panel">
+      <h1>VCF-RDFizer Term Pages</h1>
+      <p>HTML documentation pages for every <code>vcfr:</code> term referenced in this repository (ontology, SHACL, examples, and docs).</p>
+      <div class="actions">
+        <a class="btn" href="../index.html">Back to Home</a>
+        <a class="btn" href="../ontology-reference.html">Open Vocabulary Reference</a>
+        <a class="btn" href="../assets/vcf-rdfizer-vocabulary.ttl" target="_blank" rel="noreferrer">Open Ontology TTL</a>
+        <a class="btn" href="../assets/vcf-rdfizer-vocabulary.shacl.ttl" target="_blank" rel="noreferrer">Open SHACL TTL</a>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Term</th><th>Type</th><th>Sources</th><th>Repo Hits</th><th>Summary</th></tr></thead>
+          <tbody>
+<tr>
+      <td><a href="alt.html"><code>vcfr:alt</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>38</td>
+      <td>ALT allele string; for multiple ALT alleles you may repeat this property or use rdf:List externally.</td>
+    </tr>
+<tr>
+      <td><a href="AltDefinition.html"><code>vcfr:AltDefinition</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>19</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="ALTHeaderLine.html"><code>vcfr:ALTHeaderLine</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>17</td>
+      <td>Represents ##ALT=&lt;ID=...,Description=...&gt; used for symbolic alternate alleles.</td>
+    </tr>
+<tr>
+      <td><a href="altId.html"><code>vcfr:altId</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>12</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="asSequenceAlteration.html"><code>vcfr:asSequenceAlteration</code></a></td>
+      <td>Object Property</td>
+      <td>ontology, repo</td>
+      <td>20</td>
+      <td>Links a VCF record/call to a sequence alteration representation (e.g., SB/gvar SequenceAlteration: so:0001059).</td>
+    </tr>
+<tr>
+      <td><a href="CharacterType.html"><code>vcfr:CharacterType</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>10</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="chrom.html"><code>vcfr:chrom</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>38</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="chromosome.html"><code>vcfr:chromosome</code></a></td>
+      <td>Object Property</td>
+      <td>ontology, repo</td>
+      <td>10</td>
+      <td>Reference sequence for CHROM, preferably resolvable (e.g., INSDC/RefSeq/Ensembl). Can align to FALDO reference.</td>
+    </tr>
+<tr>
+      <td><a href="contigAssembly.html"><code>vcfr:contigAssembly</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>12</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="contigCount.html"><code>vcfr:contigCount</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>14</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="ContigHeaderLine.html"><code>vcfr:ContigHeaderLine</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>43</td>
+      <td>Represents ##contig=&lt;ID=...,length=...,assembly=...,...&gt; entries.</td>
+    </tr>
+<tr>
+      <td><a href="contigId.html"><code>vcfr:contigId</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>14</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="contigLength.html"><code>vcfr:contigLength</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>14</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="contigMd5.html"><code>vcfr:contigMd5</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>12</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="declaredBy.html"><code>vcfr:declaredBy</code></a></td>
+      <td>Object Property</td>
+      <td>ontology, repo</td>
+      <td>15</td>
+      <td>Links an INFO/FORMAT/FILTER/ALT value/usage to its header definition line.</td>
+    </tr>
+<tr>
+      <td><a href="FieldDefinition.html"><code>vcfr:FieldDefinition</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>64</td>
+      <td>Common superclass for INFO/FORMAT/FILTER/ALT header definitions.</td>
+    </tr>
+<tr>
+      <td><a href="fieldDescription.html"><code>vcfr:fieldDescription</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>24</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="fieldId.html"><code>vcfr:fieldId</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>24</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="fieldKey.html"><code>vcfr:fieldKey</code></a></td>
+      <td>Referenced Term</td>
+      <td>repo</td>
+      <td>9</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="fieldNumber.html"><code>vcfr:fieldNumber</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>24</td>
+      <td>The VCF Number value as string (e.g., 0, 1, A, R, G, .).</td>
+    </tr>
+<tr>
+      <td><a href="fieldType.html"><code>vcfr:fieldType</code></a></td>
+      <td>Object Property</td>
+      <td>ontology, repo</td>
+      <td>12</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="fieldValue.html"><code>vcfr:fieldValue</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>147</td>
+      <td>Literal string value; for typed values prefer vcfr:fieldValueInteger/Decimal/Boolean when possible. For source token &#39;.&#39;, use literal &#39;.&#39;^^vcfr:Null.</td>
+    </tr>
+<tr>
+      <td><a href="fieldValueBoolean.html"><code>vcfr:fieldValueBoolean</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>13</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="fieldValueDecimal.html"><code>vcfr:fieldValueDecimal</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>13</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="fieldValueInteger.html"><code>vcfr:fieldValueInteger</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>21</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="fileDate.html"><code>vcfr:fileDate</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>17</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="FileDateHeaderLine.html"><code>vcfr:FileDateHeaderLine</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>13</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="fileFormat.html"><code>vcfr:fileFormat</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>21</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="FileFormatHeaderLine.html"><code>vcfr:FileFormatHeaderLine</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>13</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="filter.html"><code>vcfr:filter</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>38</td>
+      <td>FILTER column value (e.g., PASS or semicolon-separated list). For source token &#39;.&#39;, use literal &#39;.&#39;^^vcfr:Null.</td>
+    </tr>
+<tr>
+      <td><a href="FilterDefinition.html"><code>vcfr:FilterDefinition</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>19</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="FILTERHeaderLine.html"><code>vcfr:FILTERHeaderLine</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>17</td>
+      <td>Represents ##FILTER=&lt;ID=...,Description=...&gt;.</td>
+    </tr>
+<tr>
+      <td><a href="filterId.html"><code>vcfr:filterId</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>12</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="FlagType.html"><code>vcfr:FlagType</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>10</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="FloatType.html"><code>vcfr:FloatType</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>10</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="FormatFieldDefinition.html"><code>vcfr:FormatFieldDefinition</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>24</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="FormatFieldDefinitionShape.html"><code>vcfr:FormatFieldDefinitionShape</code></a></td>
+      <td>Referenced Term</td>
+      <td>repo</td>
+      <td>3</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="FormatFieldValue.html"><code>vcfr:FormatFieldValue</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>154</td>
+      <td>A structured key/value for one FORMAT attribute within a sample call.</td>
+    </tr>
+<tr>
+      <td><a href="FormatFieldValueShape.html"><code>vcfr:FormatFieldValueShape</code></a></td>
+      <td>Referenced Term</td>
+      <td>repo</td>
+      <td>3</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="FORMATHeaderLine.html"><code>vcfr:FORMATHeaderLine</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>17</td>
+      <td>Represents ##FORMAT=&lt;ID=...,Number=...,Type=...,Description=...&gt;.</td>
+    </tr>
+<tr>
+      <td><a href="formatRaw.html"><code>vcfr:formatRaw</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>34</td>
+      <td>Raw FORMAT string as in VCF (optional). Use structured vcfr:FormatFieldValue in SampleCall.</td>
+    </tr>
+<tr>
+      <td><a href="hasCall.html"><code>vcfr:hasCall</code></a></td>
+      <td>Object Property</td>
+      <td>ontology, repo</td>
+      <td>37</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="hasFormatValue.html"><code>vcfr:hasFormatValue</code></a></td>
+      <td>Object Property</td>
+      <td>ontology, repo</td>
+      <td>68</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="hasHeader.html"><code>vcfr:hasHeader</code></a></td>
+      <td>Object Property</td>
+      <td>ontology, repo</td>
+      <td>20</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="hasHeaderLine.html"><code>vcfr:hasHeaderLine</code></a></td>
+      <td>Object Property</td>
+      <td>ontology, repo</td>
+      <td>33</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="hasInfoValue.html"><code>vcfr:hasInfoValue</code></a></td>
+      <td>Object Property</td>
+      <td>ontology, repo</td>
+      <td>15</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="hasRecord.html"><code>vcfr:hasRecord</code></a></td>
+      <td>Object Property</td>
+      <td>ontology, repo</td>
+      <td>20</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="hasSampleCall.html"><code>vcfr:hasSampleCall</code></a></td>
+      <td>Object Property</td>
+      <td>ontology, repo</td>
+      <td>37</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="headerKey.html"><code>vcfr:headerKey</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>46</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="HeaderLine.html"><code>vcfr:HeaderLine</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>114</td>
+      <td>A structured representation of one VCF header line (e.g., ##fileformat, ##INFO=&lt;...&gt;).</td>
+    </tr>
+<tr>
+      <td><a href="headerValue.html"><code>vcfr:headerValue</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>44</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="InfoFieldDefinition.html"><code>vcfr:InfoFieldDefinition</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>18</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="InfoFieldDefinitionShape.html"><code>vcfr:InfoFieldDefinitionShape</code></a></td>
+      <td>Referenced Term</td>
+      <td>repo</td>
+      <td>3</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="InfoFieldValue.html"><code>vcfr:InfoFieldValue</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>22</td>
+      <td>A structured key/value for one INFO attribute within a record/call.</td>
+    </tr>
+<tr>
+      <td><a href="InfoFieldValueShape.html"><code>vcfr:InfoFieldValueShape</code></a></td>
+      <td>Referenced Term</td>
+      <td>repo</td>
+      <td>3</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="INFOHeaderLine.html"><code>vcfr:INFOHeaderLine</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>17</td>
+      <td>Represents ##INFO=&lt;ID=...,Number=...,Type=...,Description=...&gt;.</td>
+    </tr>
+<tr>
+      <td><a href="infoRaw.html"><code>vcfr:infoRaw</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>35</td>
+      <td>Raw INFO string as in VCF (optional). Use structured vcfr:InfoFieldValue for machine-use. For source token &#39;.&#39;, use literal &#39;.&#39;^^vcfr:Null.</td>
+    </tr>
+<tr>
+      <td><a href="IntegerType.html"><code>vcfr:IntegerType</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>10</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="iriTemplate.html"><code>vcfr:iriTemplate</code></a></td>
+      <td>Annotation Property</td>
+      <td>ontology, repo</td>
+      <td>24</td>
+      <td>Recommended IRI minting template (RFC6570-style placeholders) for resources in this model.</td>
+    </tr>
+<tr>
+      <td><a href="missingValuePolicy.html"><code>vcfr:missingValuePolicy</code></a></td>
+      <td>Annotation Property</td>
+      <td>ontology, repo</td>
+      <td>7</td>
+      <td>Defines how VCF missing token &#39;.&#39; should be represented in RDF.</td>
+    </tr>
+<tr>
+      <td><a href="Null.html"><code>vcfr:Null</code></a></td>
+      <td>Referenced Term</td>
+      <td>repo</td>
+      <td>43</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="pos.html"><code>vcfr:pos</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>38</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="qual.html"><code>vcfr:qual</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>18</td>
+      <td>QUAL column value. For source token &#39;.&#39;, use literal &#39;.&#39;^^vcfr:Null.</td>
+    </tr>
+<tr>
+      <td><a href="recommendedSequenceAlterationClass.html"><code>vcfr:recommendedSequenceAlterationClass</code></a></td>
+      <td>Annotation Property</td>
+      <td>ontology, repo</td>
+      <td>22</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="recordId.html"><code>vcfr:recordId</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>35</td>
+      <td>VCF ID column (e.g., rsID). For source token &#39;.&#39;, use literal &#39;.&#39;^^vcfr:Null.</td>
+    </tr>
+<tr>
+      <td><a href="ref.html"><code>vcfr:ref</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>38</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="referenceGenome.html"><code>vcfr:referenceGenome</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>19</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="ReferenceHeaderLine.html"><code>vcfr:ReferenceHeaderLine</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>13</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="SampleCall.html"><code>vcfr:SampleCall</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>79</td>
+      <td>Per-sample values for a variant call (e.g., GT, DP, AD), as declared by FORMAT header lines.</td>
+    </tr>
+<tr>
+      <td><a href="SampleCallShape.html"><code>vcfr:SampleCallShape</code></a></td>
+      <td>Referenced Term</td>
+      <td>repo</td>
+      <td>3</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="sampleId.html"><code>vcfr:sampleId</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>60</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="SourceHeaderLine.html"><code>vcfr:SourceHeaderLine</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>13</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="sourceSoftware.html"><code>vcfr:sourceSoftware</code></a></td>
+      <td>Datatype Property</td>
+      <td>ontology, repo</td>
+      <td>16</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="StringType.html"><code>vcfr:StringType</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>10</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="VariantCall.html"><code>vcfr:VariantCall</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>82</td>
+      <td>Call-level representation for a record: QUAL/FILTER/INFO, plus FORMAT and per-sample fields.</td>
+    </tr>
+<tr>
+      <td><a href="VariantCallShape.html"><code>vcfr:VariantCallShape</code></a></td>
+      <td>Referenced Term</td>
+      <td>repo</td>
+      <td>3</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="VCFFile.html"><code>vcfr:VCFFile</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>68</td>
+      <td>A VCF file artifact (as a dataset distribution) that contains a header and a set of VCF records.</td>
+    </tr>
+<tr>
+      <td><a href="VCFFileShape.html"><code>vcfr:VCFFileShape</code></a></td>
+      <td>SHACL NodeShape</td>
+      <td>shacl, repo</td>
+      <td>3</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="VCFHeader.html"><code>vcfr:VCFHeader</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>30</td>
+      <td>Container for the structured header lines of a VCF file.</td>
+    </tr>
+<tr>
+      <td><a href="VCFHeaderShape.html"><code>vcfr:VCFHeaderShape</code></a></td>
+      <td>Referenced Term</td>
+      <td>repo</td>
+      <td>3</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="VCFNumberArity.html"><code>vcfr:VCFNumberArity</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>7</td>
+      <td>Represents INFO/FORMAT Number values (e.g., 0, 1, A, R, G, .).</td>
+    </tr>
+<tr>
+      <td><a href="VCFRecord.html"><code>vcfr:VCFRecord</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>83</td>
+      <td>A row in a VCF (CHROM, POS, ID, REF, ALT, QUAL, FILTER, INFO, FORMAT, samples...). This is a VCF-centric view; link to a sequence alteration representation via vcfr:asSequenceAlteration.</td>
+    </tr>
+<tr>
+      <td><a href="VCFRecordShape.html"><code>vcfr:VCFRecordShape</code></a></td>
+      <td>Referenced Term</td>
+      <td>repo</td>
+      <td>3</td>
+      <td>No ontology comment available.</td>
+    </tr>
+<tr>
+      <td><a href="VCFValueType.html"><code>vcfr:VCFValueType</code></a></td>
+      <td>Class</td>
+      <td>ontology, repo</td>
+      <td>43</td>
+      <td>Enumerates VCF Type values used in INFO/FORMAT definitions: Integer, Float, Flag, Character, String.</td>
+    </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

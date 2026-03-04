@@ -97,32 +97,73 @@
       gap: 12px;
     }
 
+    .hero__panel-actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .hero__panel-actions .btn {
+      width: 100%;
+      min-height: 36px;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 12px 18px;
-      border-radius: 999px;
+      padding: 11px 16px;
+      border-radius: 12px;
       font-weight: 600;
+      font-size: 0.94rem;
       border: 1px solid transparent;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+      min-height: 42px;
     }
 
     .btn:hover {
       transform: translateY(-1px);
-      box-shadow: 0 10px 22px rgba(31, 111, 120, 0.18);
+      box-shadow: 0 12px 24px rgba(19, 55, 70, 0.18);
+    }
+
+    .btn:focus-visible {
+      outline: 3px solid rgba(31, 111, 120, 0.25);
+      outline-offset: 2px;
     }
 
     .btn--primary {
-      background: var(--accent);
+      background: linear-gradient(140deg, #248992 0%, var(--accent) 100%);
+      border-color: #1c7d86;
       color: #fff;
+      box-shadow: 0 8px 18px rgba(31, 111, 120, 0.24);
     }
 
     .btn--ghost {
-      background: rgba(255, 255, 255, 0.6);
-      border-color: var(--border);
+      background: rgba(255, 255, 255, 0.92);
+      border-color: #c7d3de;
       color: var(--accent-strong);
+    }
+
+    .btn--ghost:hover {
+      border-color: #9ab0c3;
+      background: #ffffff;
+    }
+
+    .btn--font-control {
+      background: linear-gradient(180deg, #ffffff 0%, #eef7f8 100%);
+      border-color: #8eb1b6;
+      color: var(--accent-strong);
+      font-weight: 700;
+      min-width: 132px;
+    }
+
+    .btn--font-control:hover {
+      border-color: #6b969c;
+      background: linear-gradient(180deg, #ffffff 0%, #e5f3f5 100%);
     }
 
     .hero__panel {
@@ -217,6 +258,28 @@
       gap: 10px;
     }
 
+    .artifacts-grid .card__actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .artifacts-grid .card__actions .btn {
+      width: 100%;
+      border-radius: 10px;
+      min-height: 40px;
+      padding: 10px 14px;
+      justify-content: center;
+    }
+
+    .artifacts-grid .card__actions .btn--primary {
+      box-shadow: 0 6px 14px rgba(31, 111, 120, 0.2);
+    }
+
+    .artifacts-grid .card__actions .btn--ghost {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 249, 252, 0.98));
+    }
+
     .viewer {
       background: var(--card);
       border: 1px solid var(--border);
@@ -308,6 +371,10 @@
         align-items: stretch;
       }
 
+      .hero__panel-actions {
+        grid-template-columns: 1fr;
+      }
+
       .btn,
       .tab {
         width: 100%;
@@ -327,10 +394,10 @@
         <h1>VCF-RDFizer Vocabulary</h1>
         <p>RDF vocabulary and SHACL shapes that model VCF files, headers, records, and sample calls. Explore the ontology, validate datasets, inspect relationships, and jump into working examples.</p>
         <div class="hero__actions">
-          <a class="btn btn--primary" href="#viewer">Open Example Explorer</a>
-          <a class="btn btn--ghost" href="ontology-reference.html">Ontology Reference</a>
-          <a class="btn btn--ghost" href="ontology-graph.html">Interactive Graph</a>
-          <a class="btn btn--ghost" href="https://github.com/ecrum19/VCF-RDFizer-vocabulary" target="_blank" rel="noreferrer">GitHub Repository</a>
+          <a class="btn btn--primary" href="#viewer" title="Browse and inspect the example RDF, NT, and VCF files.">Open Example Explorer</a>
+          <a class="btn btn--ghost" href="ontology-reference.html" title="Read class and property documentation for the vocabulary.">Ontology Reference</a>
+          <a class="btn btn--ghost" href="ontology-graph.html" title="Explore ontology terms and relationships in an interactive graph.">Interactive Graph</a>
+          <a class="btn btn--ghost" href="https://github.com/ecrum19/VCF-RDFizer-vocabulary" target="_blank" rel="noreferrer" title="Open the source repository, history, and project files.">GitHub Repository</a>
         </div>
       </div>
       <div class="hero__panel">
@@ -338,34 +405,34 @@
           <span>Namespace</span>
           <code id="namespace">https://w3id.org/vcf-rdfizer/vocab#</code>
         </div>
-        <div class="hero__actions">
+        <div class="hero__actions hero__panel-actions">
           <button class="btn btn--ghost" id="copy-namespace" type="button">Copy Namespace</button>
           <a class="btn btn--ghost" href="assets/vcf-rdfizer-vocabulary.ttl" target="_blank" rel="noreferrer">Open Ontology TTL</a>
         </div>
         <div class="kv">
           <span>Artifacts Included</span>
-          <strong>Ontology TTL · SHACL TTL · Reference Docs · Relationship Graph · Example TTL + Raw VCF</strong>
+          <strong>Ontology TTL · SHACL TTL · Reference Docs · Relationship Graph · Example Explorer</strong>
         </div>
       </div>
     </header>
 
     <section class="section" aria-labelledby="artifacts">
       <h2 id="artifacts">Artifacts</h2>
-        <div class="card-grid">
+        <div class="card-grid artifacts-grid">
         <div class="card">
           <h3>Vocabulary Reference</h3>
-          <p>Structured documentation for classes, properties, and external ontology alignment.</p>
+          <p>Structured documentation for classes, properties, external ontology alignment, and per-term pages.</p>
           <div class="card__actions">
             <a class="btn btn--primary" href="ontology-reference.html">Open Reference</a>
+            <a class="btn btn--ghost" href="terms/index.html">Term Pages</a>
           </div>
         </div>
         <div class="card">
           <h3>Relationship Diagram</h3>
           <p>Sigma.js ontology map with generated JSON graph data and serialized relationship overview.</p>
           <div class="card__actions">
-            <a class="btn btn--primary" href="ontology-graph.html">Open Graph</a>
-            <a class="btn btn--ghost" href="assets/ontology-relationships-overview.json" target="_blank" rel="noreferrer">Overview JSON</a>
-            <a class="btn btn--ghost" href="assets/ontology-graph-static.svg" target="_blank" rel="noreferrer">Static SVG</a>
+            <a class="btn btn--primary" href="ontology-graph.html">Open Visual Graph</a>
+            <a class="btn btn--ghost" href="assets/ontology-graph-static.svg" target="_blank" rel="noreferrer">Ontology Overview SVG</a>
           </div>
         </div>
         <div class="card">
@@ -382,35 +449,26 @@
             <a class="btn btn--primary" href="assets/vcf-rdfizer-vocabulary.shacl.ttl" target="_blank" rel="noreferrer">Open TTL</a>
           </div>
         </div>
-        <div class="card">
-          <h3>Examples</h3>
-          <p>Sample RDF graphs plus the corresponding N-Triples export and raw VCF source file.</p>
-          <div class="card__actions">
-            <a class="btn btn--primary" href="assets/example-headers.ttl" target="_blank" rel="noreferrer">Headers TTL</a>
-            <a class="btn btn--ghost" href="assets/example-minimal-record.ttl" target="_blank" rel="noreferrer">Record TTL</a>
-            <a class="btn btn--ghost" href="assets/example.nt" target="_blank" rel="noreferrer">Example NT</a>
-            <a class="btn btn--ghost" href="assets/example.vcf" target="_blank" rel="noreferrer">Example VCF</a>
-          </div>
-        </div>
       </div>
     </section>
 
     <section class="section" aria-labelledby="viewer">
       <h2 id="viewer">Example Explorer</h2>
-      <p class="section-note">This explorer shows only example files. Ontology and SHACL source files are available in the Artifacts section above.</p>
+      <p class="section-note">This explorer shows only example files, including a first-mutation TTL example (`var1`) and the full all-variants TTL graph. Ontology and SHACL source files are available in the Artifacts section above.</p>
       <div class="viewer">
         <div class="tabs" role="tablist">
-          <button class="tab active" type="button" data-file="assets/example-headers.ttl" data-label="Example Headers (TTL)">Example Headers TTL</button>
-          <button class="tab" type="button" data-file="assets/example-minimal-record.ttl" data-label="Example Record (TTL)">Example Record TTL</button>
-          <button class="tab" type="button" data-file="assets/example.nt" data-label="Example Graph (N-Triples)">Example NT</button>
-          <button class="tab" type="button" data-file="assets/example.vcf" data-label="Example Source (Raw VCF)">Example VCF</button>
+          <button class="tab active" type="button" data-file="assets/example.vcf" data-label="Example Source (Raw VCF)">Example VCF</button>
+          <button class="tab" type="button" data-file="assets/example-headers.ttl" data-label="Header-Focused Example (TTL)">Header Example TTL</button>
+          <button class="tab" type="button" data-file="assets/example-minimal-record.ttl" data-label="First Mutation Example (var1, TTL)">First Mutation TTL</button>
+          <button class="tab" type="button" data-file="assets/example.ttl" data-label="Full Example Graph (All Variants, TTL)">Full Example TTL</button>
+          <button class="tab" type="button" data-file="assets/example.nt" data-label="Full Example Graph (N-Triples)">Example NT</button>
         </div>
 
         <div class="viewer__toolbar">
-          <h3 id="ttl-title">Example Headers (TTL)</h3>
+          <h3 id="ttl-title">Example Source (Raw VCF)</h3>
           <div class="viewer__actions">
-            <a class="btn btn--ghost" id="ttl-open" href="assets/example-headers.ttl" target="_blank" rel="noreferrer">Open File</a>
-            <button class="btn btn--ghost" type="button" id="ttl-copy">Copy Content</button>
+            <a class="btn btn--ghost" id="ttl-open" href="assets/example.vcf" target="_blank" rel="noreferrer">Open File</a>
+            <button class="btn btn--ghost btn--font-control" type="button" id="ttl-font-size">Font Size: M</button>
           </div>
         </div>
 
@@ -431,9 +489,16 @@
     const status = document.getElementById("ttl-status");
     const title = document.getElementById("ttl-title");
     const openLink = document.getElementById("ttl-open");
-    const copyButton = document.getElementById("ttl-copy");
+    const fontSizeButton = document.getElementById("ttl-font-size");
     const namespaceButton = document.getElementById("copy-namespace");
     const namespaceValue = document.getElementById("namespace");
+    const viewerPre = document.querySelector("pre");
+    const viewerFontSizes = [
+      { label: "S", value: "0.82rem" },
+      { label: "M", value: "0.90rem" },
+      { label: "L", value: "1.02rem" }
+    ];
+    let viewerFontSizeIndex = 1;
 
     async function loadFileContent(file, label) {
       status.textContent = "Loading " + label + "...";
@@ -446,8 +511,11 @@
           throw new Error("HTTP " + response.status);
         }
         const text = await response.text();
-        content.textContent = text.trim();
-        status.textContent = "Loaded " + label + " · " + text.length + " characters";
+        const displayText = text.trim();
+        const lineCount = displayText ? displayText.split(/\r?\n/).length : 0;
+        const lineLabel = lineCount === 1 ? "line" : "lines";
+        content.textContent = displayText;
+        status.textContent = "Loaded " + label + " · " + lineCount + " " + lineLabel;
       } catch (error) {
         content.textContent = "Unable to load " + label + ".";
         status.textContent = "Error loading file.";
@@ -479,13 +547,15 @@
       });
     });
 
-    copyButton.addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText(content.textContent);
-        status.textContent = "Copied to clipboard.";
-      } catch (error) {
-        status.textContent = "Copy failed. Select the text manually.";
-      }
+    function applyViewerFontSize(index) {
+      const selected = viewerFontSizes[index];
+      viewerPre.style.fontSize = selected.value;
+      fontSizeButton.textContent = `Font Size: ${selected.label}`;
+    }
+
+    fontSizeButton.addEventListener("click", () => {
+      viewerFontSizeIndex = (viewerFontSizeIndex + 1) % viewerFontSizes.length;
+      applyViewerFontSize(viewerFontSizeIndex);
     });
 
     namespaceButton.addEventListener("click", async () => {
@@ -497,7 +567,8 @@
       }
     });
 
-    loadFileContent("assets/example-headers.ttl", "Example Headers (TTL)");
+    applyViewerFontSize(viewerFontSizeIndex);
+    loadFileContent("assets/example.vcf", "Example Source (Raw VCF)");
   </script>
 </body>
 </html>

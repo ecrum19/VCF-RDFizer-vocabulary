@@ -10,17 +10,17 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #f3efe8;
+      --bg: #eef2f6;
       --panel: #ffffff;
-      --panel-soft: #f7fbfd;
-      --ink: #1b2229;
-      --muted: #5c6a78;
+      --panel-soft: #f5f8fb;
+      --ink: #17212b;
+      --muted: #526273;
       --accent: #0f6772;
-      --accent-soft: #d9edf0;
-      --border: #d5e1eb;
-      --shadow: 0 18px 40px rgba(15, 35, 54, 0.1);
-      --radius-lg: 18px;
-      --radius-md: 12px;
+      --accent-soft: #dbeef1;
+      --border: #d1dbe5;
+      --shadow: 0 12px 26px rgba(17, 37, 55, 0.09);
+      --radius-lg: 16px;
+      --radius-md: 10px;
     }
 
     * {
@@ -31,9 +31,10 @@
       margin: 0;
       font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
       color: var(--ink);
+      min-height: 100vh;
       background:
-        radial-gradient(circle at top right, rgba(15, 103, 114, 0.12), transparent 42%),
-        radial-gradient(circle at bottom left, rgba(226, 171, 78, 0.15), transparent 40%),
+        radial-gradient(circle at top right, rgba(15, 103, 114, 0.11), transparent 46%),
+        radial-gradient(circle at bottom left, rgba(219, 188, 138, 0.16), transparent 42%),
         var(--bg);
     }
 
@@ -47,29 +48,100 @@
     }
 
     .layout {
-      width: min(1240px, 94vw);
+      width: min(1720px, calc(100vw - 28px));
       margin: 0 auto;
-      padding: 36px 0 72px;
+      padding: 18px 0 54px;
       display: grid;
-      grid-template-columns: 260px minmax(0, 1fr);
-      gap: 24px;
+      grid-template-columns: 292px minmax(0, 1fr);
+      gap: 20px;
+      transition: grid-template-columns 0.2s ease;
+    }
+
+    .layout.toc-collapsed {
+      grid-template-columns: 64px minmax(0, 1fr);
     }
 
     .nav {
       position: sticky;
-      top: 20px;
+      top: 14px;
       align-self: start;
+      max-height: calc(100vh - 28px);
+      overflow: auto;
       background: var(--panel);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 16px;
+      padding: 16px 14px;
       box-shadow: var(--shadow);
+    }
+
+    .nav__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
     }
 
     .nav h2 {
       font-family: "Space Grotesk", "IBM Plex Sans", sans-serif;
-      font-size: 1.1rem;
-      margin: 0 0 12px;
+      font-size: 1rem;
+      margin: 0;
+    }
+
+    .nav__toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 6px 8px;
+      border-radius: 8px;
+      border: 1px solid #9cbec4;
+      background: linear-gradient(140deg, #f8fdff 0%, #eaf4f7 100%);
+      color: #1b5760;
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      line-height: 1;
+      cursor: pointer;
+      transition: background-color 0.16s ease, border-color 0.16s ease;
+    }
+
+    .nav__toggle:hover {
+      border-color: #739ca4;
+      background: linear-gradient(140deg, #ffffff 0%, #e1f0f4 100%);
+    }
+
+    .nav__toggle .toggle-arrow {
+      font-size: 0.98rem;
+      line-height: 1;
+    }
+
+    .layout.toc-collapsed .nav {
+      padding: 10px 8px;
+      overflow: visible;
+      max-height: none;
+    }
+
+    .layout.toc-collapsed .nav__head {
+      margin: 0;
+      justify-content: center;
+    }
+
+    .layout.toc-collapsed .nav h2,
+    .layout.toc-collapsed .nav ul {
+      display: none;
+    }
+
+    .layout.toc-collapsed .nav__toggle {
+      width: 100%;
+      min-height: 38px;
+      padding: 6px;
+      border-radius: 9px;
+      gap: 0;
+    }
+
+    .layout.toc-collapsed .nav__toggle .toggle-text {
+      display: none;
     }
 
     .nav ul {
@@ -77,12 +149,30 @@
       padding: 0;
       list-style: none;
       display: grid;
-      gap: 10px;
+      gap: 7px;
+    }
+
+    .nav a {
+      display: block;
+      padding: 8px 10px;
+      border-radius: 8px;
+      color: #294456;
+      font-size: 0.92rem;
+      font-weight: 500;
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: background-color 0.18s ease, border-color 0.18s ease;
+    }
+
+    .nav a:hover {
+      background: var(--panel-soft);
+      border-color: var(--border);
+      text-decoration: none;
     }
 
     .content {
       display: grid;
-      gap: 22px;
+      gap: 16px;
     }
 
     .hero,
@@ -90,14 +180,19 @@
       background: var(--panel);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 24px;
+      padding: 22px 24px;
       box-shadow: var(--shadow);
+    }
+
+    .hero {
+      display: grid;
+      gap: 14px;
     }
 
     .hero h1 {
       font-family: "Space Grotesk", "IBM Plex Sans", sans-serif;
-      margin: 0 0 10px;
-      font-size: clamp(1.9rem, 2.8vw, 2.7rem);
+      margin: 0;
+      font-size: clamp(2rem, 2.7vw, 3rem);
       letter-spacing: -0.01em;
     }
 
@@ -105,54 +200,88 @@
       margin: 0;
       color: var(--muted);
       line-height: 1.6;
+      max-width: 92ch;
     }
 
     .stats {
-      margin-top: 16px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+      margin-top: 2px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 8px;
     }
 
     .stat {
       border: 1px solid var(--border);
       background: var(--panel-soft);
-      border-radius: 999px;
-      padding: 6px 12px;
+      border-radius: 9px;
+      padding: 8px 10px;
       font-size: 0.9rem;
       color: var(--accent);
       font-weight: 600;
+      min-width: 0;
+    }
+
+    .stat--namespace {
+      grid-column: 1 / -1;
+      display: grid;
+      gap: 4px;
+    }
+
+    .stat--namespace code {
+      display: block;
+      max-width: 100%;
+      white-space: normal;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      font-size: 0.82rem;
+      line-height: 1.35;
     }
 
     .actions {
-      margin-top: 18px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+      margin-top: 2px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 8px;
+      align-items: stretch;
+    }
+
+    .actions .btn {
+      width: 100%;
+      min-height: 40px;
+      padding: 10px 12px;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 10px 16px;
-      border-radius: 999px;
+      padding: 9px 13px;
+      border-radius: 10px;
       border: 1px solid var(--border);
       font-weight: 600;
+      font-size: 0.9rem;
       background: #fff;
       color: var(--accent);
+      transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      text-decoration: none;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 16px rgba(16, 42, 62, 0.14);
     }
 
     .btn--primary {
       border-color: transparent;
-      background: var(--accent);
+      background: linear-gradient(135deg, #187683 0%, var(--accent) 100%);
       color: #fff;
     }
 
     .section h2 {
       font-family: "Space Grotesk", "IBM Plex Sans", sans-serif;
-      margin: 0 0 12px;
-      font-size: 1.4rem;
+      margin: 0 0 10px;
+      font-size: 1.32rem;
     }
 
     .section p {
@@ -163,23 +292,148 @@
 
     .panel-note {
       margin-top: 12px;
-      border-left: 4px solid var(--accent);
-      background: var(--panel-soft);
-      padding: 12px;
-      border-radius: 10px;
+      border: 1px solid #cae1e6;
+      background: linear-gradient(180deg, #f7fcfd 0%, #eff7f9 100%);
+      padding: 12px 14px;
+      border-radius: 9px;
       color: var(--muted);
       font-size: 0.95rem;
     }
 
     .tree {
       margin: 12px 0 0;
-      padding: 12px;
+      padding: 14px;
       border-radius: var(--radius-md);
-      background: #0d1b26;
-      color: #dfefff;
+      background: #0f1b26;
+      color: #e4f0ff;
       overflow: auto;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       line-height: 1.5;
+    }
+
+    .hierarchy-switch {
+      margin-top: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #f7fafc;
+    }
+
+    .hierarchy-switch__btn {
+      border: 1px solid transparent;
+      border-radius: 8px;
+      background: transparent;
+      color: #2a4b60;
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+      font-size: 0.84rem;
+      font-weight: 700;
+      padding: 6px 10px;
+      cursor: pointer;
+      transition: background-color 0.16s ease, border-color 0.16s ease;
+    }
+
+    .hierarchy-switch__btn:hover {
+      background: #edf4f8;
+      border-color: #c9d8e5;
+    }
+
+    .hierarchy-switch__btn.active {
+      background: linear-gradient(135deg, #177786 0%, #0f6772 100%);
+      color: #fff;
+      border-color: transparent;
+    }
+
+    .hierarchy-panel {
+      display: none;
+    }
+
+    .hierarchy-panel.active {
+      display: block;
+    }
+
+    .hierarchy-diagram {
+      margin-top: 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: #f9fcff;
+      padding: 12px;
+    }
+
+    .hierarchy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 10px;
+    }
+
+    .hierarchy-card {
+      border: 1px solid #d7e2ec;
+      border-radius: 10px;
+      background: #fff;
+      padding: 10px 11px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .hierarchy-card h3 {
+      margin: 0;
+      font-size: 0.96rem;
+      color: #1f475d;
+      font-family: "Space Grotesk", "IBM Plex Sans", sans-serif;
+    }
+
+    .hierarchy-track {
+      display: grid;
+      gap: 5px;
+      position: relative;
+    }
+
+    .h-node {
+      display: block;
+      border: 1px solid #bfd5e1;
+      border-radius: 8px;
+      background: #f8fcff;
+      padding: 6px 8px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: #1f5461;
+      text-decoration: none;
+    }
+
+    .h-node:hover {
+      border-color: #8fb5c3;
+      background: #f1f8fc;
+      text-decoration: none;
+    }
+
+    .h-node .meta {
+      display: block;
+      margin-top: 2px;
+      font-size: 0.73rem;
+      font-weight: 500;
+      color: #5d7588;
+    }
+
+    .h-link {
+      display: inline-flex;
+      align-self: center;
+      justify-self: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid #d4e2ec;
+      background: #f3f8fb;
+      color: #4e687a;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .h-children {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 6px;
     }
 
     .table-wrap {
@@ -187,12 +441,13 @@
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
       margin-top: 12px;
+      background: #fff;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 900px;
+      min-width: 840px;
       background: #fff;
     }
 
@@ -202,7 +457,7 @@
       text-align: left;
       vertical-align: top;
       padding: 10px 12px;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       line-height: 1.45;
     }
 
@@ -210,6 +465,13 @@
       background: #edf5f8;
       color: #234;
       font-weight: 600;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    tbody tr:nth-child(even) td {
+      background: #fbfdff;
     }
 
     code {
@@ -233,39 +495,88 @@
       white-space: nowrap;
     }
 
+    .term-row {
+      scroll-margin-top: 12px;
+    }
+
+    .term-row:target td {
+      background: #fff8d9;
+      box-shadow: inset 3px 0 0 #dfb84f;
+    }
+
     .footer {
       color: var(--muted);
       font-size: 0.9rem;
       text-align: center;
-      padding: 4px 0;
+      padding: 6px 0;
     }
 
-    @media (max-width: 980px) {
+    @media (max-width: 1160px) {
       .layout {
+        width: min(1400px, calc(100vw - 20px));
+        grid-template-columns: 248px minmax(0, 1fr);
+        gap: 14px;
+      }
+
+      table {
+        min-width: 760px;
+      }
+    }
+
+    @media (max-width: 920px) {
+      .layout {
+        grid-template-columns: 1fr;
+        width: min(1200px, calc(100vw - 16px));
+      }
+
+      .layout.toc-collapsed {
         grid-template-columns: 1fr;
       }
 
       .nav {
         position: static;
+        max-height: none;
+      }
+
+      .layout.toc-collapsed .nav {
+        padding: 10px 12px;
+      }
+
+      .hero,
+      .section {
+        padding: 18px;
       }
 
       table {
-        min-width: 780px;
+        min-width: 700px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .actions {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
   <div class="layout">
-    <nav class="nav" aria-label="Page sections">
-      <h2>On This Page</h2>
-      <ul>
+    <nav class="nav" id="page-toc" aria-label="Page sections">
+      <div class="nav__head">
+        <h2>On This Page</h2>
+        <button id="toc-toggle" class="nav__toggle" type="button" aria-controls="page-toc" aria-expanded="true" aria-label="Hide On This Page">
+          <span class="toggle-arrow" aria-hidden="true">‹</span>
+          <span class="toggle-text">Hide</span>
+        </button>
+      </div>
+      <ul class="nav__list">
         <li><a href="#overview">Overview</a></li>
         <li><a href="#hierarchy">Class Hierarchy</a></li>
         <li><a href="#classes">Classes</a></li>
         <li><a href="#object-properties">Object Properties</a></li>
         <li><a href="#datatype-properties">Datatype Properties</a></li>
         <li><a href="#annotation-properties">Annotation Properties</a></li>
+        <li><a href="#shacl">SHACL Validation Shapes</a></li>
         <li><a href="#external">External Ontology Usage</a></li>
         <li><a href="#crosswalk">VCF Crosswalk</a></li>
       </ul>
@@ -280,7 +591,7 @@
           and per-sample calls in RDF.
         </p>
         <div class="stats">
-          <span class="stat">Namespace: <code>https://w3id.org/vcf-rdfizer/vocab#</code></span>
+          <span class="stat stat--namespace">Namespace <code>https://w3id.org/vcf-rdfizer/vocab#</code></span>
           <span class="stat">29 classes</span>
           <span class="stat">11 object properties</span>
           <span class="stat">31 datatype properties</span>
@@ -289,6 +600,7 @@
         <div class="actions">
           <a class="btn btn--primary" href="index.html">Back to Home</a>
           <a class="btn" href="ontology-graph.html">Open Relationship Graph</a>
+          <a class="btn" href="terms/index.html">Open Term Pages</a>
           <a class="btn" href="assets/vcf-rdfizer-vocabulary.ttl" target="_blank" rel="noreferrer">Open Ontology TTL</a>
           <a class="btn" href="assets/vcf-rdfizer-vocabulary.shacl.ttl" target="_blank" rel="noreferrer">Open SHACL TTL</a>
         </div>
@@ -300,7 +612,88 @@
           This hierarchy summarizes the core design: file/header representation, record/call structure,
           and typed definitions for INFO/FORMAT/FILTER/ALT metadata.
         </p>
-        <pre class="tree">vcfr:VCFFile
+        <div class="hierarchy-switch" role="tablist" aria-label="Hierarchy view selector">
+          <button class="hierarchy-switch__btn active" type="button" data-hierarchy-view="diagram" aria-selected="true">Diagram</button>
+          <button class="hierarchy-switch__btn" type="button" data-hierarchy-view="raw" aria-selected="false">Raw Text</button>
+        </div>
+
+        <div class="hierarchy-panel active" data-hierarchy-panel="diagram">
+          <div class="hierarchy-diagram">
+            <div class="hierarchy-grid">
+              <article class="hierarchy-card">
+                <h3>File + Header Model</h3>
+                <div class="hierarchy-track">
+                  <a class="h-node" href="terms/VCFFile.html">vcfr:VCFFile<span class="meta">subClassOf dcat:Distribution, prov:Entity</span></a>
+                  <span class="h-link">hasHeader</span>
+                  <a class="h-node" href="terms/VCFHeader.html">vcfr:VCFHeader</a>
+                  <span class="h-link">hasHeaderLine</span>
+                  <a class="h-node" href="terms/HeaderLine.html">vcfr:HeaderLine</a>
+                  <div class="h-children">
+                    <a class="h-node" href="terms/FileFormatHeaderLine.html">vcfr:FileFormatHeaderLine</a>
+                    <a class="h-node" href="terms/FileDateHeaderLine.html">vcfr:FileDateHeaderLine</a>
+                    <a class="h-node" href="terms/SourceHeaderLine.html">vcfr:SourceHeaderLine</a>
+                    <a class="h-node" href="terms/ReferenceHeaderLine.html">vcfr:ReferenceHeaderLine</a>
+                    <a class="h-node" href="terms/ContigHeaderLine.html">vcfr:ContigHeaderLine</a>
+                    <a class="h-node" href="terms/INFOHeaderLine.html">vcfr:INFOHeaderLine</a>
+                    <a class="h-node" href="terms/FORMATHeaderLine.html">vcfr:FORMATHeaderLine</a>
+                    <a class="h-node" href="terms/FILTERHeaderLine.html">vcfr:FILTERHeaderLine</a>
+                    <a class="h-node" href="terms/ALTHeaderLine.html">vcfr:ALTHeaderLine</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="hierarchy-card">
+                <h3>Record + Call Model</h3>
+                <div class="hierarchy-track">
+                  <a class="h-node" href="terms/VCFRecord.html">vcfr:VCFRecord<span class="meta">subClassOf prov:Entity</span></a>
+                  <span class="h-link">hasCall</span>
+                  <a class="h-node" href="terms/VariantCall.html">vcfr:VariantCall<span class="meta">subClassOf prov:Entity</span></a>
+                  <span class="h-link">hasSampleCall</span>
+                  <a class="h-node" href="terms/SampleCall.html">vcfr:SampleCall<span class="meta">subClassOf prov:Entity</span></a>
+                </div>
+              </article>
+
+              <article class="hierarchy-card">
+                <h3>Definition Line Model</h3>
+                <div class="hierarchy-track">
+                  <a class="h-node" href="terms/FieldDefinition.html">vcfr:FieldDefinition<span class="meta">subClassOf vcfr:HeaderLine</span></a>
+                  <div class="h-children">
+                    <a class="h-node" href="terms/InfoFieldDefinition.html">vcfr:InfoFieldDefinition</a>
+                    <a class="h-node" href="terms/FormatFieldDefinition.html">vcfr:FormatFieldDefinition</a>
+                    <a class="h-node" href="terms/FilterDefinition.html">vcfr:FilterDefinition</a>
+                    <a class="h-node" href="terms/AltDefinition.html">vcfr:AltDefinition</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="hierarchy-card">
+                <h3>Value Nodes</h3>
+                <div class="hierarchy-track">
+                  <a class="h-node" href="terms/InfoFieldValue.html">vcfr:InfoFieldValue</a>
+                  <a class="h-node" href="terms/FormatFieldValue.html">vcfr:FormatFieldValue</a>
+                </div>
+              </article>
+
+              <article class="hierarchy-card">
+                <h3>Type Enumerations</h3>
+                <div class="hierarchy-track">
+                  <a class="h-node" href="terms/VCFValueType.html">vcfr:VCFValueType</a>
+                  <div class="h-children">
+                    <a class="h-node" href="terms/IntegerType.html">vcfr:IntegerType</a>
+                    <a class="h-node" href="terms/FloatType.html">vcfr:FloatType</a>
+                    <a class="h-node" href="terms/FlagType.html">vcfr:FlagType</a>
+                    <a class="h-node" href="terms/CharacterType.html">vcfr:CharacterType</a>
+                    <a class="h-node" href="terms/StringType.html">vcfr:StringType</a>
+                  </div>
+                  <a class="h-node" href="terms/VCFNumberArity.html">vcfr:VCFNumberArity</a>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <div class="hierarchy-panel" data-hierarchy-panel="raw">
+          <pre class="tree">vcfr:VCFFile
   subclass of dcat:Distribution, prov:Entity
 
 vcfr:VCFHeader
@@ -336,6 +729,7 @@ vcfr:VCFValueType
   - vcfr:StringType
 
 vcfr:VCFNumberArity</pre>
+        </div>
       </section>
 
       <section class="section" id="classes">
@@ -352,204 +746,204 @@ vcfr:VCFNumberArity</pre>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#VCFFile">vcfr:VCFFile</a></td>
+              <tr id="term-VCFFile" class="term-row">
+                <td><a href="terms/VCFFile.html">vcfr:VCFFile</a></td>
                 <td>VCF file</td>
                 <td>VCF file artifact containing one header and zero or more VCF records.</td>
                 <td><a href="http://www.w3.org/ns/dcat#Distribution">dcat:Distribution</a>, <a href="http://www.w3.org/ns/prov#Entity">prov:Entity</a></td>
                 <td><span class="tag">DCAT</span><span class="tag">PROV-O</span></td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#VCFHeader">vcfr:VCFHeader</a></td>
+              <tr id="term-VCFHeader" class="term-row">
+                <td><a href="terms/VCFHeader.html">vcfr:VCFHeader</a></td>
                 <td>VCF header</td>
                 <td>Container for structured VCF header lines.</td>
                 <td>-</td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#HeaderLine">vcfr:HeaderLine</a></td>
+              <tr id="term-HeaderLine" class="term-row">
+                <td><a href="terms/HeaderLine.html">vcfr:HeaderLine</a></td>
                 <td>VCF header line</td>
                 <td>One structured VCF header line such as <code>##INFO</code> or <code>##contig</code>.</td>
                 <td>-</td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#FileFormatHeaderLine">vcfr:FileFormatHeaderLine</a></td>
+              <tr id="term-FileFormatHeaderLine" class="term-row">
+                <td><a href="terms/FileFormatHeaderLine.html">vcfr:FileFormatHeaderLine</a></td>
                 <td>fileformat header line</td>
                 <td>Specialized header line for <code>##fileformat</code>.</td>
                 <td><code>vcfr:HeaderLine</code></td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#FileDateHeaderLine">vcfr:FileDateHeaderLine</a></td>
+              <tr id="term-FileDateHeaderLine" class="term-row">
+                <td><a href="terms/FileDateHeaderLine.html">vcfr:FileDateHeaderLine</a></td>
                 <td>fileDate header line</td>
                 <td>Specialized header line for <code>##fileDate</code>.</td>
                 <td><code>vcfr:HeaderLine</code></td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#SourceHeaderLine">vcfr:SourceHeaderLine</a></td>
+              <tr id="term-SourceHeaderLine" class="term-row">
+                <td><a href="terms/SourceHeaderLine.html">vcfr:SourceHeaderLine</a></td>
                 <td>source header line</td>
                 <td>Specialized header line for <code>##source</code>.</td>
                 <td><code>vcfr:HeaderLine</code></td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#ReferenceHeaderLine">vcfr:ReferenceHeaderLine</a></td>
+              <tr id="term-ReferenceHeaderLine" class="term-row">
+                <td><a href="terms/ReferenceHeaderLine.html">vcfr:ReferenceHeaderLine</a></td>
                 <td>reference header line</td>
                 <td>Specialized header line for <code>##reference</code>.</td>
                 <td><code>vcfr:HeaderLine</code></td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#ContigHeaderLine">vcfr:ContigHeaderLine</a></td>
+              <tr id="term-ContigHeaderLine" class="term-row">
+                <td><a href="terms/ContigHeaderLine.html">vcfr:ContigHeaderLine</a></td>
                 <td>contig header line</td>
                 <td>Structured representation of <code>##contig=&lt;...&gt;</code> metadata.</td>
                 <td><code>vcfr:HeaderLine</code></td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#INFOHeaderLine">vcfr:INFOHeaderLine</a></td>
+              <tr id="term-INFOHeaderLine" class="term-row">
+                <td><a href="terms/INFOHeaderLine.html">vcfr:INFOHeaderLine</a></td>
                 <td>INFO header line</td>
                 <td>Structured representation of <code>##INFO=&lt;...&gt;</code> definition metadata.</td>
                 <td><code>vcfr:HeaderLine</code></td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#FORMATHeaderLine">vcfr:FORMATHeaderLine</a></td>
+              <tr id="term-FORMATHeaderLine" class="term-row">
+                <td><a href="terms/FORMATHeaderLine.html">vcfr:FORMATHeaderLine</a></td>
                 <td>FORMAT header line</td>
                 <td>Structured representation of <code>##FORMAT=&lt;...&gt;</code> definition metadata.</td>
                 <td><code>vcfr:HeaderLine</code></td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#FILTERHeaderLine">vcfr:FILTERHeaderLine</a></td>
+              <tr id="term-FILTERHeaderLine" class="term-row">
+                <td><a href="terms/FILTERHeaderLine.html">vcfr:FILTERHeaderLine</a></td>
                 <td>FILTER header line</td>
                 <td>Structured representation of <code>##FILTER=&lt;...&gt;</code>.</td>
                 <td><code>vcfr:HeaderLine</code></td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#ALTHeaderLine">vcfr:ALTHeaderLine</a></td>
+              <tr id="term-ALTHeaderLine" class="term-row">
+                <td><a href="terms/ALTHeaderLine.html">vcfr:ALTHeaderLine</a></td>
                 <td>ALT header line</td>
                 <td>Structured representation of symbolic ALT allele metadata from <code>##ALT=&lt;...&gt;</code>.</td>
                 <td><code>vcfr:HeaderLine</code></td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#VCFRecord">vcfr:VCFRecord</a></td>
+              <tr id="term-VCFRecord" class="term-row">
+                <td><a href="terms/VCFRecord.html">vcfr:VCFRecord</a></td>
                 <td>VCF record</td>
                 <td>One VCF row (CHROM, POS, ID, REF, ALT, and associated call-level data).</td>
                 <td><a href="http://www.w3.org/ns/prov#Entity">prov:Entity</a></td>
                 <td><span class="tag">PROV-O</span></td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#VariantCall">vcfr:VariantCall</a></td>
+              <tr id="term-VariantCall" class="term-row">
+                <td><a href="terms/VariantCall.html">vcfr:VariantCall</a></td>
                 <td>variant call</td>
                 <td>Call-level representation of QUAL, FILTER, INFO, FORMAT, and sample calls.</td>
                 <td><a href="http://www.w3.org/ns/prov#Entity">prov:Entity</a></td>
                 <td><span class="tag">PROV-O</span></td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#SampleCall">vcfr:SampleCall</a></td>
+              <tr id="term-SampleCall" class="term-row">
+                <td><a href="terms/SampleCall.html">vcfr:SampleCall</a></td>
                 <td>sample call</td>
                 <td>Per-sample call values for a variant call (for example GT, DP, AD).</td>
                 <td><a href="http://www.w3.org/ns/prov#Entity">prov:Entity</a></td>
                 <td><span class="tag">PROV-O</span></td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#FieldDefinition">vcfr:FieldDefinition</a></td>
+              <tr id="term-FieldDefinition" class="term-row">
+                <td><a href="terms/FieldDefinition.html">vcfr:FieldDefinition</a></td>
                 <td>field definition</td>
                 <td>Superclass for INFO, FORMAT, FILTER, and ALT definition lines.</td>
                 <td><code>vcfr:HeaderLine</code></td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#InfoFieldDefinition">vcfr:InfoFieldDefinition</a></td>
+              <tr id="term-InfoFieldDefinition" class="term-row">
+                <td><a href="terms/InfoFieldDefinition.html">vcfr:InfoFieldDefinition</a></td>
                 <td>INFO field definition</td>
                 <td>Definition line for INFO keys.</td>
                 <td><code>vcfr:FieldDefinition</code>, <code>vcfr:INFOHeaderLine</code></td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#FormatFieldDefinition">vcfr:FormatFieldDefinition</a></td>
+              <tr id="term-FormatFieldDefinition" class="term-row">
+                <td><a href="terms/FormatFieldDefinition.html">vcfr:FormatFieldDefinition</a></td>
                 <td>FORMAT field definition</td>
                 <td>Definition line for FORMAT keys.</td>
                 <td><code>vcfr:FieldDefinition</code>, <code>vcfr:FORMATHeaderLine</code></td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#FilterDefinition">vcfr:FilterDefinition</a></td>
+              <tr id="term-FilterDefinition" class="term-row">
+                <td><a href="terms/FilterDefinition.html">vcfr:FilterDefinition</a></td>
                 <td>FILTER definition</td>
                 <td>Definition line for FILTER identifiers.</td>
                 <td><code>vcfr:FieldDefinition</code>, <code>vcfr:FILTERHeaderLine</code></td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#AltDefinition">vcfr:AltDefinition</a></td>
+              <tr id="term-AltDefinition" class="term-row">
+                <td><a href="terms/AltDefinition.html">vcfr:AltDefinition</a></td>
                 <td>ALT definition</td>
                 <td>Definition line for symbolic ALT alleles.</td>
                 <td><code>vcfr:FieldDefinition</code>, <code>vcfr:ALTHeaderLine</code></td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#InfoFieldValue">vcfr:InfoFieldValue</a></td>
+              <tr id="term-InfoFieldValue" class="term-row">
+                <td><a href="terms/InfoFieldValue.html">vcfr:InfoFieldValue</a></td>
                 <td>INFO field value</td>
                 <td>Structured key/value node for a single INFO attribute in a call.</td>
                 <td>-</td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#FormatFieldValue">vcfr:FormatFieldValue</a></td>
+              <tr id="term-FormatFieldValue" class="term-row">
+                <td><a href="terms/FormatFieldValue.html">vcfr:FormatFieldValue</a></td>
                 <td>FORMAT field value</td>
                 <td>Structured key/value node for a single FORMAT attribute in a sample call.</td>
                 <td>-</td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#VCFValueType">vcfr:VCFValueType</a></td>
+              <tr id="term-VCFValueType" class="term-row">
+                <td><a href="terms/VCFValueType.html">vcfr:VCFValueType</a></td>
                 <td>VCF value type</td>
                 <td>Enumeration superclass for VCF <code>Type</code> values in INFO/FORMAT definitions.</td>
                 <td>-</td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#IntegerType">vcfr:IntegerType</a></td>
+              <tr id="term-IntegerType" class="term-row">
+                <td><a href="terms/IntegerType.html">vcfr:IntegerType</a></td>
                 <td>Integer</td>
                 <td>Enumeration value for integer typed fields.</td>
                 <td><code>vcfr:VCFValueType</code></td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#FloatType">vcfr:FloatType</a></td>
+              <tr id="term-FloatType" class="term-row">
+                <td><a href="terms/FloatType.html">vcfr:FloatType</a></td>
                 <td>Float</td>
                 <td>Enumeration value for decimal/float typed fields.</td>
                 <td><code>vcfr:VCFValueType</code></td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#FlagType">vcfr:FlagType</a></td>
+              <tr id="term-FlagType" class="term-row">
+                <td><a href="terms/FlagType.html">vcfr:FlagType</a></td>
                 <td>Flag</td>
                 <td>Enumeration value for boolean-style flag fields.</td>
                 <td><code>vcfr:VCFValueType</code></td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#CharacterType">vcfr:CharacterType</a></td>
+              <tr id="term-CharacterType" class="term-row">
+                <td><a href="terms/CharacterType.html">vcfr:CharacterType</a></td>
                 <td>Character</td>
                 <td>Enumeration value for single-character fields.</td>
                 <td><code>vcfr:VCFValueType</code></td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#StringType">vcfr:StringType</a></td>
+              <tr id="term-StringType" class="term-row">
+                <td><a href="terms/StringType.html">vcfr:StringType</a></td>
                 <td>String</td>
                 <td>Enumeration value for string fields.</td>
                 <td><code>vcfr:VCFValueType</code></td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#VCFNumberArity">vcfr:VCFNumberArity</a></td>
+              <tr id="term-VCFNumberArity" class="term-row">
+                <td><a href="terms/VCFNumberArity.html">vcfr:VCFNumberArity</a></td>
                 <td>VCF Number arity</td>
                 <td>Represents VCF <code>Number</code> patterns (for example <code>1</code>, <code>A</code>, <code>R</code>, <code>G</code>, <code>.</code>).</td>
                 <td>-</td>
@@ -574,78 +968,78 @@ vcfr:VCFNumberArity</pre>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#hasHeader">vcfr:hasHeader</a></td>
+              <tr id="term-hasHeader" class="term-row">
+                <td><a href="terms/hasHeader.html">vcfr:hasHeader</a></td>
                 <td><code>vcfr:VCFFile</code></td>
                 <td><code>vcfr:VCFHeader</code></td>
                 <td>Connects a file artifact to its structured header container.</td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#hasHeaderLine">vcfr:hasHeaderLine</a></td>
+              <tr id="term-hasHeaderLine" class="term-row">
+                <td><a href="terms/hasHeaderLine.html">vcfr:hasHeaderLine</a></td>
                 <td><code>vcfr:VCFHeader</code></td>
                 <td><code>vcfr:HeaderLine</code></td>
                 <td>Attaches any concrete header line instance to a VCF header.</td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#hasRecord">vcfr:hasRecord</a></td>
+              <tr id="term-hasRecord" class="term-row">
+                <td><a href="terms/hasRecord.html">vcfr:hasRecord</a></td>
                 <td><code>vcfr:VCFFile</code></td>
                 <td><code>vcfr:VCFRecord</code></td>
                 <td>Connects a file to its rows (VCF records).</td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#hasCall">vcfr:hasCall</a></td>
+              <tr id="term-hasCall" class="term-row">
+                <td><a href="terms/hasCall.html">vcfr:hasCall</a></td>
                 <td><code>vcfr:VCFRecord</code></td>
                 <td><code>vcfr:VariantCall</code></td>
                 <td>Connects a row-level record to a call-level representation.</td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#hasSampleCall">vcfr:hasSampleCall</a></td>
+              <tr id="term-hasSampleCall" class="term-row">
+                <td><a href="terms/hasSampleCall.html">vcfr:hasSampleCall</a></td>
                 <td><code>vcfr:VariantCall</code></td>
                 <td><code>vcfr:SampleCall</code></td>
                 <td>Connects a call to per-sample call nodes.</td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#hasInfoValue">vcfr:hasInfoValue</a></td>
+              <tr id="term-hasInfoValue" class="term-row">
+                <td><a href="terms/hasInfoValue.html">vcfr:hasInfoValue</a></td>
                 <td><code>vcfr:VariantCall</code></td>
                 <td><code>vcfr:InfoFieldValue</code></td>
                 <td>Attaches structured INFO values to a variant call.</td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#hasFormatValue">vcfr:hasFormatValue</a></td>
+              <tr id="term-hasFormatValue" class="term-row">
+                <td><a href="terms/hasFormatValue.html">vcfr:hasFormatValue</a></td>
                 <td><code>vcfr:SampleCall</code></td>
                 <td><code>vcfr:FormatFieldValue</code></td>
                 <td>Attaches structured FORMAT values to a sample call.</td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#declaredBy">vcfr:declaredBy</a></td>
+              <tr id="term-declaredBy" class="term-row">
+                <td><a href="terms/declaredBy.html">vcfr:declaredBy</a></td>
                 <td>Not constrained in ontology</td>
                 <td><code>vcfr:FieldDefinition</code></td>
                 <td>Links INFO/FORMAT/FILTER/ALT usage nodes to the matching header definition.</td>
                 <td>-</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#chromosome">vcfr:chromosome</a></td>
+              <tr id="term-chromosome" class="term-row">
+                <td><a href="terms/chromosome.html">vcfr:chromosome</a></td>
                 <td>Not constrained in ontology</td>
                 <td><code>vcfr:ContigHeaderLine</code></td>
                 <td>References the contig context for a CHROM value.</td>
                 <td>Comment recommends FALDO-compatible references.</td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#asSequenceAlteration">vcfr:asSequenceAlteration</a></td>
+              <tr id="term-asSequenceAlteration" class="term-row">
+                <td><a href="terms/asSequenceAlteration.html">vcfr:asSequenceAlteration</a></td>
                 <td>Not constrained in ontology</td>
                 <td><a href="http://purl.obolibrary.org/obo/SO_0001059">so:0001059</a></td>
                 <td>Bridges VCF-centric entities to external sequence alteration representations.</td>
                 <td><span class="tag">SO</span><span class="tag">SB/gvar alignment</span></td>
               </tr>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#fieldType">vcfr:fieldType</a></td>
+              <tr id="term-fieldType" class="term-row">
+                <td><a href="terms/fieldType.html">vcfr:fieldType</a></td>
                 <td><code>vcfr:FieldDefinition</code></td>
                 <td><code>vcfr:VCFValueType</code></td>
                 <td>Declares the VCF Type enum for INFO/FORMAT definitions.</td>
@@ -677,44 +1071,44 @@ vcfr:VCFNumberArity</pre>
               </tr>
             </thead>
             <tbody>
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#headerKey">vcfr:headerKey</a></td><td><code>vcfr:HeaderLine</code></td><td><code>xsd:string</code></td><td>Header key token for generic header modeling.</td></tr>
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#headerValue">vcfr:headerValue</a></td><td><code>vcfr:HeaderLine</code></td><td><code>xsd:string</code></td><td>Header value token for generic header modeling.</td></tr>
+              <tr id="term-headerKey" class="term-row"><td><a href="terms/headerKey.html">vcfr:headerKey</a></td><td><code>vcfr:HeaderLine</code></td><td><code>xsd:string</code></td><td>Header key token for generic header modeling.</td></tr>
+              <tr id="term-headerValue" class="term-row"><td><a href="terms/headerValue.html">vcfr:headerValue</a></td><td><code>vcfr:HeaderLine</code></td><td><code>xsd:string</code></td><td>Header value token for generic header modeling.</td></tr>
 
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#fileFormat">vcfr:fileFormat</a></td><td><code>vcfr:VCFFile</code></td><td><code>xsd:string</code></td><td>VCF version string (for example <code>VCFv4.2</code>).</td></tr>
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#fileDate">vcfr:fileDate</a></td><td><code>vcfr:VCFFile</code></td><td><code>xsd:date</code></td><td>File date header value.</td></tr>
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#sourceSoftware">vcfr:sourceSoftware</a></td><td><code>vcfr:VCFFile</code></td><td><code>xsd:string</code></td><td>Source tool/pipeline identifier.</td></tr>
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#referenceGenome">vcfr:referenceGenome</a></td><td><code>vcfr:VCFFile</code></td><td><code>xsd:string</code></td><td>Reference genome descriptor string.</td></tr>
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#contigCount">vcfr:contigCount</a></td><td><code>vcfr:VCFFile</code></td><td><code>xsd:integer</code></td><td>Optional count of declared contigs.</td></tr>
+              <tr id="term-fileFormat" class="term-row"><td><a href="terms/fileFormat.html">vcfr:fileFormat</a></td><td><code>vcfr:VCFFile</code></td><td><code>xsd:string</code></td><td>VCF version string (for example <code>VCFv4.2</code>).</td></tr>
+              <tr id="term-fileDate" class="term-row"><td><a href="terms/fileDate.html">vcfr:fileDate</a></td><td><code>vcfr:VCFFile</code></td><td><code>xsd:date</code></td><td>File date header value.</td></tr>
+              <tr id="term-sourceSoftware" class="term-row"><td><a href="terms/sourceSoftware.html">vcfr:sourceSoftware</a></td><td><code>vcfr:VCFFile</code></td><td><code>xsd:string</code></td><td>Source tool/pipeline identifier.</td></tr>
+              <tr id="term-referenceGenome" class="term-row"><td><a href="terms/referenceGenome.html">vcfr:referenceGenome</a></td><td><code>vcfr:VCFFile</code></td><td><code>xsd:string</code></td><td>Reference genome descriptor string.</td></tr>
+              <tr id="term-contigCount" class="term-row"><td><a href="terms/contigCount.html">vcfr:contigCount</a></td><td><code>vcfr:VCFFile</code></td><td><code>xsd:integer</code></td><td>Optional count of declared contigs.</td></tr>
 
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#contigId">vcfr:contigId</a></td><td><code>vcfr:ContigHeaderLine</code></td><td><code>xsd:string</code></td><td>Contig identifier from <code>##contig</code>.</td></tr>
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#contigLength">vcfr:contigLength</a></td><td><code>vcfr:ContigHeaderLine</code></td><td><code>xsd:integer</code></td><td>Contig length metadata.</td></tr>
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#contigAssembly">vcfr:contigAssembly</a></td><td><code>vcfr:ContigHeaderLine</code></td><td><code>xsd:string</code></td><td>Assembly string for a contig declaration.</td></tr>
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#contigMd5">vcfr:contigMd5</a></td><td><code>vcfr:ContigHeaderLine</code></td><td><code>xsd:string</code></td><td>MD5 hash value from the contig header line.</td></tr>
+              <tr id="term-contigId" class="term-row"><td><a href="terms/contigId.html">vcfr:contigId</a></td><td><code>vcfr:ContigHeaderLine</code></td><td><code>xsd:string</code></td><td>Contig identifier from <code>##contig</code>.</td></tr>
+              <tr id="term-contigLength" class="term-row"><td><a href="terms/contigLength.html">vcfr:contigLength</a></td><td><code>vcfr:ContigHeaderLine</code></td><td><code>xsd:integer</code></td><td>Contig length metadata.</td></tr>
+              <tr id="term-contigAssembly" class="term-row"><td><a href="terms/contigAssembly.html">vcfr:contigAssembly</a></td><td><code>vcfr:ContigHeaderLine</code></td><td><code>xsd:string</code></td><td>Assembly string for a contig declaration.</td></tr>
+              <tr id="term-contigMd5" class="term-row"><td><a href="terms/contigMd5.html">vcfr:contigMd5</a></td><td><code>vcfr:ContigHeaderLine</code></td><td><code>xsd:string</code></td><td>MD5 hash value from the contig header line.</td></tr>
 
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#fieldId">vcfr:fieldId</a></td><td><code>vcfr:FieldDefinition</code></td><td><code>xsd:string</code></td><td>INFO/FORMAT/FILTER/ALT field identifier.</td></tr>
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#fieldNumber">vcfr:fieldNumber</a></td><td><code>vcfr:FieldDefinition</code></td><td><code>xsd:string</code></td><td>VCF Number token (<code>0</code>, <code>1</code>, <code>A</code>, <code>R</code>, <code>G</code>, <code>.</code>).</td></tr>
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#fieldDescription">vcfr:fieldDescription</a></td><td><code>vcfr:FieldDefinition</code></td><td><code>xsd:string</code></td><td>Natural-language definition text.</td></tr>
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#filterId">vcfr:filterId</a></td><td><code>vcfr:FilterDefinition</code></td><td><code>xsd:string</code></td><td>FILTER-specific identifier.</td></tr>
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#altId">vcfr:altId</a></td><td><code>vcfr:AltDefinition</code></td><td><code>xsd:string</code></td><td>ALT-specific identifier for symbolic alleles.</td></tr>
+              <tr id="term-fieldId" class="term-row"><td><a href="terms/fieldId.html">vcfr:fieldId</a></td><td><code>vcfr:FieldDefinition</code></td><td><code>xsd:string</code></td><td>INFO/FORMAT/FILTER/ALT field identifier.</td></tr>
+              <tr id="term-fieldNumber" class="term-row"><td><a href="terms/fieldNumber.html">vcfr:fieldNumber</a></td><td><code>vcfr:FieldDefinition</code></td><td><code>xsd:string</code></td><td>VCF Number token (<code>0</code>, <code>1</code>, <code>A</code>, <code>R</code>, <code>G</code>, <code>.</code>).</td></tr>
+              <tr id="term-fieldDescription" class="term-row"><td><a href="terms/fieldDescription.html">vcfr:fieldDescription</a></td><td><code>vcfr:FieldDefinition</code></td><td><code>xsd:string</code></td><td>Natural-language definition text.</td></tr>
+              <tr id="term-filterId" class="term-row"><td><a href="terms/filterId.html">vcfr:filterId</a></td><td><code>vcfr:FilterDefinition</code></td><td><code>xsd:string</code></td><td>FILTER-specific identifier.</td></tr>
+              <tr id="term-altId" class="term-row"><td><a href="terms/altId.html">vcfr:altId</a></td><td><code>vcfr:AltDefinition</code></td><td><code>xsd:string</code></td><td>ALT-specific identifier for symbolic alleles.</td></tr>
 
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#chrom">vcfr:chrom</a></td><td><code>vcfr:VCFRecord</code></td><td><code>xsd:string</code></td><td>CHROM column value.</td></tr>
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#pos">vcfr:pos</a></td><td><code>vcfr:VCFRecord</code></td><td><code>xsd:integer</code></td><td>POS column value.</td></tr>
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#recordId">vcfr:recordId</a></td><td><code>vcfr:VCFRecord</code></td><td><code>xsd:string</code></td><td>ID column value (if present).</td></tr>
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#ref">vcfr:ref</a></td><td><code>vcfr:VCFRecord</code></td><td><code>xsd:string</code></td><td>REF allele.</td></tr>
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#alt">vcfr:alt</a></td><td><code>vcfr:VCFRecord</code></td><td><code>xsd:string</code></td><td>ALT allele string.</td></tr>
+              <tr id="term-chrom" class="term-row"><td><a href="terms/chrom.html">vcfr:chrom</a></td><td><code>vcfr:VCFRecord</code></td><td><code>xsd:string</code></td><td>CHROM column value.</td></tr>
+              <tr id="term-pos" class="term-row"><td><a href="terms/pos.html">vcfr:pos</a></td><td><code>vcfr:VCFRecord</code></td><td><code>xsd:integer</code></td><td>POS column value.</td></tr>
+              <tr id="term-recordId" class="term-row"><td><a href="terms/recordId.html">vcfr:recordId</a></td><td><code>vcfr:VCFRecord</code></td><td><code>xsd:string</code></td><td>ID column value (if present).</td></tr>
+              <tr id="term-ref" class="term-row"><td><a href="terms/ref.html">vcfr:ref</a></td><td><code>vcfr:VCFRecord</code></td><td><code>xsd:string</code></td><td>REF allele.</td></tr>
+              <tr id="term-alt" class="term-row"><td><a href="terms/alt.html">vcfr:alt</a></td><td><code>vcfr:VCFRecord</code></td><td><code>xsd:string</code></td><td>ALT allele string.</td></tr>
 
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#qual">vcfr:qual</a></td><td><code>vcfr:VariantCall</code></td><td><code>xsd:decimal</code></td><td>QUAL score.</td></tr>
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#filter">vcfr:filter</a></td><td><code>vcfr:VariantCall</code></td><td><code>xsd:string</code></td><td>FILTER value(s), optionally repeated as multiple literals.</td></tr>
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#infoRaw">vcfr:infoRaw</a></td><td><code>vcfr:VariantCall</code></td><td><code>xsd:string</code></td><td>Raw INFO column text.</td></tr>
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#formatRaw">vcfr:formatRaw</a></td><td><code>vcfr:VariantCall</code></td><td><code>xsd:string</code></td><td>Raw FORMAT column text.</td></tr>
+              <tr id="term-qual" class="term-row"><td><a href="terms/qual.html">vcfr:qual</a></td><td><code>vcfr:VariantCall</code></td><td><code>xsd:decimal</code></td><td>QUAL score.</td></tr>
+              <tr id="term-filter" class="term-row"><td><a href="terms/filter.html">vcfr:filter</a></td><td><code>vcfr:VariantCall</code></td><td><code>xsd:string</code></td><td>FILTER value(s), optionally repeated as multiple literals.</td></tr>
+              <tr id="term-infoRaw" class="term-row"><td><a href="terms/infoRaw.html">vcfr:infoRaw</a></td><td><code>vcfr:VariantCall</code></td><td><code>xsd:string</code></td><td>Raw INFO column text.</td></tr>
+              <tr id="term-formatRaw" class="term-row"><td><a href="terms/formatRaw.html">vcfr:formatRaw</a></td><td><code>vcfr:VariantCall</code></td><td><code>xsd:string</code></td><td>Raw FORMAT column text.</td></tr>
 
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#fieldKey">vcfr:fieldKey</a></td><td><code>rdf:Resource</code></td><td><code>xsd:string</code></td><td>Key token on INFO/FORMAT value nodes.</td></tr>
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#fieldValue">vcfr:fieldValue</a></td><td><code>rdf:Resource</code></td><td><code>xsd:string</code></td><td>String literal payload for generic values.</td></tr>
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#fieldValueInteger">vcfr:fieldValueInteger</a></td><td><code>rdf:Resource</code></td><td><code>xsd:integer</code></td><td>Typed integer payload.</td></tr>
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#fieldValueDecimal">vcfr:fieldValueDecimal</a></td><td><code>rdf:Resource</code></td><td><code>xsd:decimal</code></td><td>Typed decimal payload.</td></tr>
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#fieldValueBoolean">vcfr:fieldValueBoolean</a></td><td><code>rdf:Resource</code></td><td><code>xsd:boolean</code></td><td>Typed boolean payload.</td></tr>
+              <tr id="term-fieldKey" class="term-row"><td><a href="terms/fieldKey.html">vcfr:fieldKey</a></td><td><code>rdf:Resource</code></td><td><code>xsd:string</code></td><td>Key token on INFO/FORMAT value nodes.</td></tr>
+              <tr id="term-fieldValue" class="term-row"><td><a href="terms/fieldValue.html">vcfr:fieldValue</a></td><td><code>rdf:Resource</code></td><td><code>xsd:string</code></td><td>String literal payload for generic values.</td></tr>
+              <tr id="term-fieldValueInteger" class="term-row"><td><a href="terms/fieldValueInteger.html">vcfr:fieldValueInteger</a></td><td><code>rdf:Resource</code></td><td><code>xsd:integer</code></td><td>Typed integer payload.</td></tr>
+              <tr id="term-fieldValueDecimal" class="term-row"><td><a href="terms/fieldValueDecimal.html">vcfr:fieldValueDecimal</a></td><td><code>rdf:Resource</code></td><td><code>xsd:decimal</code></td><td>Typed decimal payload.</td></tr>
+              <tr id="term-fieldValueBoolean" class="term-row"><td><a href="terms/fieldValueBoolean.html">vcfr:fieldValueBoolean</a></td><td><code>rdf:Resource</code></td><td><code>xsd:boolean</code></td><td>Typed boolean payload.</td></tr>
 
-              <tr><td><a href="https://w3id.org/vcf-rdfizer/vocab#sampleId">vcfr:sampleId</a></td><td><code>vcfr:SampleCall</code></td><td><code>xsd:string</code></td><td>Sample identifier for a sample-call node.</td></tr>
+              <tr id="term-sampleId" class="term-row"><td><a href="terms/sampleId.html">vcfr:sampleId</a></td><td><code>vcfr:SampleCall</code></td><td><code>xsd:string</code></td><td>Sample identifier for a sample-call node.</td></tr>
             </tbody>
           </table>
         </div>
@@ -732,10 +1126,93 @@ vcfr:VCFNumberArity</pre>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td><a href="https://w3id.org/vcf-rdfizer/vocab#recommendedSequenceAlterationClass">vcfr:recommendedSequenceAlterationClass</a></td>
+              <tr id="term-recommendedSequenceAlterationClass" class="term-row">
+                <td><a href="terms/recommendedSequenceAlterationClass.html">vcfr:recommendedSequenceAlterationClass</a></td>
                 <td>Declares recommended external class usage for sequence-alteration alignment.</td>
                 <td><code>vcfr:recommendedSequenceAlterationClass vcfr:recommendedSequenceAlterationClass so:0001059 .</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="shacl">
+        <h2>SHACL Validation Shapes</h2>
+        <p>
+          The SHACL profile in <code>shacl/vcf-rdfizer-vocabulary.shacl.ttl</code> defines structural checks
+          for the core graph pattern. It validates class-specific requirements while still allowing incremental
+          conversion workflows (for example optional call details).
+        </p>
+
+        <div class="panel-note">
+          Current profile highlights: 9 node shapes, optional <code>vcfr:fieldKey</code> on value nodes, and
+          explicit support for typed null literals via <code>vcfr:Null</code> on selected fields.
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Node Shape</th>
+                <th>Targets</th>
+                <th>Required / constrained terms</th>
+                <th>Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>vcfr:VCFFileShape</code></td>
+                <td><code>vcfr:VCFFile</code></td>
+                <td><code>vcfr:hasHeader</code> exactly 1, <code>vcfr:fileFormat</code> required; optional <code>vcfr:fileDate</code>, <code>vcfr:referenceGenome</code>, <code>vcfr:hasRecord</code></td>
+                <td>Ensures every file resource has a valid header/file metadata baseline.</td>
+              </tr>
+              <tr>
+                <td><code>vcfr:VCFHeaderShape</code></td>
+                <td><code>vcfr:VCFHeader</code></td>
+                <td><code>vcfr:hasHeaderLine</code> at least one</td>
+                <td>Prevents empty header containers.</td>
+              </tr>
+              <tr>
+                <td><code>vcfr:InfoFieldDefinitionShape</code></td>
+                <td><code>vcfr:InfoFieldDefinition</code></td>
+                <td><code>vcfr:fieldId</code>, <code>vcfr:fieldNumber</code>, <code>vcfr:fieldDescription</code> required</td>
+                <td>Requires complete INFO definition metadata.</td>
+              </tr>
+              <tr>
+                <td><code>vcfr:FormatFieldDefinitionShape</code></td>
+                <td><code>vcfr:FormatFieldDefinition</code></td>
+                <td><code>vcfr:fieldId</code>, <code>vcfr:fieldNumber</code>, <code>vcfr:fieldDescription</code> required</td>
+                <td>Requires complete FORMAT definition metadata.</td>
+              </tr>
+              <tr>
+                <td><code>vcfr:VCFRecordShape</code></td>
+                <td><code>vcfr:VCFRecord</code></td>
+                <td>Required: <code>vcfr:chrom</code>, <code>vcfr:pos</code>, <code>vcfr:ref</code>, <code>vcfr:alt</code>; optional <code>vcfr:hasCall</code>, <code>vcfr:asSequenceAlteration</code></td>
+                <td>Validates row-level record integrity and optional external alignment bridge.</td>
+              </tr>
+              <tr>
+                <td><code>vcfr:VariantCallShape</code></td>
+                <td><code>vcfr:VariantCall</code></td>
+                <td>Optional <code>vcfr:qual</code> and <code>vcfr:filter</code> accept <code>xsd</code> values or <code>vcfr:Null</code>; optional links to INFO/sample values</td>
+                <td>Supports both populated and sparse call payloads with semantic nulls.</td>
+              </tr>
+              <tr>
+                <td><code>vcfr:SampleCallShape</code></td>
+                <td><code>vcfr:SampleCall</code></td>
+                <td><code>vcfr:sampleId</code> required; optional <code>vcfr:hasFormatValue</code></td>
+                <td>Enforces sample identity while allowing variable FORMAT coverage.</td>
+              </tr>
+              <tr>
+                <td><code>vcfr:InfoFieldValueShape</code></td>
+                <td><code>vcfr:InfoFieldValue</code></td>
+                <td>Optional <code>vcfr:fieldKey</code>; optional <code>vcfr:fieldValue</code> typed as <code>xsd:string</code> or <code>vcfr:Null</code>; optional <code>vcfr:declaredBy</code></td>
+                <td>Validates typed INFO value nodes without requiring a rigid minimum field set.</td>
+              </tr>
+              <tr>
+                <td><code>vcfr:FormatFieldValueShape</code></td>
+                <td><code>vcfr:FormatFieldValue</code></td>
+                <td>Optional <code>vcfr:fieldKey</code>; optional <code>vcfr:fieldValue</code> typed as <code>xsd:string</code> or <code>vcfr:Null</code>; optional <code>vcfr:declaredBy</code></td>
+                <td>Same value-node pattern as INFO, specialized for FORMAT payloads.</td>
               </tr>
             </tbody>
           </table>
@@ -865,5 +1342,100 @@ vcfr:VCFNumberArity</pre>
       </div>
     </main>
   </div>
+  <script>
+    (function setupTocToggle() {
+      const layout = document.querySelector(".layout");
+      const nav = document.getElementById("page-toc");
+      const toggle = document.getElementById("toc-toggle");
+      const storageKey = "vcfr_reference_toc_collapsed";
+
+      if (!layout || !nav || !toggle) {
+        return;
+      }
+
+      function applyState(collapsed) {
+        layout.classList.toggle("toc-collapsed", collapsed);
+        toggle.setAttribute("aria-expanded", collapsed ? "false" : "true");
+        toggle.setAttribute("aria-label", collapsed ? "Show On This Page" : "Hide On This Page");
+        const arrow = toggle.querySelector(".toggle-arrow");
+        const text = toggle.querySelector(".toggle-text");
+        if (arrow) {
+          arrow.textContent = collapsed ? "›" : "‹";
+        }
+        if (text) {
+          text.textContent = collapsed ? "Show" : "Hide";
+        }
+      }
+
+      let collapsed = false;
+      try {
+        collapsed = window.localStorage.getItem(storageKey) === "1";
+      } catch (error) {
+        collapsed = false;
+      }
+      applyState(collapsed);
+
+      toggle.addEventListener("click", () => {
+        const next = !layout.classList.contains("toc-collapsed");
+        applyState(next);
+        try {
+          window.localStorage.setItem(storageKey, next ? "1" : "0");
+        } catch (error) {
+          // Ignore storage failures (private mode / blocked storage).
+        }
+      });
+    })();
+
+    (function setupHierarchyViewToggle() {
+      const buttons = Array.from(document.querySelectorAll("[data-hierarchy-view]"));
+      const panels = Array.from(document.querySelectorAll("[data-hierarchy-panel]"));
+      if (!buttons.length || !panels.length) {
+        return;
+      }
+
+      function setView(view) {
+        buttons.forEach((button) => {
+          const active = button.dataset.hierarchyView === view;
+          button.classList.toggle("active", active);
+          button.setAttribute("aria-selected", active ? "true" : "false");
+        });
+        panels.forEach((panel) => {
+          panel.classList.toggle("active", panel.dataset.hierarchyPanel === view);
+        });
+      }
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          setView(button.dataset.hierarchyView);
+        });
+      });
+    })();
+
+    (function normalizeTermHash() {
+      const rawHash = window.location.hash ? decodeURIComponent(window.location.hash.slice(1)) : "";
+      if (!rawHash) {
+        return;
+      }
+
+      let localName = rawHash;
+      if (localName.startsWith("term-")) {
+        localName = localName.slice("term-".length);
+      } else if (localName.startsWith("vcfr:")) {
+        localName = localName.slice("vcfr:".length);
+      } else {
+        localName = localName.replace(/^https?:\/\/w3id\.org\/vcf-rdfizer\/vocab#/, "");
+      }
+
+      const target = document.getElementById("term-" + localName);
+      if (!target) {
+        return;
+      }
+
+      if (window.location.hash !== "#term-" + localName) {
+        history.replaceState(null, "", "#term-" + localName);
+      }
+      target.scrollIntoView({ block: "start", behavior: "auto" });
+    })();
+  </script>
 </body>
 </html>

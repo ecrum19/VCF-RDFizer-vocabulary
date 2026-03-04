@@ -8,11 +8,14 @@ mkdir -p "$assets_dir"
 
 touch "$repo_root/docs/.nojekyll"
 
+node "$repo_root/scripts/convert-example-nt-to-ttl.mjs" "$repo_root"
+
 sources=(
   "$repo_root/ontology/vcf-rdfizer-vocabulary.ttl"
   "$repo_root/shacl/vcf-rdfizer-vocabulary.shacl.ttl"
   "$repo_root/examples/example-headers.ttl"
   "$repo_root/examples/example-minimal-record.ttl"
+  "$repo_root/examples/example.ttl"
   "$repo_root/examples/example.vcf"
   "$repo_root/examples/example.nt"
 )
@@ -27,3 +30,4 @@ done
 
 node "$repo_root/scripts/build-ontology-graph-data.mjs" "$repo_root"
 node "$repo_root/scripts/export-ontology-graph-svg.mjs" "$repo_root"
+node "$repo_root/scripts/build-term-pages.mjs" "$repo_root"
