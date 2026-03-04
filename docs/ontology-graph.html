@@ -379,8 +379,8 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/graphology@0.25.4/dist/graphology.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sigma@3.0.2/build/sigma.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/graphology/0.25.4/graphology.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/2.4.0/sigma.min.js"></script>
   <script>
     const TYPE_COLOR = {
       class: "#b7dcf6",
@@ -398,6 +398,13 @@
     };
 
     const RELATION_ORDER = ["subClassOf", "domain", "range", "annotation"];
+    const TYPE_ANCHOR_X = {
+      class: -72,
+      objectProperty: -22,
+      datatypeProperty: 32,
+      annotationProperty: 84,
+      external: 124
+    };
 
     const container = document.getElementById("graph-container");
     const statsEl = document.getElementById("graph-stats");
@@ -432,6 +439,21 @@
       return node ? node.qname : nodeId;
     }
 
+    function setStatus(message) {
+      statusEl.textContent = message || "";
+    }
+
+    function getFilterState() {
+      return {
+        subClassOf: document.getElementById("rel-subclass").checked,
+        domain: document.getElementById("rel-domain").checked,
+        range: document.getElementById("rel-range").checked,
+        annotation: document.getElementById("rel-annotation").checked,
+        showExternal: document.getElementById("toggle-external").checked,
+        searchTerm: document.getElementById("term-search").value.trim().toLowerCase()
+      };
+    }
+
     function findNodeByQuery(query) {
       const needle = query.trim().toLowerCase();
       if (!needle) {
@@ -454,21 +476,6 @@
         .sort((a, b) => b.score - a.score || a.node.qname.localeCompare(b.node.qname));
 
       return scored.length ? scored[0].node : null;
-    }
-
-    function setStatus(message) {
-      statusEl.textContent = message || "";
-    }
-
-    function getFilterState() {
-      return {
-        subClassOf: document.getElementById("rel-subclass").checked,
-        domain: document.getElementById("rel-domain").checked,
-        range: document.getElementById("rel-range").checked,
-        annotation: document.getElementById("rel-annotation").checked,
-        showExternal: document.getElementById("toggle-external").checked,
-        searchTerm: document.getElementById("term-search").value.trim().toLowerCase()
-      };
     }
 
     function recomputeVisibility() {
@@ -605,11 +612,127 @@
     }
 
     function refreshSelectionContext() {
-      if (!selectedNode) {
+      if (!selectedNode || !graph.hasNode(selectedNode)) {
         selectedNeighborhood = new Set();
         return;
       }
       selectedNeighborhood = new Set([selectedNode, ...graph.neighbors(selectedNode)]);
+    }
+
+    function runGraphologyRelaxation(iterations = 140) {
+      const nodeIds = graph.nodes();
+      if (nodeIds.length < 2) {
+        return;
+      }
+
+      const area = 220000;
+      const k = Math.sqrt(area / nodeIds.length);
+      let temperature = 8.5;
+
+      for (let step = 0; step < iterations; step += 1) {
+        const disp = {};
+        nodeIds.forEach((id) => {
+          disp[id] = { x: 0, y: 0 };
+        });
+
+        for (let i = 0; i < nodeIds.length; i += 1) {
+          const aId = nodeIds[i];
+          const a = graph.getNodeAttributes(aId);
+          for (let j = i + 1; j < nodeIds.length; j += 1) {
+            const bId = nodeIds[j];
+            const b = graph.getNodeAttributes(bId);
+            let dx = a.x - b.x;
+            let dy = a.y - b.y;
+            let distance = Math.hypot(dx, dy);
+            if (distance < 0.01) {
+              dx = 0.01;
+              dy = 0.01;
+              distance = 0.014;
+            }
+            const force = (k * k) / distance;
+            const rx = (dx / distance) * force;
+            const ry = (dy / distance) * force;
+            disp[aId].x += rx;
+            disp[aId].y += ry;
+            disp[bId].x -= rx;
+            disp[bId].y -= ry;
+          }
+        }
+
+        graph.forEachEdge((edge, attrs, sourceId, targetId) => {
+          const source = graph.getNodeAttributes(sourceId);
+          const target = graph.getNodeAttributes(targetId);
+          let dx = source.x - target.x;
+          let dy = source.y - target.y;
+          let distance = Math.hypot(dx, dy);
+          if (distance < 0.01) {
+            dx = 0.01;
+            dy = 0.01;
+            distance = 0.014;
+          }
+          const force = (distance * distance) / k;
+          const ax = (dx / distance) * force;
+          const ay = (dy / distance) * force;
+          disp[sourceId].x -= ax;
+          disp[sourceId].y -= ay;
+          disp[targetId].x += ax;
+          disp[targetId].y += ay;
+        });
+
+        nodeIds.forEach((id) => {
+          const attrs = graph.getNodeAttributes(id);
+          const anchorX = TYPE_ANCHOR_X[attrs.termType] || 0;
+          disp[id].x += (anchorX - attrs.x) * 0.02;
+          disp[id].y += (-attrs.y) * 0.01;
+        });
+
+        nodeIds.forEach((id) => {
+          const attrs = graph.getNodeAttributes(id);
+          const vector = disp[id];
+          const magnitude = Math.hypot(vector.x, vector.y);
+          if (magnitude < 0.0001) {
+            return;
+          }
+          const limited = Math.min(magnitude, temperature);
+          graph.mergeNodeAttributes(id, {
+            x: attrs.x + (vector.x / magnitude) * limited,
+            y: attrs.y + (vector.y / magnitude) * limited
+          });
+        });
+
+        temperature *= 0.962;
+      }
+    }
+
+    function fitCamera() {
+      if (!renderer) {
+        return;
+      }
+      const nodes = graphData.nodes.filter((node) => visibleNodes.has(node.id));
+      if (!nodes.length) {
+        return;
+      }
+
+      let minX = Infinity;
+      let maxX = -Infinity;
+      let minY = Infinity;
+      let maxY = -Infinity;
+
+      nodes.forEach((node) => {
+        const attrs = graph.getNodeAttributes(node.id);
+        minX = Math.min(minX, attrs.x);
+        maxX = Math.max(maxX, attrs.x);
+        minY = Math.min(minY, attrs.y);
+        maxY = Math.max(maxY, attrs.y);
+      });
+
+      const span = Math.max(maxX - minX, maxY - minY, 1);
+      const camera = renderer.getCamera();
+      camera.animate({
+        x: (minX + maxX) / 2,
+        y: (minY + maxY) / 2,
+        ratio: span / 125 + 0.7
+      }, { duration: 320 });
     }
 
     function applyFiltersAndRefresh() {
@@ -629,7 +752,7 @@
       const target = {
         x: attrs.x,
         y: attrs.y,
-        ratio: attrs.isExternal ? 0.42 : 0.33
+        ratio: attrs.isExternal ? 0.46 : 0.34
       };
       if (animate) {
         camera.animate(target, { duration: 500 });
@@ -650,7 +773,7 @@
         const matchesQuery = !query || attrs.qnameLower.includes(query) || attrs.labelLower.includes(query);
 
         if (!matchesQuery) {
-          result.color = hexToRgba(attrs.baseColor, 0.2);
+          result.color = hexToRgba(attrs.baseColor, 0.21);
           result.label = "";
         }
 
@@ -659,9 +782,8 @@
             result.color = hexToRgba(attrs.baseColor, 0.17);
             result.label = "";
           } else if (node === selectedNode) {
-            result.size = attrs.baseSize * 1.45;
+            result.size = attrs.baseSize * 1.42;
             result.color = attrs.baseColor;
-            result.zIndex = 1;
           }
         }
 
@@ -680,7 +802,7 @@
           const adjacent = source === selectedNode || target === selectedNode;
           if (!adjacent) {
             result.color = "rgba(117, 127, 140, 0.16)";
-            result.size = 0.7;
+            result.size = 0.65;
           } else {
             result.size = attrs.baseSize * 1.2;
           }
@@ -726,7 +848,7 @@
 
     function resetView() {
       const camera = renderer.getCamera();
-      camera.animate(initialCameraState, { duration: 450 });
+      camera.animate(initialCameraState, { duration: 350 });
       setStatus("View reset.");
     }
 
@@ -734,6 +856,7 @@
       ["rel-subclass", "rel-domain", "rel-range", "rel-annotation", "toggle-external"].forEach((id) => {
         document.getElementById(id).addEventListener("change", () => {
           applyFiltersAndRefresh();
+          fitCamera();
           setStatus("");
         });
       });
@@ -774,25 +897,25 @@
 
     function buildGraphAndRenderer() {
       const graphologyLib = window.graphology;
-      const sigmaGlobal = window.Sigma || window.sigma;
-      const GraphCtor = graphologyLib.MultiDirectedGraph || graphologyLib.Graph;
-      const SigmaCtor = typeof sigmaGlobal === "function"
-        ? sigmaGlobal
-        : (sigmaGlobal && (sigmaGlobal.Sigma || sigmaGlobal.default));
+      const SigmaCtor = window.Sigma;
 
-      if (!GraphCtor || !SigmaCtor) {
+      if (!graphologyLib || !graphologyLib.Graph || !SigmaCtor) {
         throw new Error("Graphology or Sigma failed to load.");
       }
 
-      graph = new GraphCtor();
+      graph = new graphologyLib.Graph({
+        type: "directed",
+        multi: true,
+        allowSelfLoops: true
+      });
 
       graphData.nodes.forEach((node) => {
         const color = TYPE_COLOR[node.termType] || "#dfe6ee";
         graph.addNode(node.id, {
           x: node.x,
           y: node.y,
-          size: node.isExternal ? 5.2 : 7.4,
-          baseSize: node.isExternal ? 5.2 : 7.4,
+          size: node.isExternal ? 5.1 : 7.1,
+          baseSize: node.isExternal ? 5.1 : 7.1,
           label: node.qname,
           qname: node.qname,
           qnameLower: node.qname.toLowerCase(),
@@ -800,41 +923,40 @@
           color,
           baseColor: color,
           termType: node.termType,
-          isExternal: node.isExternal,
-          zIndex: 0
+          isExternal: node.isExternal
         });
       });
 
       graphData.edges.forEach((edge) => {
         const color = EDGE_COLOR[edge.relation] || "#6f8394";
-        graph.addEdgeWithKey(edge.id, edge.source, edge.target, {
+        graph.addDirectedEdgeWithKey(edge.id, edge.source, edge.target, {
           color,
           baseColor: color,
-          size: 1.1,
-          baseSize: 1.1,
-          type: "arrow",
+          size: 1.0,
+          baseSize: 1.0,
           relation: edge.relation,
           label: edge.label
         });
       });
 
+      // Topology-aware relaxation using Graphology graph structure.
+      runGraphologyRelaxation(145);
+
       renderer = new SigmaCtor(graph, container, {
         renderEdgeLabels: false,
         renderLabels: true,
-        defaultNodeType: "circle",
-        defaultEdgeType: "arrow",
-        labelDensity: 0.09,
-        labelGridCellSize: 90,
+        labelDensity: 0.11,
+        labelGridCellSize: 96,
         labelRenderedSizeThreshold: 13,
-        minCameraRatio: 0.05,
-        maxCameraRatio: 14,
-        zIndex: true,
-        hideEdgesOnMove: false,
-        allowInvalidContainer: false
+        minCameraRatio: 0.04,
+        maxCameraRatio: 18,
+        hideEdgesOnMove: false
       });
 
-      initialCameraState = renderer.getCamera().getState();
       setupReducers();
+      recomputeVisibility();
+      fitCamera();
+      initialCameraState = renderer.getCamera().getState();
     }
 
     async function loadData() {
@@ -868,7 +990,6 @@
       try {
         await loadData();
         buildGraphAndRenderer();
-        recomputeVisibility();
         updateStats();
         updateOverviewPanel();
         updateDetail(null);

@@ -4,11 +4,11 @@ import fs from "node:fs";
 import path from "node:path";
 
 const TYPE_COLORS = {
-  class: "#b7dcf6",
-  objectProperty: "#bee7c3",
-  datatypeProperty: "#f7d7ab",
-  annotationProperty: "#f2bebf",
-  external: "#dfe6ee"
+  class: "#c8d9ee",
+  objectProperty: "#d2e6cf",
+  datatypeProperty: "#f2e7c9",
+  annotationProperty: "#efd0cf",
+  external: "#e6e6e6"
 };
 
 const RELATION_COLORS = {
@@ -16,13 +16,6 @@ const RELATION_COLORS = {
   domain: "#2f8040",
   range: "#ab6b22",
   annotation: "#a64343"
-};
-
-const RELATION_CURVE = {
-  subClassOf: 6,
-  domain: 16,
-  range: -16,
-  annotation: 24
 };
 
 const TYPE_ORDER = ["class", "objectProperty", "datatypeProperty", "annotationProperty", "external"];
@@ -46,21 +39,100 @@ function escapeXml(value) {
     .replace(/'/g, "&apos;");
 }
 
-function formatNumber(value) {
-  return Number(value.toFixed(2));
+function approxTextWidth(text, fontSize = 11) {
+  return text.length * fontSize * 0.58;
 }
 
-function computeBounds(nodes) {
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function boxForNode(node) {
+  const primary = node.qname;
+  const secondary = node.label && node.label.toLowerCase() !== node.qname.toLowerCase() ? node.label : "";
+  const lines = secondary ? [primary, secondary] : [primary];
+  const fontSize = node.isExternal ? 10 : 11;
+  const lineHeight = fontSize + 2;
+  const width = Math.max(...lines.map((line) => approxTextWidth(line, fontSize))) + 22;
+  const height = lines.length * lineHeight + 14;
+  return {
+    id: node.id,
+    qname: node.qname,
+    label: node.label,
+    termType: node.termType,
+    isExternal: node.isExternal,
+    comment: node.comment,
+    lines,
+    fontSize,
+    lineHeight,
+    w: clamp(width, 92, 260),
+    h: clamp(height, 28, 62),
+    x: node.x * 5.4,
+    y: node.y * 5.4,
+    ox: node.x * 5.4,
+    oy: node.y * 5.4
+  };
+}
+
+function resolveOverlaps(boxes) {
+  const spacing = 10;
+
+  for (let iter = 0; iter < 280; iter += 1) {
+    let moved = false;
+
+    for (let i = 0; i < boxes.length; i += 1) {
+      const a = boxes[i];
+      for (let j = i + 1; j < boxes.length; j += 1) {
+        const b = boxes[j];
+
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+
+        const overlapX = (a.w + b.w) / 2 + spacing - Math.abs(dx);
+        const overlapY = (a.h + b.h) / 2 + spacing - Math.abs(dy);
+
+        if (overlapX <= 0 || overlapY <= 0) {
+          continue;
+        }
+
+        moved = true;
+
+        if (overlapX < overlapY) {
+          const push = overlapX / 2;
+          const dir = dx === 0 ? (hashInt(a.id + b.id) % 2 === 0 ? 1 : -1) : Math.sign(dx);
+          a.x += dir * push;
+          b.x -= dir * push;
+        } else {
+          const push = overlapY / 2;
+          const dir = dy === 0 ? (hashInt(a.id + b.id + "y") % 2 === 0 ? 1 : -1) : Math.sign(dy);
+          a.y += dir * push;
+          b.y -= dir * push;
+        }
+      }
+    }
+
+    for (const box of boxes) {
+      box.x += (box.ox - box.x) * 0.025;
+      box.y += (box.oy - box.y) * 0.025;
+    }
+
+    if (!moved && iter > 40) {
+      break;
+    }
+  }
+}
+
+function boundsForBoxes(boxes) {
   let minX = Infinity;
   let maxX = -Infinity;
   let minY = Infinity;
   let maxY = -Infinity;
 
-  for (const node of nodes) {
-    minX = Math.min(minX, node.x);
-    maxX = Math.max(maxX, node.x);
-    minY = Math.min(minY, node.y);
-    maxY = Math.max(maxY, node.y);
+  for (const box of boxes) {
+    minX = Math.min(minX, box.x - box.w / 2);
+    maxX = Math.max(maxX, box.x + box.w / 2);
+    minY = Math.min(minY, box.y - box.h / 2);
+    maxY = Math.max(maxY, box.y + box.h / 2);
   }
 
   if (!Number.isFinite(minX)) {
@@ -73,88 +145,83 @@ function computeBounds(nodes) {
   return { minX, maxX, minY, maxY };
 }
 
-function buildNodePositioner(nodes, graphWidth, graphHeight, margin) {
-  const bounds = computeBounds(nodes);
-  const spanX = Math.max(bounds.maxX - bounds.minX, 1);
-  const spanY = Math.max(bounds.maxY - bounds.minY, 1);
+function edgeAnchor(fromBox, toBox) {
+  const dx = toBox.x - fromBox.x;
+  const dy = toBox.y - fromBox.y;
 
-  return (node) => {
-    const x = margin + ((node.x - bounds.minX) / spanX) * graphWidth;
-    const y = margin + ((node.y - bounds.minY) / spanY) * graphHeight;
-    return { x, y };
+  const safeDx = Math.abs(dx) < 0.001 ? 0.001 : dx;
+  const safeDy = Math.abs(dy) < 0.001 ? 0.001 : dy;
+
+  const tx = (fromBox.w / 2) / Math.abs(safeDx);
+  const ty = (fromBox.h / 2) / Math.abs(safeDy);
+  const t = Math.min(tx, ty);
+
+  return {
+    x: fromBox.x + dx * t,
+    y: fromBox.y + dy * t
   };
 }
 
-function nodeRadius(node) {
-  if (node.isExternal) {
-    return 5.2;
-  }
-  const degreeFactor = Math.min(5, Math.max(0, node.degree || 0));
-  return 6.2 + degreeFactor * 0.52;
+function formatN(value) {
+  return Number(value.toFixed(2));
 }
 
-function renderLegend(x, y, width, data) {
-  const typeEntries = TYPE_ORDER.map((type) => ({
-    label: type,
-    color: TYPE_COLORS[type],
-    count: data.summary.countsByType[type] || 0
-  }));
+function renderLegend(x, y, summary) {
+  const nodeParts = TYPE_ORDER
+    .map((type) => {
+      const count = summary.countsByType[type] || 0;
+      return `<g><rect x="0" y="-8" width="12" height="12" rx="2" fill="${TYPE_COLORS[type]}" stroke="#7a8a99"/><text x="18" y="2" font-size="12" font-family="IBM Plex Sans, sans-serif" fill="#263849">${escapeXml(type)} (${count})</text></g>`;
+    })
+    .join("");
 
-  const relEntries = REL_ORDER.map((rel) => ({
-    label: rel,
-    color: RELATION_COLORS[rel],
-    count: data.summary.relationCounts[rel] || 0
-  }));
+  const relationParts = REL_ORDER
+    .map((rel) => {
+      const count = summary.relationCounts[rel] || 0;
+      return `<g><line x1="0" y1="-2" x2="14" y2="-2" stroke="${RELATION_COLORS[rel]}" stroke-width="2"/><text x="20" y="2" font-size="12" font-family="IBM Plex Sans, sans-serif" fill="#263849">${escapeXml(rel)} (${count})</text></g>`;
+    })
+    .join("");
 
-  let cursorY = y + 32;
   let out = "";
+  out += `<g transform="translate(${x}, ${y})">`;
+  out += `<rect x="0" y="0" width="430" height="82" rx="12" fill="#ffffff" stroke="#d3dfe8"/>`;
+  out += `<text x="14" y="20" font-size="14" font-family="IBM Plex Sans, sans-serif" font-weight="600" fill="#1e2f41">Legend</text>`;
 
-  out += `<rect x="${x}" y="${y}" width="${width}" height="420" rx="16" fill="#ffffff" stroke="#d3dfe8"/>`;
-  out += `<text x="${x + 16}" y="${y + 24}" font-size="18" font-family="IBM Plex Sans, sans-serif" font-weight="600" fill="#1d2a36">Legend</text>`;
-
-  out += `<text x="${x + 16}" y="${cursorY}" font-size="13" font-family="IBM Plex Sans, sans-serif" fill="#4a5b6b">Node types</text>`;
-  cursorY += 16;
-
-  for (const entry of typeEntries) {
-    out += `<rect x="${x + 16}" y="${cursorY - 9}" width="12" height="12" rx="2" fill="${entry.color}" stroke="#b9c6d2"/>`;
-    out += `<text x="${x + 34}" y="${cursorY + 1}" font-size="12" font-family="IBM Plex Sans, sans-serif" fill="#2a3947">${escapeXml(entry.label)} (${entry.count})</text>`;
-    cursorY += 20;
+  let nx = 14;
+  for (const chunk of nodeParts.split("</g>").filter(Boolean)) {
+    out += `<g transform="translate(${nx}, 42)">${chunk}</g>`;
+    nx += 150;
   }
 
-  cursorY += 8;
-  out += `<text x="${x + 16}" y="${cursorY}" font-size="13" font-family="IBM Plex Sans, sans-serif" fill="#4a5b6b">Edge relations</text>`;
-  cursorY += 16;
-
-  for (const entry of relEntries) {
-    out += `<line x1="${x + 16}" y1="${cursorY - 4}" x2="${x + 34}" y2="${cursorY - 4}" stroke="${entry.color}" stroke-width="2.3"/>`;
-    out += `<text x="${x + 40}" y="${cursorY}" font-size="12" font-family="IBM Plex Sans, sans-serif" fill="#2a3947">${escapeXml(entry.label)} (${entry.count})</text>`;
-    cursorY += 20;
+  let rx = 14;
+  for (const chunk of relationParts.split("</g>").filter(Boolean)) {
+    out += `<g transform="translate(${rx}, 66)">${chunk}</g>`;
+    rx += 102;
   }
 
-  cursorY += 10;
-  out += `<text x="${x + 16}" y="${cursorY}" font-size="12" font-family="IBM Plex Sans, sans-serif" fill="#4b6174">Total nodes: ${data.summary.nodes}</text>`;
-  cursorY += 18;
-  out += `<text x="${x + 16}" y="${cursorY}" font-size="12" font-family="IBM Plex Sans, sans-serif" fill="#4b6174">Total edges: ${data.summary.edges}</text>`;
-
+  out += `</g>`;
   return out;
 }
 
-function renderSvg(data, outputPath) {
-  const canvasWidth = 2580;
-  const canvasHeight = 1780;
-  const sidePanel = 380;
-  const margin = 90;
+function buildSvg(data) {
+  const boxes = data.nodes.map(boxForNode);
+  resolveOverlaps(boxes);
 
-  const graphWidth = canvasWidth - sidePanel - margin * 2;
-  const graphHeight = canvasHeight - margin * 2;
+  const boxById = new Map(boxes.map((box) => [box.id, box]));
 
-  const positionFor = buildNodePositioner(data.nodes, graphWidth, graphHeight, margin);
-  const positioned = new Map();
-  for (const node of data.nodes) {
-    positioned.set(node.id, positionFor(node));
+  const bounds = boundsForBoxes(boxes);
+  const margin = 36;
+  const header = 58;
+  const footer = 116;
+
+  const width = Math.ceil(bounds.maxX - bounds.minX + margin * 2);
+  const height = Math.ceil(bounds.maxY - bounds.minY + margin * 2 + header + footer);
+
+  for (const box of boxes) {
+    box.x = box.x - bounds.minX + margin;
+    box.y = box.y - bounds.minY + margin + header;
   }
 
-  const edges = [...data.edges].sort((a, b) => {
+  const sortedEdges = [...data.edges].sort((a, b) => {
     if (a.relation !== b.relation) {
       return REL_ORDER.indexOf(a.relation) - REL_ORDER.indexOf(b.relation);
     }
@@ -164,99 +231,90 @@ function renderSvg(data, outputPath) {
     return a.targetQname.localeCompare(b.targetQname);
   });
 
-  const nodes = [...data.nodes].sort((a, b) => {
+  let svg = "";
+  svg += `<?xml version="1.0" encoding="UTF-8"?>\n`;
+  svg += `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="VCF-RDFizer ontology publication diagram">`;
+  svg += `<defs>`;
+  svg += `<linearGradient id="canvas-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f6f2ec"/><stop offset="100%" stop-color="#eef4f9"/></linearGradient>`;
+  for (const rel of REL_ORDER) {
+    svg += `<marker id="arrow-${rel}" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M 0 0 L 8 4 L 0 8 z" fill="${RELATION_COLORS[rel]}"/></marker>`;
+  }
+  svg += `</defs>`;
+
+  svg += `<rect x="0" y="0" width="${width}" height="${height}" fill="url(#canvas-bg)"/>`;
+  svg += `<rect x="8" y="8" width="${width - 16}" height="${height - 16}" rx="14" fill="#ffffff" fill-opacity="0.72" stroke="#d3dfe8"/>`;
+
+  svg += `<text x="24" y="30" font-family="Space Grotesk, IBM Plex Sans, sans-serif" font-size="22" font-weight="700" fill="#1f2f3f">VCF-RDFizer Vocabulary Relationship Overview</text>`;
+  svg += `<text x="24" y="50" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#4f6375">Generated ${escapeXml(data.generatedAt)} from ontology/vcf-rdfizer-vocabulary.ttl</text>`;
+
+  svg += `<g id="edges" opacity="0.9">`;
+  for (const edge of sortedEdges) {
+    const source = boxById.get(edge.source);
+    const target = boxById.get(edge.target);
+    if (!source || !target) {
+      continue;
+    }
+
+    const start = edgeAnchor(source, target);
+    const end = edgeAnchor(target, source);
+
+    const dx = end.x - start.x;
+    const dy = end.y - start.y;
+    const dist = Math.max(Math.hypot(dx, dy), 1);
+    const nx = -dy / dist;
+    const ny = dx / dist;
+    const curve = ((hashInt(edge.id) % 7) - 3) * 2.2 + (edge.relation === "annotation" ? 12 : 0);
+    const cx = (start.x + end.x) / 2 + nx * curve;
+    const cy = (start.y + end.y) / 2 + ny * curve;
+
+    const d = `M ${formatN(start.x)} ${formatN(start.y)} Q ${formatN(cx)} ${formatN(cy)} ${formatN(end.x)} ${formatN(end.y)}`;
+    const color = RELATION_COLORS[edge.relation] || "#6f8394";
+    const widthStroke = edge.relation === "annotation" ? 1.25 : 1.45;
+
+    svg += `<path d="${d}" fill="none" stroke="${color}" stroke-width="${widthStroke}" stroke-opacity="0.6" marker-end="url(#arrow-${edge.relation})"`;
+    if (edge.relation === "annotation") {
+      svg += ` stroke-dasharray="4 4"`;
+    }
+    svg += `/>`;
+
+    if (dist > 130) {
+      const lx = (start.x + end.x) / 2 + nx * (curve + 6);
+      const ly = (start.y + end.y) / 2 + ny * (curve + 6);
+      const label = edge.relation;
+      const lw = approxTextWidth(label, 9.5) + 10;
+      svg += `<rect x="${formatN(lx - lw / 2)}" y="${formatN(ly - 8)}" width="${formatN(lw)}" height="14" rx="2" fill="#f7f7f7" stroke="#b9c5d2" stroke-width="0.6"/>`;
+      svg += `<text x="${formatN(lx)}" y="${formatN(ly + 2)}" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="9.5" fill="#2e4050">${escapeXml(label)}</text>`;
+    }
+  }
+  svg += `</g>`;
+
+  const sortedBoxes = [...boxes].sort((a, b) => {
     if (a.termType !== b.termType) {
       return TYPE_ORDER.indexOf(a.termType) - TYPE_ORDER.indexOf(b.termType);
     }
     return a.qname.localeCompare(b.qname);
   });
 
-  let svg = "";
-  svg += `<?xml version="1.0" encoding="UTF-8"?>\n`;
-  svg += `<svg xmlns="http://www.w3.org/2000/svg" width="${canvasWidth}" height="${canvasHeight}" viewBox="0 0 ${canvasWidth} ${canvasHeight}" role="img" aria-label="VCF-RDFizer ontology relationship graph">`;
-  svg += `<defs>`;
-  svg += `<linearGradient id="bg-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f5f0e8"/><stop offset="70%" stop-color="#eef5fa"/><stop offset="100%" stop-color="#faf4ea"/></linearGradient>`;
-
-  for (const relation of REL_ORDER) {
-    const color = RELATION_COLORS[relation];
-    svg += `<marker id="arrow-${relation}" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">`;
-    svg += `<path d="M 0 0 L 8 4 L 0 8 z" fill="${color}"/>`;
-    svg += `</marker>`;
-  }
-
-  svg += `</defs>`;
-
-  svg += `<rect x="0" y="0" width="${canvasWidth}" height="${canvasHeight}" fill="url(#bg-grad)"/>`;
-  svg += `<rect x="24" y="24" width="${canvasWidth - 48}" height="${canvasHeight - 48}" rx="20" fill="#ffffff" fill-opacity="0.66" stroke="#d8e3ec"/>`;
-
-  svg += `<text x="${margin}" y="52" font-family="Space Grotesk, IBM Plex Sans, sans-serif" font-size="30" font-weight="700" fill="#1d2a36">VCF-RDFizer Vocabulary: Static Relationship Graph</text>`;
-  svg += `<text x="${margin}" y="78" font-family="IBM Plex Sans, sans-serif" font-size="14" fill="#4e6070">Generated from ontology/vcf-rdfizer-vocabulary.ttl at ${escapeXml(data.generatedAt)} (UTC)</text>`;
-
-  svg += `<g id="edges" opacity="0.92">`;
-  for (const edge of edges) {
-    const source = positioned.get(edge.source);
-    const target = positioned.get(edge.target);
-    if (!source || !target) {
-      continue;
-    }
-
-    const dx = target.x - source.x;
-    const dy = target.y - source.y;
-    const distance = Math.max(Math.hypot(dx, dy), 1);
-    const nx = -dy / distance;
-    const ny = dx / distance;
-    const jitter = (hashInt(edge.id) % 11) - 5;
-    const curvature = (RELATION_CURVE[edge.relation] || 0) + jitter * 1.5;
-
-    const cx = (source.x + target.x) / 2 + nx * curvature;
-    const cy = (source.y + target.y) / 2 + ny * curvature;
-
-    const path = `M ${formatNumber(source.x)} ${formatNumber(source.y)} Q ${formatNumber(cx)} ${formatNumber(cy)} ${formatNumber(target.x)} ${formatNumber(target.y)}`;
-    const color = RELATION_COLORS[edge.relation] || "#6f8394";
-    const width = edge.relation === "annotation" ? 1.25 : 1.55;
-    const dash = edge.relation === "annotation" ? "4 4" : "";
-
-    svg += `<path d="${path}" fill="none" stroke="${color}" stroke-width="${width}" stroke-opacity="0.54" marker-end="url(#arrow-${edge.relation})"`;
-    if (dash) {
-      svg += ` stroke-dasharray="${dash}"`;
-    }
-    svg += `/>`;
-  }
-  svg += `</g>`;
-
   svg += `<g id="nodes">`;
-  for (const node of nodes) {
-    const pos = positioned.get(node.id);
-    if (!pos) {
-      continue;
+  for (const box of sortedBoxes) {
+    const fill = TYPE_COLORS[box.termType] || "#e6e6e6";
+    const x = formatN(box.x - box.w / 2);
+    const y = formatN(box.y - box.h / 2);
+
+    svg += `<rect x="${x}" y="${y}" width="${formatN(box.w)}" height="${formatN(box.h)}" rx="6" fill="${fill}" stroke="#2a2a2a" stroke-width="1"/>`;
+
+    let textY = box.y - ((box.lines.length - 1) * box.lineHeight) / 2 + 2;
+    for (let i = 0; i < box.lines.length; i += 1) {
+      const fontWeight = i === 0 ? 600 : 400;
+      svg += `<text x="${formatN(box.x)}" y="${formatN(textY + i * box.lineHeight)}" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="${box.fontSize}" font-weight="${fontWeight}" fill="#1d2c3b">${escapeXml(box.lines[i])}</text>`;
     }
-
-    const fill = TYPE_COLORS[node.termType] || "#dfe6ee";
-    const radius = nodeRadius(node);
-    const stroke = node.isExternal ? "#8898aa" : "#5a6f82";
-    const strokeWidth = node.isExternal ? 0.9 : 1.1;
-
-    svg += `<circle cx="${formatNumber(pos.x)}" cy="${formatNumber(pos.y)}" r="${formatNumber(radius)}" fill="${fill}" stroke="${stroke}" stroke-width="${strokeWidth}"/>`;
-
-    const labelOffset = radius + 6;
-    const alignLeft = pos.x > margin + graphWidth - 240;
-    const labelX = alignLeft ? pos.x - labelOffset : pos.x + labelOffset;
-    const anchor = alignLeft ? "end" : "start";
-    const fontSize = node.isExternal ? 10 : 11.2;
-    const textColor = node.isExternal ? "#5f6f80" : "#1e2e3f";
-
-    svg += `<text x="${formatNumber(labelX)}" y="${formatNumber(pos.y + 3.8)}" text-anchor="${anchor}" font-family="IBM Plex Sans, sans-serif" font-size="${fontSize}" fill="${textColor}" stroke="#ffffff" stroke-width="3" paint-order="stroke fill">${escapeXml(node.qname)}</text>`;
   }
   svg += `</g>`;
 
-  svg += renderLegend(canvasWidth - sidePanel + 22, 114, sidePanel - 44, data);
-
-  svg += `<text x="${canvasWidth - sidePanel + 38}" y="560" font-size="12" font-family="IBM Plex Sans, sans-serif" fill="#4a6175">Edge labels omitted in static export for readability.</text>`;
-  svg += `<text x="${canvasWidth - sidePanel + 38}" y="579" font-size="12" font-family="IBM Plex Sans, sans-serif" fill="#4a6175">Use docs/ontology-graph.html for interactive filtering.</text>`;
+  svg += renderLegend(24, height - 96, data.summary);
 
   svg += `</svg>\n`;
-
-  fs.writeFileSync(outputPath, svg, "utf8");
+  return svg;
 }
 
 function main() {
@@ -270,7 +328,8 @@ function main() {
   }
 
   const data = JSON.parse(fs.readFileSync(graphDataPath, "utf8"));
-  renderSvg(data, outputPath);
+  const svg = buildSvg(data);
+  fs.writeFileSync(outputPath, svg, "utf8");
 
   console.log("Wrote", path.relative(repoRoot, outputPath));
 }
