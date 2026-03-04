@@ -13,6 +13,7 @@ sources=(
   "$repo_root/shacl/vcf-rdfizer-vocabulary.shacl.ttl"
   "$repo_root/examples/example-headers.ttl"
   "$repo_root/examples/example-minimal-record.ttl"
+  "$repo_root/examples/example-file1.vcf"
 )
 
 for src in "${sources[@]}"; do

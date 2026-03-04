@@ -1,0 +1,12 @@
+##fileformat=VCFv4.2
+##fileDate=20200615
+##source=CLC Genomics Grid Worker 20.9.9 Beta 1 build 209900
+##reference=/CLC_References/homo_sapiens/sequence/hg38_no_alt_analysis_set/Homo_sapiens_sequence_hg38_no_alt_analysis_set
+##contig=<ID=chr1,length=248956422>
+##INFO=<ID=DP,Number=1,Type=Integer,Description="Total Depth">
+##INFO=<ID=AF,Number=A,Type=Float,Description="Allele Frequency">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##FORMAT=<ID=DP,Number=1,Type=Integer,Description="Total number of filtered reads used to call variants at this position in this sample.">
+##FORMAT=<ID=AD,Number=R,Type=Integer,Description="Allele depth, number of filtered reads supporting the alleles, ordered as listed in REF and ALT.">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	SAMPLE1
+chr1	123456	rs123	A	T	52.3	PASS	DP=42;AF=0.2	GT:DP:AD	0/1:42:30,12

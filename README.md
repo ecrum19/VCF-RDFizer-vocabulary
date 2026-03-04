@@ -70,6 +70,7 @@ Graph and export files are generated from `ontology/vcf-rdfizer-vocabulary.ttl` 
 See:
 - `examples/example-headers.ttl`
 - `examples/example-minimal-record.ttl`
+- `examples/example-file1.vcf`
 
 ## Publishing
 

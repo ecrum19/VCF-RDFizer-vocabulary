@@ -320,7 +320,7 @@
         <h1>VCF-RDFizer Vocabulary</h1>
         <p>RDF vocabulary and SHACL shapes that model VCF files, headers, records, and sample calls. Explore the ontology, validate datasets, inspect relationships, and jump into working examples.</p>
         <div class="hero__actions">
-          <a class="btn btn--primary" href="#viewer">Explore TTL</a>
+          <a class="btn btn--primary" href="#viewer">Open File Explorer</a>
           <a class="btn btn--ghost" href="ontology-reference.html">Ontology Reference</a>
           <a class="btn btn--ghost" href="ontology-graph.html">Interactive Graph</a>
           <a class="btn btn--ghost" href="https://github.com/ecrum19/VCF-RDFizer-vocabulary" target="_blank" rel="noreferrer">GitHub Repository</a>
@@ -337,7 +337,7 @@
         </div>
         <div class="kv">
           <span>Artifacts Included</span>
-          <strong>Ontology TTL · SHACL TTL · Reference Docs · Relationship Graph · Example TTL</strong>
+          <strong>Ontology TTL · SHACL TTL · Reference Docs · Relationship Graph · Example TTL + Raw VCF</strong>
         </div>
       </div>
     </header>
@@ -366,7 +366,7 @@
           <p>Core vocabulary for representing VCF files and records.</p>
           <div class="card__actions">
             <a class="btn btn--primary" href="assets/vcf-rdfizer-vocabulary.ttl" target="_blank" rel="noreferrer">Open TTL</a>
-            <button class="btn btn--ghost" type="button" data-file="assets/vcf-rdfizer-vocabulary.ttl" data-label="Ontology TTL">Load in Viewer</button>
+            <button class="btn btn--ghost" type="button" data-file="assets/vcf-rdfizer-vocabulary.ttl" data-label="Ontology TTL">Load in Explorer</button>
           </div>
         </div>
         <div class="card">
@@ -374,35 +374,37 @@
           <p>Validation rules to ensure VCF-derived RDF stays consistent.</p>
           <div class="card__actions">
             <a class="btn btn--primary" href="assets/vcf-rdfizer-vocabulary.shacl.ttl" target="_blank" rel="noreferrer">Open TTL</a>
-            <button class="btn btn--ghost" type="button" data-file="assets/vcf-rdfizer-vocabulary.shacl.ttl" data-label="SHACL TTL">Load in Viewer</button>
+            <button class="btn btn--ghost" type="button" data-file="assets/vcf-rdfizer-vocabulary.shacl.ttl" data-label="SHACL TTL">Load in Explorer</button>
           </div>
         </div>
         <div class="card">
           <h3>Examples</h3>
-          <p>Sample RDF graphs for VCF headers and minimal records.</p>
+          <p>Sample RDF graphs with one combined raw VCF source file.</p>
           <div class="card__actions">
             <a class="btn btn--primary" href="assets/example-headers.ttl" target="_blank" rel="noreferrer">Headers TTL</a>
             <a class="btn btn--ghost" href="assets/example-minimal-record.ttl" target="_blank" rel="noreferrer">Record TTL</a>
+            <a class="btn btn--ghost" href="assets/example-file1.vcf" target="_blank" rel="noreferrer">Example File1 VCF</a>
           </div>
         </div>
       </div>
     </section>
 
     <section class="section" aria-labelledby="viewer">
-      <h2 id="viewer">Live TTL Viewer</h2>
+      <h2 id="viewer">File Explorer</h2>
       <div class="viewer">
         <div class="tabs" role="tablist">
           <button class="tab active" type="button" data-file="assets/vcf-rdfizer-vocabulary.ttl" data-label="Ontology TTL">Ontology TTL</button>
           <button class="tab" type="button" data-file="assets/vcf-rdfizer-vocabulary.shacl.ttl" data-label="SHACL TTL">SHACL TTL</button>
-          <button class="tab" type="button" data-file="assets/example-headers.ttl" data-label="Example Headers">Example Headers</button>
-          <button class="tab" type="button" data-file="assets/example-minimal-record.ttl" data-label="Example Record">Example Record</button>
+          <button class="tab" type="button" data-file="assets/example-headers.ttl" data-label="Example Headers (TTL)">Example Headers TTL</button>
+          <button class="tab" type="button" data-file="assets/example-minimal-record.ttl" data-label="Example Record (TTL)">Example Record TTL</button>
+          <button class="tab" type="button" data-file="assets/example-file1.vcf" data-label="Example File1 (Raw VCF)">Example File1 VCF</button>
         </div>
 
         <div class="viewer__toolbar">
           <h3 id="ttl-title">Ontology TTL</h3>
           <div class="viewer__actions">
-            <a class="btn btn--ghost" id="ttl-open" href="assets/vcf-rdfizer-vocabulary.ttl" target="_blank" rel="noreferrer">Open TTL</a>
-            <button class="btn btn--ghost" type="button" id="ttl-copy">Copy TTL</button>
+            <a class="btn btn--ghost" id="ttl-open" href="assets/vcf-rdfizer-vocabulary.ttl" target="_blank" rel="noreferrer">Open File</a>
+            <button class="btn btn--ghost" type="button" id="ttl-copy">Copy Content</button>
           </div>
         </div>
 
@@ -427,7 +429,7 @@
     const namespaceButton = document.getElementById("copy-namespace");
     const namespaceValue = document.getElementById("namespace");
 
-    async function loadTtl(file, label) {
+    async function loadFileContent(file, label) {
       status.textContent = "Loading " + label + "...";
       content.textContent = "Loading...";
       openLink.href = file;
@@ -450,7 +452,7 @@
       tab.addEventListener("click", () => {
         tabs.forEach((btn) => btn.classList.remove("active"));
         tab.classList.add("active");
-        loadTtl(tab.dataset.file, tab.dataset.label);
+        loadFileContent(tab.dataset.file, tab.dataset.label);
       });
     });
 
@@ -467,7 +469,7 @@
           document.getElementById("viewer").scrollIntoView({ behavior: "smooth" });
           return;
         }
-        loadTtl(file, label || "TTL");
+        loadFileContent(file, label || "File");
       });
     });
 
@@ -489,7 +491,7 @@
       }
     });
 
-    loadTtl("assets/vcf-rdfizer-vocabulary.ttl", "Ontology TTL");
+    loadFileContent("assets/vcf-rdfizer-vocabulary.ttl", "Ontology TTL");
   </script>
 </body>
 </html>
