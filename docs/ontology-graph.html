@@ -192,31 +192,51 @@
       color: #38506a;
     }
 
-    .legend {
-      display: grid;
-      gap: 7px;
+    .data-block {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fcfdff;
+      overflow: hidden;
     }
 
-    .legend-item {
+    .data-block summary {
+      cursor: pointer;
+      padding: 10px 12px;
+      font-family: "Space Grotesk", "IBM Plex Sans", sans-serif;
+      font-size: 1rem;
       display: flex;
       align-items: center;
-      font-size: 0.89rem;
+      justify-content: space-between;
+      color: #1f2f3f;
+      user-select: none;
+      border-bottom: 1px solid transparent;
     }
 
-    .swatch {
-      width: 12px;
-      height: 12px;
-      border-radius: 3px;
-      border: 1px solid #b9c6d2;
-      margin-right: 8px;
-      flex: 0 0 auto;
+    .data-block[open] summary {
+      border-bottom-color: var(--border);
+      background: #f7fbfd;
     }
 
-    .line {
-      width: 25px;
-      border-top: 2px solid;
-      margin-right: 8px;
-      flex: 0 0 auto;
+    .data-block summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .data-block summary::after {
+      content: "▸";
+      font-size: 0.92rem;
+      color: #486177;
+      transform: rotate(0deg);
+      transition: transform 0.15s ease;
+    }
+
+    .data-block[open] summary::after {
+      transform: rotate(90deg);
+    }
+
+    .details-body {
+      padding: 10px 12px 12px;
+      display: grid;
+      gap: 8px;
     }
 
     .stats {
@@ -264,6 +284,84 @@
       font-size: 0.86rem;
     }
 
+    .hover-info {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #f4f9fc;
+      padding: 9px 10px;
+      display: grid;
+      gap: 4px;
+      font-size: 0.85rem;
+      color: #2d4152;
+      line-height: 1.35;
+    }
+
+    .hover-info code {
+      font-family: "IBM Plex Mono", monospace;
+      background: rgba(18, 98, 111, 0.09);
+      border-radius: 5px;
+      padding: 1px 5px;
+      color: #18545d;
+      word-break: break-word;
+    }
+
+    .graph-card {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .graph-top {
+      display: grid;
+      gap: 8px;
+    }
+
+    .legend-bar {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #f8fcff;
+      padding: 9px 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      align-items: center;
+    }
+
+    .legend-title {
+      font-family: "Space Grotesk", "IBM Plex Sans", sans-serif;
+      font-size: 0.95rem;
+      color: #1f2f3f;
+      margin-right: 3px;
+    }
+
+    .legend-chip {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.82rem;
+      color: #32485a;
+      white-space: nowrap;
+      gap: 5px;
+    }
+
+    .swatch {
+      width: 11px;
+      height: 11px;
+      border-radius: 3px;
+      border: 1px solid #b9c6d2;
+      flex: 0 0 auto;
+    }
+
+    .line {
+      width: 18px;
+      border-top: 2px solid;
+      flex: 0 0 auto;
+    }
+
+    .graph-hint {
+      font-size: 0.83rem;
+      color: #446179;
+    }
+
     #graph-container {
       width: 100%;
       min-height: 670px;
@@ -273,6 +371,26 @@
       background: #fbfdff;
       position: relative;
       overflow: hidden;
+    }
+
+    .edge-tooltip {
+      position: absolute;
+      z-index: 20;
+      pointer-events: none;
+      display: none;
+      max-width: 320px;
+      font-size: 0.78rem;
+      line-height: 1.3;
+      color: #f3f8ff;
+      background: rgba(17, 27, 37, 0.92);
+      border: 1px solid rgba(205, 220, 234, 0.35);
+      border-radius: 8px;
+      padding: 6px 8px;
+      box-shadow: 0 8px 20px rgba(8, 16, 22, 0.28);
+    }
+
+    .edge-tooltip.visible {
+      display: block;
     }
 
     @media (max-width: 1100px) {
@@ -336,45 +454,62 @@
           <div id="status" class="status"></div>
         </section>
 
-        <section>
-          <h3>Legend</h3>
-          <div class="legend">
-            <div class="legend-item"><span class="swatch" style="background: var(--class);"></span>Class</div>
-            <div class="legend-item"><span class="swatch" style="background: var(--obj);"></span>Object property</div>
-            <div class="legend-item"><span class="swatch" style="background: var(--data);"></span>Datatype property</div>
-            <div class="legend-item"><span class="swatch" style="background: var(--ann);"></span>Annotation property</div>
-            <div class="legend-item"><span class="swatch" style="background: var(--external);"></span>External term</div>
-            <div class="legend-item"><span class="line" style="border-color: var(--subclass);"></span>subClassOf</div>
-            <div class="legend-item"><span class="line" style="border-color: var(--domain);"></span>domain</div>
-            <div class="legend-item"><span class="line" style="border-color: var(--range);"></span>range</div>
-            <div class="legend-item"><span class="line" style="border-color: var(--annotation);"></span>annotation</div>
+        <details class="data-block" open>
+          <summary>Graph Stats</summary>
+          <div class="details-body">
+            <div id="graph-stats" class="stats">
+              <div>Loading graph data...</div>
+            </div>
           </div>
-        </section>
+        </details>
 
-        <section>
-          <h3>Graph Stats</h3>
-          <div id="graph-stats" class="stats">
-            <div>Loading graph data...</div>
+        <details class="data-block">
+          <summary>Serialized Overview</summary>
+          <div class="details-body">
+            <div id="overview-summary" class="overview">
+              <div>Loading overview...</div>
+            </div>
           </div>
-        </section>
+        </details>
 
-        <section>
-          <h3>Serialized Overview</h3>
-          <div id="overview-summary" class="overview">
-            <div>Loading overview...</div>
+        <details class="data-block" open>
+          <summary>Term Detail</summary>
+          <div class="details-body">
+            <div id="term-detail" class="detail">
+              <div>Select a node to inspect relationships.</div>
+            </div>
           </div>
-        </section>
+        </details>
 
-        <section>
-          <h3>Term Detail</h3>
-          <div id="term-detail" class="detail">
-            <div>Select a node to inspect relationships.</div>
+        <details class="data-block" open>
+          <summary>Edge Hover</summary>
+          <div class="details-body">
+            <div id="edge-hover-info" class="hover-info">
+              <div>Hover an edge in the graph to inspect relationship information.</div>
+            </div>
           </div>
-        </section>
+        </details>
       </aside>
 
       <section class="graph-card">
-        <div id="graph-container" aria-label="Sigma ontology graph"></div>
+        <div class="graph-top">
+          <div class="legend-bar" aria-label="Graph legend">
+            <span class="legend-title">Legend</span>
+            <span class="legend-chip"><span class="swatch" style="background: var(--class);"></span>Class</span>
+            <span class="legend-chip"><span class="swatch" style="background: var(--obj);"></span>Object property</span>
+            <span class="legend-chip"><span class="swatch" style="background: var(--data);"></span>Datatype property</span>
+            <span class="legend-chip"><span class="swatch" style="background: var(--ann);"></span>Annotation property</span>
+            <span class="legend-chip"><span class="swatch" style="background: var(--external);"></span>External term</span>
+            <span class="legend-chip"><span class="line" style="border-color: var(--subclass);"></span>subClassOf</span>
+            <span class="legend-chip"><span class="line" style="border-color: var(--domain);"></span>domain</span>
+            <span class="legend-chip"><span class="line" style="border-color: var(--range);"></span>range</span>
+            <span class="legend-chip"><span class="line" style="border-color: var(--annotation);"></span>annotation</span>
+          </div>
+          <div class="graph-hint">Nodes are labeled by default. Hover edges to view predicate and source/target details.</div>
+        </div>
+        <div id="graph-container" aria-label="Sigma ontology graph">
+          <div id="edge-tooltip" class="edge-tooltip"></div>
+        </div>
       </section>
     </div>
   </div>
@@ -410,6 +545,8 @@
     const statsEl = document.getElementById("graph-stats");
     const detailEl = document.getElementById("term-detail");
     const overviewEl = document.getElementById("overview-summary");
+    const edgeHoverEl = document.getElementById("edge-hover-info");
+    const edgeTooltipEl = document.getElementById("edge-tooltip");
     const statusEl = document.getElementById("status");
 
     let graphData;
@@ -420,6 +557,7 @@
     let selectedNeighborhood = new Set();
     let visibleNodes = new Set();
     let visibleEdges = new Set();
+    let edgeById = new Map();
     let initialCameraState = { x: 0, y: 0, ratio: 1, angle: 0 };
 
     function hexToRgba(hex, alpha) {
@@ -441,6 +579,44 @@
 
     function setStatus(message) {
       statusEl.textContent = message || "";
+    }
+
+    function clearEdgeHoverInfo() {
+      edgeHoverEl.innerHTML = "<div>Hover an edge in the graph to inspect relationship information.</div>";
+      edgeTooltipEl.classList.remove("visible");
+      edgeTooltipEl.innerHTML = "";
+    }
+
+    function updateEdgeHoverInfo(edgeId, payload) {
+      const edge = edgeById.get(edgeId);
+      if (!edge) {
+        clearEdgeHoverInfo();
+        return;
+      }
+
+      edgeHoverEl.innerHTML = "" +
+        "<div><strong>Relation:</strong> <code>" + edge.relation + "</code></div>" +
+        "<div><strong>Predicate:</strong> <code>" + edge.predicateQname + "</code></div>" +
+        "<div><strong>Source:</strong> " + edge.sourceQname + "</div>" +
+        "<div><strong>Target:</strong> " + edge.targetQname + "</div>";
+
+      const evt = payload && payload.event ? (payload.event.original || payload.event) : null;
+      if (!evt || typeof evt.clientX !== "number" || typeof evt.clientY !== "number") {
+        edgeTooltipEl.classList.remove("visible");
+        edgeTooltipEl.innerHTML = "";
+        return;
+      }
+
+      const rect = container.getBoundingClientRect();
+      const left = Math.min(rect.width - 340, Math.max(8, evt.clientX - rect.left + 12));
+      const top = Math.min(rect.height - 78, Math.max(8, evt.clientY - rect.top + 12));
+
+      edgeTooltipEl.style.left = left + "px";
+      edgeTooltipEl.style.top = top + "px";
+      edgeTooltipEl.innerHTML = "" +
+        "<div><strong>" + edge.sourceQname + "</strong> → <strong>" + edge.targetQname + "</strong></div>" +
+        "<div><code>" + edge.predicateQname + "</code></div>";
+      edgeTooltipEl.classList.add("visible");
     }
 
     function getFilterState() {
@@ -843,6 +1019,7 @@
       selectedNeighborhood = new Set();
       updateDetail(null);
       renderer.refresh();
+      clearEdgeHoverInfo();
       setStatus("Selection cleared.");
     }
 
@@ -886,6 +1063,17 @@
 
       renderer.on("clickStage", () => {
         clearSelection();
+      });
+
+      renderer.on("enterEdge", (payload) => {
+        if (!visibleEdges.has(payload.edge)) {
+          return;
+        }
+        updateEdgeHoverInfo(payload.edge, payload);
+      });
+
+      renderer.on("leaveEdge", () => {
+        clearEdgeHoverInfo();
       });
 
       const observer = new ResizeObserver(() => {
@@ -945,12 +1133,13 @@
       renderer = new SigmaCtor(graph, container, {
         renderEdgeLabels: false,
         renderLabels: true,
-        labelDensity: 0.11,
-        labelGridCellSize: 96,
-        labelRenderedSizeThreshold: 13,
+        labelDensity: 1.1,
+        labelGridCellSize: 70,
+        labelRenderedSizeThreshold: 0,
         minCameraRatio: 0.04,
         maxCameraRatio: 18,
-        hideEdgesOnMove: false
+        hideEdgesOnMove: false,
+        enableEdgeHoverEvents: true
       });
 
       setupReducers();
@@ -974,6 +1163,7 @@
 
       graphData = await graphResponse.json();
       overviewData = await overviewResponse.json();
+      edgeById = new Map(graphData.edges.map((edge) => [edge.id, edge]));
 
       const optionsEl = document.getElementById("term-options");
       graphData.nodes
@@ -993,6 +1183,7 @@
         updateStats();
         updateOverviewPanel();
         updateDetail(null);
+        clearEdgeHoverInfo();
         setupInteractions();
         renderer.refresh();
         setStatus("Graph loaded.");
