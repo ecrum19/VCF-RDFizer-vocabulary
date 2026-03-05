@@ -446,7 +446,8 @@
       overflow: hidden;
     }
 
-    .edge-tooltip {
+    .edge-tooltip,
+    .node-tooltip {
       position: absolute;
       z-index: 20;
       pointer-events: none;
@@ -462,7 +463,14 @@
       box-shadow: 0 8px 20px rgba(8, 16, 22, 0.28);
     }
 
-    .edge-tooltip.visible {
+    .node-tooltip {
+      max-width: 290px;
+      background: rgba(11, 34, 45, 0.92);
+      border-color: rgba(186, 220, 230, 0.38);
+    }
+
+    .edge-tooltip.visible,
+    .node-tooltip.visible {
       display: block;
     }
 
@@ -644,10 +652,11 @@
               annotation
             </span>
           </div>
-          <div class="graph-hint">Nodes are labeled by default. Hover edges for quick info and click an edge to select it.</div>
+          <div class="graph-hint">Hover nodes or edges for quick details. Click a node or edge to select it.</div>
         </div>
         <div id="graph-container" aria-label="Sigma ontology graph">
           <div id="edge-tooltip" class="edge-tooltip"></div>
+          <div id="node-tooltip" class="node-tooltip"></div>
         </div>
       </section>
     </div>
@@ -686,6 +695,7 @@
     const overviewEl = document.getElementById("overview-summary");
     const edgeHoverEl = document.getElementById("edge-hover-info");
     const edgeTooltipEl = document.getElementById("edge-tooltip");
+    const nodeTooltipEl = document.getElementById("node-tooltip");
     const statusEl = document.getElementById("status");
 
     let graphData;
@@ -726,6 +736,47 @@
       edgeHoverEl.innerHTML = "<div>Hover an edge to inspect relationship information. Click an edge to keep it selected.</div>";
       edgeTooltipEl.classList.remove("visible");
       edgeTooltipEl.innerHTML = "";
+    }
+
+    function clearNodeTooltip() {
+      nodeTooltipEl.classList.remove("visible");
+      nodeTooltipEl.innerHTML = "";
+    }
+
+    function updateNodeTooltip(nodeId, payload) {
+      const node = nodeById.get(nodeId);
+      if (!node) {
+        clearNodeTooltip();
+        return;
+      }
+
+      const evt = payload && payload.event ? (payload.event.original || payload.event) : null;
+      if (!evt || typeof evt.clientX !== "number" || typeof evt.clientY !== "number") {
+        clearNodeTooltip();
+        return;
+      }
+
+      const rect = container.getBoundingClientRect();
+      const left = Math.min(rect.width - 300, Math.max(8, evt.clientX - rect.left + 10));
+      const top = Math.min(rect.height - 74, Math.max(8, evt.clientY - rect.top + 10));
+      const typeLabel = node.termType === "objectProperty"
+        ? "object property"
+        : node.termType === "datatypeProperty"
+          ? "datatype property"
+          : node.termType === "annotationProperty"
+            ? "annotation property"
+            : node.termType;
+      const labelPart = node.label && node.label.toLowerCase() !== node.qname.toLowerCase()
+        ? "<div>" + node.label + "</div>"
+        : "";
+
+      nodeTooltipEl.style.left = left + "px";
+      nodeTooltipEl.style.top = top + "px";
+      nodeTooltipEl.innerHTML = "" +
+        "<div><strong>" + node.qname + "</strong></div>" +
+        "<div>" + typeLabel + "</div>" +
+        labelPart;
+      nodeTooltipEl.classList.add("visible");
     }
 
     function updateEdgeHoverInfo(edgeId, payload, isSelected = false) {
@@ -805,6 +856,7 @@
       selectedEdge = edgeId;
       refreshEdgeSelectionContext();
       updateDetailForEdge(edgeId);
+      clearNodeTooltip();
       updateEdgeHoverInfo(edgeId, null, true);
       renderer.refresh();
       const edge = edgeById.get(edgeId);
@@ -1194,6 +1246,7 @@
       updateStats();
       if (selectedEdge) {
         updateDetailForEdge(selectedEdge);
+        clearNodeTooltip();
         updateEdgeHoverInfo(selectedEdge, null, true);
       } else {
         updateDetail(selectedNode);
@@ -1329,6 +1382,7 @@
       selectedEdgeEndpoints = new Set();
       refreshSelectionContext();
       updateDetail(selectedNode);
+      clearNodeTooltip();
       clearEdgeHoverInfo();
       focusNode(selectedNode, true);
       renderer.refresh();
@@ -1347,6 +1401,7 @@
       selectedEdge = null;
       selectedEdgeEndpoints = new Set();
       updateDetail(null);
+      clearNodeTooltip();
       clearEdgeHoverInfo();
     }
 
@@ -1408,6 +1463,7 @@
         selectedNode = payload.node;
         refreshSelectionContext();
         updateDetail(selectedNode);
+        clearNodeTooltip();
         clearEdgeHoverInfo();
         renderer.refresh();
         setStatus("Selected " + qnameNode(selectedNode) + ".");
@@ -1425,6 +1481,7 @@
         if (!visibleEdges.has(payload.edge)) {
           return;
         }
+        clearNodeTooltip();
         updateEdgeHoverInfo(payload.edge, payload);
       });
 
@@ -1434,6 +1491,17 @@
         } else {
           clearEdgeHoverInfo();
         }
+      });
+
+      renderer.on("enterNode", (payload) => {
+        if (!visibleNodes.has(payload.node)) {
+          return;
+        }
+        updateNodeTooltip(payload.node, payload);
+      });
+
+      renderer.on("leaveNode", () => {
+        clearNodeTooltip();
       });
 
       const observer = new ResizeObserver(() => {
@@ -1545,6 +1613,7 @@
         updateStats();
         updateOverviewPanel();
         updateDetail(null);
+        clearNodeTooltip();
         clearEdgeHoverInfo();
         setupInteractions();
         fitCamera({ animate: false, includeExternal: getFilterState().showExternal, resetAngle: true });
