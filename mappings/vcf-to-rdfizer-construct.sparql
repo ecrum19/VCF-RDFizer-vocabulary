@@ -36,7 +36,6 @@ CONSTRUCT {
     vcfr:hasFormatValue ?fmtValue .
 
   ?fmtValue a vcfr:FormatFieldValue ;
-    vcfr:fieldKey ?fmtKey ;
     vcfr:fieldValue ?fmtVal .
 
 } WHERE {
@@ -67,6 +66,5 @@ CONSTRUCT {
 
   # Example FORMAT key/value
   BIND(IRI("https://example.org/vcf/file1#sample/SAMPLE1/chr1-123456/fmt/GT") AS ?fmtValue)
-  BIND("GT" AS ?fmtKey)
   BIND("0/1" AS ?fmtVal)
 }

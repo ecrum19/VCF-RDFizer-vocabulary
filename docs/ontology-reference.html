@@ -7,7 +7,7 @@
   <meta name="description" content="Reference documentation for VCF-RDFizer vocabulary classes and properties." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@300;400;500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg: #eef2f6;
@@ -21,6 +21,7 @@
       --shadow: 0 12px 26px rgba(17, 37, 55, 0.09);
       --radius-lg: 16px;
       --radius-md: 10px;
+      --hierarchy-height: 620px;
     }
 
     * {
@@ -50,10 +51,10 @@
     .layout {
       width: min(1720px, calc(100vw - 28px));
       margin: 0 auto;
-      padding: 18px 0 54px;
+      padding: 18px 0 34px;
       display: grid;
       grid-template-columns: 292px minmax(0, 1fr);
-      gap: 20px;
+      gap: 15px;
       transition: grid-template-columns 0.2s ease;
     }
 
@@ -170,6 +171,14 @@
       text-decoration: none;
     }
 
+    .nav a.is-active {
+      background: linear-gradient(135deg, #177786 0%, #0f6772 100%);
+      border-color: transparent;
+      color: #ffffff;
+      font-weight: 700;
+      box-shadow: 0 6px 14px rgba(15, 103, 114, 0.22);
+    }
+
     .content {
       display: grid;
       gap: 16px;
@@ -204,35 +213,46 @@
     }
 
     .stats {
-      margin-top: 2px;
+      margin-top: 4px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 8px;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 10px;
+      align-items: stretch;
     }
 
     .stat {
-      border: 1px solid var(--border);
-      background: var(--panel-soft);
-      border-radius: 9px;
-      padding: 8px 10px;
+      grid-column: span 3;
+      border: 1px solid #c9d9e2;
+      background: linear-gradient(180deg, #fafdff 0%, #f2f8fb 100%);
+      border-radius: 10px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      padding: 10px 12px;
       font-size: 0.9rem;
-      color: var(--accent);
-      font-weight: 600;
+      line-height: 1.25;
+      color: #1e4e68;
+      font-weight: 700;
       min-width: 0;
+      text-align: center;
     }
 
     .stat--namespace {
       grid-column: 1 / -1;
-      display: grid;
-      gap: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      justify-content: flex-start;
+      text-align: left;
+      padding: 9px 12px;
+      font-weight: 600;
     }
 
     .stat--namespace code {
-      display: block;
-      max-width: 100%;
-      white-space: normal;
-      overflow-wrap: anywhere;
-      word-break: break-word;
+      display: inline;
+      white-space: nowrap;
+      overflow-wrap: normal;
+      word-break: normal;
       font-size: 0.82rem;
       line-height: 1.35;
     }
@@ -311,15 +331,61 @@
       line-height: 1.5;
     }
 
+    .hierarchy-panel[data-hierarchy-panel="raw"] .tree {
+      margin-top: 0;
+      padding: 16px 18px;
+      border: 1px solid #243b4f;
+      border-radius: 12px;
+      background:
+        radial-gradient(circle at top right, rgba(75, 130, 170, 0.15), transparent 48%),
+        linear-gradient(180deg, #0f1a24 0%, #0d151e 100%);
+      box-shadow: inset 0 0 0 1px rgba(169, 208, 236, 0.08);
+      color: #ffffff;
+      font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+      font-size: 0.84rem;
+      line-height: 1.7;
+      tab-size: 2;
+      height: 100%;
+      min-height: 0;
+      overflow: auto;
+    }
+
+    #hierarchy-ttl-content {
+      display: block;
+      white-space: pre;
+      letter-spacing: 0.01em;
+      color: #ffffff;
+      background: transparent;
+      border-radius: 0;
+      padding: 0;
+    }
+
+    #hierarchy-ttl-content .ttl-comment {
+      color: #a9b6c4;
+    }
+
+    .hierarchy-panel[data-hierarchy-panel="raw"] .tree code {
+      color: #ffffff;
+      background: transparent;
+      border-radius: 0;
+      padding: 0;
+    }
+
+    .hierarchy-panel[data-hierarchy-panel="raw"] .panel-note {
+      margin-top: 0;
+    }
+
     .hierarchy-switch {
       margin-top: 12px;
-      display: inline-flex;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       align-items: center;
       gap: 6px;
       padding: 5px;
       border: 1px solid var(--border);
       border-radius: 10px;
       background: #f7fafc;
+      width: 100%;
     }
 
     .hierarchy-switch__btn {
@@ -333,6 +399,7 @@
       padding: 6px 10px;
       cursor: pointer;
       transition: background-color 0.16s ease, border-color 0.16s ease;
+      width: 100%;
     }
 
     .hierarchy-switch__btn:hover {
@@ -354,86 +421,235 @@
       display: block;
     }
 
+    .hierarchy-panel[data-hierarchy-panel="diagram"].active {
+      height: var(--hierarchy-height);
+    }
+
+    .hierarchy-panel[data-hierarchy-panel="raw"].active {
+      height: var(--hierarchy-height);
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+    }
+
     .hierarchy-diagram {
       margin-top: 12px;
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
       background: #f9fcff;
       padding: 12px;
-    }
-
-    .hierarchy-grid {
+      overflow: hidden;
+      height: calc(var(--hierarchy-height) - 12px);
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 10px;
+      grid-template-rows: auto minmax(0, 1fr);
+      min-height: 0;
     }
 
-    .hierarchy-card {
+    .tree-tabs {
+      display: grid;
+      grid-template-columns: repeat(var(--tree-tab-count, 1), minmax(0, 1fr));
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .tree-tab-btn {
+      border: 1px solid #c9d8e5;
+      border-radius: 8px;
+      background: #f1f7fb;
+      color: #2a4b60;
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+      font-size: 0.79rem;
+      font-weight: 700;
+      padding: 6px 9px;
+      cursor: pointer;
+      transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+      text-align: center;
+      width: 100%;
+    }
+
+    .tree-tab-btn:hover {
+      background: #e9f3f9;
+      border-color: #aac4d6;
+    }
+
+    .tree-tab-btn.active {
+      background: linear-gradient(135deg, #177786 0%, #0f6772 100%);
+      border-color: transparent;
+      color: #fff;
+    }
+
+    .tree-tab-panels {
+      display: grid;
+      min-height: 0;
+      height: 100%;
+    }
+
+    .tree-lane {
+      display: grid;
       border: 1px solid #d7e2ec;
       border-radius: 10px;
       background: #fff;
-      padding: 10px 11px;
-      display: grid;
+      padding: 10px 12px;
       gap: 8px;
+      overflow: auto;
+      min-height: 0;
     }
 
-    .hierarchy-card h3 {
+    .tree-lane.tree-tab-panel {
+      display: none;
+    }
+
+    .tree-lane.tree-tab-panel.active {
+      display: grid;
+      height: 100%;
+      align-content: start;
+    }
+
+    .tree-lane h3 {
       margin: 0;
       font-size: 0.96rem;
       color: #1f475d;
       font-family: "Space Grotesk", "IBM Plex Sans", sans-serif;
     }
 
-    .hierarchy-track {
+    .tree-lane__groups {
       display: grid;
-      gap: 5px;
+      gap: 10px;
+    }
+
+    .tree-subgroup {
+      border: 1px solid #dbe6ef;
+      border-radius: 8px;
+      background: #fcfeff;
+      padding: 8px 10px;
+    }
+
+    .tree-subgroup-title {
+      margin: 0 0 6px;
+      font-size: 0.78rem;
+      letter-spacing: 0.01em;
+      font-weight: 700;
+      color: #436277;
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+    }
+
+    .tree-graph,
+    .tree-graph ul {
+      list-style: none;
+      margin: 0;
+      padding-left: 1.15rem;
       position: relative;
     }
 
-    .h-node {
-      display: block;
+    .tree-graph {
+      padding-left: 0;
+    }
+
+    .tree-graph ul::before {
+      content: "";
+      position: absolute;
+      left: 0.45rem;
+      top: 0;
+      bottom: 0;
+      border-left: 2px solid #b8cfdd;
+    }
+
+    .tree-graph li {
+      position: relative;
+      margin: 0.38rem 0;
+      padding-left: 0.95rem;
+    }
+
+    .tree-graph li::before {
+      content: "";
+      position: absolute;
+      left: 0.45rem;
+      top: 1rem;
+      width: 0.5rem;
+      border-top: 2px solid #b8cfdd;
+    }
+
+    .tree-graph > li {
+      padding-left: 0;
+      margin-top: 0;
+    }
+
+    .tree-graph > li::before {
+      display: none;
+    }
+
+    .tree-node {
+      display: inline-flex;
+      align-self: center;
       border: 1px solid #bfd5e1;
       border-radius: 8px;
       background: #f8fcff;
-      padding: 6px 8px;
-      font-size: 0.84rem;
-      font-weight: 600;
+      padding: 5px 8px;
+      font-size: 0.83rem;
+      font-weight: 650;
       color: #1f5461;
       text-decoration: none;
     }
 
-    .h-node:hover {
+    .tree-graph > li > .tree-node {
+      background: #ebf6fb;
+      border-color: #93bcd0;
+    }
+
+    .tree-node:hover {
       border-color: #8fb5c3;
       background: #f1f8fc;
       text-decoration: none;
     }
 
-    .h-node .meta {
+    .tree-meta {
       display: block;
-      margin-top: 2px;
+      margin-top: 3px;
+      margin-left: 2px;
       font-size: 0.73rem;
       font-weight: 500;
       color: #5d7588;
     }
 
-    .h-link {
+    .tree-meta a {
+      color: #1f5461;
+      font-weight: 600;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+    }
+
+    .tree-edge {
       display: inline-flex;
-      align-self: center;
-      justify-self: center;
-      padding: 2px 8px;
+      align-items: center;
+      padding: 2px 7px;
+      margin-right: 6px;
       border-radius: 999px;
       border: 1px solid #d4e2ec;
       background: #f3f8fb;
       color: #4e687a;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 700;
       letter-spacing: 0.02em;
     }
 
-    .h-children {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 6px;
+    a.tree-edge {
+      text-decoration: none;
+    }
+
+    a.tree-edge:hover {
+      border-color: #a9c3d2;
+      background: #eaf3f8;
+      text-decoration: none;
+    }
+
+    .tree-edge::before {
+      content: "↦";
+      margin-right: 4px;
+      color: #2d6f89;
+      font-size: 0.72rem;
+      line-height: 1;
     }
 
     .table-wrap {
@@ -524,6 +740,10 @@
     }
 
     @media (max-width: 920px) {
+      :root {
+        --hierarchy-height: 560px;
+      }
+
       .layout {
         grid-template-columns: 1fr;
         width: min(1200px, calc(100vw - 16px));
@@ -550,11 +770,42 @@
       table {
         min-width: 700px;
       }
+
+      .tree-tabs {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .stat {
+        grid-column: span 6;
+      }
     }
 
     @media (max-width: 560px) {
+      :root {
+        --hierarchy-height: 460px;
+      }
+
       .actions {
         grid-template-columns: 1fr;
+      }
+
+      .stat {
+        grid-column: span 12;
+      }
+
+      .tree-tabs {
+        grid-template-columns: 1fr;
+      }
+
+      .stat--namespace {
+        flex-wrap: wrap;
+        overflow-x: visible;
+      }
+
+      .stat--namespace code {
+        white-space: normal;
+        overflow-wrap: anywhere;
+        word-break: break-word;
       }
     }
   </style>
@@ -591,7 +842,7 @@
           and per-sample calls in RDF.
         </p>
         <div class="stats">
-          <span class="stat stat--namespace">Namespace <code>https://w3id.org/vcf-rdfizer/vocab#</code></span>
+          <span class="stat stat--namespace">Namespace: <code>https://w3id.org/vcf-rdfizer/vocab#</code></span>
           <span class="stat">29 classes</span>
           <span class="stat">11 object properties</span>
           <span class="stat">31 datatype properties</span>
@@ -619,116 +870,22 @@
 
         <div class="hierarchy-panel active" data-hierarchy-panel="diagram">
           <div class="hierarchy-diagram">
-            <div class="hierarchy-grid">
-              <article class="hierarchy-card">
-                <h3>File + Header Model</h3>
-                <div class="hierarchy-track">
-                  <a class="h-node" href="terms/VCFFile.html">vcfr:VCFFile<span class="meta">subClassOf dcat:Distribution, prov:Entity</span></a>
-                  <span class="h-link">hasHeader</span>
-                  <a class="h-node" href="terms/VCFHeader.html">vcfr:VCFHeader</a>
-                  <span class="h-link">hasHeaderLine</span>
-                  <a class="h-node" href="terms/HeaderLine.html">vcfr:HeaderLine</a>
-                  <div class="h-children">
-                    <a class="h-node" href="terms/FileFormatHeaderLine.html">vcfr:FileFormatHeaderLine</a>
-                    <a class="h-node" href="terms/FileDateHeaderLine.html">vcfr:FileDateHeaderLine</a>
-                    <a class="h-node" href="terms/SourceHeaderLine.html">vcfr:SourceHeaderLine</a>
-                    <a class="h-node" href="terms/ReferenceHeaderLine.html">vcfr:ReferenceHeaderLine</a>
-                    <a class="h-node" href="terms/ContigHeaderLine.html">vcfr:ContigHeaderLine</a>
-                    <a class="h-node" href="terms/INFOHeaderLine.html">vcfr:INFOHeaderLine</a>
-                    <a class="h-node" href="terms/FORMATHeaderLine.html">vcfr:FORMATHeaderLine</a>
-                    <a class="h-node" href="terms/FILTERHeaderLine.html">vcfr:FILTERHeaderLine</a>
-                    <a class="h-node" href="terms/ALTHeaderLine.html">vcfr:ALTHeaderLine</a>
-                  </div>
-                </div>
-              </article>
-
-              <article class="hierarchy-card">
-                <h3>Record + Call Model</h3>
-                <div class="hierarchy-track">
-                  <a class="h-node" href="terms/VCFRecord.html">vcfr:VCFRecord<span class="meta">subClassOf prov:Entity</span></a>
-                  <span class="h-link">hasCall</span>
-                  <a class="h-node" href="terms/VariantCall.html">vcfr:VariantCall<span class="meta">subClassOf prov:Entity</span></a>
-                  <span class="h-link">hasSampleCall</span>
-                  <a class="h-node" href="terms/SampleCall.html">vcfr:SampleCall<span class="meta">subClassOf prov:Entity</span></a>
-                </div>
-              </article>
-
-              <article class="hierarchy-card">
-                <h3>Definition Line Model</h3>
-                <div class="hierarchy-track">
-                  <a class="h-node" href="terms/FieldDefinition.html">vcfr:FieldDefinition<span class="meta">subClassOf vcfr:HeaderLine</span></a>
-                  <div class="h-children">
-                    <a class="h-node" href="terms/InfoFieldDefinition.html">vcfr:InfoFieldDefinition</a>
-                    <a class="h-node" href="terms/FormatFieldDefinition.html">vcfr:FormatFieldDefinition</a>
-                    <a class="h-node" href="terms/FilterDefinition.html">vcfr:FilterDefinition</a>
-                    <a class="h-node" href="terms/AltDefinition.html">vcfr:AltDefinition</a>
-                  </div>
-                </div>
-              </article>
-
-              <article class="hierarchy-card">
-                <h3>Value Nodes</h3>
-                <div class="hierarchy-track">
-                  <a class="h-node" href="terms/InfoFieldValue.html">vcfr:InfoFieldValue</a>
-                  <a class="h-node" href="terms/FormatFieldValue.html">vcfr:FormatFieldValue</a>
-                </div>
-              </article>
-
-              <article class="hierarchy-card">
-                <h3>Type Enumerations</h3>
-                <div class="hierarchy-track">
-                  <a class="h-node" href="terms/VCFValueType.html">vcfr:VCFValueType</a>
-                  <div class="h-children">
-                    <a class="h-node" href="terms/IntegerType.html">vcfr:IntegerType</a>
-                    <a class="h-node" href="terms/FloatType.html">vcfr:FloatType</a>
-                    <a class="h-node" href="terms/FlagType.html">vcfr:FlagType</a>
-                    <a class="h-node" href="terms/CharacterType.html">vcfr:CharacterType</a>
-                    <a class="h-node" href="terms/StringType.html">vcfr:StringType</a>
-                  </div>
-                  <a class="h-node" href="terms/VCFNumberArity.html">vcfr:VCFNumberArity</a>
-                </div>
+            <div class="tree-tabs" id="hierarchy-tree-tabs" role="tablist" aria-label="Hierarchy model tabs"></div>
+            <div class="tree-tab-panels" id="hierarchy-tree-panels">
+              <article class="tree-lane tree-tab-panel active">
+                <h3>Loading hierarchy diagram...</h3>
               </article>
             </div>
           </div>
         </div>
 
         <div class="hierarchy-panel" data-hierarchy-panel="raw">
-          <pre class="tree">vcfr:VCFFile
-  subclass of dcat:Distribution, prov:Entity
-
-vcfr:VCFHeader
-  has vcfr:HeaderLine
-    - vcfr:FileFormatHeaderLine
-    - vcfr:FileDateHeaderLine
-    - vcfr:SourceHeaderLine
-    - vcfr:ReferenceHeaderLine
-    - vcfr:ContigHeaderLine
-    - vcfr:INFOHeaderLine
-    - vcfr:FORMATHeaderLine
-    - vcfr:FILTERHeaderLine
-    - vcfr:ALTHeaderLine
-
-vcfr:VCFRecord (subclass of prov:Entity)
-  has vcfr:VariantCall (subclass of prov:Entity)
-    has vcfr:SampleCall (subclass of prov:Entity)
-
-vcfr:FieldDefinition (subclass of vcfr:HeaderLine)
-  - vcfr:InfoFieldDefinition
-  - vcfr:FormatFieldDefinition
-  - vcfr:FilterDefinition
-  - vcfr:AltDefinition
-
-vcfr:InfoFieldValue
-vcfr:FormatFieldValue
-
-vcfr:VCFValueType
-  - vcfr:IntegerType
-  - vcfr:FloatType
-  - vcfr:FlagType
-  - vcfr:CharacterType
-  - vcfr:StringType
-
-vcfr:VCFNumberArity</pre>
+          <div class="panel-note">
+            Raw hierarchy is serialized in <strong>RDF 1.1 Turtle (TTL)</strong>, generated from
+            <code>ontology/vcf-rdfizer-vocabulary.ttl</code> and loaded from <code>assets/ontology-hierarchy.ttl</code>.
+          </div>
+          <p class="muted"><a href="assets/ontology-hierarchy.ttl" target="_blank" rel="noreferrer">Open generated hierarchy TTL</a></p>
+          <pre class="tree"><code id="hierarchy-ttl-content">Loading generated hierarchy TTL...</code></pre>
         </div>
       </section>
 
@@ -1055,7 +1212,7 @@ vcfr:VCFNumberArity</pre>
         <p>Grouped by modeling concern to keep implementation and query logic predictable.</p>
 
         <div class="panel-note">
-          Domain notes: <code>vcfr:fieldKey</code>, <code>vcfr:fieldValue</code>, <code>vcfr:fieldValueInteger</code>,
+          Domain notes: <code>vcfr:fieldValue</code>, <code>vcfr:fieldValueInteger</code>,
           <code>vcfr:fieldValueDecimal</code>, and <code>vcfr:fieldValueBoolean</code> use <code>rdf:Resource</code>
           as domain to allow both INFO and FORMAT value nodes to share the same property set.
         </div>
@@ -1102,7 +1259,6 @@ vcfr:VCFNumberArity</pre>
               <tr id="term-infoRaw" class="term-row"><td><a href="terms/infoRaw.html">vcfr:infoRaw</a></td><td><code>vcfr:VariantCall</code></td><td><code>xsd:string</code></td><td>Raw INFO column text.</td></tr>
               <tr id="term-formatRaw" class="term-row"><td><a href="terms/formatRaw.html">vcfr:formatRaw</a></td><td><code>vcfr:VariantCall</code></td><td><code>xsd:string</code></td><td>Raw FORMAT column text.</td></tr>
 
-              <tr id="term-fieldKey" class="term-row"><td><a href="terms/fieldKey.html">vcfr:fieldKey</a></td><td><code>rdf:Resource</code></td><td><code>xsd:string</code></td><td>Key token on INFO/FORMAT value nodes.</td></tr>
               <tr id="term-fieldValue" class="term-row"><td><a href="terms/fieldValue.html">vcfr:fieldValue</a></td><td><code>rdf:Resource</code></td><td><code>xsd:string</code></td><td>String literal payload for generic values.</td></tr>
               <tr id="term-fieldValueInteger" class="term-row"><td><a href="terms/fieldValueInteger.html">vcfr:fieldValueInteger</a></td><td><code>rdf:Resource</code></td><td><code>xsd:integer</code></td><td>Typed integer payload.</td></tr>
               <tr id="term-fieldValueDecimal" class="term-row"><td><a href="terms/fieldValueDecimal.html">vcfr:fieldValueDecimal</a></td><td><code>rdf:Resource</code></td><td><code>xsd:decimal</code></td><td>Typed decimal payload.</td></tr>
@@ -1145,7 +1301,7 @@ vcfr:VCFNumberArity</pre>
         </p>
 
         <div class="panel-note">
-          Current profile highlights: 9 node shapes, optional <code>vcfr:fieldKey</code> on value nodes, and
+          Current profile highlights: 9 node shapes and
           explicit support for typed null literals via <code>vcfr:Null</code> on selected fields.
         </div>
 
@@ -1205,13 +1361,13 @@ vcfr:VCFNumberArity</pre>
               <tr>
                 <td><code>vcfr:InfoFieldValueShape</code></td>
                 <td><code>vcfr:InfoFieldValue</code></td>
-                <td>Optional <code>vcfr:fieldKey</code>; optional <code>vcfr:fieldValue</code> typed as <code>xsd:string</code> or <code>vcfr:Null</code>; optional <code>vcfr:declaredBy</code></td>
+                <td>Optional <code>vcfr:fieldValue</code> typed as <code>xsd:string</code> or <code>vcfr:Null</code>; optional <code>vcfr:declaredBy</code></td>
                 <td>Validates typed INFO value nodes without requiring a rigid minimum field set.</td>
               </tr>
               <tr>
                 <td><code>vcfr:FormatFieldValueShape</code></td>
                 <td><code>vcfr:FormatFieldValue</code></td>
-                <td>Optional <code>vcfr:fieldKey</code>; optional <code>vcfr:fieldValue</code> typed as <code>xsd:string</code> or <code>vcfr:Null</code>; optional <code>vcfr:declaredBy</code></td>
+                <td>Optional <code>vcfr:fieldValue</code> typed as <code>xsd:string</code> or <code>vcfr:Null</code>; optional <code>vcfr:declaredBy</code></td>
                 <td>Same value-node pattern as INFO, specialized for FORMAT payloads.</td>
               </tr>
             </tbody>
@@ -1386,6 +1542,90 @@ vcfr:VCFNumberArity</pre>
       });
     })();
 
+    (function setupTocScrollSpy() {
+      const toc = document.getElementById("page-toc");
+      if (!toc) {
+        return;
+      }
+
+      const links = Array.from(toc.querySelectorAll('.nav__list a[href^="#"]'));
+      if (!links.length) {
+        return;
+      }
+
+      const sections = links
+        .map((link) => {
+          const hash = link.getAttribute("href");
+          const id = hash ? hash.slice(1) : "";
+          if (!id) {
+            return null;
+          }
+          const section = document.getElementById(id);
+          if (!section) {
+            return null;
+          }
+          return { id, link, section };
+        })
+        .filter(Boolean);
+
+      if (!sections.length) {
+        return;
+      }
+
+      function setActive(id) {
+        sections.forEach((entry) => {
+          const active = entry.id === id;
+          entry.link.classList.toggle("is-active", active);
+          if (active) {
+            entry.link.setAttribute("aria-current", "location");
+          } else {
+            entry.link.removeAttribute("aria-current");
+          }
+        });
+      }
+
+      function resolveActiveId() {
+        const offset = 150;
+        let activeId = sections[0].id;
+        const viewportBottom = window.innerHeight + window.scrollY;
+        const documentBottom = document.documentElement.scrollHeight - 4;
+
+        if (viewportBottom >= documentBottom) {
+          return sections[sections.length - 1].id;
+        }
+
+        for (const entry of sections) {
+          const top = entry.section.getBoundingClientRect().top;
+          if (top - offset <= 0) {
+            activeId = entry.id;
+          } else {
+            break;
+          }
+        }
+
+        return activeId;
+      }
+
+      let ticking = false;
+      function update() {
+        ticking = false;
+        setActive(resolveActiveId());
+      }
+
+      function requestUpdate() {
+        if (ticking) {
+          return;
+        }
+        ticking = true;
+        window.requestAnimationFrame(update);
+      }
+
+      window.addEventListener("scroll", requestUpdate, { passive: true });
+      window.addEventListener("resize", requestUpdate);
+      window.addEventListener("hashchange", requestUpdate);
+      requestUpdate();
+    })();
+
     (function setupHierarchyViewToggle() {
       const buttons = Array.from(document.querySelectorAll("[data-hierarchy-view]"));
       const panels = Array.from(document.querySelectorAll("[data-hierarchy-panel]"));
@@ -1409,6 +1649,703 @@ vcfr:VCFNumberArity</pre>
           setView(button.dataset.hierarchyView);
         });
       });
+    })();
+
+    function setupHierarchyTreeTabs(initialId) {
+      const tabsRoot = document.getElementById("hierarchy-tree-tabs");
+      const panelsRoot = document.getElementById("hierarchy-tree-panels");
+      if (!tabsRoot || !panelsRoot) {
+        return;
+      }
+
+      const buttons = Array.from(tabsRoot.querySelectorAll("[data-tree-tab]"));
+      const panels = Array.from(panelsRoot.querySelectorAll("[data-tree-panel]"));
+      if (!buttons.length || !panels.length) {
+        return;
+      }
+
+      function setTreeTab(id) {
+        buttons.forEach((button) => {
+          const active = button.dataset.treeTab === id;
+          button.classList.toggle("active", active);
+          button.setAttribute("aria-selected", active ? "true" : "false");
+        });
+        panels.forEach((panel) => {
+          panel.classList.toggle("active", panel.dataset.treePanel === id);
+        });
+      }
+
+      buttons.forEach((button) => {
+        if (button.dataset.boundTreeTab === "1") {
+          return;
+        }
+        button.addEventListener("click", () => {
+          setTreeTab(button.dataset.treeTab);
+        });
+        button.dataset.boundTreeTab = "1";
+      });
+
+      const firstId = initialId
+        || buttons.find((button) => button.classList.contains("active"))?.dataset.treeTab
+        || buttons[0].dataset.treeTab;
+      if (firstId) {
+        setTreeTab(firstId);
+      }
+    }
+
+    (function loadHierarchyTtl() {
+      const target = document.getElementById("hierarchy-ttl-content");
+      const tabsTarget = document.getElementById("hierarchy-tree-tabs");
+      const panelsTarget = document.getElementById("hierarchy-tree-panels");
+      if (!target || !tabsTarget || !panelsTarget) {
+        return;
+      }
+
+      function escapeHtml(value) {
+        return value
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;");
+      }
+
+      function renderTtl(text) {
+        const lines = text.trimEnd().split("\n");
+        const html = lines.map((line) => {
+          const safe = escapeHtml(line);
+          if (line.trimStart().startsWith("#")) {
+            return `<span class="ttl-comment">${safe}</span>`;
+          }
+          return safe;
+        }).join("\n");
+        target.innerHTML = html;
+      }
+
+      function parseTermList(value) {
+        if (!value) {
+          return [];
+        }
+        return value
+          .split(",")
+          .map((part) => part.trim())
+          .filter(Boolean);
+      }
+
+      function parseHierarchyData(text) {
+        const lines = text.split("\n");
+        const prefixes = {};
+        const classes = new Map();
+        const classGroups = [];
+        const properties = new Map();
+        const domainGroups = [];
+
+        let section = "";
+        let currentGroup = null;
+        let statement = "";
+
+        function ensureClass(term) {
+          if (!classes.has(term)) {
+            classes.set(term, { parents: new Set() });
+          }
+          return classes.get(term);
+        }
+
+        function processStatement(value) {
+          if (!value) {
+            return;
+          }
+
+          const prefixMatch = value.match(/^@prefix\s+([^:\s]+):\s*<([^>]+)>\s*\.$/);
+          if (prefixMatch) {
+            prefixes[prefixMatch[1]] = prefixMatch[2];
+            return;
+          }
+
+          const classMatch = value.match(/^(\S+)\s+a\s+owl:Class(?:\s*;\s*rdfs:subClassOf\s+(.+))?\s*\.$/);
+          if (classMatch) {
+            const classTerm = classMatch[1];
+            const classEntry = ensureClass(classTerm);
+            parseTermList(classMatch[2]).forEach((parent) => classEntry.parents.add(parent));
+            if (section === "classes" && currentGroup && !currentGroup.members.includes(classTerm)) {
+              currentGroup.members.push(classTerm);
+            }
+            return;
+          }
+
+          const propertyMatch = value.match(/^(\S+)\s+a\s+owl:ObjectProperty\s*;\s*rdfs:domain\s+(.+?)\s*;\s*rdfs:range\s+(.+)\s*\.$/);
+          if (propertyMatch) {
+            const propertyTerm = propertyMatch[1];
+            properties.set(propertyTerm, {
+              domains: parseTermList(propertyMatch[2]),
+              ranges: parseTermList(propertyMatch[3])
+            });
+            if (section === "properties" && currentGroup && !currentGroup.properties.includes(propertyTerm)) {
+              currentGroup.properties.push(propertyTerm);
+            }
+          }
+        }
+
+        for (const rawLine of lines) {
+          const line = rawLine.trim();
+          if (!line) {
+            continue;
+          }
+
+          if (line.startsWith("#")) {
+            if (statement) {
+              processStatement(statement);
+              statement = "";
+            }
+
+            if (line === "## Class hierarchy") {
+              section = "classes";
+              currentGroup = null;
+            } else if (line === "## Structural object-property links (domain/range)") {
+              section = "properties";
+              currentGroup = null;
+            } else if (section === "classes" && line.startsWith("# Group:")) {
+              const group = {
+                id: `class-group-${classGroups.length + 1}`,
+                label: line.slice("# Group:".length).trim(),
+                members: []
+              };
+              classGroups.push(group);
+              currentGroup = group;
+            } else if (section === "properties" && line.startsWith("# Domain group:")) {
+              const group = {
+                id: `domain-group-${domainGroups.length + 1}`,
+                label: line.slice("# Domain group:".length).trim(),
+                properties: []
+              };
+              domainGroups.push(group);
+              currentGroup = group;
+            }
+            continue;
+          }
+
+          statement = statement ? `${statement} ${line}` : line;
+          if (line.endsWith(".")) {
+            processStatement(statement);
+            statement = "";
+          }
+        }
+
+        if (statement) {
+          processStatement(statement);
+        }
+
+        const childrenMap = new Map();
+        classes.forEach((_, classTerm) => {
+          childrenMap.set(classTerm, new Set());
+        });
+        classes.forEach((entry, classTerm) => {
+          entry.parents.forEach((parentTerm) => {
+            if (classes.has(parentTerm)) {
+              childrenMap.get(parentTerm).add(classTerm);
+            }
+          });
+        });
+
+        return { prefixes, classes, classGroups, properties, domainGroups, childrenMap };
+      }
+
+      function getTermHref(term, prefixes) {
+        if (!term) {
+          return null;
+        }
+        if (term.startsWith("vcfr:")) {
+          return `terms/${encodeURIComponent(term.slice("vcfr:".length))}.html`;
+        }
+        if (term.startsWith("<") && term.endsWith(">")) {
+          return term.slice(1, -1);
+        }
+        const split = term.indexOf(":");
+        if (split > 0) {
+          const prefix = term.slice(0, split);
+          const local = term.slice(split + 1);
+          if (prefixes[prefix]) {
+            return `${prefixes[prefix]}${local}`;
+          }
+        }
+        return null;
+      }
+
+      function buildTermLink(term, prefixes) {
+        const link = document.createElement("a");
+        link.className = "tree-node";
+        link.textContent = term;
+        const href = getTermHref(term, prefixes);
+        if (href) {
+          link.href = href;
+          if (/^https?:\/\//.test(href)) {
+            link.target = "_blank";
+            link.rel = "noreferrer";
+          }
+        } else {
+          link.href = "#";
+        }
+        return link;
+      }
+
+      function buildInlineTermLink(term, prefixes) {
+        const link = document.createElement("a");
+        link.textContent = term;
+        const href = getTermHref(term, prefixes);
+        if (href) {
+          link.href = href;
+          if (/^https?:\/\//.test(href)) {
+            link.target = "_blank";
+            link.rel = "noreferrer";
+          }
+        } else {
+          link.href = "#";
+        }
+        return link;
+      }
+
+      function createTreeEdge(label, href = null) {
+        const edge = document.createElement(href ? "a" : "span");
+        edge.className = "tree-edge";
+        edge.textContent = label;
+        if (href) {
+          edge.href = href;
+          if (/^https?:\/\//.test(href)) {
+            edge.target = "_blank";
+            edge.rel = "noreferrer";
+          }
+        }
+        return edge;
+      }
+
+      function buildPropertyEdge(propertyTerm, prefixes, label = null) {
+        return createTreeEdge(label || propertyTerm, getTermHref(propertyTerm, prefixes));
+      }
+
+      function sortTerms(terms) {
+        return Array.from(terms).sort((a, b) => a.localeCompare(b));
+      }
+
+      function propertyTargets(parsed, domainTerm, propertyTerm) {
+        const prop = parsed.properties.get(propertyTerm);
+        if (!prop) {
+          return [];
+        }
+        if (!prop.domains.includes(domainTerm)) {
+          return [];
+        }
+        return sortTerms(prop.ranges);
+      }
+
+      function appendSubclassTree(parsed, parentItem, classTerm, visited = new Set()) {
+        if (visited.has(classTerm)) {
+          return;
+        }
+        const nextVisited = new Set(visited);
+        nextVisited.add(classTerm);
+
+        const children = sortTerms(parsed.childrenMap.get(classTerm) || []);
+        if (!children.length) {
+          return;
+        }
+
+        const childList = document.createElement("ul");
+        children.forEach((childTerm) => {
+          const childItem = document.createElement("li");
+          childItem.appendChild(buildPropertyEdge("rdfs:subClassOf", parsed.prefixes));
+          childItem.appendChild(buildTermLink(childTerm, parsed.prefixes));
+          appendSubclassTree(parsed, childItem, childTerm, nextVisited);
+          childList.appendChild(childItem);
+        });
+        parentItem.appendChild(childList);
+      }
+
+      function renderVcfConceptPanel(parsed) {
+        const panel = document.createElement("article");
+        panel.className = "tree-lane tree-tab-panel";
+        panel.dataset.treePanel = "vcf-concept";
+
+        const title = document.createElement("h3");
+        title.textContent = "VCF-Oriented Conceptual Overview";
+        panel.appendChild(title);
+
+        const note = document.createElement("p");
+        note.className = "muted";
+        note.textContent = "Conceptual VCF flow using ontology predicates directly (click any class or property for its documentation).";
+        panel.appendChild(note);
+
+        if (!parsed.classes.has("vcfr:VCFFile")) {
+          const empty = document.createElement("p");
+          empty.className = "muted";
+          empty.textContent = "vcfr:VCFFile was not found in hierarchy TTL.";
+          panel.appendChild(empty);
+          return panel;
+        }
+
+        const groupsWrap = document.createElement("div");
+        groupsWrap.className = "tree-lane__groups";
+
+        const subgroup = document.createElement("section");
+        subgroup.className = "tree-subgroup";
+
+        const subgroupTitle = document.createElement("h4");
+        subgroupTitle.className = "tree-subgroup-title";
+        subgroupTitle.textContent = "From VCF file artifact to headers, records, calls, and per-field structures";
+        subgroup.appendChild(subgroupTitle);
+
+        const graph = document.createElement("ul");
+        graph.className = "tree-graph";
+
+        const fileRoot = document.createElement("li");
+        fileRoot.appendChild(buildTermLink("vcfr:VCFFile", parsed.prefixes));
+
+        const fileChildren = document.createElement("ul");
+
+        propertyTargets(parsed, "vcfr:VCFFile", "vcfr:hasHeader").forEach((headerTerm) => {
+          const headerItem = document.createElement("li");
+          headerItem.appendChild(buildPropertyEdge("vcfr:hasHeader", parsed.prefixes));
+          headerItem.appendChild(buildTermLink(headerTerm, parsed.prefixes));
+          appendSubclassTree(parsed, headerItem, headerTerm);
+
+          const headerLineTargets = propertyTargets(parsed, headerTerm, "vcfr:hasHeaderLine");
+          if (headerLineTargets.length) {
+            const headerLineBranch = document.createElement("ul");
+            headerLineTargets.forEach((lineTerm) => {
+              const lineItem = document.createElement("li");
+              lineItem.appendChild(buildPropertyEdge("vcfr:hasHeaderLine", parsed.prefixes));
+              lineItem.appendChild(buildTermLink(lineTerm, parsed.prefixes));
+              appendSubclassTree(parsed, lineItem, lineTerm);
+              headerLineBranch.appendChild(lineItem);
+            });
+            headerItem.appendChild(headerLineBranch);
+          }
+
+          fileChildren.appendChild(headerItem);
+        });
+
+        propertyTargets(parsed, "vcfr:VCFFile", "vcfr:hasRecord").forEach((recordTerm) => {
+          const recordItem = document.createElement("li");
+          recordItem.appendChild(buildPropertyEdge("vcfr:hasRecord", parsed.prefixes));
+          recordItem.appendChild(buildTermLink(recordTerm, parsed.prefixes));
+          appendSubclassTree(parsed, recordItem, recordTerm);
+
+          const callTargets = propertyTargets(parsed, recordTerm, "vcfr:hasCall");
+          if (callTargets.length) {
+            const callBranch = document.createElement("ul");
+            callTargets.forEach((callTerm) => {
+              const callItem = document.createElement("li");
+              callItem.appendChild(buildPropertyEdge("vcfr:hasCall", parsed.prefixes));
+              callItem.appendChild(buildTermLink(callTerm, parsed.prefixes));
+              appendSubclassTree(parsed, callItem, callTerm);
+
+              const infoTargets = propertyTargets(parsed, callTerm, "vcfr:hasInfoValue");
+              const sampleTargets = propertyTargets(parsed, callTerm, "vcfr:hasSampleCall");
+
+              const callChildren = document.createElement("ul");
+              infoTargets.forEach((infoTerm) => {
+                const infoItem = document.createElement("li");
+                infoItem.appendChild(buildPropertyEdge("vcfr:hasInfoValue", parsed.prefixes));
+                infoItem.appendChild(buildTermLink(infoTerm, parsed.prefixes));
+                appendSubclassTree(parsed, infoItem, infoTerm);
+                callChildren.appendChild(infoItem);
+              });
+
+              sampleTargets.forEach((sampleTerm) => {
+                const sampleItem = document.createElement("li");
+                sampleItem.appendChild(buildPropertyEdge("vcfr:hasSampleCall", parsed.prefixes));
+                sampleItem.appendChild(buildTermLink(sampleTerm, parsed.prefixes));
+                appendSubclassTree(parsed, sampleItem, sampleTerm);
+
+                const formatTargets = propertyTargets(parsed, sampleTerm, "vcfr:hasFormatValue");
+                if (formatTargets.length) {
+                  const formatBranch = document.createElement("ul");
+                  formatTargets.forEach((formatTerm) => {
+                    const formatItem = document.createElement("li");
+                    formatItem.appendChild(buildPropertyEdge("vcfr:hasFormatValue", parsed.prefixes));
+                    formatItem.appendChild(buildTermLink(formatTerm, parsed.prefixes));
+                    appendSubclassTree(parsed, formatItem, formatTerm);
+                    formatBranch.appendChild(formatItem);
+                  });
+                  sampleItem.appendChild(formatBranch);
+                }
+
+                callChildren.appendChild(sampleItem);
+              });
+
+              if (callChildren.childElementCount) {
+                callItem.appendChild(callChildren);
+              }
+              callBranch.appendChild(callItem);
+            });
+            recordItem.appendChild(callBranch);
+          }
+
+          fileChildren.appendChild(recordItem);
+        });
+
+        if (fileChildren.childElementCount) {
+          fileRoot.appendChild(fileChildren);
+        }
+        graph.appendChild(fileRoot);
+
+        subgroup.appendChild(graph);
+        groupsWrap.appendChild(subgroup);
+        panel.appendChild(groupsWrap);
+
+        return panel;
+      }
+
+      function renderClassPanel(parsed) {
+        const panel = document.createElement("article");
+        panel.className = "tree-lane tree-tab-panel";
+        panel.dataset.treePanel = "class-hierarchy";
+
+        const title = document.createElement("h3");
+        title.textContent = "Class Hierarchy Trees";
+        panel.appendChild(title);
+
+        const groupsWrap = document.createElement("div");
+        groupsWrap.className = "tree-lane__groups";
+
+        parsed.classGroups.forEach((group) => {
+          if (!group.members.length) {
+            return;
+          }
+
+          const subgroup = document.createElement("section");
+          subgroup.className = "tree-subgroup";
+
+          const subgroupTitle = document.createElement("h4");
+          subgroupTitle.className = "tree-subgroup-title";
+          subgroupTitle.textContent = group.label;
+          subgroup.appendChild(subgroupTitle);
+
+          const graph = document.createElement("ul");
+          graph.className = "tree-graph";
+
+          const memberSet = new Set(group.members);
+          const memberOrder = new Map(group.members.map((term, index) => [term, index]));
+          const visited = new Set();
+
+          const roots = group.members.filter((term) => {
+            const classEntry = parsed.classes.get(term);
+            if (!classEntry) {
+              return true;
+            }
+            for (const parent of classEntry.parents) {
+              if (memberSet.has(parent)) {
+                return false;
+              }
+            }
+            return true;
+          });
+          const rootTerms = roots.length ? roots : [group.members[0]];
+
+          function renderClassNode(term, edgeLabel) {
+            if (visited.has(term)) {
+              return null;
+            }
+            visited.add(term);
+
+            const item = document.createElement("li");
+            if (edgeLabel) {
+              item.appendChild(buildPropertyEdge("rdfs:subClassOf", parsed.prefixes, edgeLabel));
+            }
+            item.appendChild(buildTermLink(term, parsed.prefixes));
+
+            const classEntry = parsed.classes.get(term);
+            const externalParents = classEntry
+              ? Array.from(classEntry.parents).filter((parent) => !memberSet.has(parent))
+              : [];
+            if (externalParents.length) {
+              const meta = document.createElement("span");
+              meta.className = "tree-meta";
+              meta.append(document.createTextNode("rdfs:subClassOf "));
+              externalParents.forEach((parentTerm, index) => {
+                if (index > 0) {
+                  meta.append(document.createTextNode(", "));
+                }
+                const parentLink = buildInlineTermLink(parentTerm, parsed.prefixes);
+                meta.append(parentLink);
+              });
+              item.appendChild(meta);
+            }
+
+            const children = Array.from(parsed.childrenMap.get(term) || [])
+              .filter((child) => memberSet.has(child) && !visited.has(child))
+              .sort((a, b) => (memberOrder.get(a) ?? 9999) - (memberOrder.get(b) ?? 9999));
+
+            if (children.length) {
+              const childrenList = document.createElement("ul");
+              children.forEach((child) => {
+                const childNode = renderClassNode(child, "rdfs:subClassOf");
+                if (childNode) {
+                  childrenList.appendChild(childNode);
+                }
+              });
+              if (childrenList.childElementCount > 0) {
+                item.appendChild(childrenList);
+              }
+            }
+
+            return item;
+          }
+
+          rootTerms.forEach((rootTerm) => {
+            const rootNode = renderClassNode(rootTerm, null);
+            if (rootNode) {
+              graph.appendChild(rootNode);
+            }
+          });
+
+          subgroup.appendChild(graph);
+          groupsWrap.appendChild(subgroup);
+        });
+
+        if (!groupsWrap.childElementCount) {
+          const empty = document.createElement("p");
+          empty.className = "muted";
+          empty.textContent = "No class hierarchy groups were found in the generated hierarchy TTL.";
+          panel.appendChild(empty);
+          return panel;
+        }
+
+        panel.appendChild(groupsWrap);
+        return panel;
+      }
+
+      function renderPropertyPanel(parsed) {
+        const panel = document.createElement("article");
+        panel.className = "tree-lane tree-tab-panel";
+        panel.dataset.treePanel = "object-links";
+
+        const title = document.createElement("h3");
+        title.textContent = "Object-Property Domain/Range Links";
+        panel.appendChild(title);
+
+        const groupsWrap = document.createElement("div");
+        groupsWrap.className = "tree-lane__groups";
+
+        parsed.domainGroups.forEach((group) => {
+          if (!group.properties.length) {
+            return;
+          }
+
+          const subgroup = document.createElement("section");
+          subgroup.className = "tree-subgroup";
+
+          const subgroupTitle = document.createElement("h4");
+          subgroupTitle.className = "tree-subgroup-title";
+          subgroupTitle.textContent = group.label;
+          subgroup.appendChild(subgroupTitle);
+
+          const graph = document.createElement("ul");
+          graph.className = "tree-graph";
+
+          const domainToProps = new Map();
+          group.properties.forEach((propertyTerm) => {
+            const propertyEntry = parsed.properties.get(propertyTerm);
+            if (!propertyEntry) {
+              return;
+            }
+            propertyEntry.domains.forEach((domainTerm) => {
+              if (!domainToProps.has(domainTerm)) {
+                domainToProps.set(domainTerm, []);
+              }
+              domainToProps.get(domainTerm).push({
+                property: propertyTerm,
+                ranges: propertyEntry.ranges
+              });
+            });
+          });
+
+          Array.from(domainToProps.keys())
+            .sort((a, b) => a.localeCompare(b))
+            .forEach((domainTerm) => {
+              const root = document.createElement("li");
+              root.appendChild(buildTermLink(domainTerm, parsed.prefixes));
+
+              const branch = document.createElement("ul");
+              domainToProps.get(domainTerm).forEach((entry) => {
+                entry.ranges.forEach((rangeTerm) => {
+                  const item = document.createElement("li");
+                  item.appendChild(buildPropertyEdge(entry.property, parsed.prefixes));
+                  item.appendChild(buildTermLink(rangeTerm, parsed.prefixes));
+                  branch.appendChild(item);
+                });
+              });
+
+              if (branch.childElementCount > 0) {
+                root.appendChild(branch);
+              }
+              graph.appendChild(root);
+            });
+
+          subgroup.appendChild(graph);
+          groupsWrap.appendChild(subgroup);
+        });
+
+        if (!groupsWrap.childElementCount) {
+          const empty = document.createElement("p");
+          empty.className = "muted";
+          empty.textContent = "No object-property domain/range groups were found in the generated hierarchy TTL.";
+          panel.appendChild(empty);
+          return panel;
+        }
+
+        panel.appendChild(groupsWrap);
+        return panel;
+      }
+
+      function renderHierarchyDiagram(parsed) {
+        tabsTarget.innerHTML = "";
+        panelsTarget.innerHTML = "";
+
+        const tabDefs = [
+          { id: "vcf-concept", label: "VCF Concept", panel: renderVcfConceptPanel(parsed) },
+          { id: "class-hierarchy", label: "Class Trees", panel: renderClassPanel(parsed) },
+          { id: "object-links", label: "Object Links", panel: renderPropertyPanel(parsed) }
+        ].filter((tab) => !!tab.panel);
+        tabsTarget.style.setProperty("--tree-tab-count", String(Math.max(tabDefs.length, 1)));
+
+        if (!tabDefs.length) {
+          panelsTarget.innerHTML = '<article class="tree-lane tree-tab-panel active"><h3>No hierarchy data found.</h3></article>';
+          return;
+        }
+
+        tabDefs.forEach((tab, index) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = `tree-tab-btn${index === 0 ? " active" : ""}`;
+          button.dataset.treeTab = tab.id;
+          button.setAttribute("aria-selected", index === 0 ? "true" : "false");
+          button.textContent = tab.label;
+          tabsTarget.appendChild(button);
+
+          if (index === 0) {
+            tab.panel.classList.add("active");
+          }
+          tab.panel.dataset.treePanel = tab.id;
+          panelsTarget.appendChild(tab.panel);
+        });
+
+        setupHierarchyTreeTabs(tabDefs[0].id);
+      }
+
+      fetch("assets/ontology-hierarchy.ttl", { cache: "no-store" })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+          return response.text();
+        })
+        .then((text) => {
+          renderTtl(text);
+          const parsed = parseHierarchyData(text);
+          renderHierarchyDiagram(parsed);
+        })
+        .catch((error) => {
+          target.textContent = `Failed to load generated hierarchy TTL (${error.message}).`;
+          panelsTarget.innerHTML = `<article class="tree-lane tree-tab-panel active"><h3>Failed to load hierarchy diagram (${error.message}).</h3></article>`;
+        });
     })();
 
     (function normalizeTermHash() {

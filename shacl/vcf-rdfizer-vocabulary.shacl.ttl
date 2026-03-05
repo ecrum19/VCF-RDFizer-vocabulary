@@ -149,7 +149,6 @@ vcfr:SampleCallShape a sh:NodeShape ;
 vcfr:InfoFieldValueShape a sh:NodeShape ;
   sh:targetClass vcfr:InfoFieldValue ;
 
-  sh:property [ sh:path vcfr:fieldKey ; sh:minCount 0 ; sh:datatype xsd:string ] ;
   sh:property [
     sh:path vcfr:fieldValue ;
     sh:minCount 0 ;
@@ -163,7 +162,6 @@ vcfr:InfoFieldValueShape a sh:NodeShape ;
 vcfr:FormatFieldValueShape a sh:NodeShape ;
   sh:targetClass vcfr:FormatFieldValue ;
 
-  sh:property [ sh:path vcfr:fieldKey ; sh:minCount 0 ; sh:datatype xsd:string ] ;
   sh:property [
     sh:path vcfr:fieldValue ;
     sh:minCount 0 ;

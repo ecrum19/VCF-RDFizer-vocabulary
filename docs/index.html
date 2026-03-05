@@ -53,9 +53,7 @@
     }
 
     body::after {
-      bottom: -180px;
-      left: -140px;
-      background: radial-gradient(circle at top, rgba(255, 188, 90, 0.2), transparent 70%);
+      display: none;
     }
 
     a {
@@ -100,15 +98,32 @@
     .hero__panel-actions {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
+      gap: 9px;
+      align-items: stretch;
     }
 
     .hero__panel-actions .btn {
       width: 100%;
-      min-height: 36px;
-      padding: 8px 12px;
-      font-size: 0.9rem;
+      min-height: 28px;
+      padding: 5px 10px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border-radius: 8px;
+      letter-spacing: 0.01em;
       white-space: nowrap;
+    }
+
+    .hero__panel-actions .btn.btn--ghost {
+      background: linear-gradient(180deg, #ffffff 0%, #f2f7fb 100%);
+      border-color: #bfd0de;
+      color: #154f58;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    .hero__panel-actions .btn.btn--ghost:hover {
+      border-color: #8fa8bb;
+      background: linear-gradient(180deg, #ffffff 0%, #eaf2f8 100%);
+      box-shadow: 0 8px 14px rgba(19, 55, 70, 0.12);
     }
 
     .btn {
@@ -122,7 +137,7 @@
       font-size: 0.94rem;
       border: 1px solid transparent;
       transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
-      min-height: 42px;
+      min-height: 20px;
     }
 
     .btn:hover {
@@ -167,13 +182,105 @@
     }
 
     .hero__panel {
-      background: var(--card);
-      border: 1px solid var(--border);
+      background: linear-gradient(180deg, #ffffff 0%, #f7fafc 100%);
+      border: 1px solid #ccd7e1;
       border-radius: var(--radius-lg);
-      padding: 24px;
-      box-shadow: var(--shadow);
+      box-shadow: 0 18px 36px rgba(20, 32, 45, 0.1);
       display: grid;
-      gap: 18px;
+      grid-template-rows: auto 1fr;
+      overflow: hidden;
+      min-height: 100%;
+    }
+
+    .hero__panel-header {
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid #d8e1e8;
+      background: linear-gradient(135deg, rgba(31, 111, 120, 0.08) 0%, rgba(237, 243, 247, 0.4) 100%);
+      display: grid;
+      gap: 4px;
+    }
+
+    .hero__panel-header h2 {
+      margin: 0;
+      font-family: "Space Grotesk", "IBM Plex Sans", sans-serif;
+      font-size: 1.05rem;
+      letter-spacing: 0.01em;
+      color: #123e4c;
+    }
+
+    .hero__panel-header p {
+      margin: 0;
+      font-size: 0.88rem;
+      color: #4f6577;
+      line-height: 1.4;
+    }
+
+    .hero__panel-body {
+      padding: 16px 20px 18px;
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .hero__namespace {
+      border: 1px solid #d3dde6;
+      border-radius: 11px;
+      background: #ffffff;
+      padding: 10px 12px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .hero__namespace-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #5c6d7c;
+      font-weight: 600;
+    }
+
+    .hero__namespace code {
+      background: rgba(31, 111, 120, 0.08);
+      border: 1px solid rgba(31, 111, 120, 0.16);
+      padding: 6px 8px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      color: #164750;
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .hero__artifacts {
+      display: grid;
+      gap: 8px;
+    }
+
+    .hero__artifacts-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #5c6d7c;
+      font-weight: 600;
+    }
+
+    .hero__artifact-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .hero__artifact-item {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid #c7d5e2;
+      background: #f6fafc;
+      color: #2d4f63;
+      font-size: 0.79rem;
+      font-weight: 600;
+      line-height: 1.2;
     }
 
     .pill {
@@ -186,26 +293,6 @@
       border-radius: 999px;
       padding: 6px 12px;
       font-size: 0.9rem;
-    }
-
-    .kv {
-      display: grid;
-      gap: 6px;
-    }
-
-    .kv span {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-    }
-
-    .kv code {
-      background: rgba(31, 111, 120, 0.08);
-      padding: 4px 8px;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      display: inline-flex;
     }
 
     .section {
@@ -401,17 +488,29 @@
         </div>
       </div>
       <div class="hero__panel">
-        <div class="kv">
-          <span>Namespace</span>
-          <code id="namespace">https://w3id.org/vcf-rdfizer/vocab#</code>
+        <div class="hero__panel-header">
+          <h2>Vocabulary Snapshot</h2>
+          <p>Core namespace and primary source artifacts for this documentation site.</p>
         </div>
-        <div class="hero__actions hero__panel-actions">
-          <button class="btn btn--ghost" id="copy-namespace" type="button">Copy Namespace</button>
-          <a class="btn btn--ghost" href="assets/vcf-rdfizer-vocabulary.ttl" target="_blank" rel="noreferrer">Open Ontology TTL</a>
-        </div>
-        <div class="kv">
-          <span>Artifacts Included</span>
-          <strong>Ontology TTL · SHACL TTL · Reference Docs · Relationship Graph · Example Explorer</strong>
+        <div class="hero__panel-body">
+          <div class="hero__namespace">
+            <span class="hero__namespace-label">Namespace</span>
+            <code id="namespace">https://w3id.org/vcf-rdfizer/vocab#</code>
+          </div>
+          <div class="hero__panel-actions">
+            <button class="btn btn--ghost" id="copy-namespace" type="button">Copy Namespace</button>
+            <a class="btn btn--ghost" href="assets/vcf-rdfizer-vocabulary.ttl" target="_blank" rel="noreferrer">Open Ontology TTL</a>
+          </div>
+          <div class="hero__artifacts">
+            <span class="hero__artifacts-label">Artifacts Included</span>
+            <div class="hero__artifact-list">
+              <span class="hero__artifact-item">Ontology TTL</span>
+              <span class="hero__artifact-item">SHACL TTL</span>
+              <span class="hero__artifact-item">Reference Docs</span>
+              <span class="hero__artifact-item">Relationship Graph</span>
+              <span class="hero__artifact-item">Example Explorer</span>
+            </div>
+          </div>
         </div>
       </div>
     </header>
@@ -432,7 +531,7 @@
           <p>Sigma.js ontology map with generated JSON graph data and serialized relationship overview.</p>
           <div class="card__actions">
             <a class="btn btn--primary" href="ontology-graph.html">Open Visual Graph</a>
-            <a class="btn btn--ghost" href="assets/ontology-graph-static.svg" target="_blank" rel="noreferrer">Ontology Overview SVG</a>
+            <a class="btn btn--ghost" href="assets/ontology-graph-static.svg" target="_blank" rel="noreferrer">Concept Model SVG</a>
           </div>
         </div>
         <div class="card">

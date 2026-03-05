@@ -29,5 +29,6 @@ for src in "${sources[@]}"; do
 done
 
 node "$repo_root/scripts/build-ontology-graph-data.mjs" "$repo_root"
-node "$repo_root/scripts/export-ontology-graph-svg.mjs" "$repo_root"
+node "$repo_root/scripts/build-ontology-hierarchy-ttl.mjs" "$repo_root"
+node "$repo_root/scripts/build-ontology-concept-diagram.mjs" "$repo_root"
 node "$repo_root/scripts/build-term-pages.mjs" "$repo_root"

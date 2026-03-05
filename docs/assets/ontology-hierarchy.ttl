@@ -1,0 +1,119 @@
+# Auto-generated from ontology/vcf-rdfizer-vocabulary.ttl.
+@prefix vcfr: <https://w3id.org/vcf-rdfizer/vocab#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+
+## Class hierarchy
+
+# Group: vcfr:HeaderLine tree
+vcfr:HeaderLine a owl:Class .
+vcfr:FieldDefinition a owl:Class ;
+  rdfs:subClassOf vcfr:HeaderLine .
+vcfr:AltDefinition a owl:Class ;
+  rdfs:subClassOf vcfr:ALTHeaderLine, vcfr:FieldDefinition .
+vcfr:FilterDefinition a owl:Class ;
+  rdfs:subClassOf vcfr:FieldDefinition, vcfr:FILTERHeaderLine .
+vcfr:FormatFieldDefinition a owl:Class ;
+  rdfs:subClassOf vcfr:FieldDefinition, vcfr:FORMATHeaderLine .
+vcfr:InfoFieldDefinition a owl:Class ;
+  rdfs:subClassOf vcfr:FieldDefinition, vcfr:INFOHeaderLine .
+vcfr:ALTHeaderLine a owl:Class ;
+  rdfs:subClassOf vcfr:HeaderLine .
+vcfr:FILTERHeaderLine a owl:Class ;
+  rdfs:subClassOf vcfr:HeaderLine .
+vcfr:FORMATHeaderLine a owl:Class ;
+  rdfs:subClassOf vcfr:HeaderLine .
+vcfr:INFOHeaderLine a owl:Class ;
+  rdfs:subClassOf vcfr:HeaderLine .
+vcfr:ContigHeaderLine a owl:Class ;
+  rdfs:subClassOf vcfr:HeaderLine .
+vcfr:FileDateHeaderLine a owl:Class ;
+  rdfs:subClassOf vcfr:HeaderLine .
+vcfr:FileFormatHeaderLine a owl:Class ;
+  rdfs:subClassOf vcfr:HeaderLine .
+vcfr:ReferenceHeaderLine a owl:Class ;
+  rdfs:subClassOf vcfr:HeaderLine .
+vcfr:SourceHeaderLine a owl:Class ;
+  rdfs:subClassOf vcfr:HeaderLine .
+
+# Group: vcfr:VCFValueType tree
+vcfr:VCFValueType a owl:Class .
+vcfr:CharacterType a owl:Class ;
+  rdfs:subClassOf vcfr:VCFValueType .
+vcfr:FlagType a owl:Class ;
+  rdfs:subClassOf vcfr:VCFValueType .
+vcfr:FloatType a owl:Class ;
+  rdfs:subClassOf vcfr:VCFValueType .
+vcfr:IntegerType a owl:Class ;
+  rdfs:subClassOf vcfr:VCFValueType .
+vcfr:StringType a owl:Class ;
+  rdfs:subClassOf vcfr:VCFValueType .
+
+# Group: vcfr:FormatFieldValue
+vcfr:FormatFieldValue a owl:Class .
+
+# Group: vcfr:InfoFieldValue
+vcfr:InfoFieldValue a owl:Class .
+
+# Group: vcfr:SampleCall
+vcfr:SampleCall a owl:Class ;
+  rdfs:subClassOf prov:Entity .
+
+# Group: vcfr:VariantCall
+vcfr:VariantCall a owl:Class ;
+  rdfs:subClassOf prov:Entity .
+
+# Group: vcfr:VCFFile
+vcfr:VCFFile a owl:Class ;
+  rdfs:subClassOf dcat:Distribution, prov:Entity .
+
+# Group: vcfr:VCFHeader
+vcfr:VCFHeader a owl:Class .
+
+# Group: vcfr:VCFNumberArity
+vcfr:VCFNumberArity a owl:Class .
+
+# Group: vcfr:VCFRecord
+vcfr:VCFRecord a owl:Class ;
+  rdfs:subClassOf prov:Entity .
+
+## Structural object-property links (domain/range)
+
+# Domain group: vcfr:FieldDefinition
+vcfr:fieldType a owl:ObjectProperty ;
+  rdfs:domain vcfr:FieldDefinition ;
+  rdfs:range vcfr:VCFValueType .
+
+# Domain group: vcfr:SampleCall
+vcfr:hasFormatValue a owl:ObjectProperty ;
+  rdfs:domain vcfr:SampleCall ;
+  rdfs:range vcfr:FormatFieldValue .
+
+# Domain group: vcfr:VariantCall
+vcfr:hasInfoValue a owl:ObjectProperty ;
+  rdfs:domain vcfr:VariantCall ;
+  rdfs:range vcfr:InfoFieldValue .
+vcfr:hasSampleCall a owl:ObjectProperty ;
+  rdfs:domain vcfr:VariantCall ;
+  rdfs:range vcfr:SampleCall .
+
+# Domain group: vcfr:VCFFile
+vcfr:hasHeader a owl:ObjectProperty ;
+  rdfs:domain vcfr:VCFFile ;
+  rdfs:range vcfr:VCFHeader .
+vcfr:hasRecord a owl:ObjectProperty ;
+  rdfs:domain vcfr:VCFFile ;
+  rdfs:range vcfr:VCFRecord .
+
+# Domain group: vcfr:VCFHeader
+vcfr:hasHeaderLine a owl:ObjectProperty ;
+  rdfs:domain vcfr:VCFHeader ;
+  rdfs:range vcfr:HeaderLine .
+
+# Domain group: vcfr:VCFRecord
+vcfr:hasCall a owl:ObjectProperty ;
+  rdfs:domain vcfr:VCFRecord ;
+  rdfs:range vcfr:VariantCall .

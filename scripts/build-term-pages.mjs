@@ -292,12 +292,20 @@ function buildTermPage({
       background: var(--panel);
       border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 18px;
+      padding: 20px 22px;
     }
-    h1 { margin: 0 0 8px; font-size: 1.9rem; }
-    h2 { margin: 0 0 10px; font-size: 1.2rem; }
+    .panel > * + * {
+      margin-top: 12px;
+    }
+    h1 { margin: 0; font-size: 1.9rem; }
+    h2 { margin: 0; font-size: 1.2rem; }
     p { margin: 0; color: var(--muted); line-height: 1.55; }
-    .crumbs { font-size: 0.92rem; color: var(--muted); }
+    .crumbs {
+      font-size: 0.92rem;
+      color: var(--muted);
+      padding-bottom: 8px;
+      border-bottom: 1px dashed #dce5ed;
+    }
     .crumbs a { color: var(--accent); text-decoration: none; }
     .badge {
       display: inline-flex;
@@ -310,7 +318,6 @@ function buildTermPage({
       margin-right: 8px;
     }
     .meta {
-      margin-top: 10px;
       display: grid;
       gap: 8px;
       font-size: 0.94rem;
@@ -324,7 +331,6 @@ function buildTermPage({
       font-size: 0.88rem;
     }
     .actions {
-      margin-top: 10px;
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
@@ -346,7 +352,6 @@ function buildTermPage({
       overflow: auto;
       border: 1px solid var(--border);
       border-radius: 12px;
-      margin-top: 10px;
     }
     table {
       width: 100%;
@@ -381,7 +386,7 @@ function buildTermPage({
 <body>
   <div class="container">
     <div class="panel">
-      <div class="crumbs"><a href="../index.html">Home</a> / <a href="../ontology-reference.html">Vocabulary Reference</a> / <a href="index.html">Term Pages</a></div>
+      <div class="crumbs"><a href="../index.html">Home</a> / <a href="../ontology-reference.html">Vocabulary Reference</a> / <a href="index.html">vcfr Term Pages</a></div>
       <h1>${escapeHtml(pageTitle)}</h1>
       <div><span class="badge">${escapeHtml(typeLabel)}</span>${node ? '<span class="badge">Declared in ontology</span>' : ""}${shaclBlock ? '<span class="badge">Referenced in SHACL</span>' : ""}</div>
       <div class="meta">
@@ -390,7 +395,8 @@ function buildTermPage({
         <div><strong>Description:</strong> ${escapeHtml(comment)}</div>
       </div>
       <div class="actions">
-        ${hasReferenceRow ? `<a class="btn" href="../ontology-reference.html#term-${encodeURIComponent(term)}">Jump to table row</a>` : `<a class="btn" href="../ontology-reference.html">Open vocabulary reference</a>`}
+        <a class="btn" href="../ontology-reference.html">Return to Vocabulary Reference</a>
+        ${hasReferenceRow ? `<a class="btn" href="../ontology-reference.html#term-${encodeURIComponent(term)}">Return to table row</a>` : ""}
         <a class="btn" href="../assets/vcf-rdfizer-vocabulary.ttl" target="_blank" rel="noreferrer">Open Ontology TTL</a>
         <a class="btn" href="../assets/vcf-rdfizer-vocabulary.shacl.ttl" target="_blank" rel="noreferrer">Open SHACL TTL</a>
       </div>
@@ -452,14 +458,12 @@ function buildIndexPage({ terms, nodeByLocal, shaclBlocks, usage }) {
         .filter(Boolean)
         .join(", ");
       const summary = node && node.comment ? node.comment : "No ontology comment available.";
-      const count = usageEntry ? usageEntry.total : 0;
 
       return `<tr>
-      <td><a href="${encodeURIComponent(term)}.html"><code>${escapeHtml(`${VCFR_PREFIX}${term}`)}</code></a></td>
-      <td>${escapeHtml(typeLabel)}</td>
-      <td>${escapeHtml(source || "-")}</td>
-      <td>${count}</td>
-      <td>${escapeHtml(summary)}</td>
+      <td class="cell-term"><a href="${encodeURIComponent(term)}.html"><code>${escapeHtml(`${VCFR_PREFIX}${term}`)}</code></a></td>
+      <td class="cell-type">${escapeHtml(typeLabel)}</td>
+      <td class="cell-source">${escapeHtml(source || "-")}</td>
+      <td class="cell-summary">${escapeHtml(summary)}</td>
     </tr>`;
     })
     .join("\n");
@@ -481,16 +485,21 @@ function buildIndexPage({ terms, nodeByLocal, shaclBlocks, usage }) {
     }
     * { box-sizing: border-box; }
     body { margin: 0; font-family: "IBM Plex Sans", "Segoe UI", sans-serif; color: var(--ink); background: var(--bg); }
-    .container { width: min(1160px, 94vw); margin: 0 auto; padding: 30px 0 56px; display: grid; gap: 14px; }
-    .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 18px; }
-    h1 { margin: 0 0 8px; font-size: 2rem; }
+    .container { width: min(1220px, 94vw); margin: 0 auto; padding: 30px 0 56px; display: grid; gap: 16px; }
+    .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 22px; }
+    .panel > * + * { margin-top: 12px; }
+    h1 { margin: 0; font-size: 2rem; }
     p { margin: 0; color: var(--muted); line-height: 1.55; }
     .actions { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 10px; }
     .btn { display: inline-flex; align-items: center; justify-content: center; padding: 8px 12px; border: 1px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--accent); background: #fff; font-weight: 600; font-size: 0.9rem; }
-    .table-wrap { overflow: auto; border: 1px solid var(--border); border-radius: 12px; margin-top: 10px; }
-    table { width: 100%; border-collapse: collapse; min-width: 760px; background: #fff; }
-    th, td { border-bottom: 1px solid var(--border); padding: 8px 10px; font-size: 0.9rem; text-align: left; vertical-align: top; line-height: 1.4; }
-    th { background: #edf5f8; }
+    .table-wrap { overflow: auto; border: 1px solid var(--border); border-radius: 12px; margin-top: 0; background: #fff; }
+    table { width: 100%; border-collapse: collapse; min-width: 880px; background: #fff; }
+    th, td { border-bottom: 1px solid var(--border); padding: 10px 12px; font-size: 0.9rem; text-align: left; vertical-align: top; line-height: 1.45; }
+    thead th { background: linear-gradient(180deg, #f1f7fa 0%, #e7f0f5 100%); color: #21485d; font-size: 0.84rem; letter-spacing: 0.01em; }
+    tbody tr:nth-child(even) td { background: #fbfdff; }
+    tbody tr:hover td { background: #f4f9fc; }
+    .cell-type, .cell-source { white-space: nowrap; color: #325064; }
+    .cell-summary { min-width: 360px; color: #3f5668; }
     code { font-family: "IBM Plex Mono", "SFMono-Regular", monospace; background: #eff6f8; border-radius: 6px; padding: 2px 6px; color: #174950; font-size: 0.88rem; }
   </style>
 </head>
@@ -509,7 +518,7 @@ function buildIndexPage({ terms, nodeByLocal, shaclBlocks, usage }) {
     <div class="panel">
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Term</th><th>Type</th><th>Sources</th><th>Repo Hits</th><th>Summary</th></tr></thead>
+          <thead><tr><th>Term</th><th>Type</th><th>Sources</th><th>Summary</th></tr></thead>
           <tbody>
 ${rows}
           </tbody>
