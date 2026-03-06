@@ -22,19 +22,19 @@ Target persistent namespace:
 
 Recommended base for VCF instance resources:
 
-- `https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}`
+- `file://{vcfFilePath}`
 
 Recommended templates (also formalized in ontology via `vcfr:iriTemplate`):
 
 ```text
-VCFFile          https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}
-VCFHeader        https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}/header
-HeaderLine       https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}/header/line/{lineId}
-VCFRecord        https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}/record/{recordId}
-VariantCall      https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}/call/{recordId}
-SampleCall       https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}/sample/{recordId}/{sampleId}
-InfoFieldValue   https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}/call/{recordId}/info/{fieldKey}
-FormatFieldValue https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}/sample/{recordId}/{sampleId}/fmt/{fieldKey}
+VCFFile          file://{vcfFilePath}
+VCFHeader        file://{vcfFilePath}#header
+HeaderLine       file://{vcfFilePath}#header/line/{lineId}
+VCFRecord        file://{vcfFilePath}#record/{recordId}
+VariantCall      file://{vcfFilePath}#call/{recordId}
+SampleCall       file://{vcfFilePath}#sample/{recordId}/{sampleId}
+InfoFieldValue   file://{vcfFilePath}#call/{recordId}/info/{fieldKey}
+FormatFieldValue file://{vcfFilePath}#sample/{recordId}/{sampleId}/fmt/{fieldKey}
 ```
 
 ## Key concepts

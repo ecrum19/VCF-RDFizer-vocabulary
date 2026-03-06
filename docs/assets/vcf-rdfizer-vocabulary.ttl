@@ -36,18 +36,18 @@ vcfr: a owl:Ontology ;
 vcfr:VCFFile a owl:Class ;
   rdfs:label "VCF file"@en ;
   rdfs:comment "A VCF file artifact (as a dataset distribution) that contains a header and a set of VCF records."@en ;
-  vcfr:iriTemplate "https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}" ;
+  vcfr:iriTemplate "file://{vcfFilePath}" ;
   rdfs:subClassOf dcat:Distribution, prov:Entity .
 
 vcfr:VCFHeader a owl:Class ;
   rdfs:label "VCF header"@en ;
   rdfs:comment "Container for the structured header lines of a VCF file."@en ;
-  vcfr:iriTemplate "https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}/header" .
+  vcfr:iriTemplate "file://{vcfFilePath}#header" .
 
 vcfr:HeaderLine a owl:Class ;
   rdfs:label "VCF header line"@en ;
   rdfs:comment "A structured representation of one VCF header line (e.g., ##fileformat, ##INFO=<...>)."@en ;
-  vcfr:iriTemplate "https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}/header/line/{lineId}" .
+  vcfr:iriTemplate "file://{vcfFilePath}#header/line/{lineId}" .
 
 vcfr:FileFormatHeaderLine a owl:Class ; rdfs:subClassOf vcfr:HeaderLine ;
   rdfs:label "fileformat header line"@en .
@@ -84,19 +84,19 @@ vcfr:ALTHeaderLine a owl:Class ; rdfs:subClassOf vcfr:HeaderLine ;
 vcfr:VCFRecord a owl:Class ;
   rdfs:label "VCF record"@en ;
   rdfs:comment "A row in a VCF (CHROM, POS, ID, REF, ALT, QUAL, FILTER, INFO, FORMAT, samples...). This is a VCF-centric view; link to a sequence alteration representation via vcfr:asSequenceAlteration."@en ;
-  vcfr:iriTemplate "https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}/record/{recordId}" ;
+  vcfr:iriTemplate "file://{vcfFilePath}#record/{recordId}" ;
   rdfs:subClassOf prov:Entity .
 
 vcfr:VariantCall a owl:Class ;
   rdfs:label "variant call"@en ;
   rdfs:comment "Call-level representation for a record: QUAL/FILTER/INFO, plus FORMAT and per-sample fields."@en ;
-  vcfr:iriTemplate "https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}/call/{recordId}" ;
+  vcfr:iriTemplate "file://{vcfFilePath}#call/{recordId}" ;
   rdfs:subClassOf prov:Entity .
 
 vcfr:SampleCall a owl:Class ;
   rdfs:label "sample call"@en ;
   rdfs:comment "Per-sample values for a variant call (e.g., GT, DP, AD), as declared by FORMAT header lines."@en ;
-  vcfr:iriTemplate "https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}/sample/{recordId}/{sampleId}" ;
+  vcfr:iriTemplate "file://{vcfFilePath}#sample/{recordId}/{sampleId}" ;
   rdfs:subClassOf prov:Entity .
 
 vcfr:FieldDefinition a owl:Class ;
@@ -119,12 +119,12 @@ vcfr:AltDefinition a owl:Class ; rdfs:subClassOf vcfr:FieldDefinition, vcfr:ALTH
 vcfr:InfoFieldValue a owl:Class ;
   rdfs:label "INFO field value"@en ;
   rdfs:comment "A structured key/value for one INFO attribute within a record/call."@en ;
-  vcfr:iriTemplate "https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}/call/{recordId}/info/{fieldKey}" .
+  vcfr:iriTemplate "file://{vcfFilePath}#call/{recordId}/info/{fieldKey}" .
 
 vcfr:FormatFieldValue a owl:Class ;
   rdfs:label "FORMAT field value"@en ;
   rdfs:comment "A structured key/value for one FORMAT attribute within a sample call."@en ;
-  vcfr:iriTemplate "https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}/sample/{recordId}/{sampleId}/fmt/{fieldKey}" .
+  vcfr:iriTemplate "file://{vcfFilePath}#sample/{recordId}/{sampleId}/fmt/{fieldKey}" .
 
 #################################################################
 # Controlled vocab / enums (lightweight)
@@ -211,7 +211,7 @@ vcfr:iriTemplate a owl:AnnotationProperty ;
   rdfs:comment "Recommended IRI minting template (RFC6570-style placeholders) for resources in this model."@en .
 
 vcfr: vcfr:missingValuePolicy "VCF missing token '.' SHOULD be serialized as literal '.'^^vcfr:Null (do not serialize plain '.'^^xsd:string)."@en .
-vcfr: vcfr:iriTemplate "https://w3id.org/vcf-rdfizer/vcf/{vcfFileName}" .
+vcfr: vcfr:iriTemplate "file://{vcfFilePath}" .
 
 #################################################################
 # Datatype properties (VCF metadata + record fields)
