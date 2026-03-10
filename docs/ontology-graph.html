@@ -652,7 +652,7 @@
               annotation
             </span>
           </div>
-          <div class="graph-hint">Hover nodes or edges for quick details. Click a node or edge to select it.</div>
+          <div class="graph-hint">Hover nodes or edges for quick details. Click to select. Drag nodes to adjust layout.</div>
         </div>
         <div id="graph-container" aria-label="Sigma ontology graph">
           <div id="edge-tooltip" class="edge-tooltip"></div>
@@ -681,6 +681,8 @@
     };
 
     const RELATION_ORDER = ["subClassOf", "domain", "range", "annotation"];
+    const EDGE_BASE_SIZE = 1.9;
+    const EDGE_DIM_SIZE = 0.95;
     const TYPE_ANCHOR_X = {
       class: -72,
       objectProperty: -22,
@@ -710,6 +712,11 @@
     let visibleEdges = new Set();
     let edgeById = new Map();
     let nodeById = new Map();
+    let draggedNode = null;
+    let draggingNode = false;
+    let dragStartedAt = null;
+    let dragMoved = false;
+    let suppressNextClick = false;
 
     function hexToRgba(hex, alpha) {
       const source = hex.replace("#", "");
@@ -730,6 +737,27 @@
 
     function setStatus(message) {
       statusEl.textContent = message || "";
+    }
+
+    function toViewportPoint(eventLike) {
+      if (!eventLike) {
+        return null;
+      }
+
+      if (typeof eventLike.x === "number" && typeof eventLike.y === "number") {
+        return { x: eventLike.x, y: eventLike.y };
+      }
+
+      const original = eventLike.original || eventLike;
+      if (original && typeof original.clientX === "number" && typeof original.clientY === "number") {
+        const rect = container.getBoundingClientRect();
+        return {
+          x: original.clientX - rect.left,
+          y: original.clientY - rect.top
+        };
+      }
+
+      return null;
     }
 
     function clearEdgeHoverInfo() {
@@ -1334,9 +1362,9 @@
         if (selectedEdge) {
           if (edge !== selectedEdge) {
             result.color = "rgba(117, 127, 140, 0.16)";
-            result.size = 0.65;
+            result.size = EDGE_DIM_SIZE;
           } else {
-            result.size = attrs.baseSize * 1.9;
+            result.size = attrs.baseSize * 1.7;
             result.color = attrs.baseColor;
             result.zIndex = 1;
           }
@@ -1349,9 +1377,9 @@
           const adjacent = source === selectedNode || target === selectedNode;
           if (!adjacent) {
             result.color = "rgba(117, 127, 140, 0.16)";
-            result.size = 0.65;
+            result.size = EDGE_DIM_SIZE;
           } else {
-            result.size = attrs.baseSize * 1.2;
+            result.size = attrs.baseSize * 1.25;
           }
         }
         return result;
@@ -1418,7 +1446,99 @@
       }
     }
 
+    function setupNodeDragging() {
+      if (!renderer || typeof renderer.getMouseCaptor !== "function") {
+        return;
+      }
+
+      const mouseCaptor = renderer.getMouseCaptor();
+      if (!mouseCaptor || typeof mouseCaptor.on !== "function") {
+        return;
+      }
+
+      const stopEvent = (eventLike) => {
+        if (!eventLike) {
+          return;
+        }
+        if (typeof eventLike.preventSigmaDefault === "function") {
+          eventLike.preventSigmaDefault();
+        }
+        const original = eventLike.original || eventLike;
+        if (original && typeof original.preventDefault === "function") {
+          original.preventDefault();
+        }
+        if (original && typeof original.stopPropagation === "function") {
+          original.stopPropagation();
+        }
+      };
+
+      const endDrag = () => {
+        if (!draggingNode) {
+          return;
+        }
+        draggingNode = false;
+        draggedNode = null;
+        dragStartedAt = null;
+        if (dragMoved) {
+          suppressNextClick = true;
+          setStatus("Layout updated by node drag.");
+        }
+        dragMoved = false;
+        const camera = renderer.getCamera();
+        if (camera && typeof camera.enable === "function") {
+          camera.enable();
+        }
+      };
+
+      renderer.on("downNode", (payload) => {
+        if (!payload || !payload.node || !visibleNodes.has(payload.node)) {
+          return;
+        }
+        draggedNode = payload.node;
+        draggingNode = true;
+        dragMoved = false;
+        dragStartedAt = toViewportPoint(payload.event);
+        const camera = renderer.getCamera();
+        if (camera && typeof camera.disable === "function") {
+          camera.disable();
+        }
+        stopEvent(payload.event);
+      });
+
+      mouseCaptor.on("mousemovebody", (eventLike) => {
+        if (!draggingNode || !draggedNode || !graph.hasNode(draggedNode)) {
+          return;
+        }
+        const point = toViewportPoint(eventLike);
+        if (!point) {
+          return;
+        }
+        const graphPoint = renderer.viewportToGraph(point);
+        graph.mergeNodeAttributes(draggedNode, {
+          x: graphPoint.x,
+          y: graphPoint.y
+        });
+        if (dragStartedAt) {
+          const dx = point.x - dragStartedAt.x;
+          const dy = point.y - dragStartedAt.y;
+          if (Math.hypot(dx, dy) > 2) {
+            dragMoved = true;
+          }
+        } else {
+          dragMoved = true;
+        }
+        stopEvent(eventLike);
+      });
+
+      mouseCaptor.on("mouseup", endDrag);
+      mouseCaptor.on("mouseleave", endDrag);
+      window.addEventListener("mouseup", endDrag);
+      window.addEventListener("blur", endDrag);
+    }
+
     function setupInteractions() {
+      setupNodeDragging();
+
       [
         "rel-subclass",
         "rel-domain",
@@ -1458,6 +1578,10 @@
       });
 
       renderer.on("clickNode", (payload) => {
+        if (suppressNextClick) {
+          suppressNextClick = false;
+          return;
+        }
         selectedEdge = null;
         selectedEdgeEndpoints = new Set();
         selectedNode = payload.node;
@@ -1470,10 +1594,18 @@
       });
 
       renderer.on("clickEdge", (payload) => {
+        if (suppressNextClick) {
+          suppressNextClick = false;
+          return;
+        }
         selectEdge(payload.edge);
       });
 
       renderer.on("clickStage", () => {
+        if (suppressNextClick) {
+          suppressNextClick = false;
+          return;
+        }
         clearSelection();
       });
 
@@ -1549,8 +1681,8 @@
           type: "arrow",
           color,
           baseColor: color,
-          size: 1.35,
-          baseSize: 1.35,
+          size: EDGE_BASE_SIZE,
+          baseSize: EDGE_BASE_SIZE,
           relation: edge.relation,
           label: edge.label
         });

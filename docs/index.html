@@ -351,6 +351,68 @@
       gap: 10px;
     }
 
+    .artifacts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-rows: repeat(2, minmax(188px, auto));
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .artifact-card--primary {
+      grid-row: span 2;
+      padding: 18px 20px;
+      gap: 11px;
+    }
+
+    .artifact-card--compact {
+      padding: 16px 18px;
+      gap: 8px;
+    }
+
+    .artifact-card--compact p {
+      font-size: 0.97rem;
+      line-height: 1.38;
+    }
+
+    .artifact-card--primary .card__actions,
+    .artifact-card--compact .card__actions {
+      margin-top: auto;
+    }
+
+    .artifact-preview {
+      display: block;
+      border: 1px solid #c8d7e3;
+      border-radius: 11px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #f6fbff 0%, #eef5fa 100%);
+      min-height: 148px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+    }
+
+    .artifact-preview--link {
+      cursor: pointer;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .artifact-preview--link:hover {
+      border-color: #8fa8bb;
+      box-shadow: 0 12px 24px rgba(19, 55, 70, 0.16);
+      transform: translateY(-1px);
+    }
+
+    .artifact-preview--link:focus-visible {
+      outline: 3px solid rgba(31, 111, 120, 0.24);
+      outline-offset: 2px;
+    }
+
+    .artifact-preview img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
     .artifacts-grid .card__actions .btn {
       width: 100%;
       border-radius: 10px;
@@ -450,6 +512,23 @@
       gap: 10px;
     }
 
+    @media (max-width: 1080px) {
+      .artifacts-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: none;
+      }
+
+      .artifact-card--primary {
+        grid-row: auto;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .artifacts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     @media (max-width: 680px) {
       .hero__actions,
       .card__actions,
@@ -518,30 +597,36 @@
     <section class="section" aria-labelledby="artifacts">
       <h2 id="artifacts">Artifacts</h2>
         <div class="card-grid artifacts-grid">
-        <div class="card">
+        <div class="card artifact-card--primary">
           <h3>Vocabulary Reference</h3>
           <p>Structured documentation for classes, properties, external ontology alignment, and per-term pages.</p>
+          <a class="artifact-preview artifact-preview--link" href="ontology-reference.html" aria-label="Open Vocabulary Reference">
+            <img src="assets/class-hierarchy-preview.svg" alt="Preview of class hierarchy tree structure" />
+          </a>
           <div class="card__actions">
             <a class="btn btn--primary" href="ontology-reference.html">Open Reference</a>
             <a class="btn btn--ghost" href="terms/index.html">Term Pages</a>
           </div>
         </div>
-        <div class="card">
+        <div class="card artifact-card--primary">
           <h3>Relationship Diagram</h3>
           <p>Sigma.js ontology map with generated JSON graph data and serialized relationship overview.</p>
+          <a class="artifact-preview artifact-preview--link" href="ontology-graph.html" aria-label="Open Relationship Diagram">
+            <img src="assets/relationship_graph_preview.png" alt="Preview of ontology relationship graph terms" />
+          </a>
           <div class="card__actions">
             <a class="btn btn--primary" href="ontology-graph.html">Open Visual Graph</a>
             <a class="btn btn--ghost" href="assets/ontology-graph-static.svg" target="_blank" rel="noreferrer">Concept Model SVG</a>
           </div>
         </div>
-        <div class="card">
+        <div class="card artifact-card--compact">
           <h3>Ontology (Turtle)</h3>
           <p>Core vocabulary for representing VCF files and records.</p>
           <div class="card__actions">
             <a class="btn btn--primary" href="assets/vcf-rdfizer-vocabulary.ttl" target="_blank" rel="noreferrer">Open TTL</a>
           </div>
         </div>
-        <div class="card">
+        <div class="card artifact-card--compact">
           <h3>SHACL Shapes (Turtle)</h3>
           <p>Validation rules to ensure VCF-derived RDF stays consistent.</p>
           <div class="card__actions">
