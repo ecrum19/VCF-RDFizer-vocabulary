@@ -313,33 +313,61 @@
     }
 
     .iri-pattern {
-      gap: 14px;
+      gap: 16px;
     }
 
     .iri-pattern__base {
-      font-size: 0.96rem;
+      display: grid;
+      gap: 8px;
+      padding: 12px 14px;
+      border: 1px solid #d3e0eb;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #fbfdff 0%, #f3f8fc 100%);
       color: #2f4254;
+    }
+
+    .iri-pattern__base-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #5b6d7c;
+      font-weight: 700;
     }
 
     .iri-pattern__grid {
       display: grid;
-      gap: 8px;
+      gap: 10px;
     }
 
     .iri-pattern__row {
       display: grid;
-      grid-template-columns: minmax(140px, 190px) 1fr;
+      grid-template-columns: minmax(120px, 180px) minmax(0, 1fr);
       gap: 12px;
-      align-items: center;
+      align-items: start;
       background: #f7fbff;
       border: 1px solid #d3e0eb;
-      border-radius: 10px;
-      padding: 9px 10px;
+      border-radius: 12px;
+      padding: 10px 12px;
       font-size: 0.92rem;
     }
 
-    .iri-pattern__row code {
+    .iri-pattern__term {
+      min-width: 0;
+    }
+
+    .iri-pattern__term code {
       white-space: nowrap;
+      font-weight: 600;
+    }
+
+    .iri-pattern__base code,
+    .iri-pattern__value {
+      display: block;
+      min-width: 0;
+      white-space: normal;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      line-height: 1.45;
     }
 
     .iri-pattern__note {
@@ -588,7 +616,17 @@
 
       .iri-pattern__row {
         grid-template-columns: 1fr;
-        gap: 6px;
+        gap: 8px;
+        padding: 10px 12px;
+      }
+
+      .iri-pattern__base {
+        padding: 10px 12px;
+      }
+
+      .iri-pattern__base code,
+      .iri-pattern__value {
+        font-size: 0.84rem;
       }
     }
   </style>
@@ -639,16 +677,19 @@
       <h2 id="canonical-iri-pattern">Suggested Canonical IRI Pattern</h2>
       <p class="section-note">This website provides a suggested canonical IRI pattern for core instance resources, so users can generate RDF from VCF files with a consistent structure.</p>
       <div class="card iri-pattern">
-        <div class="iri-pattern__base"><strong>Base URL:</strong> <code>file://{vcfFilePath}</code></div>
+        <div class="iri-pattern__base">
+          <span class="iri-pattern__base-label">Base URL</span>
+          <code>file://{vcfFilePath}</code>
+        </div>
         <div class="iri-pattern__grid">
-          <div class="iri-pattern__row"><code>VCFFile</code><code>file://{vcfFilePath}</code></div>
-          <div class="iri-pattern__row"><code>VCFHeader</code><code>file://{vcfFilePath}#header</code></div>
-          <div class="iri-pattern__row"><code>HeaderLine</code><code>file://{vcfFilePath}#header/line/{lineId}</code></div>
-          <div class="iri-pattern__row"><code>VCFRecord</code><code>file://{vcfFilePath}#record/{recordId}</code></div>
-          <div class="iri-pattern__row"><code>VariantCall</code><code>file://{vcfFilePath}#call/{recordId}</code></div>
-          <div class="iri-pattern__row"><code>SampleCall</code><code>file://{vcfFilePath}#sample/{recordId}/{sampleId}</code></div>
-          <div class="iri-pattern__row"><code>InfoFieldValue</code><code>file://{vcfFilePath}#call/{recordId}/info/{fieldKey}</code></div>
-          <div class="iri-pattern__row"><code>FormatFieldValue</code><code>file://{vcfFilePath}#sample/{recordId}/{sampleId}/fmt/{fieldKey}</code></div>
+          <div class="iri-pattern__row"><span class="iri-pattern__term"><code>VCFFile</code></span><code class="iri-pattern__value">file://{vcfFilePath}</code></div>
+          <div class="iri-pattern__row"><span class="iri-pattern__term"><code>VCFHeader</code></span><code class="iri-pattern__value">file://{vcfFilePath}#header</code></div>
+          <div class="iri-pattern__row"><span class="iri-pattern__term"><code>HeaderLine</code></span><code class="iri-pattern__value">file://{vcfFilePath}#header/line/{lineId}</code></div>
+          <div class="iri-pattern__row"><span class="iri-pattern__term"><code>VCFRecord</code></span><code class="iri-pattern__value">file://{vcfFilePath}#record/{recordId}</code></div>
+          <div class="iri-pattern__row"><span class="iri-pattern__term"><code>VariantCall</code></span><code class="iri-pattern__value">file://{vcfFilePath}#call/{recordId}</code></div>
+          <div class="iri-pattern__row"><span class="iri-pattern__term"><code>SampleCall</code></span><code class="iri-pattern__value">file://{vcfFilePath}#sample/{recordId}/{sampleId}</code></div>
+          <div class="iri-pattern__row"><span class="iri-pattern__term"><code>InfoFieldValue</code></span><code class="iri-pattern__value">file://{vcfFilePath}#call/{recordId}/info/{fieldKey}</code></div>
+          <div class="iri-pattern__row"><span class="iri-pattern__term"><code>FormatFieldValue</code></span><code class="iri-pattern__value">file://{vcfFilePath}#sample/{recordId}/{sampleId}/fmt/{fieldKey}</code></div>
         </div>
         <p class="iri-pattern__note">These templates are also formalized in the ontology via <a href="terms/iriTemplate.html"><code>vcfr:iriTemplate</code></a>.</p>
       </div>
