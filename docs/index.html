@@ -312,6 +312,42 @@
       line-height: 1.45;
     }
 
+    .iri-pattern {
+      gap: 14px;
+    }
+
+    .iri-pattern__base {
+      font-size: 0.96rem;
+      color: #2f4254;
+    }
+
+    .iri-pattern__grid {
+      display: grid;
+      gap: 8px;
+    }
+
+    .iri-pattern__row {
+      display: grid;
+      grid-template-columns: minmax(140px, 190px) 1fr;
+      gap: 12px;
+      align-items: center;
+      background: #f7fbff;
+      border: 1px solid #d3e0eb;
+      border-radius: 10px;
+      padding: 9px 10px;
+      font-size: 0.92rem;
+    }
+
+    .iri-pattern__row code {
+      white-space: nowrap;
+    }
+
+    .iri-pattern__note {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
     .card-grid {
       display: grid;
       gap: 18px;
@@ -549,6 +585,11 @@
       pre {
         min-height: 240px;
       }
+
+      .iri-pattern__row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
     }
   </style>
 </head>
@@ -593,6 +634,25 @@
         </div>
       </div>
     </header>
+
+    <section class="section" aria-labelledby="canonical-iri-pattern">
+      <h2 id="canonical-iri-pattern">Suggested Canonical IRI Pattern</h2>
+      <p class="section-note">This website provides a suggested canonical IRI pattern for core instance resources, so users can generate RDF from VCF files with a consistent structure.</p>
+      <div class="card iri-pattern">
+        <div class="iri-pattern__base"><strong>Base URL:</strong> <code>file://{vcfFilePath}</code></div>
+        <div class="iri-pattern__grid">
+          <div class="iri-pattern__row"><code>VCFFile</code><code>file://{vcfFilePath}</code></div>
+          <div class="iri-pattern__row"><code>VCFHeader</code><code>file://{vcfFilePath}#header</code></div>
+          <div class="iri-pattern__row"><code>HeaderLine</code><code>file://{vcfFilePath}#header/line/{lineId}</code></div>
+          <div class="iri-pattern__row"><code>VCFRecord</code><code>file://{vcfFilePath}#record/{recordId}</code></div>
+          <div class="iri-pattern__row"><code>VariantCall</code><code>file://{vcfFilePath}#call/{recordId}</code></div>
+          <div class="iri-pattern__row"><code>SampleCall</code><code>file://{vcfFilePath}#sample/{recordId}/{sampleId}</code></div>
+          <div class="iri-pattern__row"><code>InfoFieldValue</code><code>file://{vcfFilePath}#call/{recordId}/info/{fieldKey}</code></div>
+          <div class="iri-pattern__row"><code>FormatFieldValue</code><code>file://{vcfFilePath}#sample/{recordId}/{sampleId}/fmt/{fieldKey}</code></div>
+        </div>
+        <p class="iri-pattern__note">These templates are also formalized in the ontology via <a href="terms/iriTemplate.html"><code>vcfr:iriTemplate</code></a>.</p>
+      </div>
+    </section>
 
     <section class="section" aria-labelledby="artifacts">
       <h2 id="artifacts">Artifacts</h2>

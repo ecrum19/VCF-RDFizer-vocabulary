@@ -4,9 +4,11 @@ import fs from "node:fs";
 import path from "node:path";
 
 const RDF_TYPE_URI = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
-const BASE_URI = "https://w3id.org/vcf-rdfizer/vcf/";
+const VCFR_NAMESPACE = "https://w3id.org/vcf-rdfizer/vocab#";
+const LEGACY_INSTANCE_NAMESPACE = "https://w3id.org/vcf-rdfizer/vcf/";
+const CANONICAL_BASE_IRI = "file://";
 const KNOWN_PREFIXES = [
-  { prefix: "vcfr", iri: "https://w3id.org/vcf-rdfizer/vocab#" },
+  { prefix: "vcfr", iri: VCFR_NAMESPACE },
   { prefix: "rdf", iri: "http://www.w3.org/1999/02/22-rdf-syntax-ns#" },
   { prefix: "xsd", iri: "http://www.w3.org/2001/XMLSchema#" },
 ];
@@ -148,7 +150,7 @@ function isSafePrefixedLocal(local) {
   return /^[A-Za-z_][A-Za-z0-9._~-]*$/.test(local);
 }
 
-function formatIri(term, position) {
+function formatIri(term, position, baseIri) {
   const iri = getIri(term);
   if (!iri) {
     return term;
@@ -167,8 +169,8 @@ function formatIri(term, position) {
     }
   }
 
-  if (iri.startsWith(BASE_URI)) {
-    return `<${iri.slice(BASE_URI.length)}>`;
+  if (baseIri && iri.startsWith(baseIri)) {
+    return `<${iri.slice(baseIri.length)}>`;
   }
 
   return term;
@@ -193,15 +195,15 @@ function formatLiteral(term) {
     return lexicalForm;
   }
 
-  const formattedDatatype = formatIri(`<${datatypeIri}>`, "object");
+  const formattedDatatype = formatIri(`<${datatypeIri}>`, "object", null);
   return `${lexicalForm}^^${formattedDatatype}`;
 }
 
-function formatTerm(term, position) {
+function formatTerm(term, position, baseIri) {
   if (term.startsWith('"')) {
     return formatLiteral(term);
   }
-  return formatIri(term, position);
+  return formatIri(term, position, baseIri);
 }
 
 function sortKey(term) {
@@ -237,31 +239,100 @@ function parseVariantNumber(parts) {
   return null;
 }
 
-function subjectOrderKey(term) {
+function splitLegacyInstanceRelative(relative) {
+  const match = /^(.*)\/(header|record|call|sample)(?:\/(.*))?$/.exec(relative);
+  if (!match) {
+    return { fileId: relative, resourcePath: "" };
+  }
+
+  const [, fileId, rootSegment, remainingPath] = match;
+  return {
+    fileId,
+    resourcePath: remainingPath ? `${rootSegment}/${remainingPath}` : rootSegment,
+  };
+}
+
+function canonicalizeInstanceIri(iri) {
+  if (iri.startsWith(CANONICAL_BASE_IRI)) {
+    const relative = iri.slice(CANONICAL_BASE_IRI.length);
+    const hashIndex = relative.indexOf("#");
+    if (hashIndex >= 0) {
+      const fileId = relative.slice(0, hashIndex);
+      const resourcePath = relative.slice(hashIndex + 1);
+      return resourcePath ? `${CANONICAL_BASE_IRI}${fileId}#${resourcePath}` : `${CANONICAL_BASE_IRI}${fileId}`;
+    }
+
+    const { fileId, resourcePath } = splitLegacyInstanceRelative(relative);
+    return resourcePath ? `${CANONICAL_BASE_IRI}${fileId}#${resourcePath}` : `${CANONICAL_BASE_IRI}${fileId}`;
+  }
+
+  if (iri.startsWith(LEGACY_INSTANCE_NAMESPACE)) {
+    const relative = iri.slice(LEGACY_INSTANCE_NAMESPACE.length);
+    const { fileId, resourcePath } = splitLegacyInstanceRelative(relative);
+    return resourcePath ? `${CANONICAL_BASE_IRI}${fileId}#${resourcePath}` : `${CANONICAL_BASE_IRI}${fileId}`;
+  }
+
+  return iri;
+}
+
+function canonicalizeTerm(term) {
+  const iri = getIri(term);
+  if (!iri) {
+    return term;
+  }
+  return `<${canonicalizeInstanceIri(iri)}>`;
+}
+
+function canonicalizeTriples(triples) {
+  return triples.map(([subject, predicate, object]) => [
+    canonicalizeTerm(subject),
+    canonicalizeTerm(predicate),
+    canonicalizeTerm(object),
+  ]);
+}
+
+function parseRelativeInstancePath(relative) {
+  const hashIndex = relative.indexOf("#");
+  if (hashIndex >= 0) {
+    const fileId = relative.slice(0, hashIndex);
+    const resourcePath = relative.slice(hashIndex + 1);
+    return {
+      fileId,
+      parts: resourcePath ? resourcePath.split("/") : [],
+    };
+  }
+
+  const { fileId, resourcePath } = splitLegacyInstanceRelative(relative);
+  return {
+    fileId,
+    parts: resourcePath ? resourcePath.split("/") : [],
+  };
+}
+
+function subjectOrderKey(term, baseIri) {
   const iri = getIri(term);
   if (!iri) {
     return [9, "", "", term];
   }
 
-  if (!iri.startsWith(BASE_URI)) {
+  if (!baseIri || !iri.startsWith(baseIri)) {
     return [8, iri];
   }
 
-  const relative = iri.slice(BASE_URI.length);
-  const parts = relative.split("/");
-  const fileId = parts[0] ?? "";
+  const relative = iri.slice(baseIri.length);
+  const { fileId, parts } = parseRelativeInstancePath(relative);
 
-  if (parts.length === 1) {
+  if (parts.length === 0) {
     // File-level metadata node.
     return [0, fileId];
   }
 
-  if (parts[1] === "header" && parts.length === 2) {
+  if (parts[0] === "header" && parts.length === 1) {
     return [1, fileId];
   }
 
-  if (parts[1] === "header" && parts[2] === "line" && /^\d+$/.test(parts[3] ?? "")) {
-    return [2, fileId, Number.parseInt(parts[3], 10)];
+  if (parts[0] === "header" && parts[1] === "line" && /^\d+$/.test(parts[2] ?? "")) {
+    return [2, fileId, Number.parseInt(parts[2], 10)];
   }
 
   const variantNumber = parseVariantNumber(parts);
@@ -270,17 +341,17 @@ function subjectOrderKey(term) {
     let sampleId = "";
     let formatFieldId = "";
 
-    if (parts[1] === "record") {
+    if (parts[0] === "record") {
       resourceRank = 0;
-    } else if (parts[1] === "call") {
+    } else if (parts[0] === "call") {
       resourceRank = 1;
-    } else if (parts[1] === "sample" && parts[4] !== "fmt") {
+    } else if (parts[0] === "sample" && parts[3] !== "fmt") {
       resourceRank = 2;
-      sampleId = parts[3] ?? "";
-    } else if (parts[1] === "sample" && parts[4] === "fmt") {
+      sampleId = parts[2] ?? "";
+    } else if (parts[0] === "sample" && parts[3] === "fmt") {
       resourceRank = 3;
-      sampleId = parts[3] ?? "";
-      formatFieldId = parts[5] ?? "";
+      sampleId = parts[2] ?? "";
+      formatFieldId = parts[4] ?? "";
     } else {
       resourceRank = 4;
     }
@@ -319,8 +390,8 @@ function orderKeyComparator(left, right) {
   return 0;
 }
 
-function subjectComparator(left, right) {
-  return orderKeyComparator(subjectOrderKey(left), subjectOrderKey(right));
+function subjectComparator(left, right, baseIri) {
+  return orderKeyComparator(subjectOrderKey(left, baseIri), subjectOrderKey(right, baseIri));
 }
 
 function buildGroupedTriples(triples) {
@@ -338,28 +409,67 @@ function buildGroupedTriples(triples) {
   return grouped;
 }
 
-function serializeTurtle(groupedTriples) {
+function expandGroupedTriples(groupedTriples) {
+  const triples = [];
+  for (const [subject, predicates] of groupedTriples.entries()) {
+    for (const [predicate, objects] of predicates.entries()) {
+      for (const object of objects.values()) {
+        triples.push([subject, predicate, object]);
+      }
+    }
+  }
+  return triples;
+}
+
+function tripleKey([subject, predicate, object]) {
+  return `${subject} ${predicate} ${object}`;
+}
+
+function assertFaithfulGraph(originalTriples, groupedTriples) {
+  const originalKeys = new Set(originalTriples.map(tripleKey));
+  const expandedKeys = new Set(expandGroupedTriples(groupedTriples).map(tripleKey));
+
+  if (originalKeys.size !== expandedKeys.size) {
+    throw new Error(
+      `Grouped graph mismatch: input has ${originalKeys.size} unique triples, grouped graph has ${expandedKeys.size}.`
+    );
+  }
+
+  for (const key of originalKeys) {
+    if (!expandedKeys.has(key)) {
+      throw new Error(`Missing triple during grouping: ${key}`);
+    }
+  }
+
+  for (const key of expandedKeys) {
+    if (!originalKeys.has(key)) {
+      throw new Error(`Unexpected triple introduced during grouping: ${key}`);
+    }
+  }
+}
+
+function serializeTurtle(groupedTriples, baseIri) {
   const header = [
-    "@base <https://w3id.org/vcf-rdfizer/vcf/> .",
+    baseIri ? `@base <${baseIri}> .` : null,
     "@prefix vcfr: <https://w3id.org/vcf-rdfizer/vocab#> .",
     "@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .",
     "@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .",
     "",
     "# This file is generated from examples/example.nt.",
-  ];
+  ].filter(Boolean);
 
   const subjectBlocks = [];
-  const subjects = [...groupedTriples.keys()].sort(subjectComparator);
+  const subjects = [...groupedTriples.keys()].sort((left, right) => subjectComparator(left, right, baseIri));
   for (const subject of subjects) {
     const predicates = groupedTriples.get(subject);
     const predicateKeys = [...predicates.keys()].sort(predicateComparator);
-    const lines = [formatTerm(subject, "subject")];
+    const lines = [formatTerm(subject, "subject", baseIri)];
 
     predicateKeys.forEach((predicate, predicateIndex) => {
       const objects = [...predicates.get(predicate)].sort(termComparator);
-      const objectTerms = objects.map((object) => formatTerm(object, "object"));
+      const objectTerms = objects.map((object) => formatTerm(object, "object", baseIri));
       const suffix = predicateIndex === predicateKeys.length - 1 ? " ." : " ;";
-      const formattedPredicate = formatTerm(predicate, "predicate");
+      const formattedPredicate = formatTerm(predicate, "predicate", baseIri);
 
       if (objectTerms.length === 1) {
         lines.push(`  ${formattedPredicate} ${objectTerms[0]}${suffix}`);
@@ -390,11 +500,13 @@ function main() {
 
   const ntContent = fs.readFileSync(inputPath, "utf8");
   const triples = parseNTriples(ntContent);
-  const groupedTriples = buildGroupedTriples(triples);
-  const turtleContent = serializeTurtle(groupedTriples);
+  const canonicalTriples = canonicalizeTriples(triples);
+  const groupedTriples = buildGroupedTriples(canonicalTriples);
+  assertFaithfulGraph(canonicalTriples, groupedTriples);
+  const turtleContent = serializeTurtle(groupedTriples, CANONICAL_BASE_IRI);
 
   fs.writeFileSync(outputPath, turtleContent, "utf8");
-  console.log(`Wrote ${outputPath} (${triples.length} triples).`);
+  console.log(`Wrote ${outputPath} (${canonicalTriples.length} triples, base ${CANONICAL_BASE_IRI}).`);
 }
 
 main();

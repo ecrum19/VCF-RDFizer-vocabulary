@@ -13,6 +13,7 @@ node "$repo_root/scripts/convert-example-nt-to-ttl.mjs" "$repo_root"
 sources=(
   "$repo_root/ontology/vcf-rdfizer-vocabulary.ttl"
   "$repo_root/shacl/vcf-rdfizer-vocabulary.shacl.ttl"
+  "$repo_root/examples/example-file1.vcf"
   "$repo_root/examples/example-headers.ttl"
   "$repo_root/examples/example-minimal-record.ttl"
   "$repo_root/examples/example.ttl"

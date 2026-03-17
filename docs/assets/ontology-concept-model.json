@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-10T10:02:32.276Z",
+  "generatedAt": "2026-03-17T10:45:18.724Z",
   "source": "ontology/vcf-rdfizer-vocabulary.ttl",
   "namespace": "https://w3id.org/vcf-rdfizer/vocab#",
   "prefixes": {
@@ -11,10 +11,13 @@
     "dct": "http://purl.org/dc/terms/",
     "dcat": "http://www.w3.org/ns/dcat#",
     "prov": "http://www.w3.org/ns/prov#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
     "so": "http://purl.obolibrary.org/obo/SO_",
     "faldo": "http://biohackathon.org/resource/faldo#",
     "geno": "http://purl.obolibrary.org/obo/GENO_",
     "sio": "http://semanticscience.org/resource/SIO_",
+    "hero": "https://w3id.org/hereditary/ontology/genomics/schema/",
+    "vrs": "https://w3id.org/ga4gh/schema/vrs/2.0/json/",
     "ican": "https://ican.fr/"
   },
   "nodes": [

@@ -6,11 +6,14 @@
 @prefix dct:    <http://purl.org/dc/terms/> .
 @prefix dcat:   <http://www.w3.org/ns/dcat#> .
 @prefix prov:   <http://www.w3.org/ns/prov#> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
 
 @prefix so:     <http://purl.obolibrary.org/obo/SO_> .
 @prefix faldo:  <http://biohackathon.org/resource/faldo#> .
 @prefix geno:   <http://purl.obolibrary.org/obo/GENO_> .
 @prefix sio:    <http://semanticscience.org/resource/SIO_> .
+@prefix hero:   <https://w3id.org/hereditary/ontology/genomics/schema/> .
+@prefix vrs:    <https://w3id.org/ga4gh/schema/vrs/2.0/json/> .
 
 # SB/gvar uses https://ican.fr/ as its schema URI; keep prefix for convenience.
 @prefix ican:   <https://ican.fr/> .
@@ -37,6 +40,8 @@ vcfr:VCFFile a owl:Class ;
   rdfs:label "VCF file"@en ;
   rdfs:comment "A VCF file artifact (as a dataset distribution) that contains a header and a set of VCF records."@en ;
   vcfr:iriTemplate "file://{vcfFilePath}" ;
+  skos:exactMatch hero:VCFFile ;
+  rdfs:seeAlso hero:VCFFile ;
   rdfs:subClassOf dcat:Distribution, prov:Entity .
 
 vcfr:VCFHeader a owl:Class ;
@@ -63,7 +68,8 @@ vcfr:ReferenceHeaderLine a owl:Class ; rdfs:subClassOf vcfr:HeaderLine ;
 
 vcfr:ContigHeaderLine a owl:Class ; rdfs:subClassOf vcfr:HeaderLine ;
   rdfs:label "contig header line"@en ;
-  rdfs:comment "Represents ##contig=<ID=...,length=...,assembly=...,...> entries."@en .
+  rdfs:comment "Represents ##contig=<ID=...,length=...,assembly=...,...> entries."@en ;
+  skos:relatedMatch faldo:Reference .
 
 vcfr:INFOHeaderLine a owl:Class ; rdfs:subClassOf vcfr:HeaderLine ;
   rdfs:label "INFO header line"@en ;
@@ -85,18 +91,26 @@ vcfr:VCFRecord a owl:Class ;
   rdfs:label "VCF record"@en ;
   rdfs:comment "A row in a VCF (CHROM, POS, ID, REF, ALT, QUAL, FILTER, INFO, FORMAT, samples...). This is a VCF-centric view; link to a sequence alteration representation via vcfr:asSequenceAlteration."@en ;
   vcfr:iriTemplate "file://{vcfFilePath}#record/{recordId}" ;
+  skos:exactMatch hero:VCFRecord ;
+  skos:relatedMatch faldo:Region, vrs:SequenceLocation, vrs:Allele ;
+  rdfs:seeAlso hero:VCFRecord, faldo:Region, vrs:SequenceLocation, vrs:Allele ;
   rdfs:subClassOf prov:Entity .
 
 vcfr:VariantCall a owl:Class ;
   rdfs:label "variant call"@en ;
   rdfs:comment "Call-level representation for a record: QUAL/FILTER/INFO, plus FORMAT and per-sample fields."@en ;
   vcfr:iriTemplate "file://{vcfFilePath}#call/{recordId}" ;
+  skos:closeMatch hero:GenomicVariation, so:0001060, vrs:Allele ;
+  rdfs:seeAlso hero:GenomicVariation, so:0001060, vrs:Allele ;
   rdfs:subClassOf prov:Entity .
 
 vcfr:SampleCall a owl:Class ;
   rdfs:label "sample call"@en ;
   rdfs:comment "Per-sample values for a variant call (e.g., GT, DP, AD), as declared by FORMAT header lines."@en ;
   vcfr:iriTemplate "file://{vcfFilePath}#sample/{recordId}/{sampleId}" ;
+  skos:closeMatch hero:Genotype ;
+  skos:relatedMatch hero:Zygosity ;
+  rdfs:seeAlso hero:Genotype, hero:Zygosity ;
   rdfs:subClassOf prov:Entity .
 
 vcfr:FieldDefinition a owl:Class ;
@@ -119,12 +133,16 @@ vcfr:AltDefinition a owl:Class ; rdfs:subClassOf vcfr:FieldDefinition, vcfr:ALTH
 vcfr:InfoFieldValue a owl:Class ;
   rdfs:label "INFO field value"@en ;
   rdfs:comment "A structured key/value for one INFO attribute within a record/call."@en ;
-  vcfr:iriTemplate "file://{vcfFilePath}#call/{recordId}/info/{fieldKey}" .
+  vcfr:iriTemplate "file://{vcfFilePath}#call/{recordId}/info/{fieldKey}" ;
+  skos:relatedMatch hero:VariantLevelData ;
+  rdfs:seeAlso hero:VariantLevelData .
 
 vcfr:FormatFieldValue a owl:Class ;
   rdfs:label "FORMAT field value"@en ;
   rdfs:comment "A structured key/value for one FORMAT attribute within a sample call."@en ;
-  vcfr:iriTemplate "file://{vcfFilePath}#sample/{recordId}/{sampleId}/fmt/{fieldKey}" .
+  vcfr:iriTemplate "file://{vcfFilePath}#sample/{recordId}/{sampleId}/fmt/{fieldKey}" ;
+  skos:relatedMatch hero:Genotype ;
+  rdfs:seeAlso hero:Genotype .
 
 #################################################################
 # Controlled vocab / enums (lightweight)
@@ -195,11 +213,13 @@ vcfr:declaredBy a owl:ObjectProperty ;
 vcfr:chromosome a owl:ObjectProperty ;
   rdfs:label "chromosome / contig reference"@en ;
   rdfs:comment "Reference sequence for CHROM, preferably resolvable (e.g., INSDC/RefSeq/Ensembl). Can align to FALDO reference."@en ;
+  rdfs:seeAlso vrs:SequenceLocation ;
   rdfs:range vcfr:ContigHeaderLine .
 
 vcfr:asSequenceAlteration a owl:ObjectProperty ;
   rdfs:label "as sequence alteration"@en ;
   rdfs:comment "Links a VCF record/call to a sequence alteration representation (e.g., SB/gvar SequenceAlteration: so:0001059)."@en ;
+  rdfs:seeAlso vrs:Allele ;
   rdfs:range so:0001059 .
 
 vcfr:missingValuePolicy a owl:AnnotationProperty ;
@@ -317,6 +337,7 @@ vcfr:chrom a owl:DatatypeProperty ;
 
 vcfr:pos a owl:DatatypeProperty ;
   rdfs:label "POS"@en ;
+  rdfs:seeAlso vrs:SequenceLocation ;
   rdfs:domain vcfr:VCFRecord ;
   rdfs:range xsd:integer .
 
@@ -328,12 +349,14 @@ vcfr:recordId a owl:DatatypeProperty ;
 
 vcfr:ref a owl:DatatypeProperty ;
   rdfs:label "REF"@en ;
+  rdfs:seeAlso vrs:LiteralSequenceExpression ;
   rdfs:domain vcfr:VCFRecord ;
   rdfs:range xsd:string .
 
 vcfr:alt a owl:DatatypeProperty ;
   rdfs:label "ALT"@en ;
   rdfs:comment "ALT allele string; for multiple ALT alleles you may repeat this property or use rdf:List externally."@en ;
+  rdfs:seeAlso vrs:LiteralSequenceExpression ;
   rdfs:domain vcfr:VCFRecord ;
   rdfs:range xsd:string .
 
