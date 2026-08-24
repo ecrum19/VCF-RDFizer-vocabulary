@@ -2,7 +2,8 @@
 set -euo pipefail
 
 repo_root=$(git rev-parse --show-toplevel)
-"$repo_root/scripts/sync-docs-assets.sh"
+cd "$repo_root"
 
-# Ensure generated assets are included in the commit.
-git add docs/assets docs/.nojekyll
+# The companion site is generated in ignored site/ output and deployed by
+# GitHub Actions. Validate its source configuration without staging artifacts.
+npm run ocg:check
