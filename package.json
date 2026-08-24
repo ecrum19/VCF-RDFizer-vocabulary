@@ -1,0 +1,16 @@
+{
+  "name": "vcf-rdfizer-vocabulary",
+  "version": "1.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "ocg:build": "ocg build && node scripts/insert-class-hierarchy.mjs site",
+    "ocg:check": "ocg check",
+    "ocg:clean": "ocg clean",
+    "ocg:dev": "ocg dev",
+    "examples:ttl": "node scripts/convert-example-nt-to-ttl.mjs"
+  },
+  "devDependencies": {
+    "ontology-companion-generator": "1.3.0"
+  }
+}

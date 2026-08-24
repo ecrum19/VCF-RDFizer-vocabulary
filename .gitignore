@@ -2,7 +2,9 @@
 *.swp
 *.tmp
 dist/
-site/
+/docs/
+node_modules/
+/site/
 target/
 .idea/
 .vscode/
