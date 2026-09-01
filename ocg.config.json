@@ -14,7 +14,13 @@
     "ontology": "ontology/vcf-rdfizer-vocabulary.ttl",
     "ontologyFormat": "turtle",
     "shapes": "shacl/vcf-rdfizer-vocabulary.shacl.ttl",
-    "examples": [
+    "artifacts": [
+      {
+        "key": "mapping",
+        "label": "VCF to RDF Mapping",
+        "path": "mappings/vcf-to-rdfizer-construct.sparql",
+        "description": "SPARQL CONSTRUCT mapping patterns for producing VCF-RDFizer triples."
+      },
       {
         "key": "example-file1-vcf",
         "label": "Example VCF",
@@ -44,14 +50,6 @@
         "label": "Full Example Graph (N-Triples)",
         "path": "examples/example.nt",
         "description": "The complete N-Triples serialization of the example graph."
-      }
-    ],
-    "artifacts": [
-      {
-        "key": "mapping",
-        "label": "VCF to RDF Mapping",
-        "path": "mappings/vcf-to-rdfizer-construct.sparql",
-        "description": "SPARQL CONSTRUCT mapping patterns for producing VCF-RDFizer triples."
       }
     ]
   },
@@ -293,11 +291,11 @@
     "autoFeaturedTerms": false,
     "featuredTermLimit": 6,
     "viewerTabs": [
-      "example:example-file1-vcf",
-      "example:example-headers",
-      "example:example-minimal-record",
-      "example:example-ttl",
-      "example:example-nt"
+      "artifact:example-file1-vcf",
+      "artifact:example-headers",
+      "artifact:example-minimal-record",
+      "artifact:example-ttl",
+      "artifact:example-nt"
     ]
   }
 }
