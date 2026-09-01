@@ -1,0 +1,77 @@
+@base <file://> .
+@prefix vcfr: <https://w3id.org/vcf-rdfizer/vocab#> .
+
+# Version 1.1.0 condensed representation of three VCF sample columns.
+<cohort.vcf>
+  a vcfr:VCFFile ;
+  vcfr:fileFormat "VCFv4.5" ;
+  vcfr:representationProfile vcfr:CondensedRepresentation ;
+  vcfr:hasSampleSet <cohort.vcf#samples> ;
+  vcfr:hasRecord <cohort.vcf#record/1> .
+
+<cohort.vcf#samples>
+  a vcfr:SampleSet ;
+  vcfr:hasSample
+    <cohort.vcf#samples/SAMPLE1>,
+    <cohort.vcf#samples/SAMPLE2>,
+    <cohort.vcf#samples/SAMPLE3> .
+
+<cohort.vcf#samples/SAMPLE1>
+  a vcfr:VCFSample ;
+  vcfr:sampleName "SAMPLE1" ;
+  vcfr:sampleIndex 1 .
+
+<cohort.vcf#samples/SAMPLE2>
+  a vcfr:VCFSample ;
+  vcfr:sampleName "SAMPLE2" ;
+  vcfr:sampleIndex 2 .
+
+<cohort.vcf#samples/SAMPLE3>
+  a vcfr:VCFSample ;
+  vcfr:sampleName "SAMPLE3" ;
+  vcfr:sampleIndex 3 .
+
+<cohort.vcf#record/1>
+  a vcfr:VCFRecord ;
+  vcfr:chrom "1" ;
+  vcfr:pos 100 ;
+  vcfr:ref "A" ;
+  vcfr:alt "G" ;
+  vcfr:hasCall <cohort.vcf#call/1> .
+
+<cohort.vcf#call/1>
+  a vcfr:VariantCall ;
+  vcfr:formatRaw "GT:DP" ;
+  vcfr:hasCallMatrix <cohort.vcf#call/1/matrix> .
+
+<cohort.vcf#call/1/matrix>
+  a vcfr:CohortCallMatrix ;
+  vcfr:appliesToSampleSet <cohort.vcf#samples> ;
+  vcfr:hasFormatValueVector
+    <cohort.vcf#call/1/matrix/fmt/GT>,
+    <cohort.vcf#call/1/matrix/fmt/DP> ;
+  vcfr:sampleDataRaw "0/1:42\t0/0:18\t./.:." .
+
+<cohort.vcf#call/1/matrix/fmt/GT>
+  a vcfr:FormatValueVector ;
+  vcfr:declaredBy <cohort.vcf#header/format/GT> ;
+  vcfr:valueEncoding vcfr:VCFTextVector ;
+  vcfr:encodedValues "0/1\t0/0\t./." .
+
+<cohort.vcf#call/1/matrix/fmt/DP>
+  a vcfr:FormatValueVector ;
+  vcfr:declaredBy <cohort.vcf#header/format/DP> ;
+  vcfr:valueEncoding vcfr:VCFTextVector ;
+  vcfr:encodedValues "42\t18\t." .
+
+<cohort.vcf#header/format/GT>
+  a vcfr:FormatFieldDefinition ;
+  vcfr:fieldId "GT" ;
+  vcfr:fieldNumber "1" ;
+  vcfr:fieldDescription "Genotype" .
+
+<cohort.vcf#header/format/DP>
+  a vcfr:FormatFieldDefinition ;
+  vcfr:fieldId "DP" ;
+  vcfr:fieldNumber "1" ;
+  vcfr:fieldDescription "Read depth" .

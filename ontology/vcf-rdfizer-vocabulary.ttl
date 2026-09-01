@@ -24,12 +24,13 @@
 
 vcfr: a owl:Ontology ;
   rdfs:label "VCF-RDFizer Vocabulary"@en ;
-  dct:description "Vocabulary for representing VCF files, headers, records, and per-sample calls in RDF. Its VCF-facing terms document the VCF 4.5 syntax and semantics, while its alignment hooks can link calls to SB/gvar and other genomics ontologies."@en ;
+  dct:description "Vocabulary for representing VCF files, headers, records, and sample genotype data in RDF. Version 1.1.0 supports both a dense per-sample representation and a condensed, sample-ordered vector representation for large multi-sample VCF files. Its VCF-facing terms document the VCF 4.5 syntax and semantics, while its alignment hooks can link calls to SB/gvar and other genomics ontologies."@en ;
   dct:license <https://creativecommons.org/licenses/by/4.0/> ;
   dct:creator "Elias Crum" ;
-  owl:versionIRI <https://w3id.org/vcf-rdfizer/vocab/1.0.1> ;
+  owl:versionIRI <https://w3id.org/vcf-rdfizer/vocab/1.1.0> ;
+  owl:versionInfo "1.1.0" ;
   dct:issued "2026-02-10"^^xsd:date ;
-  dct:modified "2026-08-24"^^xsd:date ;
+  dct:modified "2026-09-01"^^xsd:date ;
   rdfs:seeAlso <https://samtools.github.io/hts-specs/VCFv4.5.pdf> ;
   rdfs:seeAlso <https://swat4hcls-2025-genomic-variation.github.io/genomic-variant-schema/> ;
   rdfs:seeAlso <https://hereditary.dei.unipd.it/ontology/genomics/> .
@@ -104,7 +105,7 @@ vcfr:VCFRecord a owl:Class ;
 
 vcfr:VariantCall a owl:Class ;
   rdfs:label "variant call"@en ;
-  rdfs:comment "A vocabulary-level resource that groups the call assessment carried by a VCF record: QUAL, FILTER, INFO, the FORMAT declaration, and any per-sample values. It is an RDF convenience for the contents of a record, not a separate line type in VCF syntax."@en ;
+  rdfs:comment "A vocabulary-level resource that groups the call assessment carried by a VCF record: QUAL, FILTER, INFO, the FORMAT declaration, and sample genotype data. It is an RDF convenience for the contents of a record, not a separate line type in VCF syntax. Since version 1.1.0, genotype data can be represented either as dense per-sample calls or through one condensed cohort call matrix."@en ;
   vcfr:iriTemplate "file://{vcfFilePath}#call/{recordId}" ;
   skos:closeMatch hero:GenomicVariation, so:0001060, vrs:Allele ;
   rdfs:seeAlso hero:GenomicVariation, so:0001060, vrs:Allele ;
@@ -112,7 +113,7 @@ vcfr:VariantCall a owl:Class ;
 
 vcfr:SampleCall a owl:Class ;
   rdfs:label "sample call"@en ;
-  rdfs:comment "The colon-delimited value block for one sample in a genotype-bearing VCF record, represented as structured FORMAT field values. Its field order and meanings are supplied by that record's FORMAT column and corresponding FORMAT declarations."@en ;
+  rdfs:comment "The colon-delimited value block for one sample in a genotype-bearing VCF record, represented as structured FORMAT field values. Its field order and meanings are supplied by that record's FORMAT column and corresponding FORMAT declarations. This is the dense representation retained in version 1.1.0 for single-sample and low-sample VCF files; it MUST NOT be used to represent a vector of values for multiple samples."@en ;
   vcfr:iriTemplate "file://{vcfFilePath}#sample/{recordId}/{sampleId}" ;
   skos:closeMatch hero:Genotype ;
   skos:relatedMatch hero:Zygosity ;
@@ -130,7 +131,7 @@ vcfr:InfoFieldDefinition a owl:Class ; rdfs:subClassOf vcfr:FieldDefinition, vcf
 
 vcfr:FormatFieldDefinition a owl:Class ; rdfs:subClassOf vcfr:FieldDefinition, vcfr:FORMATHeaderLine ;
   rdfs:label "FORMAT field definition"@en ;
-  rdfs:comment "The definition of one FORMAT key, including its ID, Number, Type, and human-readable Description. It specifies how the corresponding per-sample values must be interpreted."@en .
+  rdfs:comment "The definition of one FORMAT key, including its ID, Number, Type, and human-readable Description. It specifies how the corresponding per-sample values must be interpreted. Since version 1.1.0, it can also declare a condensed vcfr:FormatValueVector through vcfr:declaredBy."@en .
 
 vcfr:FilterDefinition a owl:Class ; rdfs:subClassOf vcfr:FieldDefinition, vcfr:FILTERHeaderLine ;
   rdfs:label "FILTER definition"@en ;
@@ -149,10 +150,55 @@ vcfr:InfoFieldValue a owl:Class ;
 
 vcfr:FormatFieldValue a owl:Class ;
   rdfs:label "FORMAT field value"@en ;
-  rdfs:comment "A structured representation of one value from a sample's colon-delimited data block, interpreted at the corresponding position in the record's FORMAT key list."@en ;
+  rdfs:comment "A structured representation of one value from one sample's colon-delimited data block, interpreted at the corresponding position in the record's FORMAT key list. This is a dense, per-sample resource; version 1.1.0 adds vcfr:FormatValueVector for a condensed multi-sample representation and the two classes MUST NOT be substituted for one another."@en ;
   vcfr:iriTemplate "file://{vcfFilePath}#sample/{recordId}/{sampleId}/fmt/{fieldKey}" ;
   skos:relatedMatch hero:Genotype ;
   rdfs:seeAlso hero:Genotype .
+
+# Cohort-oriented representation additions (version 1.1.0)
+vcfr:VCFSample a owl:Class ;
+  rdfs:label "VCF sample"@en ;
+  rdfs:comment "Added in version 1.1.0. A reusable representation of one named sample column in one VCF file. It identifies a VCF column, not necessarily a biological individual; external subject or biosample resources may be linked separately."@en ;
+  vcfr:iriTemplate "file://{vcfFilePath}#samples/{sampleId}" ;
+  rdfs:subClassOf prov:Entity .
+
+vcfr:SampleSet a owl:Class ;
+  rdfs:label "VCF sample set"@en ;
+  rdfs:comment "Added in version 1.1.0. The ordered set of sample columns declared by one VCF file. The vcfr:sampleIndex of each member is one-based and determines how values in a condensed representation are associated with samples."@en ;
+  vcfr:iriTemplate "file://{vcfFilePath}#samples" ;
+  rdfs:subClassOf prov:Entity .
+
+vcfr:CohortCallMatrix a owl:Class ;
+  rdfs:label "cohort call matrix"@en ;
+  rdfs:comment "Added in version 1.1.0. A condensed representation of all sample genotype data for one VariantCall. It applies to exactly one ordered SampleSet and groups one FormatValueVector for each represented FORMAT key. A matrix does not itself assert an individual RDF statement for every sample value."@en ;
+  vcfr:iriTemplate "file://{vcfFilePath}#call/{recordId}/matrix" ;
+  rdfs:subClassOf prov:Entity .
+
+vcfr:FormatValueVector a owl:Class ;
+  rdfs:label "FORMAT value vector"@en ;
+  rdfs:comment "Added in version 1.1.0. The values of one FORMAT key across the ordered members of a CohortCallMatrix's SampleSet. It MUST be linked to the corresponding FormatFieldDefinition with vcfr:declaredBy and its encoded values MUST contain one position for each sample, including explicit missing values. It is a compact container, not a collection of individual vcfr:FormatFieldValue assertions."@en ;
+  vcfr:iriTemplate "file://{vcfFilePath}#call/{recordId}/matrix/fmt/{fieldKey}" ;
+  rdfs:subClassOf prov:Entity .
+
+vcfr:RepresentationProfile a owl:Class ;
+  rdfs:label "VCF RDF representation profile"@en ;
+  rdfs:comment "Added in version 1.1.0. A declared profile that tells consumers whether genotype data are emitted as individual dense statements or as condensed, sample-ordered vectors."@en .
+
+vcfr:VectorEncoding a owl:Class ;
+  rdfs:label "FORMAT value vector encoding"@en ;
+  rdfs:comment "Added in version 1.1.0. A named encoding for the lexical payload of a FormatValueVector. The encoding is required to interpret vcfr:encodedValues."@en .
+
+vcfr:DenseRepresentation a owl:NamedIndividual, vcfr:RepresentationProfile ;
+  rdfs:label "dense representation"@en ;
+  rdfs:comment "Added in version 1.1.0. The representation profile that expresses genotype data as a vcfr:SampleCall for each sample and a vcfr:FormatFieldValue for each populated sample/FORMAT position. It is intended for single-sample or low-sample VCF files and for use cases requiring direct RDF statements about individual calls."@en .
+
+vcfr:CondensedRepresentation a owl:NamedIndividual, vcfr:RepresentationProfile ;
+  rdfs:label "condensed representation"@en ;
+  rdfs:comment "Added in version 1.1.0. The representation profile that expresses a VariantCall's multi-sample genotype data through a CohortCallMatrix, a shared SampleSet, and FORMAT value vectors. It is intended for large multi-sample VCF files. Individual genotype values remain recoverable by decoding the vectors, but are not independently asserted as RDF triples."@en .
+
+vcfr:VCFTextVector a owl:NamedIndividual, vcfr:VectorEncoding ;
+  rdfs:label "VCF text vector encoding"@en ;
+  rdfs:comment "Added in version 1.1.0. A tab-separated sequence of raw VCF values, ordered by the matrix SampleSet. There is exactly one item per sample; a missing item is represented by the VCF token '.'. Commas within an item remain part of that FORMAT value and MUST NOT be treated as vector separators."@en .
 
 #################################################################
 # Controlled vocab / enums (lightweight)
@@ -220,9 +266,45 @@ vcfr:hasCall a owl:ObjectProperty ;
 
 vcfr:hasSampleCall a owl:ObjectProperty ;
   rdfs:label "has sample call"@en ;
-  rdfs:comment "Associates a record-level call with the values for one sample. It is used only when the VCF record includes genotype columns."@en ;
+  rdfs:comment "Associates a record-level call with the values for one sample. It is used only when the VCF record includes genotype columns. In version 1.1.0 this property is the dense-profile alternative to vcfr:hasCallMatrix, not a link to a condensed vector."@en ;
   rdfs:domain vcfr:VariantCall ;
   rdfs:range vcfr:SampleCall .
+
+vcfr:hasSampleSet a owl:ObjectProperty ;
+  rdfs:label "has sample set"@en ;
+  rdfs:comment "Added in version 1.1.0. Associates a VCF file with its ordered set of sample columns. The set provides the sample order used by every condensed cohort call matrix in that file."@en ;
+  rdfs:domain vcfr:VCFFile ;
+  rdfs:range vcfr:SampleSet .
+
+vcfr:hasSample a owl:ObjectProperty ;
+  rdfs:label "has sample"@en ;
+  rdfs:comment "Added in version 1.1.0. Associates a SampleSet with a reusable VCF sample-column resource. The member's vcfr:sampleIndex supplies the set order."@en ;
+  rdfs:domain vcfr:SampleSet ;
+  rdfs:range vcfr:VCFSample .
+
+vcfr:forSample a owl:ObjectProperty ;
+  rdfs:label "for sample"@en ;
+  rdfs:comment "Added in version 1.1.0. Optionally links a dense SampleCall to the reusable VCFSample representing its column. This avoids treating repeated vcfr:sampleId literals as the only sample identity."@en ;
+  rdfs:domain vcfr:SampleCall ;
+  rdfs:range vcfr:VCFSample .
+
+vcfr:hasCallMatrix a owl:ObjectProperty ;
+  rdfs:label "has cohort call matrix"@en ;
+  rdfs:comment "Added in version 1.1.0. Associates a VariantCall with its condensed multi-sample genotype representation. It is the condensed-profile alternative to emitting one vcfr:hasSampleCall assertion per sample."@en ;
+  rdfs:domain vcfr:VariantCall ;
+  rdfs:range vcfr:CohortCallMatrix .
+
+vcfr:hasFormatValueVector a owl:ObjectProperty ;
+  rdfs:label "has FORMAT value vector"@en ;
+  rdfs:comment "Added in version 1.1.0. Associates a CohortCallMatrix with the ordered values for one FORMAT key across its SampleSet."@en ;
+  rdfs:domain vcfr:CohortCallMatrix ;
+  rdfs:range vcfr:FormatValueVector .
+
+vcfr:appliesToSampleSet a owl:ObjectProperty ;
+  rdfs:label "applies to sample set"@en ;
+  rdfs:comment "Added in version 1.1.0. Identifies the ordered SampleSet used to interpret a CohortCallMatrix and all of its FORMAT value vectors."@en ;
+  rdfs:domain vcfr:CohortCallMatrix ;
+  rdfs:range vcfr:SampleSet .
 
 vcfr:hasInfoValue a owl:ObjectProperty ;
   rdfs:label "has INFO value"@en ;
@@ -238,7 +320,7 @@ vcfr:hasFormatValue a owl:ObjectProperty ;
 
 vcfr:declaredBy a owl:ObjectProperty ;
   rdfs:label "declared by"@en ;
-  rdfs:comment "Links an INFO/FORMAT/FILTER/ALT value/usage to its header definition line."@en ;
+  rdfs:comment "Links an INFO, FORMAT, FILTER, or ALT value/usage to its header definition line. Since version 1.1.0, a FormatValueVector uses this property to identify the FORMAT key that defines every position in the vector."@en ;
   rdfs:range vcfr:FieldDefinition .
 
 vcfr:chromosome a owl:ObjectProperty ;
@@ -252,6 +334,18 @@ vcfr:asSequenceAlteration a owl:ObjectProperty ;
   rdfs:comment "Links the VCF-centric record or call to an independently modelled sequence alteration, such as an SB/gvar SequenceAlteration. This relation supports semantic alignment without changing the source VCF representation."@en ;
   rdfs:seeAlso vrs:Allele ;
   rdfs:range so:0001059 .
+
+vcfr:representationProfile a owl:ObjectProperty ;
+  rdfs:label "representation profile"@en ;
+  rdfs:comment "Added in version 1.1.0. Declares the genotype-data representation used by a VCF RDF graph. A converter MUST use vcfr:DenseRepresentation when emitting per-sample call resources and vcfr:CondensedRepresentation when emitting cohort call matrices."@en ;
+  rdfs:domain vcfr:VCFFile ;
+  rdfs:range vcfr:RepresentationProfile .
+
+vcfr:valueEncoding a owl:ObjectProperty ;
+  rdfs:label "value encoding"@en ;
+  rdfs:comment "Added in version 1.1.0. Names the lexical encoding used for a FormatValueVector's vcfr:encodedValues payload."@en ;
+  rdfs:domain vcfr:FormatValueVector ;
+  rdfs:range vcfr:VectorEncoding .
 
 vcfr:missingValuePolicy a owl:AnnotationProperty ;
   rdfs:label "missing value policy"@en ;
@@ -431,14 +525,14 @@ vcfr:infoRaw a owl:DatatypeProperty ;
 
 vcfr:formatRaw a owl:DatatypeProperty ;
   rdfs:label "FORMAT raw"@en ;
-  rdfs:comment "An optional lossless copy of the FORMAT column: the colon-separated, ordered list of keys that determines the meaning of every sample data block in the record. If GT is included, it is the first key; the same field order applies to all samples in the record."@en ;
+  rdfs:comment "An optional lossless copy of the FORMAT column: the colon-separated, ordered list of keys that determines the meaning of every sample data block in the record. If GT is included, it is the first key; the same field order applies to all samples in the record. Since version 1.1.0, this order also determines how a condensed CohortCallMatrix's FORMAT value vectors are combined for a sample."@en ;
   rdfs:domain vcfr:VariantCall ;
   rdfs:range xsd:string .
 
 # Structured INFO/FORMAT values
 vcfr:fieldValue a owl:DatatypeProperty ;
   rdfs:label "field value"@en ;
-  rdfs:comment "The literal value copied from a structured INFO or FORMAT entry. It may preserve a comma-separated VCF value list; when a source value is missing, use '.'^^vcfr:Null. The typed value properties may additionally be used where the source type and transformation support them."@en ;
+  rdfs:comment "The literal value copied from one structured INFO or FORMAT entry. It may preserve a comma-separated VCF value list; when a source value is missing, use '.'^^vcfr:Null. The typed value properties may additionally be used where the source type and transformation support them. In the version 1.1.0 condensed profile, use vcfr:encodedValues on a FormatValueVector instead of creating one vcfr:fieldValue assertion per sample."@en ;
   rdfs:domain rdf:Resource ;
   rdfs:range rdfs:Literal .
 
@@ -460,11 +554,37 @@ vcfr:fieldValueBoolean a owl:DatatypeProperty ;
   rdfs:domain rdf:Resource ;
   rdfs:range xsd:boolean .
 
-# SampleCall identity
+# Reusable VCF sample-column identity (version 1.1.0)
+vcfr:sampleName a owl:DatatypeProperty ;
+  rdfs:label "sample name"@en ;
+  rdfs:comment "Added in version 1.1.0. The exact sample-column identifier from the '#CHROM' header line, attached to a reusable VCFSample. It is distinct from vcfr:sampleId, which remains the identifier literal on a dense SampleCall."@en ;
+  rdfs:domain vcfr:VCFSample ;
+  rdfs:range xsd:string .
+
+vcfr:sampleIndex a owl:DatatypeProperty ;
+  rdfs:label "sample index"@en ;
+  rdfs:comment "Added in version 1.1.0. The one-based position of a VCFSample in its file's '#CHROM' sample-column order. A condensed FormatValueVector position i corresponds to the SampleSet member whose sample index is i."@en ;
+  rdfs:domain vcfr:VCFSample ;
+  rdfs:range xsd:positiveInteger .
+
+# Dense SampleCall identity
 vcfr:sampleId a owl:DatatypeProperty ;
   rdfs:label "sample ID"@en ;
-  rdfs:comment "The sample identifier from the column-header line. When genotype data is present, VCF places FORMAT after the eight fixed columns and then one uniquely named column per sample."@en ;
+  rdfs:comment "The sample identifier from the column-header line on a dense SampleCall. When genotype data is present, VCF places FORMAT after the eight fixed columns and then one uniquely named column per sample. Since version 1.1.0, converters should additionally use vcfr:forSample and VCFSample when reusable sample identity is needed."@en ;
   rdfs:domain vcfr:SampleCall ;
+  rdfs:range xsd:string .
+
+# Condensed cohort payloads (version 1.1.0)
+vcfr:encodedValues a owl:DatatypeProperty ;
+  rdfs:label "encoded values"@en ;
+  rdfs:comment "Added in version 1.1.0. The lexical payload of a FormatValueVector. Interpret it only according to vcfr:valueEncoding, the vector's vcfr:declaredBy FORMAT definition, and the SampleSet of its CohortCallMatrix; it is not a sequence of independently asserted RDF values."@en ;
+  rdfs:domain vcfr:FormatValueVector ;
+  rdfs:range xsd:string .
+
+vcfr:sampleDataRaw a owl:DatatypeProperty ;
+  rdfs:label "sample data raw"@en ;
+  rdfs:comment "Added in version 1.1.0. An optional lossless textual copy of a record's genotype columns, with individual sample blocks separated by tabs in SampleSet order. It preserves source serialization for a CohortCallMatrix but does not replace its FORMAT value vectors for semantic interpretation."@en ;
+  rdfs:domain vcfr:CohortCallMatrix ;
   rdfs:range xsd:string .
 
 #################################################################

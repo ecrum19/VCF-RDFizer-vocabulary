@@ -4,10 +4,10 @@
     "title": "VCF-RDFizer Vocabulary",
     "shortName": "VCF-RDFizer",
     "slug": "vcf-rdfizer-vocabulary",
-    "description": "An RDF vocabulary and SHACL profile for representing VCF 4.5 files, headers, records, and per-sample calls, while linking call data to established genomics models.",
+    "description": "An RDF vocabulary and SHACL profile for representing VCF 4.5 files, headers, records, and genotype data through dense or condensed cohort representations, while linking call data to established genomics models.",
     "namespace": "https://w3id.org/vcf-rdfizer/vocab#",
     "canonicalUri": "https://w3id.org/vcf-rdfizer/vocab",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "maintainer": "Elias Crum"
   },
   "sources": {
@@ -40,6 +40,12 @@
         "description": "A focused RDF representation of the first mutation record."
       },
       {
+        "key": "example-condensed-cohort",
+        "label": "Condensed Cohort Example (TTL)",
+        "path": "examples/example-condensed-cohort.ttl",
+        "description": "A version 1.1.0 sample-ordered vector representation for a multi-sample VCF record."
+      },
+      {
         "key": "example-ttl",
         "label": "Full Example Graph (TTL)",
         "path": "examples/example.ttl",
@@ -66,7 +72,7 @@
   },
   "hierarchy": {
     "title": "Class Hierarchy",
-    "description": "This hierarchy summarizes the core design: file/header representation, record/call structure, and typed definitions for INFO/FORMAT/FILTER/ALT metadata.",
+    "description": "This hierarchy summarizes the core design: file/header representation, record/call structure, dense and condensed cohort genotype data, and typed definitions for INFO/FORMAT/FILTER/ALT metadata.",
     "termTypes": ["class"],
     "relations": ["subClassOf"],
     "rootTerms": [
@@ -76,13 +82,19 @@
       "vcfr:VCFRecord",
       "vcfr:VariantCall",
       "vcfr:SampleCall",
+      "vcfr:VCFSample",
+      "vcfr:SampleSet",
+      "vcfr:CohortCallMatrix",
+      "vcfr:FormatValueVector",
+      "vcfr:RepresentationProfile",
+      "vcfr:VectorEncoding",
       "vcfr:FieldDefinition",
       "vcfr:VCFValueType",
       "vcfr:VCFNumberArity",
       "vcfr:InfoFieldValue",
       "vcfr:FormatFieldValue"
     ],
-    "maxRoots": 12,
+    "maxRoots": 18,
     "maxDepth": 4,
     "maxChildrenPerNode": 12,
     "maxNodes": 60,

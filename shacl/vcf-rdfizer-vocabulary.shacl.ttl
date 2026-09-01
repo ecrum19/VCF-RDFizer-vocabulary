@@ -39,6 +39,20 @@ vcfr:VCFFileShape a sh:NodeShape ;
   ] ;
 
   sh:property [
+    sh:path vcfr:representationProfile ;
+    sh:minCount 0 ;
+    sh:maxCount 1 ;
+    sh:class vcfr:RepresentationProfile ;
+  ] ;
+
+  sh:property [
+    sh:path vcfr:hasSampleSet ;
+    sh:minCount 0 ;
+    sh:maxCount 1 ;
+    sh:class vcfr:SampleSet ;
+  ] ;
+
+  sh:property [
     sh:path vcfr:hasRecord ;
     sh:minCount 0 ;
     sh:class vcfr:VCFRecord ;
@@ -130,6 +144,12 @@ vcfr:VariantCallShape a sh:NodeShape ;
     sh:path vcfr:hasSampleCall ;
     sh:minCount 0 ;
     sh:class vcfr:SampleCall ;
+  ] ;
+
+  sh:property [
+    sh:path vcfr:hasCallMatrix ;
+    sh:minCount 0 ;
+    sh:class vcfr:CohortCallMatrix ;
   ] .
 
 #################################################################
@@ -140,7 +160,37 @@ vcfr:SampleCallShape a sh:NodeShape ;
   sh:targetClass vcfr:SampleCall ;
 
   sh:property [ sh:path vcfr:sampleId ; sh:minCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path vcfr:forSample ; sh:minCount 0 ; sh:maxCount 1 ; sh:class vcfr:VCFSample ] ;
   sh:property [ sh:path vcfr:hasFormatValue ; sh:minCount 0 ; sh:class vcfr:FormatFieldValue ] .
+
+#################################################################
+# Dense / condensed cohort representation shapes (version 1.1.0)
+#################################################################
+
+vcfr:VCFSampleShape a sh:NodeShape ;
+  sh:targetClass vcfr:VCFSample ;
+
+  sh:property [ sh:path vcfr:sampleName ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path vcfr:sampleIndex ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:positiveInteger ] .
+
+vcfr:SampleSetShape a sh:NodeShape ;
+  sh:targetClass vcfr:SampleSet ;
+
+  sh:property [ sh:path vcfr:hasSample ; sh:minCount 1 ; sh:class vcfr:VCFSample ] .
+
+vcfr:CohortCallMatrixShape a sh:NodeShape ;
+  sh:targetClass vcfr:CohortCallMatrix ;
+
+  sh:property [ sh:path vcfr:appliesToSampleSet ; sh:minCount 1 ; sh:maxCount 1 ; sh:class vcfr:SampleSet ] ;
+  sh:property [ sh:path vcfr:hasFormatValueVector ; sh:minCount 1 ; sh:class vcfr:FormatValueVector ] ;
+  sh:property [ sh:path vcfr:sampleDataRaw ; sh:minCount 0 ; sh:datatype xsd:string ] .
+
+vcfr:FormatValueVectorShape a sh:NodeShape ;
+  sh:targetClass vcfr:FormatValueVector ;
+
+  sh:property [ sh:path vcfr:declaredBy ; sh:minCount 1 ; sh:maxCount 1 ; sh:class vcfr:FormatFieldDefinition ] ;
+  sh:property [ sh:path vcfr:valueEncoding ; sh:minCount 1 ; sh:maxCount 1 ; sh:class vcfr:VectorEncoding ] ;
+  sh:property [ sh:path vcfr:encodedValues ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] .
 
 #################################################################
 # INFO/FORMAT value shapes

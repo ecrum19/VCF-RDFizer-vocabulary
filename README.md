@@ -1,6 +1,6 @@
 # VCF-RDFizer-vocabulary
 
-Vocabulary + SHACL shapes for representing **VCF files, headers, records, and per-sample calls** in RDF.
+Vocabulary + SHACL shapes for representing **VCF files, headers, records, and genotype data** in RDF.
 
 This repository is intentionally **VCF-centric** (file + header metadata + row/call provenance), and is designed to **link out** to established ontologies for representing the *sequence alteration itself*.
 
@@ -9,6 +9,15 @@ This repository is intentionally **VCF-centric** (file + header metadata + row/c
 - VCF is the de-facto interchange format for variant catalogs.
 - Existing semantic models (e.g., SB/gvar) focus on *variants as Linked Data*, not a complete RDF rendering of VCF files.  
   We therefore model the **VCF artifact**, **header lines**, and **call-level fields** here, and enable alignment to SB/gvar (and optionally HERO).
+
+## Version 1.1.0: dense and condensed genotype representations
+
+Version 1.1.0 adds an additive, cohort-oriented representation for large multi-sample VCF files. It does not change or deprecate the existing per-sample terms. A producer declares one of two profiles on the `vcfr:VCFFile`:
+
+- `vcfr:DenseRepresentation` for individual `vcfr:SampleCall` and `vcfr:FormatFieldValue` resources.
+- `vcfr:CondensedRepresentation` for sample-ordered `vcfr:CohortCallMatrix` and `vcfr:FormatValueVector` resources.
+
+The dense profile is suitable for single-sample and low-sample inputs. The condensed profile prevents the RDF graph from growing with every variant × sample × FORMAT-field combination while retaining the genotype contents in an explicitly described vector encoding.
 
 ## Namespace
 
@@ -35,6 +44,10 @@ VariantCall      file://{vcfFilePath}#call/{recordId}
 SampleCall       file://{vcfFilePath}#sample/{recordId}/{sampleId}
 InfoFieldValue   file://{vcfFilePath}#call/{recordId}/info/{fieldKey}
 FormatFieldValue file://{vcfFilePath}#sample/{recordId}/{sampleId}/fmt/{fieldKey}
+SampleSet         file://{vcfFilePath}#samples
+VCFSample         file://{vcfFilePath}#samples/{sampleId}
+CohortCallMatrix  file://{vcfFilePath}#call/{recordId}/matrix
+FormatValueVector file://{vcfFilePath}#call/{recordId}/matrix/fmt/{fieldKey}
 ```
 
 ## Key concepts
@@ -59,6 +72,32 @@ FormatFieldValue file://{vcfFilePath}#sample/{recordId}/{sampleId}/fmt/{fieldKey
 - `vcfr:VCFRecord` – one row of a VCF (variant observation statement)
 - `vcfr:VariantCall` – call-level representation (QUAL/FILTER/INFO/FORMAT + sample calls)
 - `vcfr:SampleCall` – per-sample call values (GT/DP/AD/…)
+- `vcfr:VCFSample` – one reusable, file-scoped VCF sample-column identity
+- `vcfr:SampleSet` – the ordered sample columns of a VCF file
+- `vcfr:CohortCallMatrix` – condensed genotype data for one `vcfr:VariantCall`
+- `vcfr:FormatValueVector` – values of one FORMAT key across the matrix sample order
+
+### Dense profile
+
+Use `vcfr:DenseRepresentation` when direct RDF statements about individual samples and FORMAT values are required. Each `vcfr:VariantCall` has a `vcfr:hasSampleCall` relation for every represented sample; each `vcfr:SampleCall` has a `vcfr:hasFormatValue` relation for its FORMAT entries. `vcfr:SampleCall` and `vcfr:FormatFieldValue` are deliberately **one-sample** resources and must not be used for values spanning multiple samples.
+
+The dense profile is the pre-1.1.0 representation and remains appropriate for one sample or a small number of samples. Producers may additionally link a `SampleCall` to a reusable `vcfr:VCFSample` using `vcfr:forSample`.
+
+### Condensed profile
+
+Use `vcfr:CondensedRepresentation` for large multi-sample VCF files. Model the `#CHROM` sample columns once as a `vcfr:SampleSet`; every member is a `vcfr:VCFSample` with an exact `vcfr:sampleName` and one-based `vcfr:sampleIndex`.
+
+For each record with genotype data, link the `vcfr:VariantCall` to one `vcfr:CohortCallMatrix` with `vcfr:hasCallMatrix`. The matrix identifies its `vcfr:appliesToSampleSet` and has one `vcfr:hasFormatValueVector` per represented FORMAT key. Each vector:
+
+- links with `vcfr:declaredBy` to the appropriate `vcfr:FormatFieldDefinition`;
+- declares a `vcfr:valueEncoding`; and
+- stores its lexical payload in `vcfr:encodedValues`.
+
+The initial standard encoding is `vcfr:VCFTextVector`: tab-separated raw VCF values in `vcfr:sampleIndex` order. It has exactly one position per sample. `.` remains the VCF missing-value token, and commas remain inside a single FORMAT value (for example `AD` or `PL`); commas are never vector separators. A consumer obtains the value for sample *i* by selecting position *i* in every needed FORMAT vector. The record's `vcfr:formatRaw` retains the source FORMAT-key order.
+
+`vcfr:encodedValues` is a compact payload, not thousands of individual RDF assertions. Consumers must decode it using the vector encoding, the linked FORMAT definition, and the matrix SampleSet. If source-level textual fidelity is required, a matrix may additionally use `vcfr:sampleDataRaw` for the original tab-separated sample blocks. It is optional because the FORMAT vectors already preserve the semantic genotype values.
+
+Use one profile consistently for a graph. A converter should not emit both dense calls and condensed vectors for the same call unless it intentionally documents the redundant materialization. The condensed profile is semantically complete for the represented VCF values, but a SPARQL engine cannot filter inside vector payloads without a decoder or an application-level vector function.
 
 ### Alignment
 
@@ -76,7 +115,7 @@ SB/gvar reference:
 
 ## Validation
 
-SHACL shapes are provided in `shacl/vcf-rdfizer-vocabulary.shacl.ttl`.
+SHACL shapes are provided in `shacl/vcf-rdfizer-vocabulary.shacl.ttl`. Version 1.1.0 validates the required identifiers and links of `VCFSample`, `SampleSet`, `CohortCallMatrix`, and `FormatValueVector`; lexical payload cardinality and vector position parsing remain encoding-specific application responsibilities.
 
 ## Documentation
 
@@ -93,6 +132,7 @@ The formatted example graph (`examples/example.ttl`) is generated from `examples
 See:
 - `examples/example-headers.ttl`
 - `examples/example-minimal-record.ttl`
+- `examples/example-condensed-cohort.ttl` (version 1.1.0 condensed cohort profile)
 - `examples/example.ttl` (formatted from `example.nt`)
 - `examples/example.nt`
 - `examples/example.vcf`
