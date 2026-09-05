@@ -35,6 +35,12 @@ VariantCall      file://{vcfFilePath}#call/{recordId}
 SampleCall       file://{vcfFilePath}#sample/{recordId}/{sampleId}
 InfoFieldValue   file://{vcfFilePath}#call/{recordId}/info/{fieldKey}
 FormatFieldValue file://{vcfFilePath}#sample/{recordId}/{sampleId}/fmt/{fieldKey}
+
+# Condensed profile
+SampleSet         file://{vcfFilePath}#samples
+VCFSample         file://{vcfFilePath}#samples/{sampleId}
+CohortCallMatrix  file://{vcfFilePath}#call/{recordId}/matrix
+FormatValueVector file://{vcfFilePath}#call/{recordId}/matrix/fmt/{fieldKey}
 ```
 
 ## Key concepts
@@ -60,6 +66,35 @@ FormatFieldValue file://{vcfFilePath}#sample/{recordId}/{sampleId}/fmt/{fieldKey
 - `vcfr:VariantCall` – call-level representation (QUAL/FILTER/INFO/FORMAT + sample calls)
 - `vcfr:SampleCall` – per-sample call values (GT/DP/AD/…)
 
+### Representation profiles
+
+The same VCF can be serialized with two different shapes for its per-sample
+genotype block. A file declares which one it follows with
+`vcfr:representationProfile`, and a consumer should read that first, because it
+decides how per-sample values are addressed.
+
+| | `vcfr:ExpandedRepresentation` | `vcfr:CondensedRepresentation` |
+|---|---|---|
+| Per-sample values | one `vcfr:SampleCall` per sample, one `vcfr:FormatFieldValue` per key | one `vcfr:CohortCallMatrix` per record, one `vcfr:FormatValueVector` per key |
+| Samples declared | per record | once per file, as a `vcfr:SampleSet` of `vcfr:VCFSample` |
+| A value is addressed | by IRI | by position, using the sample's `vcfr:sampleIndex` |
+| Genotype resources | records x samples x keys | records x keys |
+
+The condensed profile exists because the expanded one does not survive cohort
+scale: its genotype cost grows with the number of samples, and a large cohort
+is mostly genotype. The condensed terms are:
+
+- `vcfr:SampleSet` / `vcfr:hasSampleSet` – the file's sample columns, declared once
+- `vcfr:VCFSample` / `vcfr:hasSample` – one sample column, with `vcfr:sampleName` and a 1-based `vcfr:sampleIndex`
+- `vcfr:CohortCallMatrix` / `vcfr:hasCallMatrix` – a record's whole genotype block, `vcfr:appliesToSampleSet` the file's sample set
+- `vcfr:FormatValueVector` / `vcfr:hasFormatValueVector` – one FORMAT key's values across all samples
+- `vcfr:valueEncoding` / `vcfr:VCFTextVector` / `vcfr:encodedValues` – how a vector's literal is split back into per-sample values
+
+Under `vcfr:VCFTextVector`, `vcfr:encodedValues` holds one tab-separated field
+per sample in ascending `vcfr:sampleIndex` order. See
+`examples/example-condensed-record.ttl`, which is the same record as
+`examples/example-minimal-record.ttl` in the other profile.
+
 ### Alignment
 
 This vocabulary:
@@ -67,8 +102,21 @@ This vocabulary:
 
 ### Missing values (`.`)
 
-- Missing VCF token `.` is modeled as a typed literal: `"."^^vcfr:Null`.
-- This avoids using plain `"."^^xsd:string` and keeps missingness explicit in RDF.
+- Where VCF 4.5 permits the missing token - ID, ALT, QUAL, FILTER, INFO, and any
+  INFO or FORMAT value - it is modeled as a typed literal: `"."^^vcfr:Null`.
+  This avoids plain `"."^^xsd:string` and keeps missingness explicit in RDF.
+- CHROM, POS and REF are **required** and have no missing form, so the policy
+  does not apply to them: a `.` in one of those is malformed input, and the
+  SHACL shapes state their datatype exactly so that it is reported.
+- Inside a `vcfr:FormatValueVector`, a missing per-sample value stays the
+  character `.` at that sample's position in `vcfr:encodedValues`. Lifting it
+  out into a typed literal would break the positional alignment the whole
+  profile depends on.
+
+The boundary matters: stating the policy without it put the vocabulary in
+contradiction with its own shapes, since a record with no alternative allele
+could satisfy neither `vcfr:missingValuePolicy` nor a `vcfr:alt` constrained to
+`xsd:string`.
 
 SB/gvar reference:
 - Docs: https://swat4hcls-2025-genomic-variation.github.io/genomic-variant-schema/
@@ -76,7 +124,23 @@ SB/gvar reference:
 
 ## Validation
 
-SHACL shapes are provided in `shacl/vcf-rdfizer-vocabulary.shacl.ttl`.
+SHACL shapes are provided in `shacl/vcf-rdfizer-vocabulary.shacl.ttl`, covering
+both representation profiles. The condensed shapes constrain what positional
+decoding actually depends on: every `vcfr:VCFSample` carries exactly one
+`vcfr:sampleIndex`, every matrix names the sample set it applies to, and every
+vector states its encoding and its FORMAT declaration. A vector cannot be read
+without those, so they are required rather than merely recommended.
+
+```bash
+pyshacl -s shacl/vcf-rdfizer-vocabulary.shacl.ttl \
+        -e ontology/vcf-rdfizer-vocabulary.ttl \
+        -df turtle examples/example-condensed-record.ttl
+```
+
+The profile terms (`vcfr:ExpandedRepresentation`, `vcfr:CondensedRepresentation`,
+`vcfr:VCFTextVector`) are classes used as values, following the vocabulary's
+existing `vcfr:VCFValueType` pattern. They therefore carry no `rdf:type` edge,
+and the shapes constrain them with `sh:in` rather than `sh:class`.
 
 ## Documentation
 
@@ -93,6 +157,7 @@ The formatted example graph (`examples/example.ttl`) is generated from `examples
 See:
 - `examples/example-headers.ttl`
 - `examples/example-minimal-record.ttl`
+- `examples/example-condensed-record.ttl`
 - `examples/example.ttl` (formatted from `example.nt`)
 - `examples/example.nt`
 - `examples/example.vcf`
@@ -104,6 +169,12 @@ See:
 - Register w3id redirect:
   - Desired path: `/vcf-rdfizer/`
   - Redirect to your hosted ontology + docs.
+
+## Versioning
+
+Release notes are in [`CHANGELOG.md`](CHANGELOG.md). The current version is
+declared by `owl:versionIRI` in the ontology and mirrored in `package.json` and
+`CITATION.cff`.
 
 ## License
 

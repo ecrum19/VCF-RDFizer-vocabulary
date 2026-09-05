@@ -40,6 +40,12 @@
         "description": "A focused RDF representation of the first mutation record."
       },
       {
+        "key": "example-condensed-record",
+        "label": "Condensed Record (TTL)",
+        "path": "examples/example-condensed-record.ttl",
+        "description": "The same record as the minimal example, in the condensed profile: a file-level sample set and one FORMAT value vector per key."
+      },
+      {
         "key": "example-ttl",
         "label": "Full Example Graph (TTL)",
         "path": "examples/example.ttl",
@@ -66,9 +72,13 @@
   },
   "hierarchy": {
     "title": "Class Hierarchy",
-    "description": "This hierarchy summarizes the core design: file/header representation, record/call structure, and typed definitions for INFO/FORMAT/FILTER/ALT metadata.",
-    "termTypes": ["class"],
-    "relations": ["subClassOf"],
+    "description": "This hierarchy summarizes the core design: file/header representation, record/call structure, typed definitions for INFO/FORMAT/FILTER/ALT metadata, and the condensed cohort representation with its sample set, call matrix, and value vectors.",
+    "termTypes": [
+      "class"
+    ],
+    "relations": [
+      "subClassOf"
+    ],
     "rootTerms": [
       "vcfr:VCFFile",
       "vcfr:VCFHeader",
@@ -80,16 +90,25 @@
       "vcfr:VCFValueType",
       "vcfr:VCFNumberArity",
       "vcfr:InfoFieldValue",
-      "vcfr:FormatFieldValue"
+      "vcfr:FormatFieldValue",
+      "vcfr:SampleSet",
+      "vcfr:VCFSample",
+      "vcfr:CohortCallMatrix",
+      "vcfr:FormatValueVector",
+      "vcfr:RepresentationProfile",
+      "vcfr:VectorEncoding"
     ],
-    "maxRoots": 12,
+    "maxRoots": 17,
     "maxDepth": 4,
     "maxChildrenPerNode": 12,
-    "maxNodes": 60,
+    "maxNodes": 80,
     "includeLeafTerms": true,
     "includeExternal": false,
     "includePropertyRelations": true,
-    "propertyRelations": ["domain", "range"],
+    "propertyRelations": [
+      "domain",
+      "range"
+    ],
     "maxPropertyRelations": 24,
     "labelMode": "label-and-qname"
   },
@@ -294,6 +313,7 @@
       "artifact:example-file1-vcf",
       "artifact:example-headers",
       "artifact:example-minimal-record",
+      "artifact:example-condensed-record",
       "artifact:example-ttl",
       "artifact:example-nt"
     ]

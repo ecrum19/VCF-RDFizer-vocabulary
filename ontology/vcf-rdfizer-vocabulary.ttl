@@ -27,9 +27,9 @@ vcfr: a owl:Ontology ;
   dct:description "Vocabulary for representing VCF files, headers, records, and per-sample calls in RDF. Its VCF-facing terms document the VCF 4.5 syntax and semantics, while its alignment hooks can link calls to SB/gvar and other genomics ontologies."@en ;
   dct:license <https://creativecommons.org/licenses/by/4.0/> ;
   dct:creator "Elias Crum" ;
-  owl:versionIRI <https://w3id.org/vcf-rdfizer/vocab/1.0.1> ;
+  owl:versionIRI <https://w3id.org/vcf-rdfizer/vocab/1.1.0> ;
   dct:issued "2026-02-10"^^xsd:date ;
-  dct:modified "2026-08-24"^^xsd:date ;
+  dct:modified "2026-09-05"^^xsd:date ;
   rdfs:seeAlso <https://samtools.github.io/hts-specs/VCFv4.5.pdf> ;
   rdfs:seeAlso <https://swat4hcls-2025-genomic-variation.github.io/genomic-variant-schema/> ;
   rdfs:seeAlso <https://hereditary.dei.unipd.it/ontology/genomics/> .
@@ -155,6 +155,43 @@ vcfr:FormatFieldValue a owl:Class ;
   rdfs:seeAlso hero:Genotype .
 
 #################################################################
+# Condensed cohort representation
+#################################################################
+
+# The classes below describe the condensed serialization profile, in which a
+# record's per-sample FORMAT values are kept as one vector per FORMAT key
+# instead of one resource per sample and key. Both profiles describe the same
+# VCF; they differ only in how many RDF resources the genotype block costs.
+# A graph declares which profile it follows with vcfr:representationProfile.
+
+vcfr:SampleSet a owl:Class ;
+  rdfs:label "sample set"@en ;
+  rdfs:comment "The ordered set of sample columns declared once for a VCF file by its '#CHROM' column-header line. Declaring the samples at file level, rather than repeating them per record, is what allows the condensed profile to address per-sample values positionally."@en ;
+  vcfr:iriTemplate "file://{vcfFilePath}#samples" ;
+  rdfs:subClassOf prov:Entity .
+
+vcfr:VCFSample a owl:Class ;
+  rdfs:label "VCF sample"@en ;
+  rdfs:comment "One sample column of a VCF file, identified by its name in the column-header line and by its 1-based position among the sample columns. It is a file-level participant resource; the values it was assigned in a given record are carried by that record's vectors, at the position given by vcfr:sampleIndex."@en ;
+  vcfr:iriTemplate "file://{vcfFilePath}#samples/{sampleId}" ;
+  rdfs:seeAlso vcfr:SampleCall ;
+  rdfs:subClassOf prov:Entity .
+
+vcfr:CohortCallMatrix a owl:Class ;
+  rdfs:label "cohort call matrix"@en ;
+  rdfs:comment "The complete genotype block of one VCF record, held as a matrix over the file's sample set: one vector per FORMAT key, each vector carrying that key's value for every sample in sample-column order. It is the condensed counterpart of the set of vcfr:SampleCall resources a record would otherwise have."@en ;
+  vcfr:iriTemplate "file://{vcfFilePath}#call/{recordId}/matrix" ;
+  rdfs:seeAlso vcfr:SampleCall ;
+  rdfs:subClassOf prov:Entity .
+
+vcfr:FormatValueVector a owl:Class ;
+  rdfs:label "FORMAT value vector"@en ;
+  rdfs:comment "The values of one FORMAT key across every sample of a record, held as a single encoded literal rather than as one resource per sample. Its vcfr:declaredBy definition supplies the key's Type and Number, exactly as for a vcfr:FormatFieldValue; its vcfr:valueEncoding states how the literal is to be split back into per-sample values."@en ;
+  vcfr:iriTemplate "file://{vcfFilePath}#call/{recordId}/matrix/fmt/{fieldKey}" ;
+  rdfs:seeAlso vcfr:FormatFieldValue ;
+  rdfs:subClassOf prov:Entity .
+
+#################################################################
 # Controlled vocab / enums (lightweight)
 #################################################################
 
@@ -185,6 +222,26 @@ vcfr:StringType a owl:Class ; rdfs:subClassOf vcfr:VCFValueType ;
 vcfr:VCFNumberArity a owl:Class ;
   rdfs:label "VCF Number arity"@en ;
   rdfs:comment "The cardinality declaration used in a structured INFO or FORMAT definition. Besides a non-negative integer, VCF 4.5 defines A (one value per ALT allele), R (one per allele including REF), G (one per genotype), and '.' (variable, unknown, or unbounded); FORMAT additionally defines LA, LR, LG, P, and M."@en .
+
+vcfr:RepresentationProfile a owl:Class ;
+  rdfs:label "representation profile"@en ;
+  rdfs:comment "A declared serialization profile for the per-sample genotype block of a VCF graph. The profile does not change which VCF facts are represented; it determines which classes and properties carry them, and therefore which queries a consumer must write."@en .
+
+vcfr:ExpandedRepresentation a owl:Class ; rdfs:subClassOf vcfr:RepresentationProfile ;
+  rdfs:label "expanded representation"@en ;
+  rdfs:comment "The profile in which every sample's value block is a vcfr:SampleCall carrying one vcfr:FormatFieldValue per FORMAT key. Every per-sample value is individually addressable as an RDF resource, at the cost of a number of resources proportional to records times samples times keys."@en .
+
+vcfr:CondensedRepresentation a owl:Class ; rdfs:subClassOf vcfr:RepresentationProfile ;
+  rdfs:label "condensed representation"@en ;
+  rdfs:comment "The profile in which a record's genotype block is a vcfr:CohortCallMatrix of vcfr:FormatValueVector literals over a file-level vcfr:SampleSet. A per-sample value is reached by position rather than by IRI, which keeps the graph size proportional to records times keys and makes cohort-scale files tractable."@en .
+
+vcfr:VectorEncoding a owl:Class ;
+  rdfs:label "vector encoding"@en ;
+  rdfs:comment "The scheme by which a vcfr:FormatValueVector literal is decoded into one value per sample. Stating it explicitly is what keeps a vector self-describing rather than dependent on out-of-band knowledge of the producer."@en .
+
+vcfr:VCFTextVector a owl:Class ; rdfs:subClassOf vcfr:VectorEncoding ;
+  rdfs:label "VCF text vector encoding"@en ;
+  rdfs:comment "Values are encoded as one tab-separated field per sample, in ascending vcfr:sampleIndex order, with exactly as many fields as the sample set has members. A sample whose value is absent contributes the VCF missing token '.' at its position: within a vector the token is a character in the literal, not a '.'^^vcfr:Null literal of its own, because positional alignment must be preserved."@en .
 
 vcfr:Null a rdfs:Datatype ;
   rdfs:label "null literal datatype"@en ;
@@ -236,6 +293,49 @@ vcfr:hasFormatValue a owl:ObjectProperty ;
   rdfs:domain vcfr:SampleCall ;
   rdfs:range vcfr:FormatFieldValue .
 
+# Condensed cohort representation
+vcfr:hasSampleSet a owl:ObjectProperty ;
+  rdfs:label "has sample set"@en ;
+  rdfs:comment "Associates a VCF file with the file-level set of sample columns its records are scored against. Asserted once per file; a file with no sample columns has none."@en ;
+  rdfs:domain vcfr:VCFFile ;
+  rdfs:range vcfr:SampleSet .
+
+vcfr:hasSample a owl:ObjectProperty ;
+  rdfs:label "has sample"@en ;
+  rdfs:comment "Associates a sample set with one of its member samples. The set is unordered as an RDF collection; the column order that vectors depend on is carried by vcfr:sampleIndex, not by this property."@en ;
+  rdfs:domain vcfr:SampleSet ;
+  rdfs:range vcfr:VCFSample .
+
+vcfr:hasCallMatrix a owl:ObjectProperty ;
+  rdfs:label "has call matrix"@en ;
+  rdfs:comment "Associates a variant call with the condensed genotype block of its record. In the condensed profile this takes the place of the record's vcfr:hasSampleCall assertions."@en ;
+  rdfs:domain vcfr:VariantCall ;
+  rdfs:range vcfr:CohortCallMatrix .
+
+vcfr:appliesToSampleSet a owl:ObjectProperty ;
+  rdfs:label "applies to sample set"@en ;
+  rdfs:comment "States which sample set a call matrix's vectors are aligned to. Without it a vector's positions cannot be resolved to samples, so it is required for the condensed profile to be interpretable."@en ;
+  rdfs:domain vcfr:CohortCallMatrix ;
+  rdfs:range vcfr:SampleSet .
+
+vcfr:hasFormatValueVector a owl:ObjectProperty ;
+  rdfs:label "has FORMAT value vector"@en ;
+  rdfs:comment "Associates a call matrix with the vector holding one FORMAT key's values across all samples. A record contributes one vector per key in its FORMAT column."@en ;
+  rdfs:domain vcfr:CohortCallMatrix ;
+  rdfs:range vcfr:FormatValueVector .
+
+vcfr:valueEncoding a owl:ObjectProperty ;
+  rdfs:label "value encoding"@en ;
+  rdfs:comment "States how a FORMAT value vector's literal is to be split into one value per sample. It makes the vector self-describing, so a consumer need not assume a particular producer's convention."@en ;
+  rdfs:domain vcfr:FormatValueVector ;
+  rdfs:range vcfr:VectorEncoding .
+
+vcfr:representationProfile a owl:ObjectProperty ;
+  rdfs:label "representation profile"@en ;
+  rdfs:comment "Declares which genotype serialization profile a VCF graph follows. A consumer reads it first, because it determines whether per-sample values are addressed as vcfr:SampleCall resources or by position within a vcfr:FormatValueVector."@en ;
+  rdfs:domain vcfr:VCFFile ;
+  rdfs:range vcfr:RepresentationProfile .
+
 vcfr:declaredBy a owl:ObjectProperty ;
   rdfs:label "declared by"@en ;
   rdfs:comment "Links an INFO/FORMAT/FILTER/ALT value/usage to its header definition line."@en ;
@@ -255,13 +355,18 @@ vcfr:asSequenceAlteration a owl:ObjectProperty ;
 
 vcfr:missingValuePolicy a owl:AnnotationProperty ;
   rdfs:label "missing value policy"@en ;
-  rdfs:comment "Documents how the VCF missing-value token '.' is represented when source values are transformed to RDF."@en .
+  rdfs:comment "Documents how the VCF missing-value token '.' is represented when source values are transformed to RDF. It may be attached to the ontology to state the general rule, or to an individual term whose field departs from it."@en .
 
 vcfr:iriTemplate a owl:AnnotationProperty ;
   rdfs:label "IRI template"@en ;
   rdfs:comment "Provides a recommended IRI-minting pattern, using RFC 6570-style placeholders, for instances of a vocabulary class."@en .
 
-vcfr: vcfr:missingValuePolicy "VCF missing token '.' SHOULD be serialized as literal '.'^^vcfr:Null (do not serialize plain '.'^^xsd:string)."@en .
+# The policy applies where VCF itself permits the missing token, which is not
+# everywhere. Stating that boundary is what keeps the policy and the SHACL
+# shapes consistent: a shape may require xsd:string for a field precisely
+# because VCF gives that field no missing form, so a '.' there is malformed
+# input rather than an absent value.
+vcfr: vcfr:missingValuePolicy "In a field where VCF 4.5 permits the missing token '.' - ID, ALT, QUAL, FILTER, INFO, and any INFO or FORMAT value - it SHOULD be serialized as the literal '.'^^vcfr:Null, and MUST NOT be serialized as plain '.'^^xsd:string. CHROM, POS, and REF are required and have no missing form, so a '.' in one of them is malformed input and is not to be given a vcfr:Null literal. Within a vcfr:FormatValueVector the token stays a character at its sample's position in the encoded literal, because splitting it out would break positional alignment."@en .
 vcfr: vcfr:iriTemplate "file://{vcfFilePath}" .
 
 #################################################################
@@ -393,6 +498,7 @@ vcfr:pos a owl:DatatypeProperty ;
 vcfr:recordId a owl:DatatypeProperty ;
   rdfs:label "ID"@en ;
   rdfs:comment "The ID fixed-field value: a semicolon-separated list of unique record identifiers, such as dbSNP rs identifiers. When no identifier is available, VCF uses '.', represented here as '.'^^vcfr:Null."@en ;
+  vcfr:missingValuePolicy "VCF permits the missing token for ID; an absent identifier is '.'^^vcfr:Null."@en ;
   rdfs:domain vcfr:VCFRecord ;
   rdfs:range rdfs:Literal .
 
@@ -406,6 +512,7 @@ vcfr:ref a owl:DatatypeProperty ;
 vcfr:alt a owl:DatatypeProperty ;
   rdfs:label "ALT"@en ;
   rdfs:comment "An alternate, non-reference allele from the ALT fixed field. The VCF source serializes ALT as an ordered comma-separated list; each item may be a base string, '*', '.', a symbolic '<ID>', '<*>', or a breakend expression. Multiple values may be represented by repeated assertions or an external rdf:List, while retaining source order for Number=A, R, and G fields."@en ;
+  vcfr:missingValuePolicy "VCF permits the missing token for ALT, meaning the record asserts no alternative allele; it is '.'^^vcfr:Null. The range below is the datatype of a present allele - see vcfr:VCFRecordShape, which admits both."@en ;
   rdfs:seeAlso vrs:LiteralSequenceExpression ;
   rdfs:domain vcfr:VCFRecord ;
   rdfs:range xsd:string .
@@ -465,6 +572,26 @@ vcfr:sampleId a owl:DatatypeProperty ;
   rdfs:label "sample ID"@en ;
   rdfs:comment "The sample identifier from the column-header line. When genotype data is present, VCF places FORMAT after the eight fixed columns and then one uniquely named column per sample."@en ;
   rdfs:domain vcfr:SampleCall ;
+  rdfs:range xsd:string .
+
+# Condensed cohort representation
+vcfr:sampleName a owl:DatatypeProperty ;
+  rdfs:label "sample name"@en ;
+  rdfs:comment "The name of a sample column as written in the '#CHROM' column-header line. It is the file-level counterpart of vcfr:sampleId, which names the sample of an individual expanded-profile call."@en ;
+  rdfs:seeAlso vcfr:sampleId ;
+  rdfs:domain vcfr:VCFSample ;
+  rdfs:range xsd:string .
+
+vcfr:sampleIndex a owl:DatatypeProperty ;
+  rdfs:label "sample index"@en ;
+  rdfs:comment "The 1-based position of a sample among the file's sample columns, counted in column-header order. It is the key that resolves a position within a vcfr:FormatValueVector to a sample, and so must be stable for the whole file."@en ;
+  rdfs:domain vcfr:VCFSample ;
+  rdfs:range xsd:positiveInteger .
+
+vcfr:encodedValues a owl:DatatypeProperty ;
+  rdfs:label "encoded values"@en ;
+  rdfs:comment "The encoded per-sample values of one FORMAT key for one record, read according to the vector's vcfr:valueEncoding. Under vcfr:VCFTextVector the literal holds one tab-separated field per sample in ascending vcfr:sampleIndex order, with '.' at the position of an absent value."@en ;
+  rdfs:domain vcfr:FormatValueVector ;
   rdfs:range xsd:string .
 
 #################################################################
