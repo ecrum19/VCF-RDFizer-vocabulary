@@ -1,14 +1,23 @@
 {
-  "name": "vcf-rdfizer-vocabulary",
-  "version": "1.1.0",
+  "name": "vcf-core-vocabulary",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "ocg:build": "ocg build && node scripts/insert-class-hierarchy.mjs site",
-    "ocg:check": "ocg check",
+    "reserved-keys:generate": "node scripts/generate-reserved-keys.mjs",
+    "ontology:bundle": "node scripts/build-ontology-bundle.mjs",
+    "validate:rdf": "node tests/verify-vcf45-implementation.mjs",
+    "validate:shacl": "if [ -x .venv/bin/python ]; then .venv/bin/python tests/validate_shacl.py; else python3 tests/validate_shacl.py; fi",
+    "validate": "npm run ontology:bundle && npm run validate:rdf && npm run validate:shacl && npm run validate:regressions && npm run validate:examples && node SWAT4HCLS_2027/evidence/verify.mjs",
+    "ocg:build": "npm run ontology:bundle && ocg build && node scripts/insert-class-hierarchy.mjs site",
+    "ocg:check": "npm run validate && ocg check",
     "ocg:clean": "ocg clean",
     "ocg:dev": "ocg dev",
-    "examples:ttl": "node scripts/convert-example-nt-to-ttl.mjs"
+    "examples:ttl": "node scripts/convert-example-nt-to-ttl.mjs",
+    "validation:build": "if [ -x .venv/bin/python ]; then .venv/bin/python scripts/build-shacl-profiles.py; else python3 scripts/build-shacl-profiles.py; fi",
+    "examples:build": "if [ -x .venv/bin/python ]; then .venv/bin/python scripts/vcf_examples.py --write; else python3 scripts/vcf_examples.py --write; fi",
+    "validate:examples": "if [ -x .venv/bin/python ]; then .venv/bin/python tests/check_examples.py; else python3 tests/check_examples.py; fi",
+    "validate:regressions": "if [ -x .venv/bin/python ]; then .venv/bin/python -m unittest discover -s tests -p 'test_*.py'; else python3 -m unittest discover -s tests -p 'test_*.py'; fi"
   },
   "devDependencies": {
     "ontology-companion-generator": "1.3.0"

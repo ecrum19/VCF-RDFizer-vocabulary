@@ -1,0 +1,173 @@
+@prefix ns1: <https://w3id.org/vcf-core/vocab#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<file://example-file1.vcf> a ns1:VCF42File,
+        ns1:VCFFile ;
+    ns1:fileFormat "VCFv4.2" ;
+    ns1:hasHeader <file://example-file1.vcf#header> ;
+    ns1:hasSampleSet <file://example-file1.vcf#samples> ;
+    ns1:referenceGenome "GRCh38" ;
+    ns1:representationProfile ns1:ExpandedRepresentation ;
+    ns1:sourceSoftware "HaplotypeCaller" .
+
+<file://example-file1.vcf#header> a ns1:VCFHeader ;
+    ns1:hasColumnHeader <file://example-file1.vcf#header/columns> ;
+    ns1:hasHeaderLine <file://example-file1.vcf#header/line/1>,
+        <file://example-file1.vcf#header/line/2>,
+        <file://example-file1.vcf#header/line/3>,
+        <file://example-file1.vcf#header/line/4>,
+        <file://example-file1.vcf#header/line/5>,
+        <file://example-file1.vcf#header/line/6>,
+        <file://example-file1.vcf#header/line/7>,
+        <file://example-file1.vcf#header/line/8> .
+
+<file://example-file1.vcf#header/columns> a ns1:ColumnHeaderLine ;
+    ns1:hasGenotypeColumns <file://example-file1.vcf#samples/NG131FQA1I> .
+
+<file://example-file1.vcf#header/line/1> a ns1:FileFormatHeaderLine ;
+    ns1:headerKey "fileformat" ;
+    ns1:headerValue "VCFv4.2" ;
+    ns1:lineIndex 1 .
+
+<file://example-file1.vcf#header/line/2> a ns1:SourceHeaderLine ;
+    ns1:headerKey "source" ;
+    ns1:headerValue "HaplotypeCaller" ;
+    ns1:lineIndex 2 .
+
+<file://example-file1.vcf#header/line/3> a ns1:ReferenceHeaderLine ;
+    ns1:headerKey "reference" ;
+    ns1:headerValue "GRCh38" ;
+    ns1:lineIndex 3 .
+
+<file://example-file1.vcf#header/line/4> a ns1:ContigHeaderLine ;
+    ns1:contigId "chr1" ;
+    ns1:contigLength 248956422 ;
+    ns1:hasAttribute <file://example-file1.vcf#header/line/4/attribute/1>,
+        <file://example-file1.vcf#header/line/4/attribute/2> ;
+    ns1:headerKey "contig" ;
+    ns1:headerValue "<ID=chr1,length=248956422>" ;
+    ns1:lineIndex 4 .
+
+<file://example-file1.vcf#header/line/4/attribute/1> a ns1:HeaderAttribute ;
+    ns1:attributeIndex 1 ;
+    ns1:attributeKey "ID" ;
+    ns1:attributeValue "chr1" .
+
+<file://example-file1.vcf#header/line/4/attribute/2> a ns1:HeaderAttribute ;
+    ns1:attributeIndex 2 ;
+    ns1:attributeKey "length" ;
+    ns1:attributeValue "248956422" .
+
+<file://example-file1.vcf#header/line/5> a ns1:UnstructuredHeaderLine ;
+    ns1:headerKey "subsetNote" ;
+    ns1:headerValue "Subset of test-larger.vcf.gz; annotations reduced for the VCF Core tutorial; sample calls retained." ;
+    ns1:lineIndex 5 .
+
+<file://example-file1.vcf#header/line/6> a ns1:FORMATHeaderLine ;
+    ns1:fieldDescription "Genotype" ;
+    ns1:fieldId "GT" ;
+    ns1:fieldNumber "1" ;
+    ns1:fieldNumberInteger 1 ;
+    ns1:fieldType ns1:StringType ;
+    ns1:hasAttribute <file://example-file1.vcf#header/line/6/attribute/1>,
+        <file://example-file1.vcf#header/line/6/attribute/2>,
+        <file://example-file1.vcf#header/line/6/attribute/3>,
+        <file://example-file1.vcf#header/line/6/attribute/4> ;
+    ns1:headerKey "FORMAT" ;
+    ns1:headerValue "<ID=GT,Number=1,Type=String,Description=\"Genotype\">" ;
+    ns1:lineIndex 6 .
+
+<file://example-file1.vcf#header/line/6/attribute/1> a ns1:HeaderAttribute ;
+    ns1:attributeIndex 1 ;
+    ns1:attributeKey "ID" ;
+    ns1:attributeValue "GT" .
+
+<file://example-file1.vcf#header/line/6/attribute/2> a ns1:HeaderAttribute ;
+    ns1:attributeIndex 2 ;
+    ns1:attributeKey "Number" ;
+    ns1:attributeValue "1" .
+
+<file://example-file1.vcf#header/line/6/attribute/3> a ns1:HeaderAttribute ;
+    ns1:attributeIndex 3 ;
+    ns1:attributeKey "Type" ;
+    ns1:attributeValue "String" .
+
+<file://example-file1.vcf#header/line/6/attribute/4> a ns1:HeaderAttribute ;
+    ns1:attributeIndex 4 ;
+    ns1:attributeKey "Description" ;
+    ns1:attributeValue "Genotype" .
+
+<file://example-file1.vcf#header/line/7> a ns1:FORMATHeaderLine ;
+    ns1:fieldArity ns1:ArityPerAllele ;
+    ns1:fieldDescription "Allelic depths for the ref and alt alleles in the order listed" ;
+    ns1:fieldId "AD" ;
+    ns1:fieldNumber "R" ;
+    ns1:fieldType ns1:IntegerType ;
+    ns1:hasAttribute <file://example-file1.vcf#header/line/7/attribute/1>,
+        <file://example-file1.vcf#header/line/7/attribute/2>,
+        <file://example-file1.vcf#header/line/7/attribute/3>,
+        <file://example-file1.vcf#header/line/7/attribute/4> ;
+    ns1:headerKey "FORMAT" ;
+    ns1:headerValue "<ID=AD,Number=R,Type=Integer,Description=\"Allelic depths for the ref and alt alleles in the order listed\">" ;
+    ns1:lineIndex 7 .
+
+<file://example-file1.vcf#header/line/7/attribute/1> a ns1:HeaderAttribute ;
+    ns1:attributeIndex 1 ;
+    ns1:attributeKey "ID" ;
+    ns1:attributeValue "AD" .
+
+<file://example-file1.vcf#header/line/7/attribute/2> a ns1:HeaderAttribute ;
+    ns1:attributeIndex 2 ;
+    ns1:attributeKey "Number" ;
+    ns1:attributeValue "R" .
+
+<file://example-file1.vcf#header/line/7/attribute/3> a ns1:HeaderAttribute ;
+    ns1:attributeIndex 3 ;
+    ns1:attributeKey "Type" ;
+    ns1:attributeValue "Integer" .
+
+<file://example-file1.vcf#header/line/7/attribute/4> a ns1:HeaderAttribute ;
+    ns1:attributeIndex 4 ;
+    ns1:attributeKey "Description" ;
+    ns1:attributeValue "Allelic depths for the ref and alt alleles in the order listed" .
+
+<file://example-file1.vcf#header/line/8> a ns1:FORMATHeaderLine ;
+    ns1:fieldDescription "Approximate read depth (reads with MQ=255 or with bad mates are filtered)" ;
+    ns1:fieldId "DP" ;
+    ns1:fieldNumber "1" ;
+    ns1:fieldNumberInteger 1 ;
+    ns1:fieldType ns1:IntegerType ;
+    ns1:hasAttribute <file://example-file1.vcf#header/line/8/attribute/1>,
+        <file://example-file1.vcf#header/line/8/attribute/2>,
+        <file://example-file1.vcf#header/line/8/attribute/3>,
+        <file://example-file1.vcf#header/line/8/attribute/4> ;
+    ns1:headerKey "FORMAT" ;
+    ns1:headerValue "<ID=DP,Number=1,Type=Integer,Description=\"Approximate read depth (reads with MQ=255 or with bad mates are filtered)\">" ;
+    ns1:lineIndex 8 .
+
+<file://example-file1.vcf#header/line/8/attribute/1> a ns1:HeaderAttribute ;
+    ns1:attributeIndex 1 ;
+    ns1:attributeKey "ID" ;
+    ns1:attributeValue "DP" .
+
+<file://example-file1.vcf#header/line/8/attribute/2> a ns1:HeaderAttribute ;
+    ns1:attributeIndex 2 ;
+    ns1:attributeKey "Number" ;
+    ns1:attributeValue "1" .
+
+<file://example-file1.vcf#header/line/8/attribute/3> a ns1:HeaderAttribute ;
+    ns1:attributeIndex 3 ;
+    ns1:attributeKey "Type" ;
+    ns1:attributeValue "Integer" .
+
+<file://example-file1.vcf#header/line/8/attribute/4> a ns1:HeaderAttribute ;
+    ns1:attributeIndex 4 ;
+    ns1:attributeKey "Description" ;
+    ns1:attributeValue "Approximate read depth (reads with MQ=255 or with bad mates are filtered)" .
+
+<file://example-file1.vcf#samples> a ns1:SampleSet ;
+    ns1:hasSample <file://example-file1.vcf#samples/NG131FQA1I> .
+
+<file://example-file1.vcf#samples/NG131FQA1I> a ns1:VCFSample ;
+    ns1:sampleIndex 1 ;
+    ns1:sampleName "NG131FQA1I" .

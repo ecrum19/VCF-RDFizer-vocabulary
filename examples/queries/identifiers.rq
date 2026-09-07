@@ -1,0 +1,2 @@
+PREFIX vcfc: <https://w3id.org/vcf-core/vocab#>
+SELECT ?id WHERE { ?record vcfc:hasIdentifier/vcfc:identifierValue ?id } ORDER BY ?id

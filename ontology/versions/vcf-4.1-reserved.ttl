@@ -1,0 +1,322 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix vcfc: <https://w3id.org/vcf-core/vocab#> .
+
+vcfc:ReservedFormat_v41_AHAP a owl:NamedIndividual,
+        vcfc:FormatFieldDefinition ;
+    vcfc:fieldDescription "Reserved FORMAT AHAP declaration in VCF 4.1." ;
+    vcfc:fieldId "AHAP" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedFormat_v41_CN a owl:NamedIndividual,
+        vcfc:FormatFieldDefinition ;
+    vcfc:fieldDescription "Reserved FORMAT CN declaration in VCF 4.1." ;
+    vcfc:fieldId "CN" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedFormat_v41_CNL a owl:NamedIndividual,
+        vcfc:FormatFieldDefinition ;
+    vcfc:fieldDescription "Reserved FORMAT CNL declaration in VCF 4.1." ;
+    vcfc:fieldId "CNL" ;
+    vcfc:fieldNumber "." ;
+    vcfc:fieldType vcfc:FloatType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedFormat_v41_CNQ a owl:NamedIndividual,
+        vcfc:FormatFieldDefinition ;
+    vcfc:fieldDescription "Reserved FORMAT CNQ declaration in VCF 4.1." ;
+    vcfc:fieldId "CNQ" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldType vcfc:FloatType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedFormat_v41_DP a owl:NamedIndividual,
+        vcfc:FormatFieldDefinition ;
+    vcfc:fieldDescription "Reserved FORMAT DP declaration in VCF 4.1." ;
+    vcfc:fieldId "DP" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedFormat_v41_GQ a owl:NamedIndividual,
+        vcfc:FormatFieldDefinition ;
+    vcfc:fieldDescription "Reserved FORMAT GQ declaration in VCF 4.1." ;
+    vcfc:fieldId "GQ" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedFormat_v41_GT a owl:NamedIndividual,
+        vcfc:FormatFieldDefinition ;
+    vcfc:fieldDescription "Reserved FORMAT GT declaration in VCF 4.1." ;
+    vcfc:fieldId "GT" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldType vcfc:StringType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedFormat_v41_HAP a owl:NamedIndividual,
+        vcfc:FormatFieldDefinition ;
+    vcfc:fieldDescription "Reserved FORMAT HAP declaration in VCF 4.1." ;
+    vcfc:fieldId "HAP" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedFormat_v41_HQ a owl:NamedIndividual,
+        vcfc:FormatFieldDefinition ;
+    vcfc:fieldDescription "Reserved FORMAT HQ declaration in VCF 4.1." ;
+    vcfc:fieldId "HQ" ;
+    vcfc:fieldNumber "2" ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedFormat_v41_NQ a owl:NamedIndividual,
+        vcfc:FormatFieldDefinition ;
+    vcfc:fieldDescription "Reserved FORMAT NQ declaration in VCF 4.1." ;
+    vcfc:fieldId "NQ" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_AA a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO AA declaration in VCF 4.1." ;
+    vcfc:fieldId "AA" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldType vcfc:StringType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_AF a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO AF declaration in VCF 4.1." ;
+    vcfc:fieldId "AF" ;
+    vcfc:fieldNumber "A" ;
+    vcfc:fieldType vcfc:FloatType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_BKPTID a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO BKPTID declaration in VCF 4.1." ;
+    vcfc:fieldId "BKPTID" ;
+    vcfc:fieldNumber "." ;
+    vcfc:fieldType vcfc:StringType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_CICN a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO CICN declaration in VCF 4.1." ;
+    vcfc:fieldId "CICN" ;
+    vcfc:fieldNumber "2" ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_CICNADJ a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO CICNADJ declaration in VCF 4.1." ;
+    vcfc:fieldId "CICNADJ" ;
+    vcfc:fieldNumber "." ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_CIEND a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO CIEND declaration in VCF 4.1." ;
+    vcfc:fieldId "CIEND" ;
+    vcfc:fieldNumber "2" ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_CILEN a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO CILEN declaration in VCF 4.1." ;
+    vcfc:fieldId "CILEN" ;
+    vcfc:fieldNumber "2" ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_CIPOS a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO CIPOS declaration in VCF 4.1." ;
+    vcfc:fieldId "CIPOS" ;
+    vcfc:fieldNumber "2" ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_CN a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO CN declaration in VCF 4.1." ;
+    vcfc:fieldId "CN" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_CNADJ a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO CNADJ declaration in VCF 4.1." ;
+    vcfc:fieldId "CNADJ" ;
+    vcfc:fieldNumber "." ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_DB a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO DB declaration in VCF 4.1." ;
+    vcfc:fieldId "DB" ;
+    vcfc:fieldNumber "0" ;
+    vcfc:fieldType vcfc:FlagType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_DBRIPID a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO DBRIPID declaration in VCF 4.1." ;
+    vcfc:fieldId "DBRIPID" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldType vcfc:StringType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_DBVARID a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO DBVARID declaration in VCF 4.1." ;
+    vcfc:fieldId "DBVARID" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldType vcfc:StringType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_DGVID a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO DGVID declaration in VCF 4.1." ;
+    vcfc:fieldId "DGVID" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldType vcfc:StringType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_DP a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO DP declaration in VCF 4.1." ;
+    vcfc:fieldId "DP" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_DPADJ a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO DPADJ declaration in VCF 4.1." ;
+    vcfc:fieldId "DPADJ" ;
+    vcfc:fieldNumber "." ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_END a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO END declaration in VCF 4.1." ;
+    vcfc:fieldId "END" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_EVENT a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO EVENT declaration in VCF 4.1." ;
+    vcfc:fieldId "EVENT" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldType vcfc:StringType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_H2 a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO H2 declaration in VCF 4.1." ;
+    vcfc:fieldId "H2" ;
+    vcfc:fieldNumber "0" ;
+    vcfc:fieldType vcfc:FlagType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_HOMLEN a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO HOMLEN declaration in VCF 4.1." ;
+    vcfc:fieldId "HOMLEN" ;
+    vcfc:fieldNumber "." ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_HOMSEQ a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO HOMSEQ declaration in VCF 4.1." ;
+    vcfc:fieldId "HOMSEQ" ;
+    vcfc:fieldNumber "." ;
+    vcfc:fieldType vcfc:StringType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_IMPRECISE a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO IMPRECISE declaration in VCF 4.1." ;
+    vcfc:fieldId "IMPRECISE" ;
+    vcfc:fieldNumber "0" ;
+    vcfc:fieldType vcfc:FlagType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_MATEID a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO MATEID declaration in VCF 4.1." ;
+    vcfc:fieldId "MATEID" ;
+    vcfc:fieldNumber "." ;
+    vcfc:fieldType vcfc:StringType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_MEINFO a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO MEINFO declaration in VCF 4.1." ;
+    vcfc:fieldId "MEINFO" ;
+    vcfc:fieldNumber "4" ;
+    vcfc:fieldType vcfc:StringType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_METRANS a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO METRANS declaration in VCF 4.1." ;
+    vcfc:fieldId "METRANS" ;
+    vcfc:fieldNumber "4" ;
+    vcfc:fieldType vcfc:StringType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_NOVEL a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO NOVEL declaration in VCF 4.1." ;
+    vcfc:fieldId "NOVEL" ;
+    vcfc:fieldNumber "0" ;
+    vcfc:fieldType vcfc:FlagType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_NS a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO NS declaration in VCF 4.1." ;
+    vcfc:fieldId "NS" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_PARID a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO PARID declaration in VCF 4.1." ;
+    vcfc:fieldId "PARID" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldType vcfc:StringType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_SVLEN a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO SVLEN declaration in VCF 4.1." ;
+    vcfc:fieldId "SVLEN" ;
+    vcfc:fieldNumber "." ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:reservedIn "VCFv4.1" .
+
+vcfc:ReservedInfo_v41_SVTYPE a owl:NamedIndividual,
+        vcfc:InfoFieldDefinition ;
+    vcfc:fieldDescription "Reserved INFO SVTYPE declaration in VCF 4.1." ;
+    vcfc:fieldId "SVTYPE" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldType vcfc:StringType ;
+    vcfc:reservedIn "VCFv4.1" .

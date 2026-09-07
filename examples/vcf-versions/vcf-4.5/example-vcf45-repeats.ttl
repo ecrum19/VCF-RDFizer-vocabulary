@@ -1,0 +1,762 @@
+@prefix ex: <file://example-vcf45-repeats.vcf#> .
+@prefix vcfc: <https://w3id.org/vcf-core/vocab#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<file://example-vcf45-repeats.vcf> a vcfc:VCF45File,
+        vcfc:VCFFile ;
+    vcfc:fileFormat "VCFv4.5" ;
+    vcfc:hasHeader ex:header ;
+    vcfc:hasRecord <file://example-vcf45-repeats.vcf#record/1> ;
+    vcfc:hasSampleSet ex:samples ;
+    vcfc:referenceGenome "https://example.org/reference.fa" ;
+    vcfc:representationProfile vcfc:ExpandedRepresentation ;
+    vcfc:sourceSoftware "VCF-Core-synthetic-examples" .
+
+<file://example-vcf45-repeats.vcf#call/1> a vcfc:VariantCall ;
+    vcfc:filter "PASS" ;
+    vcfc:filterStatus vcfc:FiltersPassed ;
+    vcfc:formatRaw "GT:CN" ;
+    vcfc:hasInfoValue <file://example-vcf45-repeats.vcf#call/1/info/CN>,
+        <file://example-vcf45-repeats.vcf#call/1/info/RB>,
+        <file://example-vcf45-repeats.vcf#call/1/info/RN>,
+        <file://example-vcf45-repeats.vcf#call/1/info/RUC>,
+        <file://example-vcf45-repeats.vcf#call/1/info/RUL>,
+        <file://example-vcf45-repeats.vcf#call/1/info/RUS>,
+        <file://example-vcf45-repeats.vcf#call/1/info/SVCLAIM>,
+        <file://example-vcf45-repeats.vcf#call/1/info/SVLEN> ;
+    vcfc:hasSampleCall <file://example-vcf45-repeats.vcf#sample/1/S1> ;
+    vcfc:infoRaw "SVLEN=30;SVCLAIM=D;RN=1;RUS=CAG;RUL=3;RUC=10;RB=30;CN=2" ;
+    vcfc:qual "60"^^vcfc:VCFFloat .
+
+<file://example-vcf45-repeats.vcf#call/1/info/CN> a vcfc:InfoFieldValue ;
+    vcfc:declaredBy <file://example-vcf45-repeats.vcf#header/line/14> ;
+    vcfc:fieldIndex 8 ;
+    vcfc:fieldValue "2" ;
+    vcfc:fieldValueDecimal 2.0 ;
+    vcfc:hasValueItem <file://example-vcf45-repeats.vcf#call/1/info/CN/item/0> .
+
+<file://example-vcf45-repeats.vcf#call/1/info/CN/item/0> a vcfc:FieldValueItem ;
+    vcfc:forAllele <file://example-vcf45-repeats.vcf#record/1/allele/1> ;
+    vcfc:itemValue "2"^^vcfc:VCFFloat ;
+    vcfc:valueIndex 0 .
+
+<file://example-vcf45-repeats.vcf#call/1/info/RB> a vcfc:InfoFieldValue ;
+    vcfc:declaredBy <file://example-vcf45-repeats.vcf#header/line/13> ;
+    vcfc:fieldIndex 7 ;
+    vcfc:fieldValue "30" ;
+    vcfc:fieldValueInteger 30 ;
+    vcfc:hasValueItem <file://example-vcf45-repeats.vcf#call/1/info/RB/item/0> .
+
+<file://example-vcf45-repeats.vcf#call/1/info/RB/item/0> a vcfc:FieldValueItem ;
+    vcfc:itemValue 30 ;
+    vcfc:valueIndex 0 .
+
+<file://example-vcf45-repeats.vcf#call/1/info/RN> a vcfc:InfoFieldValue ;
+    vcfc:declaredBy <file://example-vcf45-repeats.vcf#header/line/9> ;
+    vcfc:fieldIndex 3 ;
+    vcfc:fieldValue "1" ;
+    vcfc:fieldValueInteger 1 ;
+    vcfc:hasValueItem <file://example-vcf45-repeats.vcf#call/1/info/RN/item/0> .
+
+<file://example-vcf45-repeats.vcf#call/1/info/RN/item/0> a vcfc:FieldValueItem ;
+    vcfc:forAllele <file://example-vcf45-repeats.vcf#record/1/allele/1> ;
+    vcfc:itemValue 1 ;
+    vcfc:valueIndex 0 .
+
+<file://example-vcf45-repeats.vcf#call/1/info/RUC> a vcfc:InfoFieldValue ;
+    vcfc:declaredBy <file://example-vcf45-repeats.vcf#header/line/12> ;
+    vcfc:fieldIndex 6 ;
+    vcfc:fieldValue "10" ;
+    vcfc:fieldValueDecimal 10.0 ;
+    vcfc:hasValueItem <file://example-vcf45-repeats.vcf#call/1/info/RUC/item/0> .
+
+<file://example-vcf45-repeats.vcf#call/1/info/RUC/item/0> a vcfc:FieldValueItem ;
+    vcfc:itemValue "10"^^vcfc:VCFFloat ;
+    vcfc:valueIndex 0 .
+
+<file://example-vcf45-repeats.vcf#call/1/info/RUL> a vcfc:InfoFieldValue ;
+    vcfc:declaredBy <file://example-vcf45-repeats.vcf#header/line/11> ;
+    vcfc:fieldIndex 5 ;
+    vcfc:fieldValue "3" ;
+    vcfc:fieldValueInteger 3 ;
+    vcfc:hasValueItem <file://example-vcf45-repeats.vcf#call/1/info/RUL/item/0> .
+
+<file://example-vcf45-repeats.vcf#call/1/info/RUL/item/0> a vcfc:FieldValueItem ;
+    vcfc:itemValue 3 ;
+    vcfc:valueIndex 0 .
+
+<file://example-vcf45-repeats.vcf#call/1/info/RUS> a vcfc:InfoFieldValue ;
+    vcfc:declaredBy <file://example-vcf45-repeats.vcf#header/line/10> ;
+    vcfc:fieldIndex 4 ;
+    vcfc:fieldValue "CAG" ;
+    vcfc:hasValueItem <file://example-vcf45-repeats.vcf#call/1/info/RUS/item/0> .
+
+<file://example-vcf45-repeats.vcf#call/1/info/RUS/item/0> a vcfc:FieldValueItem ;
+    vcfc:itemValue "CAG" ;
+    vcfc:valueIndex 0 .
+
+<file://example-vcf45-repeats.vcf#call/1/info/SVCLAIM> a vcfc:InfoFieldValue ;
+    vcfc:declaredBy <file://example-vcf45-repeats.vcf#header/line/8> ;
+    vcfc:fieldIndex 2 ;
+    vcfc:fieldValue "D" ;
+    vcfc:hasValueItem <file://example-vcf45-repeats.vcf#call/1/info/SVCLAIM/item/0> .
+
+<file://example-vcf45-repeats.vcf#call/1/info/SVCLAIM/item/0> a vcfc:FieldValueItem ;
+    vcfc:forAllele <file://example-vcf45-repeats.vcf#record/1/allele/1> ;
+    vcfc:itemValue "D" ;
+    vcfc:valueIndex 0 .
+
+<file://example-vcf45-repeats.vcf#call/1/info/SVLEN> a vcfc:InfoFieldValue ;
+    vcfc:declaredBy <file://example-vcf45-repeats.vcf#header/line/7> ;
+    vcfc:fieldIndex 1 ;
+    vcfc:fieldValue "30" ;
+    vcfc:fieldValueInteger 30 ;
+    vcfc:hasValueItem <file://example-vcf45-repeats.vcf#call/1/info/SVLEN/item/0> .
+
+<file://example-vcf45-repeats.vcf#call/1/info/SVLEN/item/0> a vcfc:FieldValueItem ;
+    vcfc:forAllele <file://example-vcf45-repeats.vcf#record/1/allele/1> ;
+    vcfc:itemValue 30 ;
+    vcfc:valueIndex 0 .
+
+ex:header a vcfc:VCFHeader ;
+    vcfc:hasColumnHeader <file://example-vcf45-repeats.vcf#header/columns> ;
+    vcfc:hasHeaderLine <file://example-vcf45-repeats.vcf#header/line/1>,
+        <file://example-vcf45-repeats.vcf#header/line/10>,
+        <file://example-vcf45-repeats.vcf#header/line/11>,
+        <file://example-vcf45-repeats.vcf#header/line/12>,
+        <file://example-vcf45-repeats.vcf#header/line/13>,
+        <file://example-vcf45-repeats.vcf#header/line/14>,
+        <file://example-vcf45-repeats.vcf#header/line/15>,
+        <file://example-vcf45-repeats.vcf#header/line/16>,
+        <file://example-vcf45-repeats.vcf#header/line/2>,
+        <file://example-vcf45-repeats.vcf#header/line/3>,
+        <file://example-vcf45-repeats.vcf#header/line/4>,
+        <file://example-vcf45-repeats.vcf#header/line/5>,
+        <file://example-vcf45-repeats.vcf#header/line/6>,
+        <file://example-vcf45-repeats.vcf#header/line/7>,
+        <file://example-vcf45-repeats.vcf#header/line/8>,
+        <file://example-vcf45-repeats.vcf#header/line/9> .
+
+<file://example-vcf45-repeats.vcf#header/columns> a vcfc:ColumnHeaderLine ;
+    vcfc:hasGenotypeColumns <file://example-vcf45-repeats.vcf#samples/S1> .
+
+<file://example-vcf45-repeats.vcf#header/line/1> a vcfc:FileFormatHeaderLine ;
+    vcfc:headerKey "fileformat" ;
+    vcfc:headerValue "VCFv4.5" ;
+    vcfc:lineIndex 1 .
+
+<file://example-vcf45-repeats.vcf#header/line/10/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "RUS" .
+
+<file://example-vcf45-repeats.vcf#header/line/10/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "." .
+
+<file://example-vcf45-repeats.vcf#header/line/10/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "String" .
+
+<file://example-vcf45-repeats.vcf#header/line/10/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Example RUS" .
+
+<file://example-vcf45-repeats.vcf#header/line/10/attribute/5> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 5 ;
+    vcfc:attributeKey "Source" ;
+    vcfc:attributeValue "VCF-Core-examples" .
+
+<file://example-vcf45-repeats.vcf#header/line/10/attribute/6> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 6 ;
+    vcfc:attributeKey "Version" ;
+    vcfc:attributeValue "1.0" .
+
+<file://example-vcf45-repeats.vcf#header/line/11/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "RUL" .
+
+<file://example-vcf45-repeats.vcf#header/line/11/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "." .
+
+<file://example-vcf45-repeats.vcf#header/line/11/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "Integer" .
+
+<file://example-vcf45-repeats.vcf#header/line/11/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Example RUL" .
+
+<file://example-vcf45-repeats.vcf#header/line/11/attribute/5> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 5 ;
+    vcfc:attributeKey "Source" ;
+    vcfc:attributeValue "VCF-Core-examples" .
+
+<file://example-vcf45-repeats.vcf#header/line/11/attribute/6> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 6 ;
+    vcfc:attributeKey "Version" ;
+    vcfc:attributeValue "1.0" .
+
+<file://example-vcf45-repeats.vcf#header/line/12/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "RUC" .
+
+<file://example-vcf45-repeats.vcf#header/line/12/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "." .
+
+<file://example-vcf45-repeats.vcf#header/line/12/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "Float" .
+
+<file://example-vcf45-repeats.vcf#header/line/12/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Example RUC" .
+
+<file://example-vcf45-repeats.vcf#header/line/12/attribute/5> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 5 ;
+    vcfc:attributeKey "Source" ;
+    vcfc:attributeValue "VCF-Core-examples" .
+
+<file://example-vcf45-repeats.vcf#header/line/12/attribute/6> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 6 ;
+    vcfc:attributeKey "Version" ;
+    vcfc:attributeValue "1.0" .
+
+<file://example-vcf45-repeats.vcf#header/line/13/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "RB" .
+
+<file://example-vcf45-repeats.vcf#header/line/13/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "." .
+
+<file://example-vcf45-repeats.vcf#header/line/13/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "Integer" .
+
+<file://example-vcf45-repeats.vcf#header/line/13/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Example RB" .
+
+<file://example-vcf45-repeats.vcf#header/line/13/attribute/5> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 5 ;
+    vcfc:attributeKey "Source" ;
+    vcfc:attributeValue "VCF-Core-examples" .
+
+<file://example-vcf45-repeats.vcf#header/line/13/attribute/6> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 6 ;
+    vcfc:attributeKey "Version" ;
+    vcfc:attributeValue "1.0" .
+
+<file://example-vcf45-repeats.vcf#header/line/14/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "CN" .
+
+<file://example-vcf45-repeats.vcf#header/line/14/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "A" .
+
+<file://example-vcf45-repeats.vcf#header/line/14/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "Float" .
+
+<file://example-vcf45-repeats.vcf#header/line/14/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Example CN" .
+
+<file://example-vcf45-repeats.vcf#header/line/14/attribute/5> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 5 ;
+    vcfc:attributeKey "Source" ;
+    vcfc:attributeValue "VCF-Core-examples" .
+
+<file://example-vcf45-repeats.vcf#header/line/14/attribute/6> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 6 ;
+    vcfc:attributeKey "Version" ;
+    vcfc:attributeValue "1.0" .
+
+<file://example-vcf45-repeats.vcf#header/line/15/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "GT" .
+
+<file://example-vcf45-repeats.vcf#header/line/15/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "1" .
+
+<file://example-vcf45-repeats.vcf#header/line/15/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "String" .
+
+<file://example-vcf45-repeats.vcf#header/line/15/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Example GT" .
+
+<file://example-vcf45-repeats.vcf#header/line/16/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "CN" .
+
+<file://example-vcf45-repeats.vcf#header/line/16/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "1" .
+
+<file://example-vcf45-repeats.vcf#header/line/16/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "Float" .
+
+<file://example-vcf45-repeats.vcf#header/line/16/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Example CN" .
+
+<file://example-vcf45-repeats.vcf#header/line/2> a vcfc:SourceHeaderLine ;
+    vcfc:headerKey "source" ;
+    vcfc:headerValue "VCF-Core-synthetic-examples" ;
+    vcfc:lineIndex 2 .
+
+<file://example-vcf45-repeats.vcf#header/line/3> a vcfc:ReferenceHeaderLine ;
+    vcfc:headerKey "reference" ;
+    vcfc:headerValue "https://example.org/reference.fa" ;
+    vcfc:lineIndex 3 .
+
+<file://example-vcf45-repeats.vcf#header/line/4/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "chr1" .
+
+<file://example-vcf45-repeats.vcf#header/line/4/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "length" ;
+    vcfc:attributeValue "1000" .
+
+<file://example-vcf45-repeats.vcf#header/line/5> a vcfc:ContigHeaderLine ;
+    vcfc:contigId "chr2" ;
+    vcfc:contigLength 1000 ;
+    vcfc:hasAttribute <file://example-vcf45-repeats.vcf#header/line/5/attribute/1>,
+        <file://example-vcf45-repeats.vcf#header/line/5/attribute/2> ;
+    vcfc:headerKey "contig" ;
+    vcfc:headerValue "<ID=chr2,length=1000>" ;
+    vcfc:lineIndex 5 .
+
+<file://example-vcf45-repeats.vcf#header/line/5/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "chr2" .
+
+<file://example-vcf45-repeats.vcf#header/line/5/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "length" ;
+    vcfc:attributeValue "1000" .
+
+<file://example-vcf45-repeats.vcf#header/line/6/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "CNV:TR" .
+
+<file://example-vcf45-repeats.vcf#header/line/6/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Synthetic CNV:TR allele" .
+
+<file://example-vcf45-repeats.vcf#header/line/7/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "SVLEN" .
+
+<file://example-vcf45-repeats.vcf#header/line/7/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "A" .
+
+<file://example-vcf45-repeats.vcf#header/line/7/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "Integer" .
+
+<file://example-vcf45-repeats.vcf#header/line/7/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Example SVLEN" .
+
+<file://example-vcf45-repeats.vcf#header/line/7/attribute/5> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 5 ;
+    vcfc:attributeKey "Source" ;
+    vcfc:attributeValue "VCF-Core-examples" .
+
+<file://example-vcf45-repeats.vcf#header/line/7/attribute/6> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 6 ;
+    vcfc:attributeKey "Version" ;
+    vcfc:attributeValue "1.0" .
+
+<file://example-vcf45-repeats.vcf#header/line/8/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "SVCLAIM" .
+
+<file://example-vcf45-repeats.vcf#header/line/8/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "A" .
+
+<file://example-vcf45-repeats.vcf#header/line/8/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "String" .
+
+<file://example-vcf45-repeats.vcf#header/line/8/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Example SVCLAIM" .
+
+<file://example-vcf45-repeats.vcf#header/line/8/attribute/5> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 5 ;
+    vcfc:attributeKey "Source" ;
+    vcfc:attributeValue "VCF-Core-examples" .
+
+<file://example-vcf45-repeats.vcf#header/line/8/attribute/6> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 6 ;
+    vcfc:attributeKey "Version" ;
+    vcfc:attributeValue "1.0" .
+
+<file://example-vcf45-repeats.vcf#header/line/9/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "RN" .
+
+<file://example-vcf45-repeats.vcf#header/line/9/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "A" .
+
+<file://example-vcf45-repeats.vcf#header/line/9/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "Integer" .
+
+<file://example-vcf45-repeats.vcf#header/line/9/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Example RN" .
+
+<file://example-vcf45-repeats.vcf#header/line/9/attribute/5> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 5 ;
+    vcfc:attributeKey "Source" ;
+    vcfc:attributeValue "VCF-Core-examples" .
+
+<file://example-vcf45-repeats.vcf#header/line/9/attribute/6> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 6 ;
+    vcfc:attributeKey "Version" ;
+    vcfc:attributeValue "1.0" .
+
+<file://example-vcf45-repeats.vcf#record/1> a vcfc:VCFRecord ;
+    vcfc:alt "<CNV:TR>" ;
+    vcfc:chrom "chr1" ;
+    vcfc:chromosome <file://example-vcf45-repeats.vcf#header/line/4> ;
+    vcfc:hasAltAllele <file://example-vcf45-repeats.vcf#record/1/allele/1> ;
+    vcfc:hasCall <file://example-vcf45-repeats.vcf#call/1> ;
+    vcfc:hasIdentifier <file://example-vcf45-repeats.vcf#record/1/id/1> ;
+    vcfc:hasReferenceAllele <file://example-vcf45-repeats.vcf#record/1/allele/0> ;
+    vcfc:pos 600 ;
+    vcfc:recordId "repeat1" ;
+    vcfc:recordIndex 1 ;
+    vcfc:ref "A" .
+
+<file://example-vcf45-repeats.vcf#record/1/allele/1/repeat/1> a vcfc:RepeatSequence ;
+    vcfc:repeatBases 30 ;
+    vcfc:repeatSequenceIndex 1 ;
+    vcfc:repeatUnitCount 10.0 ;
+    vcfc:repeatUnitLength 3 ;
+    vcfc:repeatUnitSequence "CAG" .
+
+<file://example-vcf45-repeats.vcf#record/1/id/1> a vcfc:RecordIdentifier ;
+    vcfc:componentIndex 1 ;
+    vcfc:identifierValue "repeat1" .
+
+<file://example-vcf45-repeats.vcf#sample/1/S1> a vcfc:SampleCall ;
+    vcfc:forSample <file://example-vcf45-repeats.vcf#samples/S1> ;
+    vcfc:hasFormatValue <file://example-vcf45-repeats.vcf#sample/1/S1/fmt/CN>,
+        <file://example-vcf45-repeats.vcf#sample/1/S1/fmt/GT> ;
+    vcfc:hasGenotype <file://example-vcf45-repeats.vcf#sample/1/S1/genotype> ;
+    vcfc:sampleFieldsRaw "0/1:3" ;
+    vcfc:sampleId "S1" .
+
+<file://example-vcf45-repeats.vcf#sample/1/S1/fmt/CN> a vcfc:FormatFieldValue ;
+    vcfc:declaredBy <file://example-vcf45-repeats.vcf#header/line/16> ;
+    vcfc:fieldIndex 2 ;
+    vcfc:fieldValue "3" ;
+    vcfc:fieldValueDecimal 3.0 ;
+    vcfc:hasValueItem <file://example-vcf45-repeats.vcf#sample/1/S1/fmt/CN/item/0> .
+
+<file://example-vcf45-repeats.vcf#sample/1/S1/fmt/CN/item/0> a vcfc:FieldValueItem ;
+    vcfc:itemValue "3"^^vcfc:VCFFloat ;
+    vcfc:valueIndex 0 .
+
+<file://example-vcf45-repeats.vcf#sample/1/S1/fmt/GT> a vcfc:FormatFieldValue ;
+    vcfc:declaredBy <file://example-vcf45-repeats.vcf#header/line/15> ;
+    vcfc:fieldIndex 1 ;
+    vcfc:fieldValue "0/1" ;
+    vcfc:hasValueItem <file://example-vcf45-repeats.vcf#sample/1/S1/fmt/GT/item/0> .
+
+<file://example-vcf45-repeats.vcf#sample/1/S1/fmt/GT/item/0> a vcfc:FieldValueItem ;
+    vcfc:itemValue "0/1" ;
+    vcfc:valueIndex 0 .
+
+<file://example-vcf45-repeats.vcf#sample/1/S1/genotype> a vcfc:Genotype ;
+    vcfc:genotypeString "0/1"^^vcfc:GenotypeString ;
+    vcfc:hasAlleleCall <file://example-vcf45-repeats.vcf#sample/1/S1/genotype/0>,
+        <file://example-vcf45-repeats.vcf#sample/1/S1/genotype/1> ;
+    vcfc:phasingStatus vcfc:Unphased ;
+    vcfc:ploidy 2 .
+
+<file://example-vcf45-repeats.vcf#sample/1/S1/genotype/0> a vcfc:GenotypeAlleleCall ;
+    vcfc:callIndex 0 ;
+    vcfc:calledAllele <file://example-vcf45-repeats.vcf#record/1/allele/0> ;
+    vcfc:isNoCall false ;
+    vcfc:phaseIndicator "/" .
+
+<file://example-vcf45-repeats.vcf#sample/1/S1/genotype/1> a vcfc:GenotypeAlleleCall ;
+    vcfc:callIndex 1 ;
+    vcfc:calledAllele <file://example-vcf45-repeats.vcf#record/1/allele/1> ;
+    vcfc:isNoCall false ;
+    vcfc:phaseIndicator "/" .
+
+ex:samples a vcfc:SampleSet ;
+    vcfc:hasSample <file://example-vcf45-repeats.vcf#samples/S1> .
+
+<file://example-vcf45-repeats.vcf#header/line/10> a vcfc:INFOHeaderLine ;
+    vcfc:fieldArity vcfc:ArityVariable ;
+    vcfc:fieldDescription "Example RUS" ;
+    vcfc:fieldId "RUS" ;
+    vcfc:fieldNumber "." ;
+    vcfc:fieldSource "VCF-Core-examples" ;
+    vcfc:fieldType vcfc:StringType ;
+    vcfc:fieldVersion "1.0" ;
+    vcfc:hasAttribute <file://example-vcf45-repeats.vcf#header/line/10/attribute/1>,
+        <file://example-vcf45-repeats.vcf#header/line/10/attribute/2>,
+        <file://example-vcf45-repeats.vcf#header/line/10/attribute/3>,
+        <file://example-vcf45-repeats.vcf#header/line/10/attribute/4>,
+        <file://example-vcf45-repeats.vcf#header/line/10/attribute/5>,
+        <file://example-vcf45-repeats.vcf#header/line/10/attribute/6> ;
+    vcfc:headerKey "INFO" ;
+    vcfc:headerValue "<ID=RUS,Number=.,Type=String,Description=\"Example RUS\",Source=\"VCF-Core-examples\",Version=\"1.0\">" ;
+    vcfc:lineIndex 10 .
+
+<file://example-vcf45-repeats.vcf#header/line/11> a vcfc:INFOHeaderLine ;
+    vcfc:fieldArity vcfc:ArityVariable ;
+    vcfc:fieldDescription "Example RUL" ;
+    vcfc:fieldId "RUL" ;
+    vcfc:fieldNumber "." ;
+    vcfc:fieldSource "VCF-Core-examples" ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:fieldVersion "1.0" ;
+    vcfc:hasAttribute <file://example-vcf45-repeats.vcf#header/line/11/attribute/1>,
+        <file://example-vcf45-repeats.vcf#header/line/11/attribute/2>,
+        <file://example-vcf45-repeats.vcf#header/line/11/attribute/3>,
+        <file://example-vcf45-repeats.vcf#header/line/11/attribute/4>,
+        <file://example-vcf45-repeats.vcf#header/line/11/attribute/5>,
+        <file://example-vcf45-repeats.vcf#header/line/11/attribute/6> ;
+    vcfc:headerKey "INFO" ;
+    vcfc:headerValue "<ID=RUL,Number=.,Type=Integer,Description=\"Example RUL\",Source=\"VCF-Core-examples\",Version=\"1.0\">" ;
+    vcfc:lineIndex 11 .
+
+<file://example-vcf45-repeats.vcf#header/line/12> a vcfc:INFOHeaderLine ;
+    vcfc:fieldArity vcfc:ArityVariable ;
+    vcfc:fieldDescription "Example RUC" ;
+    vcfc:fieldId "RUC" ;
+    vcfc:fieldNumber "." ;
+    vcfc:fieldSource "VCF-Core-examples" ;
+    vcfc:fieldType vcfc:FloatType ;
+    vcfc:fieldVersion "1.0" ;
+    vcfc:hasAttribute <file://example-vcf45-repeats.vcf#header/line/12/attribute/1>,
+        <file://example-vcf45-repeats.vcf#header/line/12/attribute/2>,
+        <file://example-vcf45-repeats.vcf#header/line/12/attribute/3>,
+        <file://example-vcf45-repeats.vcf#header/line/12/attribute/4>,
+        <file://example-vcf45-repeats.vcf#header/line/12/attribute/5>,
+        <file://example-vcf45-repeats.vcf#header/line/12/attribute/6> ;
+    vcfc:headerKey "INFO" ;
+    vcfc:headerValue "<ID=RUC,Number=.,Type=Float,Description=\"Example RUC\",Source=\"VCF-Core-examples\",Version=\"1.0\">" ;
+    vcfc:lineIndex 12 .
+
+<file://example-vcf45-repeats.vcf#header/line/13> a vcfc:INFOHeaderLine ;
+    vcfc:fieldArity vcfc:ArityVariable ;
+    vcfc:fieldDescription "Example RB" ;
+    vcfc:fieldId "RB" ;
+    vcfc:fieldNumber "." ;
+    vcfc:fieldSource "VCF-Core-examples" ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:fieldVersion "1.0" ;
+    vcfc:hasAttribute <file://example-vcf45-repeats.vcf#header/line/13/attribute/1>,
+        <file://example-vcf45-repeats.vcf#header/line/13/attribute/2>,
+        <file://example-vcf45-repeats.vcf#header/line/13/attribute/3>,
+        <file://example-vcf45-repeats.vcf#header/line/13/attribute/4>,
+        <file://example-vcf45-repeats.vcf#header/line/13/attribute/5>,
+        <file://example-vcf45-repeats.vcf#header/line/13/attribute/6> ;
+    vcfc:headerKey "INFO" ;
+    vcfc:headerValue "<ID=RB,Number=.,Type=Integer,Description=\"Example RB\",Source=\"VCF-Core-examples\",Version=\"1.0\">" ;
+    vcfc:lineIndex 13 .
+
+<file://example-vcf45-repeats.vcf#header/line/14> a vcfc:INFOHeaderLine ;
+    vcfc:fieldArity vcfc:ArityPerAlt ;
+    vcfc:fieldDescription "Example CN" ;
+    vcfc:fieldId "CN" ;
+    vcfc:fieldNumber "A" ;
+    vcfc:fieldSource "VCF-Core-examples" ;
+    vcfc:fieldType vcfc:FloatType ;
+    vcfc:fieldVersion "1.0" ;
+    vcfc:hasAttribute <file://example-vcf45-repeats.vcf#header/line/14/attribute/1>,
+        <file://example-vcf45-repeats.vcf#header/line/14/attribute/2>,
+        <file://example-vcf45-repeats.vcf#header/line/14/attribute/3>,
+        <file://example-vcf45-repeats.vcf#header/line/14/attribute/4>,
+        <file://example-vcf45-repeats.vcf#header/line/14/attribute/5>,
+        <file://example-vcf45-repeats.vcf#header/line/14/attribute/6> ;
+    vcfc:headerKey "INFO" ;
+    vcfc:headerValue "<ID=CN,Number=A,Type=Float,Description=\"Example CN\",Source=\"VCF-Core-examples\",Version=\"1.0\">" ;
+    vcfc:lineIndex 14 .
+
+<file://example-vcf45-repeats.vcf#header/line/15> a vcfc:FORMATHeaderLine ;
+    vcfc:fieldDescription "Example GT" ;
+    vcfc:fieldId "GT" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldNumberInteger 1 ;
+    vcfc:fieldType vcfc:StringType ;
+    vcfc:hasAttribute <file://example-vcf45-repeats.vcf#header/line/15/attribute/1>,
+        <file://example-vcf45-repeats.vcf#header/line/15/attribute/2>,
+        <file://example-vcf45-repeats.vcf#header/line/15/attribute/3>,
+        <file://example-vcf45-repeats.vcf#header/line/15/attribute/4> ;
+    vcfc:headerKey "FORMAT" ;
+    vcfc:headerValue "<ID=GT,Number=1,Type=String,Description=\"Example GT\">" ;
+    vcfc:lineIndex 15 .
+
+<file://example-vcf45-repeats.vcf#header/line/16> a vcfc:FORMATHeaderLine ;
+    vcfc:fieldDescription "Example CN" ;
+    vcfc:fieldId "CN" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldNumberInteger 1 ;
+    vcfc:fieldType vcfc:FloatType ;
+    vcfc:hasAttribute <file://example-vcf45-repeats.vcf#header/line/16/attribute/1>,
+        <file://example-vcf45-repeats.vcf#header/line/16/attribute/2>,
+        <file://example-vcf45-repeats.vcf#header/line/16/attribute/3>,
+        <file://example-vcf45-repeats.vcf#header/line/16/attribute/4> ;
+    vcfc:headerKey "FORMAT" ;
+    vcfc:headerValue "<ID=CN,Number=1,Type=Float,Description=\"Example CN\">" ;
+    vcfc:lineIndex 16 .
+
+<file://example-vcf45-repeats.vcf#header/line/4> a vcfc:ContigHeaderLine ;
+    vcfc:contigId "chr1" ;
+    vcfc:contigLength 1000 ;
+    vcfc:hasAttribute <file://example-vcf45-repeats.vcf#header/line/4/attribute/1>,
+        <file://example-vcf45-repeats.vcf#header/line/4/attribute/2> ;
+    vcfc:headerKey "contig" ;
+    vcfc:headerValue "<ID=chr1,length=1000>" ;
+    vcfc:lineIndex 4 .
+
+<file://example-vcf45-repeats.vcf#header/line/6> a vcfc:ALTHeaderLine ;
+    vcfc:altId "CNV:TR" ;
+    vcfc:fieldDescription "Synthetic CNV:TR allele" ;
+    vcfc:hasAttribute <file://example-vcf45-repeats.vcf#header/line/6/attribute/1>,
+        <file://example-vcf45-repeats.vcf#header/line/6/attribute/2> ;
+    vcfc:headerKey "ALT" ;
+    vcfc:headerValue "<ID=CNV:TR,Description=\"Synthetic CNV:TR allele\">" ;
+    vcfc:lineIndex 6 .
+
+<file://example-vcf45-repeats.vcf#header/line/7> a vcfc:INFOHeaderLine ;
+    vcfc:fieldArity vcfc:ArityPerAlt ;
+    vcfc:fieldDescription "Example SVLEN" ;
+    vcfc:fieldId "SVLEN" ;
+    vcfc:fieldNumber "A" ;
+    vcfc:fieldSource "VCF-Core-examples" ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:fieldVersion "1.0" ;
+    vcfc:hasAttribute <file://example-vcf45-repeats.vcf#header/line/7/attribute/1>,
+        <file://example-vcf45-repeats.vcf#header/line/7/attribute/2>,
+        <file://example-vcf45-repeats.vcf#header/line/7/attribute/3>,
+        <file://example-vcf45-repeats.vcf#header/line/7/attribute/4>,
+        <file://example-vcf45-repeats.vcf#header/line/7/attribute/5>,
+        <file://example-vcf45-repeats.vcf#header/line/7/attribute/6> ;
+    vcfc:headerKey "INFO" ;
+    vcfc:headerValue "<ID=SVLEN,Number=A,Type=Integer,Description=\"Example SVLEN\",Source=\"VCF-Core-examples\",Version=\"1.0\">" ;
+    vcfc:lineIndex 7 .
+
+<file://example-vcf45-repeats.vcf#header/line/8> a vcfc:INFOHeaderLine ;
+    vcfc:fieldArity vcfc:ArityPerAlt ;
+    vcfc:fieldDescription "Example SVCLAIM" ;
+    vcfc:fieldId "SVCLAIM" ;
+    vcfc:fieldNumber "A" ;
+    vcfc:fieldSource "VCF-Core-examples" ;
+    vcfc:fieldType vcfc:StringType ;
+    vcfc:fieldVersion "1.0" ;
+    vcfc:hasAttribute <file://example-vcf45-repeats.vcf#header/line/8/attribute/1>,
+        <file://example-vcf45-repeats.vcf#header/line/8/attribute/2>,
+        <file://example-vcf45-repeats.vcf#header/line/8/attribute/3>,
+        <file://example-vcf45-repeats.vcf#header/line/8/attribute/4>,
+        <file://example-vcf45-repeats.vcf#header/line/8/attribute/5>,
+        <file://example-vcf45-repeats.vcf#header/line/8/attribute/6> ;
+    vcfc:headerKey "INFO" ;
+    vcfc:headerValue "<ID=SVCLAIM,Number=A,Type=String,Description=\"Example SVCLAIM\",Source=\"VCF-Core-examples\",Version=\"1.0\">" ;
+    vcfc:lineIndex 8 .
+
+<file://example-vcf45-repeats.vcf#header/line/9> a vcfc:INFOHeaderLine ;
+    vcfc:fieldArity vcfc:ArityPerAlt ;
+    vcfc:fieldDescription "Example RN" ;
+    vcfc:fieldId "RN" ;
+    vcfc:fieldNumber "A" ;
+    vcfc:fieldSource "VCF-Core-examples" ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:fieldVersion "1.0" ;
+    vcfc:hasAttribute <file://example-vcf45-repeats.vcf#header/line/9/attribute/1>,
+        <file://example-vcf45-repeats.vcf#header/line/9/attribute/2>,
+        <file://example-vcf45-repeats.vcf#header/line/9/attribute/3>,
+        <file://example-vcf45-repeats.vcf#header/line/9/attribute/4>,
+        <file://example-vcf45-repeats.vcf#header/line/9/attribute/5>,
+        <file://example-vcf45-repeats.vcf#header/line/9/attribute/6> ;
+    vcfc:headerKey "INFO" ;
+    vcfc:headerValue "<ID=RN,Number=A,Type=Integer,Description=\"Example RN\",Source=\"VCF-Core-examples\",Version=\"1.0\">" ;
+    vcfc:lineIndex 9 .
+
+<file://example-vcf45-repeats.vcf#record/1/allele/0> a vcfc:ReferenceAllele ;
+    vcfc:alleleIndex 0 ;
+    vcfc:alleleKind vcfc:BaseSequenceAllele ;
+    vcfc:alleleValue "A" .
+
+<file://example-vcf45-repeats.vcf#samples/S1> a vcfc:VCFSample ;
+    vcfc:sampleIndex 1 ;
+    vcfc:sampleName "S1" .
+
+<file://example-vcf45-repeats.vcf#record/1/allele/1> a vcfc:AltAllele,
+        vcfc:TandemRepeatAllele ;
+    vcfc:alleleIndex 1 ;
+    vcfc:alleleKind vcfc:SymbolicAllele ;
+    vcfc:alleleValue "<CNV:TR>" ;
+    vcfc:copyNumber 2.0 ;
+    vcfc:declaredByAlt <file://example-vcf45-repeats.vcf#header/line/6> ;
+    vcfc:hasRepeatSequence <file://example-vcf45-repeats.vcf#record/1/allele/1/repeat/1> ;
+    vcfc:repeatSequenceCount 1 ;
+    vcfc:svClaim vcfc:AbundanceClaim ;
+    vcfc:svLength 30 ;
+    vcfc:svType vcfc:SymbolicTandemRepeat .

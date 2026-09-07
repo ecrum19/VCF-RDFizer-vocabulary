@@ -1,43 +1,91 @@
 {
   "$schema": "./ocg.config.schema.json",
   "project": {
-    "title": "VCF-RDFizer Vocabulary",
-    "shortName": "VCF-RDFizer",
-    "slug": "vcf-rdfizer-vocabulary",
-    "description": "An RDF vocabulary and SHACL profile for representing VCF 4.5 files, headers, records, and per-sample calls, while linking call data to established genomics models.",
-    "namespace": "https://w3id.org/vcf-rdfizer/vocab#",
-    "canonicalUri": "https://w3id.org/vcf-rdfizer/vocab",
-    "version": "1.0.1",
+    "title": "VCF Core Vocabulary",
+    "shortName": "VCF Core",
+    "slug": "vcf-core-vocabulary",
+    "description": "An RDF vocabulary for VCF files, headers, records and genotype data, with expanded and condensed sample representations, VCF 4.5 feature examples and SHACL profiles for VCF 4.1\u20134.5.",
+    "namespace": "https://w3id.org/vcf-core/vocab#",
+    "canonicalUri": "https://w3id.org/vcf-core/vocab",
+    "version": "2.0.0",
     "maintainer": "Elias Crum"
   },
   "sources": {
-    "ontology": "ontology/vcf-rdfizer-vocabulary.ttl",
+    "ontology": "ontology/vcf-core-vocabulary.bundle.ttl",
     "ontologyFormat": "turtle",
-    "shapes": "shacl/vcf-rdfizer-vocabulary.shacl.ttl",
+    "shapes": "shacl/vcf-core-vocabulary.shacl.ttl",
     "artifacts": [
+      {
+        "key": "ontology-core",
+        "label": "Core ontology module (Turtle)",
+        "path": "ontology/vcf-core-vocabulary.ttl",
+        "description": "Normative core: VCF files, headers, records, ordering, arity, and lexical policy."
+      },
+      {
+        "key": "ontology-alleles",
+        "label": "Allele and value-indexing module (Turtle)",
+        "path": "ontology/vcf-core-alleles.ttl",
+        "description": "Normative allele and Number=A/R/G/LA/LR/LG/P/M value-indexing module."
+      },
+      {
+        "key": "ontology-genotypes",
+        "label": "Genotype module (Turtle)",
+        "path": "ontology/vcf-core-genotypes.ttl",
+        "description": "Normative parsed genotype, phasing, phase-set, and local-allele module."
+      },
+      {
+        "key": "ontology-sv",
+        "label": "Structural-variation module (Turtle)",
+        "path": "ontology/vcf-core-sv.ttl",
+        "description": "Normative VCF structural-variant syntax, repeats, copy-number, reference-block, and base-modification module."
+      },
+      {
+        "key": "reserved-keys",
+        "label": "VCF 4.5 reserved-key registry (Turtle)",
+        "path": "ontology/vcf-core-reserved-keys.ttl",
+        "description": "Generated registry of the 122 unique VCF 4.5 INFO and FORMAT reserved definitions."
+      },
+      {
+        "key": "sparql-shapes",
+        "label": "Cross-resource SHACL constraints (Turtle)",
+        "path": "shacl/vcf-core-vocabulary-sparql.shacl.ttl",
+        "description": "Common ordering, uniqueness and profile rules; required by the complete validation suite."
+      },
       {
         "key": "mapping",
         "label": "VCF to RDF Mapping",
-        "path": "mappings/vcf-to-rdfizer-construct.sparql",
-        "description": "SPARQL CONSTRUCT mapping patterns for producing VCF-RDFizer triples."
+        "path": "mappings/vcf-to-vcf-core-construct.sparql",
+        "description": "SPARQL CONSTRUCT mapping patterns for producing VCF Core triples."
       },
       {
         "key": "example-file1-vcf",
-        "label": "Example VCF",
-        "path": "examples/example-file1.vcf",
-        "description": "The complete VCF source used by the RDF examples."
+        "label": "One real record and sample (VCF)",
+        "path": "examples/core/example-file1.vcf",
+        "description": "The supplied HaplotypeCaller source reduced to one record with GT:AD:DP."
       },
       {
         "key": "example-headers",
-        "label": "Example Headers (TTL)",
-        "path": "examples/example-headers.ttl",
-        "description": "RDF representation of the VCF header and its structured definitions."
+        "label": "Complete header-only example (Turtle)",
+        "path": "examples/core/example-headers.ttl",
+        "description": "A complete zero-record graph with structured metadata and sample columns."
       },
       {
         "key": "example-minimal-record",
-        "label": "First Mutation Example (TTL)",
-        "path": "examples/example-minimal-record.ttl",
-        "description": "A focused RDF representation of the first mutation record."
+        "label": "One real record and sample (Turtle)",
+        "path": "examples/core/example-minimal-record.ttl",
+        "description": "A complete HaplotypeCaller record with the original GT, AD and DP sample values."
+      },
+      {
+        "key": "example-condensed-cohort",
+        "label": "1000 Genomes cohort (8 samples, Turtle)",
+        "path": "examples/profiles/example-condensed-cohort.ttl",
+        "description": "Three chromosome 20 SNPs and eight real samples, with phased GT vectors and subset allele counts."
+      },
+      {
+        "key": "example-vcf45-features",
+        "label": "VCF 4.5 linked features (Turtle)",
+        "path": "examples/vcf-versions/vcf-4.5/example-vcf45-features.ttl",
+        "description": "Linked modifications, mixed phasing, local alleles, filters and structural-variant length intervals."
       },
       {
         "key": "example-condensed-record",
@@ -47,15 +95,273 @@
       },
       {
         "key": "example-ttl",
-        "label": "Full Example Graph (TTL)",
-        "path": "examples/example.ttl",
-        "description": "The complete formatted Turtle serialization of the example graph."
+        "label": "Real HaplotypeCaller calls (Turtle)",
+        "path": "examples/core/example.ttl",
+        "description": "Three source records with read depth, allele depths, genotype quality and likelihoods."
+      },
+      {
+        "key": "legacy-namespace",
+        "label": "Retired Namespace Document (TTL)",
+        "path": "legacy/legacy-vcf-rdfizer.ttl",
+        "description": "Deprecation record for the retired https://w3id.org/vcf-rdfizer/vocab# namespace, linking every 1.1.0 term to its VCF Core successor."
       },
       {
         "key": "example-nt",
-        "label": "Full Example Graph (N-Triples)",
-        "path": "examples/example.nt",
-        "description": "The complete N-Triples serialization of the example graph."
+        "label": "Real HaplotypeCaller calls (N-Triples)",
+        "path": "examples/core/example.nt",
+        "description": "The same three-record graph as the Turtle example."
+      },
+      {
+        "key": "audit-vcf-4-1-shacl",
+        "label": "VCF 4.1 validation overlay",
+        "path": "shacl/vcf-4.1.shacl.ttl",
+        "description": "VCF 4.1 Number codes, reserved declarations and SV tuple rules; load with the common shapes."
+      },
+      {
+        "key": "audit-vcf-4-2-shacl",
+        "label": "VCF 4.2 validation overlay",
+        "path": "shacl/vcf-4.2.shacl.ttl",
+        "description": "VCF 4.2 Number codes, reserved declarations and SV tuple rules; load with the common shapes."
+      },
+      {
+        "key": "audit-vcf-4-3-shacl",
+        "label": "VCF 4.3 validation overlay",
+        "path": "shacl/vcf-4.3.shacl.ttl",
+        "description": "VCF 4.3 Number codes, reserved declarations and SV tuple rules; load with the common shapes."
+      },
+      {
+        "key": "audit-vcf-4-4-shacl",
+        "label": "VCF 4.4 validation overlay",
+        "path": "shacl/vcf-4.4.shacl.ttl",
+        "description": "VCF 4.4 Number codes, reserved declarations and SV tuple rules; load with the common shapes."
+      },
+      {
+        "key": "audit-vcf-4-5-shacl",
+        "label": "VCF 4.5 validation overlay",
+        "path": "shacl/vcf-4.5.shacl.ttl",
+        "description": "VCF 4.5 Number codes, reserved declarations and SV tuple rules; load with the common shapes."
+      },
+      {
+        "key": "audit-vcf-core-consistency-shacl",
+        "label": "Raw and parsed value consistency",
+        "path": "shacl/vcf-core-consistency.shacl.ttl",
+        "description": "SHACL-SPARQL rules for header and allele agreement, value counts, genotype calls and matrix dimensions."
+      },
+      {
+        "key": "audit-vcf-core-vocabulary-shacl",
+        "label": "Core structural shapes",
+        "path": "shacl/vcf-core-vocabulary.shacl.ttl",
+        "description": "Common structural, datatype and local constraints; combine with the SPARQL rules and version overlays."
+      },
+      {
+        "key": "audit-vcf-4-1-reserved",
+        "label": "VCF 4.1 reserved declarations",
+        "path": "ontology/versions/vcf-4.1-reserved.ttl",
+        "description": "Explicit INFO and FORMAT declarations from the official VCF 4.1 source."
+      },
+      {
+        "key": "audit-vcf-4-2-reserved",
+        "label": "VCF 4.2 reserved declarations",
+        "path": "ontology/versions/vcf-4.2-reserved.ttl",
+        "description": "Explicit INFO and FORMAT declarations from the official VCF 4.2 source."
+      },
+      {
+        "key": "audit-vcf-4-3-reserved",
+        "label": "VCF 4.3 reserved declarations",
+        "path": "ontology/versions/vcf-4.3-reserved.ttl",
+        "description": "Explicit INFO and FORMAT declarations from the official VCF 4.3 source."
+      },
+      {
+        "key": "audit-vcf-4-4-reserved",
+        "label": "VCF 4.4 reserved declarations",
+        "path": "ontology/versions/vcf-4.4-reserved.ttl",
+        "description": "Explicit INFO and FORMAT declarations from the official VCF 4.4 source."
+      },
+      {
+        "key": "audit-example-vcf41",
+        "label": "VCF 4.1 example (Turtle)",
+        "path": "examples/vcf-versions/vcf-4.1/example-vcf41.ttl",
+        "description": "A complete VCF 4.1 graph showing historical SVLEN, CIPOS and CN declarations and values."
+      },
+      {
+        "key": "audit-example-vcf42",
+        "label": "VCF 4.2 example (Turtle)",
+        "path": "examples/vcf-versions/vcf-4.2/example-vcf42.ttl",
+        "description": "A complete VCF 4.2 graph showing historical SVLEN, CIPOS and CN declarations and values."
+      },
+      {
+        "key": "audit-example-vcf43",
+        "label": "VCF 4.3 example (Turtle)",
+        "path": "examples/vcf-versions/vcf-4.3/example-vcf43.ttl",
+        "description": "A complete VCF 4.3 graph showing historical SVLEN, CIPOS and CN declarations and values."
+      },
+      {
+        "key": "audit-example-vcf44",
+        "label": "VCF 4.4 example (Turtle)",
+        "path": "examples/vcf-versions/vcf-4.4/example-vcf44.ttl",
+        "description": "A complete VCF 4.4 graph showing historical SVLEN, CIPOS and CN declarations and values."
+      },
+      {
+        "key": "audit-example-vcf45-breakends",
+        "label": "Breakends (Turtle)",
+        "path": "examples/vcf-versions/vcf-4.5/example-vcf45-breakends.ttl",
+        "description": "Reciprocal mates and a single breakend, with remote FALDO positions."
+      },
+      {
+        "key": "audit-example-vcf45-gvcf",
+        "label": "Sample reference blocks (Turtle)",
+        "path": "examples/vcf-versions/vcf-4.5/example-vcf45-gvcf.ttl",
+        "description": "Two sample LEN extents for one ALT allele, plus a later reference-only record."
+      },
+      {
+        "key": "audit-example-vcf45-repeats",
+        "label": "Repeats and copy number (Turtle)",
+        "path": "examples/vcf-versions/vcf-4.5/example-vcf45-repeats.ttl",
+        "description": "Linked repeat unit, sequence, length and copy-number values."
+      },
+      {
+        "key": "audit-example-quickstart",
+        "label": "Quickstart (Turtle)",
+        "path": "examples/core/example-quickstart.ttl",
+        "description": "One site and complete metadata: start here to follow file, record, call and allele links."
+      },
+      {
+        "key": "audit-README",
+        "label": "Example guide (Markdown)",
+        "path": "examples/README.md",
+        "description": "A guided index of complete examples, paired sources, queries and validation commands."
+      },
+      {
+        "key": "source-example-condensed-cohort",
+        "label": "1000 Genomes cohort (VCF)",
+        "path": "examples/profiles/example-condensed-cohort.vcf",
+        "description": "Three SNPs, eight original sample columns and their real phased calls; AC/AF/AN recalculated for the subset."
+      },
+      {
+        "key": "source-example-headers",
+        "label": "example-headers.vcf (VCF source)",
+        "path": "examples/core/example-headers.vcf",
+        "description": "VCF source paired with the corresponding complete RDF example."
+      },
+      {
+        "key": "source-example-quickstart",
+        "label": "example-quickstart.vcf (VCF source)",
+        "path": "examples/core/example-quickstart.vcf",
+        "description": "VCF source paired with the corresponding complete RDF example."
+      },
+      {
+        "key": "source-example-vcf41",
+        "label": "example-vcf41.vcf (VCF source)",
+        "path": "examples/vcf-versions/vcf-4.1/example-vcf41.vcf",
+        "description": "VCF source paired with the corresponding complete RDF example."
+      },
+      {
+        "key": "source-example-vcf42",
+        "label": "example-vcf42.vcf (VCF source)",
+        "path": "examples/vcf-versions/vcf-4.2/example-vcf42.vcf",
+        "description": "VCF source paired with the corresponding complete RDF example."
+      },
+      {
+        "key": "source-example-vcf43",
+        "label": "example-vcf43.vcf (VCF source)",
+        "path": "examples/vcf-versions/vcf-4.3/example-vcf43.vcf",
+        "description": "VCF source paired with the corresponding complete RDF example."
+      },
+      {
+        "key": "source-example-vcf44",
+        "label": "example-vcf44.vcf (VCF source)",
+        "path": "examples/vcf-versions/vcf-4.4/example-vcf44.vcf",
+        "description": "VCF source paired with the corresponding complete RDF example."
+      },
+      {
+        "key": "source-example-vcf45-breakends",
+        "label": "example-vcf45-breakends.vcf (VCF source)",
+        "path": "examples/vcf-versions/vcf-4.5/example-vcf45-breakends.vcf",
+        "description": "VCF source paired with the corresponding complete RDF example."
+      },
+      {
+        "key": "source-example-vcf45-features",
+        "label": "example-vcf45-features.vcf (VCF source)",
+        "path": "examples/vcf-versions/vcf-4.5/example-vcf45-features.vcf",
+        "description": "VCF source paired with the corresponding complete RDF example."
+      },
+      {
+        "key": "source-example-vcf45-gvcf",
+        "label": "example-vcf45-gvcf.vcf (VCF source)",
+        "path": "examples/vcf-versions/vcf-4.5/example-vcf45-gvcf.vcf",
+        "description": "VCF source paired with the corresponding complete RDF example."
+      },
+      {
+        "key": "source-example-vcf45-repeats",
+        "label": "example-vcf45-repeats.vcf (VCF source)",
+        "path": "examples/vcf-versions/vcf-4.5/example-vcf45-repeats.vcf",
+        "description": "VCF source paired with the corresponding complete RDF example."
+      },
+      {
+        "key": "source-example",
+        "label": "Real HaplotypeCaller calls (VCF)",
+        "path": "examples/core/example.vcf",
+        "description": "Three source records with the actual GT:AD:DP:GQ:PL sample values."
+      },
+      {
+        "key": "query-breakend-mates",
+        "label": "Breakend mates query",
+        "path": "examples/queries/breakend-mates.rq",
+        "description": "Executable SPARQL example; exact expected answers are maintained in examples/manifest.json."
+      },
+      {
+        "key": "query-identifiers",
+        "label": "Identifiers query",
+        "path": "examples/queries/identifiers.rq",
+        "description": "Executable SPARQL example; exact expected answers are maintained in examples/manifest.json."
+      },
+      {
+        "key": "query-local-alleles",
+        "label": "Local alleles query",
+        "path": "examples/queries/local-alleles.rq",
+        "description": "Executable SPARQL example; exact expected answers are maintained in examples/manifest.json."
+      },
+      {
+        "key": "query-mixed-phasing",
+        "label": "Mixed phasing query",
+        "path": "examples/queries/mixed-phasing.rq",
+        "description": "Executable SPARQL example; exact expected answers are maintained in examples/manifest.json."
+      },
+      {
+        "key": "query-modifications",
+        "label": "Modifications query",
+        "path": "examples/queries/modifications.rq",
+        "description": "Executable SPARQL example; exact expected answers are maintained in examples/manifest.json."
+      },
+      {
+        "key": "query-reference-blocks",
+        "label": "Reference blocks query",
+        "path": "examples/queries/reference-blocks.rq",
+        "description": "Executable SPARQL example; exact expected answers are maintained in examples/manifest.json."
+      },
+      {
+        "key": "query-repeat-units",
+        "label": "Repeat units query",
+        "path": "examples/queries/repeat-units.rq",
+        "description": "Executable SPARQL example; exact expected answers are maintained in examples/manifest.json."
+      },
+      {
+        "key": "example-manifest",
+        "label": "Example manifest and expected query answers",
+        "path": "examples/manifest.json",
+        "description": "VCF/RDF source pairs and exact expected results for the example SPARQL queries."
+      },
+      {
+        "key": "query-cohort-genotypes",
+        "label": "Decode a cohort sample genotype",
+        "path": "examples/queries/cohort-genotypes.rq",
+        "description": "Use sampleIndex to decode HG00096 from each phased-GT vector."
+      },
+      {
+        "key": "example-provenance",
+        "label": "Real example provenance",
+        "path": "examples/provenance.json",
+        "description": "Source URLs, hashes, selected samples/sites and documented annotation reductions."
       }
     ]
   },
@@ -72,7 +378,7 @@
   },
   "hierarchy": {
     "title": "Class Hierarchy",
-    "description": "This hierarchy summarizes the core design: file/header representation, record/call structure, typed definitions for INFO/FORMAT/FILTER/ALT metadata, and the condensed cohort representation with its sample set, call matrix, and value vectors.",
+    "description": "This hierarchy summarizes the core design: file/header representation, record/call structure, expanded and condensed cohort genotype data, and typed definitions for INFO/FORMAT/FILTER/ALT metadata.",
     "termTypes": [
       "class"
     ],
@@ -80,28 +386,42 @@
       "subClassOf"
     ],
     "rootTerms": [
-      "vcfr:VCFFile",
-      "vcfr:VCFHeader",
-      "vcfr:HeaderLine",
-      "vcfr:VCFRecord",
-      "vcfr:VariantCall",
-      "vcfr:SampleCall",
-      "vcfr:FieldDefinition",
-      "vcfr:VCFValueType",
-      "vcfr:VCFNumberArity",
-      "vcfr:InfoFieldValue",
-      "vcfr:FormatFieldValue",
-      "vcfr:SampleSet",
-      "vcfr:VCFSample",
-      "vcfr:CohortCallMatrix",
-      "vcfr:FormatValueVector",
-      "vcfr:RepresentationProfile",
-      "vcfr:VectorEncoding"
+      "vcfc:VCFFile",
+      "vcfc:VCFHeader",
+      "vcfc:HeaderLine",
+      "vcfc:ColumnHeaderLine",
+      "vcfc:VCFRecord",
+      "vcfc:VariantCall",
+      "vcfc:SampleCall",
+      "vcfc:VCFSample",
+      "vcfc:SampleSet",
+      "vcfc:CohortCallMatrix",
+      "vcfc:FormatValueVector",
+      "vcfc:RepresentationProfile",
+      "vcfc:VectorEncoding",
+      "vcfc:FieldDefinition",
+      "vcfc:VCFValueType",
+      "vcfc:VCFNumberArity",
+      "vcfc:InfoFieldValue",
+      "vcfc:FormatFieldValue",
+      "vcfc:Allele",
+      "vcfc:FieldValueItem",
+      "vcfc:Genotype",
+      "vcfc:LocalAlleleSet",
+      "vcfc:SymbolicAlleleType",
+      "vcfc:SVClaim",
+      "vcfc:BreakendOrientation",
+      "vcfc:VariantEvent",
+      "vcfc:EventType",
+      "vcfc:ConfidenceInterval",
+      "vcfc:RepeatSequence",
+      "vcfc:ReferenceBlock",
+      "vcfc:BaseModification"
     ],
-    "maxRoots": 17,
+    "maxRoots": 32,
     "maxDepth": 4,
     "maxChildrenPerNode": 12,
-    "maxNodes": 80,
+    "maxNodes": 100,
     "includeLeafTerms": true,
     "includeExternal": false,
     "includePropertyRelations": true,
@@ -141,7 +461,7 @@
     "webvowl": {
       "enabled": true,
       "serviceUrl": "https://service.tib.eu/webvowl/",
-      "ontologyUrl": "https://raw.githubusercontent.com/ecrum19/VCF-RDFizer-vocabulary/main/ontology/vcf-rdfizer-vocabulary.ttl",
+      "ontologyUrl": "https://raw.githubusercontent.com/ecrum19/vcf-core-vocabulary/main/ontology/vcf-core-vocabulary.bundle.ttl",
       "height": 760
     },
     "colors": {
@@ -187,7 +507,7 @@
     },
     "hero": {
       "kicker": "VCF 4.5 to RDF",
-      "headline": "VCF-RDFizer Vocabulary",
+      "headline": "VCF Core Vocabulary",
       "body": "A semantic companion for publishing VCF files, structured headers, records, call assessments, and sample-level values as interoperable RDF."
     },
     "resourcePanel": {
@@ -223,7 +543,7 @@
       },
       "overview": {
         "title": "Represent VCF Data with Context",
-        "body": "VCF-RDFizer preserves the file-level provenance and header declarations that make a VCF interpretable, then represents its records, call assessments, INFO annotations, FORMAT fields, and sample values as linked RDF resources. It is designed for bioinformaticians implementing transformations, data stewards publishing interoperable variant data, and ontology developers aligning VCF calls with broader genomics models."
+        "body": "VCF Core preserves the file-level provenance and header declarations that make a VCF interpretable, then represents its records, call assessments, INFO annotations, FORMAT fields, and sample values as linked RDF resources. It is designed for bioinformaticians implementing transformations, data stewards publishing interoperable variant data, and ontology developers aligning VCF calls with broader genomics models."
       },
       "featuredTerms": {
         "title": "Core Terms",
@@ -232,8 +552,8 @@
       },
       "examples": {
         "title": "Example Explorer",
-        "body": "The viewer starts with the complete VCF source, followed by header, first-mutation, Turtle, and N-Triples representations.",
-        "defaultDescription": "Example source file for the VCF-RDFizer vocabulary.",
+        "body": "Explore eight real 1000 Genomes samples as VCF and condensed RDF, then inspect three HaplotypeCaller records with read-level call fields. The quickstart and synthetic feature graph explain the model in smaller steps.",
+        "defaultDescription": "Example source file for the VCF Core vocabulary.",
         "linkText": "Open Example"
       },
       "viewer": {
@@ -244,7 +564,7 @@
       },
       "artifacts": {
         "ontologyLabel": "Ontology (Turtle)",
-        "ontologyDescription": "The normative VCF-RDFizer OWL vocabulary.",
+        "ontologyDescription": "The normative VCF Core OWL vocabulary.",
         "shapesLabel": "SHACL Shapes",
         "shapesDescription": "Validation rules for VCF-derived RDF graphs.",
         "additionalArtifactDescription": "Additional project artifact."
@@ -267,7 +587,7 @@
     "customSections": [
       {
         "title": "Vocabulary Scope",
-        "body": "VCF-RDFizer is intentionally VCF-centric: it captures the syntax-facing file, header, record, and per-sample call information that is commonly lost when only a sequence alteration is modelled.",
+        "body": "VCF Core is intentionally VCF-centric: it captures the syntax-facing file, header, record, and per-sample call information that is commonly lost when only a sequence alteration is modelled.",
         "items": [
           "Use VCFFile, VCFHeader, and HeaderLine to preserve the source artifact and its declarations.",
           "Use VCFRecord, VariantCall, and SampleCall to represent a data line and its call-level or sample-level values.",
@@ -276,46 +596,46 @@
       },
       {
         "title": "Suggested Canonical IRI Pattern",
-        "body": "The site provides suggested instance IRIs for generating RDF from VCF files. The templates are also formalized by vcfr:iriTemplate in the ontology.",
+        "body": "The site provides suggested instance IRIs for generating RDF from VCF files. The templates are also formalized by vcfc:iriTemplate in the ontology. The examples use portable local identifiers such as file://example-file1.vcf#header; use an absolute file:///... form for a real local path or a stable HTTP(S) base when resources must be shared and dereferenced.",
         "items": [
           "VCFFile          file://{vcfFilePath}",
           "VCFHeader        file://{vcfFilePath}#header",
           "HeaderLine       file://{vcfFilePath}#header/line/{lineId}",
-          "VCFRecord        file://{vcfFilePath}#record/{recordId}",
-          "VariantCall      file://{vcfFilePath}#call/{recordId}",
-          "SampleCall       file://{vcfFilePath}#sample/{recordId}/{sampleId}",
-          "InfoFieldValue   file://{vcfFilePath}#call/{recordId}/info/{fieldKey}",
-          "FormatFieldValue file://{vcfFilePath}#sample/{recordId}/{sampleId}/fmt/{fieldKey}"
+          "VCFRecord        file://{vcfFilePath}#record/{recordKey}",
+          "VariantCall      file://{vcfFilePath}#call/{recordKey}",
+          "SampleCall       file://{vcfFilePath}#sample/{recordKey}/{sampleId}",
+          "InfoFieldValue   file://{vcfFilePath}#call/{recordKey}/info/{fieldKey}",
+          "FormatFieldValue file://{vcfFilePath}#sample/{recordKey}/{sampleId}/fmt/{fieldKey}"
         ]
       }
     ],
     "footer": {
-      "primary": "VCF-RDFizer Vocabulary",
+      "primary": "VCF Core Vocabulary",
       "secondary": "An RDF vocabulary and SHACL profile for VCF 4.5 files, headers, records, calls, and sample values."
     },
     "generator": {
-      "repositoryUrl": "https://github.com/ecrum19/VCF-RDFizer-vocabulary",
-      "documentationUrl": "https://github.com/ecrum19/VCF-RDFizer-vocabulary"
+      "repositoryUrl": "https://github.com/ecrum19/vcf-core-vocabulary",
+      "documentationUrl": "https://github.com/ecrum19/vcf-core-vocabulary"
     }
   },
   "curation": {
     "featuredTerms": [
-      "vcfr:VCFFile",
-      "vcfr:VCFHeader",
-      "vcfr:VCFRecord",
-      "vcfr:VariantCall",
-      "vcfr:SampleCall",
-      "vcfr:hasRecord"
+      "vcfc:VCFFile",
+      "vcfc:VCFHeader",
+      "vcfc:VCFRecord",
+      "vcfc:VariantCall",
+      "vcfc:SampleCall",
+      "vcfc:hasRecord"
     ],
     "autoFeaturedTerms": false,
     "featuredTermLimit": 6,
     "viewerTabs": [
-      "artifact:example-file1-vcf",
-      "artifact:example-headers",
-      "artifact:example-minimal-record",
-      "artifact:example-condensed-record",
+      "artifact:source-example-condensed-cohort",
+      "artifact:example-condensed-cohort",
+      "artifact:source-example",
       "artifact:example-ttl",
-      "artifact:example-nt"
+      "artifact:audit-example-quickstart",
+      "artifact:example-vcf45-features"
     ]
   }
 }

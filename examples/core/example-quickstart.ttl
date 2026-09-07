@@ -1,0 +1,57 @@
+@prefix vcfc: <https://w3id.org/vcf-core/vocab#> .
+
+# A complete file with one site and no sample columns. Load the ontology when
+# validating; the richer examples add parsed alleles, genotypes and value items.
+<file://example-quickstart.vcf>
+    a vcfc:VCFFile, vcfc:VCF45File ;
+    vcfc:fileFormat "VCFv4.5" ;
+    vcfc:representationProfile vcfc:ExpandedRepresentation ;
+    vcfc:referenceGenome "https://example.org/reference.fa" ;
+    vcfc:hasHeader <file://example-quickstart.vcf#header> ;
+    vcfc:hasRecord <file://example-quickstart.vcf#record/1> .
+
+<file://example-quickstart.vcf#header> a vcfc:VCFHeader ;
+    vcfc:hasHeaderLine
+        <file://example-quickstart.vcf#header/line/1>,
+        <file://example-quickstart.vcf#header/line/2>,
+        <file://example-quickstart.vcf#header/line/3> ;
+    vcfc:hasColumnHeader <file://example-quickstart.vcf#header/columns> .
+
+<file://example-quickstart.vcf#header/line/1> a vcfc:FileFormatHeaderLine ;
+    vcfc:lineIndex 1 ;
+    vcfc:headerKey "fileformat" ;
+    vcfc:headerValue "VCFv4.5" .
+
+<file://example-quickstart.vcf#header/line/2> a vcfc:ReferenceHeaderLine ;
+    vcfc:lineIndex 2 ;
+    vcfc:headerKey "reference" ;
+    vcfc:headerValue "https://example.org/reference.fa" .
+
+<file://example-quickstart.vcf#header/line/3> a vcfc:ContigHeaderLine ;
+    vcfc:lineIndex 3 ;
+    vcfc:headerKey "contig" ;
+    vcfc:headerValue "<ID=chr1>" ;
+    vcfc:contigId "chr1" ;
+    vcfc:hasAttribute <file://example-quickstart.vcf#header/line/3/attribute/1> .
+
+<file://example-quickstart.vcf#header/line/3/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "chr1" .
+
+<file://example-quickstart.vcf#header/columns> a vcfc:ColumnHeaderLine .
+
+<file://example-quickstart.vcf#record/1> a vcfc:VCFRecord ;
+    vcfc:recordIndex 1 ;
+    vcfc:chrom "chr1" ;
+    vcfc:chromosome <file://example-quickstart.vcf#header/line/3> ;
+    vcfc:pos 100 ;
+    vcfc:recordId "."^^vcfc:Null ;
+    vcfc:ref "A" ;
+    vcfc:alt "G" ;
+    vcfc:hasCall <file://example-quickstart.vcf#call/1> .
+
+<file://example-quickstart.vcf#call/1> a vcfc:VariantCall ;
+    vcfc:qual "60"^^vcfc:VCFFloat ;
+    vcfc:filter "PASS" ;
+    vcfc:infoRaw "." .

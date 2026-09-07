@@ -1,0 +1,16 @@
+PREFIX vcfc: <https://w3id.org/vcf-core/vocab#>
+
+# Run against expanded.ttl. Expected row: SAMPLE1, 42.
+# This basic graph pattern cannot address individual condensed vector cells.
+SELECT ?sampleName ?depth
+WHERE {
+  ?file a vcfc:VCFFile ;
+        vcfc:representationProfile vcfc:ExpandedRepresentation ;
+        vcfc:hasRecord/vcfc:hasCall/vcfc:hasSampleCall ?sampleCall .
+  ?sampleCall vcfc:forSample/vcfc:sampleName ?sampleName ;
+              vcfc:hasFormatValue ?value .
+  ?value vcfc:declaredBy/vcfc:fieldId "DP" ;
+         vcfc:fieldValueInteger ?depth .
+  FILTER (?depth >= 20)
+}
+ORDER BY ?sampleName

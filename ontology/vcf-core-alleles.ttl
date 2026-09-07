@@ -1,0 +1,94 @@
+@prefix vcfc:  <https://w3id.org/vcf-core/vocab#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix faldo: <http://biohackathon.org/resource/faldo#> .
+@prefix vrs:   <https://w3id.org/ga4gh/schema/vrs/2.0/json/> .
+
+#################################################################
+# Alleles and VCF Number-indexed values
+#################################################################
+
+<https://w3id.org/vcf-core/alleles> a owl:Ontology ;
+  rdfs:label "VCF Core allele and value-indexing module"@en ;
+  dct:description "VCF-specific allele carriers and indexed values for Number=A/R/G/LA/LR/LG/P/M fields."@en ;
+  owl:imports <https://w3id.org/vcf-core/vocab> ;
+  owl:versionInfo "2.0.0" .
+
+vcfc:Allele a owl:Class ;
+  rdfs:label "VCF allele"@en ;
+  rdfs:comment "An ordered allele participating in one VCF record. alleleIndex is 0 for REF and one-based for ALT, making VCF Number=A and Number=R values directly joinable without parsing the ALT string."@en ;
+  skos:closeMatch vrs:Allele ;
+  rdfs:seeAlso vrs:Allele, faldo:location ;
+  vcfc:iriTemplate "file://{vcfFilePath}#record/{recordKey}/allele/{alleleIndex}" .
+
+vcfc:ReferenceAllele a owl:Class ; rdfs:subClassOf vcfc:Allele ;
+  rdfs:label "reference allele"@en ;
+  rdfs:comment "The record's REF allele, identified by alleleIndex 0."@en .
+
+vcfc:AltAllele a owl:Class ; rdfs:subClassOf vcfc:Allele ;
+  rdfs:label "alternate allele"@en ;
+  rdfs:comment "One ordered ALT allele, identified by a positive alleleIndex in source ALT order."@en .
+
+vcfc:AlleleKind a owl:Class ;
+  rdfs:label "VCF allele kind"@en ;
+  rdfs:comment "A controlled syntactic category for an allele lexical form."@en .
+
+vcfc:BaseSequenceAllele a owl:NamedIndividual, vcfc:AlleleKind ;
+  rdfs:label "base-sequence allele"@en ;
+  rdfs:comment "A literal base sequence in an ALT field."@en .
+vcfc:OverlappingDeletionAllele a owl:NamedIndividual, vcfc:AlleleKind ;
+  rdfs:label "overlapping-deletion allele (*)"@en ;
+  rdfs:comment "The star ALT allele, marking an allele deleted by an overlapping upstream record."@en .
+vcfc:MissingAllele a owl:NamedIndividual, vcfc:AlleleKind ;
+  rdfs:label "missing allele (.)"@en ;
+  rdfs:comment "The VCF missing ALT token."@en .
+vcfc:SymbolicAllele a owl:NamedIndividual, vcfc:AlleleKind ;
+  rdfs:label "symbolic allele"@en ;
+  rdfs:comment "An angle-bracketed symbolic ALT identifier such as <DEL>."@en .
+vcfc:UnspecifiedAllele a owl:NamedIndividual, vcfc:AlleleKind ;
+  rdfs:label "unspecified allele"@en ;
+  rdfs:comment "The <*> or <NON_REF> ALT form used to indicate an unspecified alternate allele."@en .
+vcfc:BreakendAllele a owl:NamedIndividual, vcfc:AlleleKind ;
+  rdfs:label "breakend allele"@en ;
+  rdfs:comment "A bracketed VCF ALT expression describing a breakend."@en .
+
+vcfc:FieldValueItem a owl:Class ;
+  rdfs:label "field value item"@en ;
+  rdfs:comment "One ordered, parsed item from the comma-separated payload of an INFO or FORMAT field. The parent field value retains the original lexical payload for round-tripping."@en ;
+  vcfc:iriTemplate "file://{vcfFilePath}#call/{recordKey}/field/{fieldKey}/value/{valueIndex}" .
+
+vcfc:hasAltAllele a owl:ObjectProperty ;
+  rdfs:label "has alternate allele"@en ; rdfs:domain vcfc:VCFRecord ; rdfs:range vcfc:AltAllele .
+vcfc:hasReferenceAllele a owl:ObjectProperty ;
+  rdfs:label "has reference allele"@en ; rdfs:domain vcfc:VCFRecord ; rdfs:range vcfc:ReferenceAllele .
+vcfc:alleleKind a owl:ObjectProperty ;
+  rdfs:label "allele kind"@en ; rdfs:domain vcfc:Allele ; rdfs:range vcfc:AlleleKind .
+vcfc:declaredByAlt a owl:ObjectProperty ;
+  rdfs:label "declared by ALT definition"@en ; rdfs:domain vcfc:AltAllele ; rdfs:range vcfc:AltDefinition .
+vcfc:hasValueItem a owl:ObjectProperty ;
+  rdfs:label "has value item"@en ; rdfs:range vcfc:FieldValueItem .
+vcfc:forAllele a owl:ObjectProperty ;
+  rdfs:label "for allele"@en ; rdfs:domain vcfc:FieldValueItem ; rdfs:range vcfc:Allele .
+vcfc:forBaseModification a owl:ObjectProperty ;
+  rdfs:label "for base modification"@en ; rdfs:domain vcfc:FieldValueItem ;
+  rdfs:comment "Links a Number=M value item to the applicable BaseModification resource when that layer is used."@en .
+
+vcfc:alleleIndex a owl:DatatypeProperty ;
+  rdfs:label "allele index"@en ; rdfs:domain vcfc:Allele ; rdfs:range xsd:nonNegativeInteger .
+vcfc:alleleValue a owl:DatatypeProperty ;
+  rdfs:label "allele value"@en ; rdfs:domain vcfc:Allele ; rdfs:range rdfs:Literal .
+vcfc:valueIndex a owl:DatatypeProperty ;
+  rdfs:label "value index"@en ; rdfs:domain vcfc:FieldValueItem ; rdfs:range xsd:nonNegativeInteger .
+vcfc:itemValue a owl:DatatypeProperty ;
+  rdfs:label "item value"@en ; rdfs:domain vcfc:FieldValueItem ; rdfs:range rdfs:Literal .
+vcfc:forGenotypeIndex a owl:DatatypeProperty ;
+  rdfs:label "for genotype index"@en ; rdfs:domain vcfc:FieldValueItem ; rdfs:range xsd:nonNegativeInteger .
+vcfc:forGTAlleleIndex a owl:DatatypeProperty ;
+  rdfs:label "for GT allele index"@en ; rdfs:domain vcfc:FieldValueItem ; rdfs:range xsd:nonNegativeInteger .
+vcfc:tupleArity a owl:DatatypeProperty ;
+  rdfs:label "tuple arity"@en ;
+  rdfs:comment "The fixed grouping width for flattened VCF value lists, such as 2 for confidence intervals and 4 for MEINFO or METRANS."@en ;
+  rdfs:domain vcfc:FieldValueItem ; rdfs:range xsd:positiveInteger .

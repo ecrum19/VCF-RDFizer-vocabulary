@@ -1,0 +1,23 @@
+name: Validate vocabulary and examples
+on:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install validation dependencies
+        run: |
+          npm ci
+          python -m pip install --disable-pip-version-check -r requirements-dev.txt
+      - name: Validate vocabulary, profiles, examples and regression probes
+        run: npm run ocg:check

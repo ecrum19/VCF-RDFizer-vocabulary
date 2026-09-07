@@ -1,0 +1,276 @@
+@prefix ex: <file://example-file1.vcf#> .
+@prefix vcfc: <https://w3id.org/vcf-core/vocab#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<file://example-file1.vcf> a vcfc:VCF42File,
+        vcfc:VCFFile ;
+    vcfc:fileFormat "VCFv4.2" ;
+    vcfc:hasHeader ex:header ;
+    vcfc:hasRecord <file://example-file1.vcf#record/1> ;
+    vcfc:hasSampleSet ex:samples ;
+    vcfc:referenceGenome "GRCh38" ;
+    vcfc:representationProfile vcfc:ExpandedRepresentation ;
+    vcfc:sourceSoftware "HaplotypeCaller" .
+
+<file://example-file1.vcf#call/1> a vcfc:VariantCall ;
+    vcfc:filter "PASS" ;
+    vcfc:filterStatus vcfc:FiltersPassed ;
+    vcfc:formatRaw "GT:AD:DP" ;
+    vcfc:hasSampleCall <file://example-file1.vcf#sample/1/NG131FQA1I> ;
+    vcfc:infoRaw "." ;
+    vcfc:qual "84.77"^^vcfc:VCFFloat .
+
+ex:header a vcfc:VCFHeader ;
+    vcfc:hasColumnHeader <file://example-file1.vcf#header/columns> ;
+    vcfc:hasHeaderLine <file://example-file1.vcf#header/line/1>,
+        <file://example-file1.vcf#header/line/2>,
+        <file://example-file1.vcf#header/line/3>,
+        <file://example-file1.vcf#header/line/4>,
+        <file://example-file1.vcf#header/line/5>,
+        <file://example-file1.vcf#header/line/6>,
+        <file://example-file1.vcf#header/line/7>,
+        <file://example-file1.vcf#header/line/8> .
+
+<file://example-file1.vcf#header/columns> a vcfc:ColumnHeaderLine ;
+    vcfc:hasGenotypeColumns <file://example-file1.vcf#samples/NG131FQA1I> .
+
+<file://example-file1.vcf#header/line/1> a vcfc:FileFormatHeaderLine ;
+    vcfc:headerKey "fileformat" ;
+    vcfc:headerValue "VCFv4.2" ;
+    vcfc:lineIndex 1 .
+
+<file://example-file1.vcf#header/line/2> a vcfc:SourceHeaderLine ;
+    vcfc:headerKey "source" ;
+    vcfc:headerValue "HaplotypeCaller" ;
+    vcfc:lineIndex 2 .
+
+<file://example-file1.vcf#header/line/3> a vcfc:ReferenceHeaderLine ;
+    vcfc:headerKey "reference" ;
+    vcfc:headerValue "GRCh38" ;
+    vcfc:lineIndex 3 .
+
+<file://example-file1.vcf#header/line/4/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "chr1" .
+
+<file://example-file1.vcf#header/line/4/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "length" ;
+    vcfc:attributeValue "248956422" .
+
+<file://example-file1.vcf#header/line/5> a vcfc:UnstructuredHeaderLine ;
+    vcfc:headerKey "subsetNote" ;
+    vcfc:headerValue "Subset of test-larger.vcf.gz; annotations reduced for the VCF Core tutorial; sample calls retained." ;
+    vcfc:lineIndex 5 .
+
+<file://example-file1.vcf#header/line/6/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "GT" .
+
+<file://example-file1.vcf#header/line/6/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "1" .
+
+<file://example-file1.vcf#header/line/6/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "String" .
+
+<file://example-file1.vcf#header/line/6/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Genotype" .
+
+<file://example-file1.vcf#header/line/7/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "AD" .
+
+<file://example-file1.vcf#header/line/7/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "R" .
+
+<file://example-file1.vcf#header/line/7/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "Integer" .
+
+<file://example-file1.vcf#header/line/7/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Allelic depths for the ref and alt alleles in the order listed" .
+
+<file://example-file1.vcf#header/line/8/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "DP" .
+
+<file://example-file1.vcf#header/line/8/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "1" .
+
+<file://example-file1.vcf#header/line/8/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "Integer" .
+
+<file://example-file1.vcf#header/line/8/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Approximate read depth (reads with MQ=255 or with bad mates are filtered)" .
+
+<file://example-file1.vcf#record/1> a vcfc:VCFRecord ;
+    vcfc:alt "A" ;
+    vcfc:chrom "chr1" ;
+    vcfc:chromosome <file://example-file1.vcf#header/line/4> ;
+    vcfc:hasAltAllele <file://example-file1.vcf#record/1/allele/1> ;
+    vcfc:hasCall <file://example-file1.vcf#call/1> ;
+    vcfc:hasIdentifier <file://example-file1.vcf#record/1/id/1> ;
+    vcfc:hasReferenceAllele <file://example-file1.vcf#record/1/allele/0> ;
+    vcfc:pos 13613 ;
+    vcfc:recordId "rs879980801" ;
+    vcfc:recordIndex 1 ;
+    vcfc:ref "T" .
+
+<file://example-file1.vcf#record/1/id/1> a vcfc:RecordIdentifier ;
+    vcfc:componentIndex 1 ;
+    vcfc:identifierValue "rs879980801" .
+
+<file://example-file1.vcf#sample/1/NG131FQA1I> a vcfc:SampleCall ;
+    vcfc:forSample <file://example-file1.vcf#samples/NG131FQA1I> ;
+    vcfc:hasFormatValue <file://example-file1.vcf#sample/1/NG131FQA1I/fmt/AD>,
+        <file://example-file1.vcf#sample/1/NG131FQA1I/fmt/DP>,
+        <file://example-file1.vcf#sample/1/NG131FQA1I/fmt/GT> ;
+    vcfc:hasGenotype <file://example-file1.vcf#sample/1/NG131FQA1I/genotype> ;
+    vcfc:sampleFieldsRaw "0/1:2,5:7" ;
+    vcfc:sampleId "NG131FQA1I" .
+
+<file://example-file1.vcf#sample/1/NG131FQA1I/fmt/AD> a vcfc:FormatFieldValue ;
+    vcfc:declaredBy <file://example-file1.vcf#header/line/7> ;
+    vcfc:fieldIndex 2 ;
+    vcfc:fieldValue "2,5" ;
+    vcfc:hasValueItem <file://example-file1.vcf#sample/1/NG131FQA1I/fmt/AD/item/0>,
+        <file://example-file1.vcf#sample/1/NG131FQA1I/fmt/AD/item/1> .
+
+<file://example-file1.vcf#sample/1/NG131FQA1I/fmt/AD/item/0> a vcfc:FieldValueItem ;
+    vcfc:forAllele <file://example-file1.vcf#record/1/allele/0> ;
+    vcfc:itemValue 2 ;
+    vcfc:valueIndex 0 .
+
+<file://example-file1.vcf#sample/1/NG131FQA1I/fmt/AD/item/1> a vcfc:FieldValueItem ;
+    vcfc:forAllele <file://example-file1.vcf#record/1/allele/1> ;
+    vcfc:itemValue 5 ;
+    vcfc:valueIndex 1 .
+
+<file://example-file1.vcf#sample/1/NG131FQA1I/fmt/DP> a vcfc:FormatFieldValue ;
+    vcfc:declaredBy <file://example-file1.vcf#header/line/8> ;
+    vcfc:fieldIndex 3 ;
+    vcfc:fieldValue "7" ;
+    vcfc:fieldValueInteger 7 ;
+    vcfc:hasValueItem <file://example-file1.vcf#sample/1/NG131FQA1I/fmt/DP/item/0> .
+
+<file://example-file1.vcf#sample/1/NG131FQA1I/fmt/DP/item/0> a vcfc:FieldValueItem ;
+    vcfc:itemValue 7 ;
+    vcfc:valueIndex 0 .
+
+<file://example-file1.vcf#sample/1/NG131FQA1I/fmt/GT> a vcfc:FormatFieldValue ;
+    vcfc:declaredBy <file://example-file1.vcf#header/line/6> ;
+    vcfc:fieldIndex 1 ;
+    vcfc:fieldValue "0/1" ;
+    vcfc:hasValueItem <file://example-file1.vcf#sample/1/NG131FQA1I/fmt/GT/item/0> .
+
+<file://example-file1.vcf#sample/1/NG131FQA1I/fmt/GT/item/0> a vcfc:FieldValueItem ;
+    vcfc:itemValue "0/1" ;
+    vcfc:valueIndex 0 .
+
+<file://example-file1.vcf#sample/1/NG131FQA1I/genotype> a vcfc:Genotype ;
+    vcfc:genotypeString "0/1"^^vcfc:GenotypeString ;
+    vcfc:hasAlleleCall <file://example-file1.vcf#sample/1/NG131FQA1I/genotype/0>,
+        <file://example-file1.vcf#sample/1/NG131FQA1I/genotype/1> ;
+    vcfc:phasingStatus vcfc:Unphased ;
+    vcfc:ploidy 2 .
+
+<file://example-file1.vcf#sample/1/NG131FQA1I/genotype/0> a vcfc:GenotypeAlleleCall ;
+    vcfc:callIndex 0 ;
+    vcfc:calledAllele <file://example-file1.vcf#record/1/allele/0> ;
+    vcfc:isNoCall false ;
+    vcfc:phaseIndicator "/" .
+
+<file://example-file1.vcf#sample/1/NG131FQA1I/genotype/1> a vcfc:GenotypeAlleleCall ;
+    vcfc:callIndex 1 ;
+    vcfc:calledAllele <file://example-file1.vcf#record/1/allele/1> ;
+    vcfc:isNoCall false ;
+    vcfc:phaseIndicator "/" .
+
+ex:samples a vcfc:SampleSet ;
+    vcfc:hasSample <file://example-file1.vcf#samples/NG131FQA1I> .
+
+<file://example-file1.vcf#header/line/4> a vcfc:ContigHeaderLine ;
+    vcfc:contigId "chr1" ;
+    vcfc:contigLength 248956422 ;
+    vcfc:hasAttribute <file://example-file1.vcf#header/line/4/attribute/1>,
+        <file://example-file1.vcf#header/line/4/attribute/2> ;
+    vcfc:headerKey "contig" ;
+    vcfc:headerValue "<ID=chr1,length=248956422>" ;
+    vcfc:lineIndex 4 .
+
+<file://example-file1.vcf#header/line/6> a vcfc:FORMATHeaderLine ;
+    vcfc:fieldDescription "Genotype" ;
+    vcfc:fieldId "GT" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldNumberInteger 1 ;
+    vcfc:fieldType vcfc:StringType ;
+    vcfc:hasAttribute <file://example-file1.vcf#header/line/6/attribute/1>,
+        <file://example-file1.vcf#header/line/6/attribute/2>,
+        <file://example-file1.vcf#header/line/6/attribute/3>,
+        <file://example-file1.vcf#header/line/6/attribute/4> ;
+    vcfc:headerKey "FORMAT" ;
+    vcfc:headerValue "<ID=GT,Number=1,Type=String,Description=\"Genotype\">" ;
+    vcfc:lineIndex 6 .
+
+<file://example-file1.vcf#header/line/7> a vcfc:FORMATHeaderLine ;
+    vcfc:fieldArity vcfc:ArityPerAllele ;
+    vcfc:fieldDescription "Allelic depths for the ref and alt alleles in the order listed" ;
+    vcfc:fieldId "AD" ;
+    vcfc:fieldNumber "R" ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:hasAttribute <file://example-file1.vcf#header/line/7/attribute/1>,
+        <file://example-file1.vcf#header/line/7/attribute/2>,
+        <file://example-file1.vcf#header/line/7/attribute/3>,
+        <file://example-file1.vcf#header/line/7/attribute/4> ;
+    vcfc:headerKey "FORMAT" ;
+    vcfc:headerValue "<ID=AD,Number=R,Type=Integer,Description=\"Allelic depths for the ref and alt alleles in the order listed\">" ;
+    vcfc:lineIndex 7 .
+
+<file://example-file1.vcf#header/line/8> a vcfc:FORMATHeaderLine ;
+    vcfc:fieldDescription "Approximate read depth (reads with MQ=255 or with bad mates are filtered)" ;
+    vcfc:fieldId "DP" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldNumberInteger 1 ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:hasAttribute <file://example-file1.vcf#header/line/8/attribute/1>,
+        <file://example-file1.vcf#header/line/8/attribute/2>,
+        <file://example-file1.vcf#header/line/8/attribute/3>,
+        <file://example-file1.vcf#header/line/8/attribute/4> ;
+    vcfc:headerKey "FORMAT" ;
+    vcfc:headerValue "<ID=DP,Number=1,Type=Integer,Description=\"Approximate read depth (reads with MQ=255 or with bad mates are filtered)\">" ;
+    vcfc:lineIndex 8 .
+
+<file://example-file1.vcf#record/1/allele/0> a vcfc:ReferenceAllele ;
+    vcfc:alleleIndex 0 ;
+    vcfc:alleleKind vcfc:BaseSequenceAllele ;
+    vcfc:alleleValue "T" .
+
+<file://example-file1.vcf#record/1/allele/1> a vcfc:AltAllele ;
+    vcfc:alleleIndex 1 ;
+    vcfc:alleleKind vcfc:BaseSequenceAllele ;
+    vcfc:alleleValue "A" .
+
+<file://example-file1.vcf#samples/NG131FQA1I> a vcfc:VCFSample ;
+    vcfc:sampleIndex 1 ;
+    vcfc:sampleName "NG131FQA1I" .

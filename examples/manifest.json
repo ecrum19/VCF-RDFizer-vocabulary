@@ -1,0 +1,224 @@
+{
+  "fixtures": [
+    {
+      "vcf": "examples/core/example-quickstart.vcf",
+      "rdf": [
+        "examples/core/example-quickstart.ttl"
+      ]
+    },
+    {
+      "vcf": "examples/profiles/example-condensed-cohort.vcf",
+      "rdf": [
+        "examples/profiles/example-condensed-cohort.ttl"
+      ]
+    },
+    {
+      "vcf": "examples/core/example-file1.vcf",
+      "rdf": [
+        "examples/core/example-minimal-record.ttl"
+      ]
+    },
+    {
+      "vcf": "examples/core/example-headers.vcf",
+      "rdf": [
+        "examples/core/example-headers.ttl"
+      ]
+    },
+    {
+      "vcf": "examples/vcf-versions/vcf-4.1/example-vcf41.vcf",
+      "rdf": [
+        "examples/vcf-versions/vcf-4.1/example-vcf41.ttl"
+      ]
+    },
+    {
+      "vcf": "examples/vcf-versions/vcf-4.2/example-vcf42.vcf",
+      "rdf": [
+        "examples/vcf-versions/vcf-4.2/example-vcf42.ttl"
+      ]
+    },
+    {
+      "vcf": "examples/vcf-versions/vcf-4.3/example-vcf43.vcf",
+      "rdf": [
+        "examples/vcf-versions/vcf-4.3/example-vcf43.ttl"
+      ]
+    },
+    {
+      "vcf": "examples/vcf-versions/vcf-4.4/example-vcf44.vcf",
+      "rdf": [
+        "examples/vcf-versions/vcf-4.4/example-vcf44.ttl"
+      ]
+    },
+    {
+      "vcf": "examples/vcf-versions/vcf-4.5/example-vcf45-breakends.vcf",
+      "rdf": [
+        "examples/vcf-versions/vcf-4.5/example-vcf45-breakends.ttl"
+      ]
+    },
+    {
+      "vcf": "examples/vcf-versions/vcf-4.5/example-vcf45-features.vcf",
+      "rdf": [
+        "examples/vcf-versions/vcf-4.5/example-vcf45-features.ttl"
+      ]
+    },
+    {
+      "vcf": "examples/vcf-versions/vcf-4.5/example-vcf45-gvcf.vcf",
+      "rdf": [
+        "examples/vcf-versions/vcf-4.5/example-vcf45-gvcf.ttl"
+      ]
+    },
+    {
+      "vcf": "examples/vcf-versions/vcf-4.5/example-vcf45-repeats.vcf",
+      "rdf": [
+        "examples/vcf-versions/vcf-4.5/example-vcf45-repeats.ttl"
+      ]
+    },
+    {
+      "vcf": "examples/core/example.vcf",
+      "rdf": [
+        "examples/core/example.ttl",
+        "examples/core/example.nt"
+      ]
+    },
+    {
+      "vcf": "SWAT4HCLS_2027/evidence/synthetic.vcf",
+      "rdf": [
+        "SWAT4HCLS_2027/evidence/expanded.ttl",
+        "SWAT4HCLS_2027/evidence/condensed.ttl"
+      ]
+    }
+  ],
+  "queries": [
+    {
+      "query": "examples/queries/identifiers.rq",
+      "rdf": "examples/vcf-versions/vcf-4.5/example-vcf45-features.ttl",
+      "expected": [
+        [
+          "aliasExample"
+        ],
+        [
+          "del1"
+        ],
+        [
+          "rsExample"
+        ]
+      ]
+    },
+    {
+      "query": "examples/queries/modifications.rq",
+      "rdf": "examples/vcf-versions/vcf-4.5/example-vcf45-features.ttl",
+      "expected": [
+        [
+          "S1",
+          "0.9",
+          "20"
+        ]
+      ]
+    },
+    {
+      "query": "examples/queries/local-alleles.rq",
+      "rdf": "examples/vcf-versions/vcf-4.5/example-vcf45-features.ttl",
+      "expected": [
+        [
+          "1",
+          "1"
+        ],
+        [
+          "2",
+          "2"
+        ]
+      ]
+    },
+    {
+      "query": "examples/queries/mixed-phasing.rq",
+      "rdf": "examples/vcf-versions/vcf-4.5/example-vcf45-features.ttl",
+      "expected": [
+        [
+          "0",
+          "|"
+        ],
+        [
+          "1",
+          "/"
+        ],
+        [
+          "2",
+          "|"
+        ]
+      ]
+    },
+    {
+      "query": "examples/queries/repeat-units.rq",
+      "rdf": "examples/vcf-versions/vcf-4.5/example-vcf45-repeats.ttl",
+      "expected": [
+        [
+          "CAG",
+          "10.0"
+        ]
+      ]
+    },
+    {
+      "query": "examples/queries/reference-blocks.rq",
+      "rdf": "examples/vcf-versions/vcf-4.5/example-vcf45-gvcf.ttl",
+      "expected": [
+        [
+          "S1",
+          "5",
+          "704"
+        ],
+        [
+          "S2",
+          "10",
+          "709"
+        ]
+      ]
+    },
+    {
+      "query": "examples/queries/breakend-mates.rq",
+      "rdf": "examples/vcf-versions/vcf-4.5/example-vcf45-breakends.ttl",
+      "expected": [
+        [
+          "bnd1",
+          "bnd2"
+        ],
+        [
+          "bnd2",
+          "bnd1"
+        ]
+      ]
+    },
+    {
+      "query": "SWAT4HCLS_2027/evidence/sample-depth.rq",
+      "rdf": "SWAT4HCLS_2027/evidence/expanded.ttl",
+      "expected": [
+        [
+          "SAMPLE1",
+          "42"
+        ]
+      ]
+    },
+    {
+      "query": "examples/queries/cohort-genotypes.rq",
+      "rdf": "examples/profiles/example-condensed-cohort.ttl",
+      "expected": [
+        [
+          "20",
+          "61795",
+          "HG00096",
+          "1|0"
+        ],
+        [
+          "20",
+          "68749",
+          "HG00096",
+          "1|1"
+        ],
+        [
+          "20",
+          "69094",
+          "HG00096",
+          "1|0"
+        ]
+      ]
+    }
+  ]
+}

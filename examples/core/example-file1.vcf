@@ -1,0 +1,10 @@
+##fileformat=VCFv4.2
+##source=HaplotypeCaller
+##reference=GRCh38
+##contig=<ID=chr1,length=248956422>
+##subsetNote=Subset of test-larger.vcf.gz; annotations reduced for the VCF Core tutorial; sample calls retained.
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##FORMAT=<ID=AD,Number=R,Type=Integer,Description="Allelic depths for the ref and alt alleles in the order listed">
+##FORMAT=<ID=DP,Number=1,Type=Integer,Description="Approximate read depth (reads with MQ=255 or with bad mates are filtered)">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	NG131FQA1I
+chr1	13613	rs879980801	T	A	84.77	PASS	.	GT:AD:DP	0/1:2,5:7

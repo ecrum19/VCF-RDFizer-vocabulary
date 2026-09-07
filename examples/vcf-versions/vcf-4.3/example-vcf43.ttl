@@ -1,0 +1,530 @@
+@prefix ex: <file://example-vcf43.vcf#> .
+@prefix vcfc: <https://w3id.org/vcf-core/vocab#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<file://example-vcf43.vcf> a vcfc:VCF43File,
+        vcfc:VCFFile ;
+    vcfc:fileFormat "VCFv4.3" ;
+    vcfc:hasHeader ex:header ;
+    vcfc:hasRecord <file://example-vcf43.vcf#record/1> ;
+    vcfc:hasSampleSet ex:samples ;
+    vcfc:referenceGenome "https://example.org/reference.fa" ;
+    vcfc:representationProfile vcfc:ExpandedRepresentation ;
+    vcfc:sourceSoftware "VCF-Core-synthetic-examples" .
+
+<file://example-vcf43.vcf#call/1> a vcfc:VariantCall ;
+    vcfc:copyNumber 2 ;
+    vcfc:filter "PASS" ;
+    vcfc:filterStatus vcfc:FiltersPassed ;
+    vcfc:formatRaw "GT:DP" ;
+    vcfc:hasInfoValue <file://example-vcf43.vcf#call/1/info/AF>,
+        <file://example-vcf43.vcf#call/1/info/CIPOS>,
+        <file://example-vcf43.vcf#call/1/info/CN>,
+        <file://example-vcf43.vcf#call/1/info/SVLEN> ;
+    vcfc:hasSampleCall <file://example-vcf43.vcf#sample/1/S1> ;
+    vcfc:infoRaw "AF=0.25,0.1;SVLEN=-20,30;CIPOS=-5,5;CN=2" ;
+    vcfc:qual "60"^^vcfc:VCFFloat .
+
+<file://example-vcf43.vcf#call/1/info/AF> a vcfc:InfoFieldValue ;
+    vcfc:declaredBy <file://example-vcf43.vcf#header/line/7> ;
+    vcfc:fieldIndex 1 ;
+    vcfc:fieldValue "0.25,0.1" ;
+    vcfc:hasValueItem <file://example-vcf43.vcf#call/1/info/AF/item/0>,
+        <file://example-vcf43.vcf#call/1/info/AF/item/1> .
+
+<file://example-vcf43.vcf#call/1/info/AF/item/0> a vcfc:FieldValueItem ;
+    vcfc:forAllele <file://example-vcf43.vcf#record/1/allele/1> ;
+    vcfc:itemValue "0.25"^^vcfc:VCFFloat ;
+    vcfc:valueIndex 0 .
+
+<file://example-vcf43.vcf#call/1/info/AF/item/1> a vcfc:FieldValueItem ;
+    vcfc:forAllele <file://example-vcf43.vcf#record/1/allele/2> ;
+    vcfc:itemValue "0.1"^^vcfc:VCFFloat ;
+    vcfc:valueIndex 1 .
+
+<file://example-vcf43.vcf#call/1/info/CIPOS> a vcfc:InfoFieldValue ;
+    vcfc:declaredBy <file://example-vcf43.vcf#header/line/9> ;
+    vcfc:fieldIndex 3 ;
+    vcfc:fieldValue "-5,5" ;
+    vcfc:hasValueItem <file://example-vcf43.vcf#call/1/info/CIPOS/item/0>,
+        <file://example-vcf43.vcf#call/1/info/CIPOS/item/1> .
+
+<file://example-vcf43.vcf#call/1/info/CIPOS/item/0> a vcfc:FieldValueItem ;
+    vcfc:itemValue -5 ;
+    vcfc:tupleArity 2 ;
+    vcfc:valueIndex 0 .
+
+<file://example-vcf43.vcf#call/1/info/CIPOS/item/1> a vcfc:FieldValueItem ;
+    vcfc:itemValue 5 ;
+    vcfc:tupleArity 2 ;
+    vcfc:valueIndex 1 .
+
+<file://example-vcf43.vcf#call/1/info/CN> a vcfc:InfoFieldValue ;
+    vcfc:declaredBy <file://example-vcf43.vcf#header/line/10> ;
+    vcfc:fieldIndex 4 ;
+    vcfc:fieldValue "2" ;
+    vcfc:fieldValueInteger 2 ;
+    vcfc:hasValueItem <file://example-vcf43.vcf#call/1/info/CN/item/0> .
+
+<file://example-vcf43.vcf#call/1/info/CN/item/0> a vcfc:FieldValueItem ;
+    vcfc:itemValue 2 ;
+    vcfc:valueIndex 0 .
+
+<file://example-vcf43.vcf#call/1/info/SVLEN> a vcfc:InfoFieldValue ;
+    vcfc:declaredBy <file://example-vcf43.vcf#header/line/8> ;
+    vcfc:fieldIndex 2 ;
+    vcfc:fieldValue "-20,30" ;
+    vcfc:hasValueItem <file://example-vcf43.vcf#call/1/info/SVLEN/item/0>,
+        <file://example-vcf43.vcf#call/1/info/SVLEN/item/1> .
+
+<file://example-vcf43.vcf#call/1/info/SVLEN/item/0> a vcfc:FieldValueItem ;
+    vcfc:itemValue -20 ;
+    vcfc:valueIndex 0 .
+
+<file://example-vcf43.vcf#call/1/info/SVLEN/item/1> a vcfc:FieldValueItem ;
+    vcfc:itemValue 30 ;
+    vcfc:valueIndex 1 .
+
+ex:header a vcfc:VCFHeader ;
+    vcfc:hasColumnHeader <file://example-vcf43.vcf#header/columns> ;
+    vcfc:hasHeaderLine <file://example-vcf43.vcf#header/line/1>,
+        <file://example-vcf43.vcf#header/line/10>,
+        <file://example-vcf43.vcf#header/line/11>,
+        <file://example-vcf43.vcf#header/line/12>,
+        <file://example-vcf43.vcf#header/line/2>,
+        <file://example-vcf43.vcf#header/line/3>,
+        <file://example-vcf43.vcf#header/line/4>,
+        <file://example-vcf43.vcf#header/line/5>,
+        <file://example-vcf43.vcf#header/line/6>,
+        <file://example-vcf43.vcf#header/line/7>,
+        <file://example-vcf43.vcf#header/line/8>,
+        <file://example-vcf43.vcf#header/line/9> .
+
+<file://example-vcf43.vcf#header/columns> a vcfc:ColumnHeaderLine ;
+    vcfc:hasGenotypeColumns <file://example-vcf43.vcf#samples/S1> .
+
+<file://example-vcf43.vcf#header/line/1> a vcfc:FileFormatHeaderLine ;
+    vcfc:headerKey "fileformat" ;
+    vcfc:headerValue "VCFv4.3" ;
+    vcfc:lineIndex 1 .
+
+<file://example-vcf43.vcf#header/line/10/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "CN" .
+
+<file://example-vcf43.vcf#header/line/10/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "1" .
+
+<file://example-vcf43.vcf#header/line/10/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "Integer" .
+
+<file://example-vcf43.vcf#header/line/10/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Example CN" .
+
+<file://example-vcf43.vcf#header/line/10/attribute/5> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 5 ;
+    vcfc:attributeKey "Source" ;
+    vcfc:attributeValue "Example" .
+
+<file://example-vcf43.vcf#header/line/10/attribute/6> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 6 ;
+    vcfc:attributeKey "Version" ;
+    vcfc:attributeValue "1.0" .
+
+<file://example-vcf43.vcf#header/line/11/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "GT" .
+
+<file://example-vcf43.vcf#header/line/11/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "1" .
+
+<file://example-vcf43.vcf#header/line/11/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "String" .
+
+<file://example-vcf43.vcf#header/line/11/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Example GT" .
+
+<file://example-vcf43.vcf#header/line/12/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "DP" .
+
+<file://example-vcf43.vcf#header/line/12/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "1" .
+
+<file://example-vcf43.vcf#header/line/12/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "Integer" .
+
+<file://example-vcf43.vcf#header/line/12/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Example DP" .
+
+<file://example-vcf43.vcf#header/line/2> a vcfc:SourceHeaderLine ;
+    vcfc:headerKey "source" ;
+    vcfc:headerValue "VCF-Core-synthetic-examples" ;
+    vcfc:lineIndex 2 .
+
+<file://example-vcf43.vcf#header/line/3> a vcfc:ReferenceHeaderLine ;
+    vcfc:headerKey "reference" ;
+    vcfc:headerValue "https://example.org/reference.fa" ;
+    vcfc:lineIndex 3 .
+
+<file://example-vcf43.vcf#header/line/4/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "chr1" .
+
+<file://example-vcf43.vcf#header/line/4/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "length" ;
+    vcfc:attributeValue "1000" .
+
+<file://example-vcf43.vcf#header/line/5/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "DEL" .
+
+<file://example-vcf43.vcf#header/line/5/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Deletion" .
+
+<file://example-vcf43.vcf#header/line/6/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "DUP" .
+
+<file://example-vcf43.vcf#header/line/6/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Duplication" .
+
+<file://example-vcf43.vcf#header/line/7/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "AF" .
+
+<file://example-vcf43.vcf#header/line/7/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "A" .
+
+<file://example-vcf43.vcf#header/line/7/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "Float" .
+
+<file://example-vcf43.vcf#header/line/7/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Example AF" .
+
+<file://example-vcf43.vcf#header/line/7/attribute/5> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 5 ;
+    vcfc:attributeKey "Source" ;
+    vcfc:attributeValue "Example" .
+
+<file://example-vcf43.vcf#header/line/7/attribute/6> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 6 ;
+    vcfc:attributeKey "Version" ;
+    vcfc:attributeValue "1.0" .
+
+<file://example-vcf43.vcf#header/line/8/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "SVLEN" .
+
+<file://example-vcf43.vcf#header/line/8/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "." .
+
+<file://example-vcf43.vcf#header/line/8/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "Integer" .
+
+<file://example-vcf43.vcf#header/line/8/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Example SVLEN" .
+
+<file://example-vcf43.vcf#header/line/8/attribute/5> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 5 ;
+    vcfc:attributeKey "Source" ;
+    vcfc:attributeValue "Example" .
+
+<file://example-vcf43.vcf#header/line/8/attribute/6> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 6 ;
+    vcfc:attributeKey "Version" ;
+    vcfc:attributeValue "1.0" .
+
+<file://example-vcf43.vcf#header/line/9/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "CIPOS" .
+
+<file://example-vcf43.vcf#header/line/9/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "2" .
+
+<file://example-vcf43.vcf#header/line/9/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "Integer" .
+
+<file://example-vcf43.vcf#header/line/9/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Example CIPOS" .
+
+<file://example-vcf43.vcf#header/line/9/attribute/5> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 5 ;
+    vcfc:attributeKey "Source" ;
+    vcfc:attributeValue "Example" .
+
+<file://example-vcf43.vcf#header/line/9/attribute/6> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 6 ;
+    vcfc:attributeKey "Version" ;
+    vcfc:attributeValue "1.0" .
+
+<file://example-vcf43.vcf#record/1> a vcfc:VCFRecord ;
+    vcfc:alt "<DEL>,<DUP>" ;
+    vcfc:chrom "chr1" ;
+    vcfc:chromosome <file://example-vcf43.vcf#header/line/4> ;
+    vcfc:hasAltAllele <file://example-vcf43.vcf#record/1/allele/1>,
+        <file://example-vcf43.vcf#record/1/allele/2> ;
+    vcfc:hasCall <file://example-vcf43.vcf#call/1> ;
+    vcfc:hasIdentifier <file://example-vcf43.vcf#record/1/id/1> ;
+    vcfc:hasReferenceAllele <file://example-vcf43.vcf#record/1/allele/0> ;
+    vcfc:pos 100 ;
+    vcfc:recordId "legacy3" ;
+    vcfc:recordIndex 1 ;
+    vcfc:ref "A" .
+
+<file://example-vcf43.vcf#record/1/id/1> a vcfc:RecordIdentifier ;
+    vcfc:componentIndex 1 ;
+    vcfc:identifierValue "legacy3" .
+
+<file://example-vcf43.vcf#sample/1/S1> a vcfc:SampleCall ;
+    vcfc:forSample <file://example-vcf43.vcf#samples/S1> ;
+    vcfc:hasFormatValue <file://example-vcf43.vcf#sample/1/S1/fmt/DP>,
+        <file://example-vcf43.vcf#sample/1/S1/fmt/GT> ;
+    vcfc:hasGenotype <file://example-vcf43.vcf#sample/1/S1/genotype> ;
+    vcfc:sampleFieldsRaw "0/1:20" ;
+    vcfc:sampleId "S1" .
+
+<file://example-vcf43.vcf#sample/1/S1/fmt/DP> a vcfc:FormatFieldValue ;
+    vcfc:declaredBy <file://example-vcf43.vcf#header/line/12> ;
+    vcfc:fieldIndex 2 ;
+    vcfc:fieldValue "20" ;
+    vcfc:fieldValueInteger 20 ;
+    vcfc:hasValueItem <file://example-vcf43.vcf#sample/1/S1/fmt/DP/item/0> .
+
+<file://example-vcf43.vcf#sample/1/S1/fmt/DP/item/0> a vcfc:FieldValueItem ;
+    vcfc:itemValue 20 ;
+    vcfc:valueIndex 0 .
+
+<file://example-vcf43.vcf#sample/1/S1/fmt/GT> a vcfc:FormatFieldValue ;
+    vcfc:declaredBy <file://example-vcf43.vcf#header/line/11> ;
+    vcfc:fieldIndex 1 ;
+    vcfc:fieldValue "0/1" ;
+    vcfc:hasValueItem <file://example-vcf43.vcf#sample/1/S1/fmt/GT/item/0> .
+
+<file://example-vcf43.vcf#sample/1/S1/fmt/GT/item/0> a vcfc:FieldValueItem ;
+    vcfc:itemValue "0/1" ;
+    vcfc:valueIndex 0 .
+
+<file://example-vcf43.vcf#sample/1/S1/genotype> a vcfc:Genotype ;
+    vcfc:genotypeString "0/1"^^vcfc:GenotypeString ;
+    vcfc:hasAlleleCall <file://example-vcf43.vcf#sample/1/S1/genotype/0>,
+        <file://example-vcf43.vcf#sample/1/S1/genotype/1> ;
+    vcfc:phasingStatus vcfc:Unphased ;
+    vcfc:ploidy 2 .
+
+<file://example-vcf43.vcf#sample/1/S1/genotype/0> a vcfc:GenotypeAlleleCall ;
+    vcfc:callIndex 0 ;
+    vcfc:calledAllele <file://example-vcf43.vcf#record/1/allele/0> ;
+    vcfc:isNoCall false ;
+    vcfc:phaseIndicator "/" .
+
+<file://example-vcf43.vcf#sample/1/S1/genotype/1> a vcfc:GenotypeAlleleCall ;
+    vcfc:callIndex 1 ;
+    vcfc:calledAllele <file://example-vcf43.vcf#record/1/allele/1> ;
+    vcfc:isNoCall false ;
+    vcfc:phaseIndicator "/" .
+
+ex:samples a vcfc:SampleSet ;
+    vcfc:hasSample <file://example-vcf43.vcf#samples/S1> .
+
+<file://example-vcf43.vcf#header/line/10> a vcfc:INFOHeaderLine ;
+    vcfc:fieldDescription "Example CN" ;
+    vcfc:fieldId "CN" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldNumberInteger 1 ;
+    vcfc:fieldSource "Example" ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:fieldVersion "1.0" ;
+    vcfc:hasAttribute <file://example-vcf43.vcf#header/line/10/attribute/1>,
+        <file://example-vcf43.vcf#header/line/10/attribute/2>,
+        <file://example-vcf43.vcf#header/line/10/attribute/3>,
+        <file://example-vcf43.vcf#header/line/10/attribute/4>,
+        <file://example-vcf43.vcf#header/line/10/attribute/5>,
+        <file://example-vcf43.vcf#header/line/10/attribute/6> ;
+    vcfc:headerKey "INFO" ;
+    vcfc:headerValue "<ID=CN,Number=1,Type=Integer,Description=\"Example CN\",Source=\"Example\",Version=\"1.0\">" ;
+    vcfc:lineIndex 10 .
+
+<file://example-vcf43.vcf#header/line/11> a vcfc:FORMATHeaderLine ;
+    vcfc:fieldDescription "Example GT" ;
+    vcfc:fieldId "GT" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldNumberInteger 1 ;
+    vcfc:fieldType vcfc:StringType ;
+    vcfc:hasAttribute <file://example-vcf43.vcf#header/line/11/attribute/1>,
+        <file://example-vcf43.vcf#header/line/11/attribute/2>,
+        <file://example-vcf43.vcf#header/line/11/attribute/3>,
+        <file://example-vcf43.vcf#header/line/11/attribute/4> ;
+    vcfc:headerKey "FORMAT" ;
+    vcfc:headerValue "<ID=GT,Number=1,Type=String,Description=\"Example GT\">" ;
+    vcfc:lineIndex 11 .
+
+<file://example-vcf43.vcf#header/line/12> a vcfc:FORMATHeaderLine ;
+    vcfc:fieldDescription "Example DP" ;
+    vcfc:fieldId "DP" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldNumberInteger 1 ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:hasAttribute <file://example-vcf43.vcf#header/line/12/attribute/1>,
+        <file://example-vcf43.vcf#header/line/12/attribute/2>,
+        <file://example-vcf43.vcf#header/line/12/attribute/3>,
+        <file://example-vcf43.vcf#header/line/12/attribute/4> ;
+    vcfc:headerKey "FORMAT" ;
+    vcfc:headerValue "<ID=DP,Number=1,Type=Integer,Description=\"Example DP\">" ;
+    vcfc:lineIndex 12 .
+
+<file://example-vcf43.vcf#header/line/4> a vcfc:ContigHeaderLine ;
+    vcfc:contigId "chr1" ;
+    vcfc:contigLength 1000 ;
+    vcfc:hasAttribute <file://example-vcf43.vcf#header/line/4/attribute/1>,
+        <file://example-vcf43.vcf#header/line/4/attribute/2> ;
+    vcfc:headerKey "contig" ;
+    vcfc:headerValue "<ID=chr1,length=1000>" ;
+    vcfc:lineIndex 4 .
+
+<file://example-vcf43.vcf#header/line/5> a vcfc:ALTHeaderLine ;
+    vcfc:altId "DEL" ;
+    vcfc:fieldDescription "Deletion" ;
+    vcfc:hasAttribute <file://example-vcf43.vcf#header/line/5/attribute/1>,
+        <file://example-vcf43.vcf#header/line/5/attribute/2> ;
+    vcfc:headerKey "ALT" ;
+    vcfc:headerValue "<ID=DEL,Description=\"Deletion\">" ;
+    vcfc:lineIndex 5 .
+
+<file://example-vcf43.vcf#header/line/6> a vcfc:ALTHeaderLine ;
+    vcfc:altId "DUP" ;
+    vcfc:fieldDescription "Duplication" ;
+    vcfc:hasAttribute <file://example-vcf43.vcf#header/line/6/attribute/1>,
+        <file://example-vcf43.vcf#header/line/6/attribute/2> ;
+    vcfc:headerKey "ALT" ;
+    vcfc:headerValue "<ID=DUP,Description=\"Duplication\">" ;
+    vcfc:lineIndex 6 .
+
+<file://example-vcf43.vcf#header/line/7> a vcfc:INFOHeaderLine ;
+    vcfc:fieldArity vcfc:ArityPerAlt ;
+    vcfc:fieldDescription "Example AF" ;
+    vcfc:fieldId "AF" ;
+    vcfc:fieldNumber "A" ;
+    vcfc:fieldSource "Example" ;
+    vcfc:fieldType vcfc:FloatType ;
+    vcfc:fieldVersion "1.0" ;
+    vcfc:hasAttribute <file://example-vcf43.vcf#header/line/7/attribute/1>,
+        <file://example-vcf43.vcf#header/line/7/attribute/2>,
+        <file://example-vcf43.vcf#header/line/7/attribute/3>,
+        <file://example-vcf43.vcf#header/line/7/attribute/4>,
+        <file://example-vcf43.vcf#header/line/7/attribute/5>,
+        <file://example-vcf43.vcf#header/line/7/attribute/6> ;
+    vcfc:headerKey "INFO" ;
+    vcfc:headerValue "<ID=AF,Number=A,Type=Float,Description=\"Example AF\",Source=\"Example\",Version=\"1.0\">" ;
+    vcfc:lineIndex 7 .
+
+<file://example-vcf43.vcf#header/line/8> a vcfc:INFOHeaderLine ;
+    vcfc:fieldArity vcfc:ArityVariable ;
+    vcfc:fieldDescription "Example SVLEN" ;
+    vcfc:fieldId "SVLEN" ;
+    vcfc:fieldNumber "." ;
+    vcfc:fieldSource "Example" ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:fieldVersion "1.0" ;
+    vcfc:hasAttribute <file://example-vcf43.vcf#header/line/8/attribute/1>,
+        <file://example-vcf43.vcf#header/line/8/attribute/2>,
+        <file://example-vcf43.vcf#header/line/8/attribute/3>,
+        <file://example-vcf43.vcf#header/line/8/attribute/4>,
+        <file://example-vcf43.vcf#header/line/8/attribute/5>,
+        <file://example-vcf43.vcf#header/line/8/attribute/6> ;
+    vcfc:headerKey "INFO" ;
+    vcfc:headerValue "<ID=SVLEN,Number=.,Type=Integer,Description=\"Example SVLEN\",Source=\"Example\",Version=\"1.0\">" ;
+    vcfc:lineIndex 8 .
+
+<file://example-vcf43.vcf#header/line/9> a vcfc:INFOHeaderLine ;
+    vcfc:fieldDescription "Example CIPOS" ;
+    vcfc:fieldId "CIPOS" ;
+    vcfc:fieldNumber "2" ;
+    vcfc:fieldNumberInteger 2 ;
+    vcfc:fieldSource "Example" ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:fieldVersion "1.0" ;
+    vcfc:hasAttribute <file://example-vcf43.vcf#header/line/9/attribute/1>,
+        <file://example-vcf43.vcf#header/line/9/attribute/2>,
+        <file://example-vcf43.vcf#header/line/9/attribute/3>,
+        <file://example-vcf43.vcf#header/line/9/attribute/4>,
+        <file://example-vcf43.vcf#header/line/9/attribute/5>,
+        <file://example-vcf43.vcf#header/line/9/attribute/6> ;
+    vcfc:headerKey "INFO" ;
+    vcfc:headerValue "<ID=CIPOS,Number=2,Type=Integer,Description=\"Example CIPOS\",Source=\"Example\",Version=\"1.0\">" ;
+    vcfc:lineIndex 9 .
+
+<file://example-vcf43.vcf#record/1/allele/0> a vcfc:ReferenceAllele ;
+    vcfc:alleleIndex 0 ;
+    vcfc:alleleKind vcfc:BaseSequenceAllele ;
+    vcfc:alleleValue "A" .
+
+<file://example-vcf43.vcf#record/1/allele/2> a vcfc:AltAllele ;
+    vcfc:alleleIndex 2 ;
+    vcfc:alleleKind vcfc:SymbolicAllele ;
+    vcfc:alleleValue "<DUP>" ;
+    vcfc:declaredByAlt <file://example-vcf43.vcf#header/line/6> ;
+    vcfc:svLength 30 ;
+    vcfc:svType vcfc:SymbolicDuplication .
+
+<file://example-vcf43.vcf#record/1/allele/1> a vcfc:AltAllele ;
+    vcfc:alleleIndex 1 ;
+    vcfc:alleleKind vcfc:SymbolicAllele ;
+    vcfc:alleleValue "<DEL>" ;
+    vcfc:declaredByAlt <file://example-vcf43.vcf#header/line/5> ;
+    vcfc:svLength -20 ;
+    vcfc:svType vcfc:SymbolicDeletion .
+
+<file://example-vcf43.vcf#samples/S1> a vcfc:VCFSample ;
+    vcfc:sampleIndex 1 ;
+    vcfc:sampleName "S1" .

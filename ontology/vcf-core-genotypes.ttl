@@ -1,0 +1,109 @@
+@prefix vcfc: <https://w3id.org/vcf-core/vocab#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix geno: <http://purl.obolibrary.org/obo/GENO_> .
+@prefix vrs:  <https://w3id.org/ga4gh/schema/vrs/2.0/json/> .
+
+#################################################################
+# Genotype, phasing, and local alleles
+#################################################################
+
+<https://w3id.org/vcf-core/genotypes> a owl:Ontology ;
+  rdfs:label "VCF Core genotype module"@en ;
+  dct:description "Parsed GT, phasing, phase-set, local-allele, and sample-filter carriers for VCF 4.5."@en ;
+  owl:imports <https://w3id.org/vcf-core/vocab>, <https://w3id.org/vcf-core/alleles> ;
+  owl:versionInfo "2.0.0" .
+
+vcfc:Genotype a owl:Class ;
+  rdfs:label "VCF genotype"@en ;
+  rdfs:comment "The parsed GT field for one SampleCall. It preserves genotypeString and represents its ordered allele calls and phasing independently."@en ;
+  skos:closeMatch geno:0000536 ; rdfs:seeAlso vrs:CisPhasedBlock .
+
+vcfc:GenotypeAlleleCall a owl:Class ;
+  rdfs:label "genotype allele call"@en ;
+  rdfs:comment "One allele position in a parsed GT value. callIndex preserves genotype order; isNoCall represents a dot call without inventing an allele."@en .
+
+vcfc:PhasingStatus a owl:Class ;
+  rdfs:label "phasing status"@en ;
+  rdfs:comment "The separator semantics between genotype allele calls."@en .
+
+vcfc:PhaseSet a owl:Class ;
+  rdfs:label "phase set"@en ;
+  rdfs:comment "A parsed phase-set identifier or list carried by PS or PSL, optionally with PSO and PSQ information."@en ;
+  skos:closeMatch geno:0000886, vrs:CisPhasedBlock .
+
+vcfc:LocalAlleleSet a owl:Class ;
+  rdfs:label "local allele set"@en ;
+  rdfs:comment "The subset of ALT alleles declared as locally relevant to a sample by LAA. Its members keep their record-global alleleIndex values."@en .
+
+vcfc:Phased a owl:NamedIndividual, vcfc:PhasingStatus ;
+  rdfs:label "phased"@en ; rdfs:seeAlso geno:0000131 .
+vcfc:Unphased a owl:NamedIndividual, vcfc:PhasingStatus ;
+  rdfs:label "unphased"@en .
+
+vcfc:hasGenotype a owl:ObjectProperty ;
+  rdfs:label "has genotype"@en ; rdfs:domain vcfc:SampleCall ; rdfs:range vcfc:Genotype .
+vcfc:hasAlleleCall a owl:ObjectProperty ;
+  rdfs:label "has allele call"@en ; rdfs:domain vcfc:Genotype ; rdfs:range vcfc:GenotypeAlleleCall .
+vcfc:calledAllele a owl:ObjectProperty ;
+  rdfs:label "called allele"@en ; rdfs:domain vcfc:GenotypeAlleleCall ; rdfs:range vcfc:Allele .
+vcfc:phasingStatus a owl:ObjectProperty ;
+  rdfs:label "phasing status"@en ; rdfs:domain vcfc:Genotype ; rdfs:range vcfc:PhasingStatus .
+vcfc:inPhaseSet a owl:ObjectProperty ;
+  rdfs:label "in phase set"@en ; rdfs:domain vcfc:Genotype ; rdfs:range vcfc:PhaseSet .
+vcfc:hasLocalAlleleSet a owl:ObjectProperty ;
+  rdfs:label "has local allele set"@en ; rdfs:domain vcfc:Genotype ; rdfs:range vcfc:LocalAlleleSet .
+vcfc:hasLocalAllele a owl:ObjectProperty ;
+  rdfs:label "has local allele"@en ; rdfs:domain vcfc:LocalAlleleSet ; rdfs:range vcfc:AltAllele .
+
+vcfc:genotypeString a owl:DatatypeProperty ;
+  rdfs:label "genotype string"@en ; rdfs:domain vcfc:Genotype ; rdfs:range vcfc:GenotypeString .
+vcfc:ploidy a owl:DatatypeProperty ;
+  rdfs:label "ploidy"@en ; rdfs:domain vcfc:Genotype ; rdfs:range xsd:nonNegativeInteger .
+vcfc:callIndex a owl:DatatypeProperty ;
+  rdfs:label "allele-call index"@en ; rdfs:domain vcfc:GenotypeAlleleCall ; rdfs:range xsd:nonNegativeInteger .
+vcfc:isNoCall a owl:DatatypeProperty ;
+  rdfs:label "is no-call"@en ; rdfs:domain vcfc:GenotypeAlleleCall ; rdfs:range xsd:boolean .
+vcfc:phaseSetId a owl:DatatypeProperty ;
+  rdfs:label "phase-set ID"@en ; rdfs:domain vcfc:PhaseSet ; rdfs:range xsd:string .
+vcfc:phaseSetName a owl:DatatypeProperty ;
+  rdfs:label "phase-set name"@en ; rdfs:domain vcfc:PhaseSet ; rdfs:range xsd:string .
+vcfc:phaseSetOrdinal a owl:DatatypeProperty ;
+  rdfs:label "phase-set ordinal"@en ; rdfs:domain vcfc:PhaseSet ; rdfs:range xsd:integer .
+vcfc:phaseSetQuality a owl:DatatypeProperty ;
+  rdfs:label "phase-set quality"@en ; rdfs:domain vcfc:PhaseSet ; rdfs:range rdfs:Literal .
+vcfc:localAlleleIndex a owl:DatatypeProperty ;
+  rdfs:label "local allele index"@en ;
+  rdfs:comment "The one-based ALT index written in LAA for a member of a LocalAlleleSet."@en ;
+  rdfs:domain vcfc:AltAllele ; rdfs:range xsd:positiveInteger .
+vcfc:genotypeIndex a owl:DatatypeProperty ;
+  rdfs:label "genotype index"@en ;
+  rdfs:comment "The VCF Number=G index for genotype alleles k₁…k_P: Index(k₁…k_P) = Σ C(k_m + m − 1, m)."@en ;
+  rdfs:range xsd:nonNegativeInteger .
+vcfc:sampleFilter a owl:DatatypeProperty ;
+  rdfs:label "sample filter"@en ;
+  rdfs:comment "The FT value on one SampleCall, preserving PASS, one or more failure codes, or the VCF missing token."@en ;
+  rdfs:domain vcfc:SampleCall ; rdfs:range rdfs:Literal .
+
+vcfc:phaseIndicator a owl:DatatypeProperty ; rdfs:label "preceding phase indicator"@en ;
+  rdfs:comment "The / or | indicator preceding this GT allele call, including the effective first indicator when omitted in the source. genotypeString preserves whether it was explicit."@en ;
+  rdfs:domain vcfc:GenotypeAlleleCall ; rdfs:range xsd:string .
+vcfc:MixedPhasing a owl:NamedIndividual, vcfc:PhasingStatus ; rdfs:label "mixed phasing"@en ;
+  rdfs:comment "Both phased and unphased allele indicators occur; phaseIndicator on each allele call supplies the precise semantics."@en .
+vcfc:LocalAlleleMembership a owl:Class ; rdfs:label "local allele membership"@en ;
+  rdfs:comment "An ordered membership in one sample's LocalAlleleSet. The membership, rather than the shared ALT allele, carries the local index."@en .
+vcfc:hasLocalAlleleMembership a owl:ObjectProperty ; rdfs:label "has local allele membership"@en ;
+  rdfs:domain vcfc:LocalAlleleSet ; rdfs:range vcfc:LocalAlleleMembership .
+vcfc:localAllele a owl:ObjectProperty ; rdfs:label "local allele"@en ;
+  rdfs:domain vcfc:LocalAlleleMembership ; rdfs:range vcfc:AltAllele .
+vcfc:localIndex a owl:DatatypeProperty ; rdfs:label "local index"@en ;
+  rdfs:domain vcfc:LocalAlleleMembership ; rdfs:range xsd:positiveInteger .
+vcfc:localAlleleIndex owl:deprecated true ;
+  rdfs:comment "Use localIndex on LocalAlleleMembership for sample-specific ordering. alleleIndex remains the record-global ALT index written in LAA."@en .
+
+vcfc:allelePhaseSet a owl:ObjectProperty ; rdfs:label "allele phase set"@en ;
+  rdfs:domain vcfc:GenotypeAlleleCall ; rdfs:range vcfc:PhaseSet ;
+  rdfs:comment "The PSL entry for this GT allele call; missing entries have no link."@en .

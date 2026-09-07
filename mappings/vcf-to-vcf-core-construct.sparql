@@ -1,0 +1,85 @@
+PREFIX vcfc: <https://w3id.org/vcf-core/vocab#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+# TEMPLATE: construct vcfc:VCFRecord + vcfc:VariantCall from some staging graph
+# Replace ?chrom ?pos ?id ?ref ?alt ?qual ?filter ?infoRaw ?formatRaw ?sample etc.
+
+CONSTRUCT {
+  ?vcfFile a vcfc:VCFFile ;
+    vcfc:fileFormat ?fileFormat ;
+    vcfc:representationProfile vcfc:ExpandedRepresentation ;
+    vcfc:hasSampleSet <file://file1.vcf#samples> ;
+    vcfc:referenceGenome ?referenceGenome ;
+    vcfc:fileDate ?fileDate ;
+    vcfc:sourceSoftware ?sourceSoftware ;
+    vcfc:hasRecord ?record ;
+    vcfc:hasHeader ?header .
+
+  ?header a vcfc:VCFHeader ;
+    vcfc:hasColumnHeader <file://file1.vcf#columns> ;
+    vcfc:hasHeaderLine <file://file1.vcf#fileformat>, <file://file1.vcf#contig>, <file://file1.vcf#GT> .
+  <file://file1.vcf#fileformat> a vcfc:FileFormatHeaderLine ; vcfc:headerKey "fileformat" ; vcfc:headerValue ?fileFormat ; vcfc:lineIndex 1 .
+  <file://file1.vcf#contig> a vcfc:ContigHeaderLine ; vcfc:headerKey "contig" ; vcfc:contigId ?chrom ; vcfc:lineIndex 2 ; vcfc:hasAttribute <file://file1.vcf#contig-ID> .
+  <file://file1.vcf#contig-ID> a vcfc:HeaderAttribute ; vcfc:attributeKey "ID" ; vcfc:attributeValue ?chrom ; vcfc:attributeIndex 1 .
+  <file://file1.vcf#GT> a vcfc:FORMATHeaderLine ; vcfc:headerKey "FORMAT" ; vcfc:fieldId "GT" ; vcfc:fieldNumber "1" ; vcfc:fieldType vcfc:StringType ; vcfc:fieldDescription "Genotype" ; vcfc:lineIndex 3 ; vcfc:hasAttribute <file://file1.vcf#GT-ID> .
+  <file://file1.vcf#GT-ID> a vcfc:HeaderAttribute ; vcfc:attributeKey "ID" ; vcfc:attributeValue "GT" ; vcfc:attributeIndex 1 .
+  <file://file1.vcf#columns> a vcfc:ColumnHeaderLine ; vcfc:hasGenotypeColumns <file://file1.vcf#SAMPLE1> .
+  <file://file1.vcf#samples> a vcfc:SampleSet ; vcfc:hasSample <file://file1.vcf#SAMPLE1> .
+  <file://file1.vcf#SAMPLE1> a vcfc:VCFSample ; vcfc:sampleName ?sample ; vcfc:sampleIndex 1 .
+
+  ?record a vcfc:VCFRecord ;
+    vcfc:recordIndex 1 ;
+    vcfc:chrom ?chrom ;
+    vcfc:pos ?posInt ;
+    vcfc:recordId ?id ;
+    vcfc:ref ?ref ;
+    vcfc:alt ?alt ;
+    vcfc:hasCall ?call .
+
+  ?call a vcfc:VariantCall ;
+    vcfc:qual ?qualDec ;
+    vcfc:filter ?filter ;
+    vcfc:infoRaw ?infoRaw ;
+    vcfc:formatRaw ?formatRaw ;
+    vcfc:hasSampleCall ?sampleCall .
+
+  ?sampleCall a vcfc:SampleCall ;
+    vcfc:forSample <file://file1.vcf#SAMPLE1> ;
+    vcfc:sampleId ?sample ;
+    vcfc:hasFormatValue ?fmtValue .
+
+  ?fmtValue a vcfc:FormatFieldValue ;
+    vcfc:declaredBy <file://file1.vcf#GT> ;
+    vcfc:fieldValue ?fmtVal .
+
+} WHERE {
+  # --- Your staging model goes here ---
+  # Example bindings (replace with real patterns)
+  BIND(IRI("file://file1.vcf") AS ?vcfFile)
+  BIND(IRI("file://file1.vcf#header") AS ?header)
+  BIND("VCFv4.5" AS ?fileFormat)
+  BIND("hg38" AS ?referenceGenome)
+  BIND("2020-06-15"^^xsd:date AS ?fileDate)
+  BIND("CLC Genomics Grid Worker 20.9.9" AS ?sourceSoftware)
+
+  BIND(IRI("file://file1.vcf#record/chr1-123456") AS ?record)
+  BIND("chr1" AS ?chrom)
+  BIND(123456 AS ?posInt)
+  BIND("rs123" AS ?id)
+  BIND("A" AS ?ref)
+  BIND("T" AS ?alt)
+
+  BIND(IRI("file://file1.vcf#call/chr1-123456") AS ?call)
+  BIND(52.3 AS ?qualDec)
+  BIND("PASS" AS ?filter)
+  BIND("." AS ?infoRaw)
+  BIND("GT" AS ?formatRaw)
+
+  BIND(IRI("file://file1.vcf#sample/chr1-123456/SAMPLE1") AS ?sampleCall)
+  BIND("SAMPLE1" AS ?sample)
+
+  # Example FORMAT key/value
+  BIND(IRI("file://file1.vcf#sample/chr1-123456/SAMPLE1/fmt/GT") AS ?fmtValue)
+  BIND("0/1" AS ?fmtVal)
+}

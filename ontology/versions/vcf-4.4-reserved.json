@@ -1,0 +1,476 @@
+{
+  "version": "4.4",
+  "source": "https://raw.githubusercontent.com/samtools/hts-specs/master/VCFv4.4.tex",
+  "sha256": "4c88884cf6b016efcec691d5186432a2e0b679396204d14770e89839ef536e1a",
+  "scope": "Explicit reserved table rows and header declarations in the specification; earlier prose-only definitions remain producer-declared.",
+  "definitions": [
+    {
+      "kind": "FORMAT",
+      "id": "AD",
+      "number": "R",
+      "type": "Integer"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "ADF",
+      "number": "R",
+      "type": "Integer"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "ADR",
+      "number": "R",
+      "type": "Integer"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "AHAP",
+      "number": "1",
+      "type": "Integer"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "CICN",
+      "number": "2",
+      "type": "Float"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "CN",
+      "number": "1",
+      "type": "Float"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "CNL",
+      "number": "G",
+      "type": "Float"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "CNP",
+      "number": "G",
+      "type": "Float"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "CNQ",
+      "number": "1",
+      "type": "Float"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "DP",
+      "number": "1",
+      "type": "Integer"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "EC",
+      "number": "A",
+      "type": "Integer"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "FT",
+      "number": "1",
+      "type": "String"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "GL",
+      "number": "G",
+      "type": "Float"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "GP",
+      "number": "G",
+      "type": "Float"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "GQ",
+      "number": "1",
+      "type": "Integer"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "GT",
+      "number": "1",
+      "type": "String"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "HAP",
+      "number": "1",
+      "type": "Integer"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "HQ",
+      "number": "2",
+      "type": "Integer"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "MQ",
+      "number": "1",
+      "type": "Integer"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "NQ",
+      "number": "1",
+      "type": "Integer"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "PL",
+      "number": "G",
+      "type": "Integer"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "PP",
+      "number": "G",
+      "type": "Integer"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "PQ",
+      "number": "1",
+      "type": "Integer"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "PS",
+      "number": "1",
+      "type": "Integer"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "PSL",
+      "number": "P",
+      "type": "String"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "PSO",
+      "number": "P",
+      "type": "Integer"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "PSQ",
+      "number": "P",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "1000G",
+      "number": "0",
+      "type": "Flag"
+    },
+    {
+      "kind": "INFO",
+      "id": "AA",
+      "number": "1",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "AC",
+      "number": "A",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "AD",
+      "number": "R",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "ADF",
+      "number": "R",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "ADR",
+      "number": "R",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "AF",
+      "number": "A",
+      "type": "Float"
+    },
+    {
+      "kind": "INFO",
+      "id": "AN",
+      "number": "1",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "BKPTID",
+      "number": "A",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "BQ",
+      "number": "1",
+      "type": "Float"
+    },
+    {
+      "kind": "INFO",
+      "id": "CICN",
+      "number": ".",
+      "type": "Float"
+    },
+    {
+      "kind": "INFO",
+      "id": "CIEND",
+      "number": ".",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "CIGAR",
+      "number": "A",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "CILEN",
+      "number": ".",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "CIPOS",
+      "number": ".",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "CIRB",
+      "number": ".",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "CIRUC",
+      "number": ".",
+      "type": "Float"
+    },
+    {
+      "kind": "INFO",
+      "id": "CN",
+      "number": "A",
+      "type": "Float"
+    },
+    {
+      "kind": "INFO",
+      "id": "DB",
+      "number": "0",
+      "type": "Flag"
+    },
+    {
+      "kind": "INFO",
+      "id": "DBRIPID",
+      "number": "A",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "DBVARID",
+      "number": "A",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "DGVID",
+      "number": "A",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "DP",
+      "number": "1",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "END",
+      "number": "1",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "EVENT",
+      "number": "A",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "EVENTTYPE",
+      "number": "A",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "H2",
+      "number": "0",
+      "type": "Flag"
+    },
+    {
+      "kind": "INFO",
+      "id": "H3",
+      "number": "0",
+      "type": "Flag"
+    },
+    {
+      "kind": "INFO",
+      "id": "HOMLEN",
+      "number": "A",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "HOMSEQ",
+      "number": "A",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "IMPRECISE",
+      "number": "0",
+      "type": "Flag"
+    },
+    {
+      "kind": "INFO",
+      "id": "MATEID",
+      "number": "A",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "MEINFO",
+      "number": ".",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "METRANS",
+      "number": ".",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "MQ",
+      "number": "1",
+      "type": "Float"
+    },
+    {
+      "kind": "INFO",
+      "id": "MQ0",
+      "number": "1",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "NOVEL",
+      "number": "0",
+      "type": "Flag"
+    },
+    {
+      "kind": "INFO",
+      "id": "NS",
+      "number": "1",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "PARID",
+      "number": "A",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "RB",
+      "number": ".",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "RN",
+      "number": "A",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "RUB",
+      "number": ".",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "RUC",
+      "number": ".",
+      "type": "Float"
+    },
+    {
+      "kind": "INFO",
+      "id": "RUL",
+      "number": ".",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "RUS",
+      "number": ".",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "SB",
+      "number": "4",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "SOMATIC",
+      "number": "0",
+      "type": "Flag"
+    },
+    {
+      "kind": "INFO",
+      "id": "SVCLAIM",
+      "number": "A",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "SVLEN",
+      "number": "A",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "SVTYPE",
+      "number": "1",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "VALIDATED",
+      "number": "0",
+      "type": "Flag"
+    }
+  ]
+}
