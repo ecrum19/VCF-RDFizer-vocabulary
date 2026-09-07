@@ -1,7 +1,12 @@
 # Executable coverage checklist
 
-This is a maintained inventory of implemented coverage, not a percentage of all
-VCF constructs. Specification references are to
+This is a maintained inventory of implemented coverage, organised by
+specification area. The quantified companion is
+`tests/vcf45-coverage-inventory.json`, which records a verdict, the covering
+vocabulary terms and an evidence artifact for each of 106 VCF 4.5 logical-model
+constructs; `npm run coverage:report` recomputes the totals from it into
+`tests/coverage-report.json` and fails if it cites a term the ontology no longer
+declares. Those are the figures quoted in the SWAT4HCLS 2027 manuscript. Specification references are to
 [VCF 4.5](https://samtools.github.io/hts-specs/VCFv4.5.pdf), unless versioned below.
 
 | Specification area | Vocabulary / enforcement | Positive evidence / negative probe |

@@ -1,0 +1,1292 @@
+{
+ "$comment": "Auditable inventory of VCF 4.5 logical-model constructs used to compute the coverage figures reported in the SWAT4HCLS 2027 paper. Verdicts are curated editorial judgements; scripts/coverage-report.py verifies that every term named here exists in the ontology and recomputes all totals. BCF 2.2 byte layout is out of scope by an explicit design decision and is not part of the denominator.",
+ "spec": {
+  "name": "VCFv4.5",
+  "url": "https://samtools.github.io/hts-specs/VCFv4.5.pdf"
+ },
+ "verdicts": {
+  "full": "a dedicated queryable term or term set exists",
+  "partial": "representable but only through documentation or a raw literal",
+  "absent": "no carrier"
+ },
+ "areas": [
+  {
+   "area": "File and header structure",
+   "section": "1.4-1.5",
+   "constructs": [
+    {
+     "id": 1,
+     "spec": "1.4",
+     "construct": "VCF file artifact",
+     "verdict": "full",
+     "terms": [
+      "VCFFile"
+     ],
+     "evidence": "examples/core/example.ttl"
+    },
+    {
+     "id": 2,
+     "spec": "1.4",
+     "construct": "Meta-information block",
+     "verdict": "full",
+     "terms": [
+      "VCFHeader",
+      "hasHeaderLine"
+     ],
+     "evidence": "examples/core/example-headers.ttl"
+    },
+    {
+     "id": 3,
+     "spec": "1.4",
+     "construct": "Unstructured meta-information line",
+     "verdict": "full",
+     "terms": [
+      "UnstructuredHeaderLine",
+      "headerKey",
+      "headerValue"
+     ],
+     "evidence": "UnstructuredHeaderLineShape"
+    },
+    {
+     "id": 4,
+     "spec": "1.4",
+     "construct": "Structured line key-value attributes",
+     "verdict": "full",
+     "terms": [
+      "StructuredHeaderLine",
+      "HeaderAttribute",
+      "attributeKey",
+      "attributeValue",
+      "attributeIndex"
+     ],
+     "evidence": "HeaderAttributeShape"
+    },
+    {
+     "id": 5,
+     "spec": "1.4",
+     "construct": "Arbitrary/extension structured lines",
+     "verdict": "full",
+     "terms": [
+      "HeaderAttribute",
+      "hasAttribute"
+     ],
+     "evidence": "HeaderDeclarationAgreementShape"
+    },
+    {
+     "id": 6,
+     "spec": "1.4",
+     "construct": "Header line order",
+     "verdict": "full",
+     "terms": [
+      "lineIndex"
+     ],
+     "evidence": "HeaderOrderingSparqlShape"
+    },
+    {
+     "id": 7,
+     "spec": "1.5",
+     "construct": "#CHROM column-header line",
+     "verdict": "full",
+     "terms": [
+      "ColumnHeaderLine",
+      "hasColumnHeader"
+     ],
+     "evidence": "ColumnHeaderLineShape"
+    },
+    {
+     "id": 8,
+     "spec": "1.5",
+     "construct": "Genotype columns present",
+     "verdict": "full",
+     "terms": [
+      "hasGenotypeColumns"
+     ],
+     "evidence": "ColumnHeaderLineShape"
+    },
+    {
+     "id": 9,
+     "spec": "1.5",
+     "construct": "Sample column identity and order",
+     "verdict": "full",
+     "terms": [
+      "VCFSample",
+      "SampleSet",
+      "sampleName",
+      "sampleIndex"
+     ],
+     "evidence": "VCFSampleShape"
+    },
+    {
+     "id": 10,
+     "spec": "1.4.1",
+     "construct": "##fileformat",
+     "verdict": "full",
+     "terms": [
+      "FileFormatHeaderLine",
+      "fileFormat"
+     ],
+     "evidence": "HeaderVersionAgreementShape"
+    },
+    {
+     "id": 11,
+     "spec": "1.4.2",
+     "construct": "##INFO",
+     "verdict": "full",
+     "terms": [
+      "INFOHeaderLine",
+      "InfoFieldDefinition"
+     ],
+     "evidence": "InfoFieldDefinitionShape"
+    },
+    {
+     "id": 12,
+     "spec": "1.4.3",
+     "construct": "##FILTER",
+     "verdict": "full",
+     "terms": [
+      "FILTERHeaderLine",
+      "FilterDefinition"
+     ],
+     "evidence": "FilterDefinitionShape"
+    },
+    {
+     "id": 13,
+     "spec": "1.4.4",
+     "construct": "##FORMAT",
+     "verdict": "full",
+     "terms": [
+      "FORMATHeaderLine",
+      "FormatFieldDefinition"
+     ],
+     "evidence": "FormatFieldDefinitionShape"
+    },
+    {
+     "id": 14,
+     "spec": "1.4.5",
+     "construct": "##ALT",
+     "verdict": "full",
+     "terms": [
+      "ALTHeaderLine",
+      "AltDefinition"
+     ],
+     "evidence": "AltDefinitionShape"
+    },
+    {
+     "id": 15,
+     "spec": "1.4.7",
+     "construct": "##contig ID",
+     "verdict": "full",
+     "terms": [
+      "ContigHeaderLine",
+      "contigId"
+     ],
+     "evidence": "ContigHeaderLineShape"
+    },
+    {
+     "id": 16,
+     "spec": "1.4.7",
+     "construct": "##contig length/md5/URL",
+     "verdict": "full",
+     "terms": [
+      "contigLength",
+      "contigMd5",
+      "contigUrl"
+     ],
+     "evidence": "ContigHeaderLineShape"
+    },
+    {
+     "id": 17,
+     "spec": "1.4.6",
+     "construct": "##assembly",
+     "verdict": "full",
+     "terms": [
+      "AssemblyHeaderLine",
+      "assemblyUrl"
+     ],
+     "evidence": "examples/features"
+    },
+    {
+     "id": 18,
+     "spec": "1.4.8",
+     "construct": "##META",
+     "verdict": "full",
+     "terms": [
+      "MetaHeaderLine",
+      "MetaDefinition",
+      "metaAllowedValue"
+     ],
+     "evidence": "MetaDefinitionShape"
+    },
+    {
+     "id": 19,
+     "spec": "1.4.8",
+     "construct": "##SAMPLE",
+     "verdict": "full",
+     "terms": [
+      "SampleHeaderLine",
+      "SampleDeclaration",
+      "declaresSample"
+     ],
+     "evidence": "SampleHeaderLineShape"
+    },
+    {
+     "id": 20,
+     "spec": "1.4.9",
+     "construct": "##PEDIGREE and ##pedigreeDB",
+     "verdict": "full",
+     "terms": [
+      "PedigreeHeaderLine",
+      "PedigreeRelation",
+      "pedigreeOriginal",
+      "pedigreeMother",
+      "pedigreeFather",
+      "pedigreeAncestor",
+      "ancestorRole",
+      "PedigreeDBHeaderLine",
+      "pedigreeDbUrl"
+     ],
+     "evidence": "PedigreeHeaderLineShape"
+    }
+   ]
+  },
+  {
+   "area": "Field declaration attributes",
+   "section": "1.4.2-1.4.4",
+   "constructs": [
+    {
+     "id": 21,
+     "spec": "1.4.2",
+     "construct": "Declaration ID",
+     "verdict": "full",
+     "terms": [
+      "fieldId"
+     ],
+     "evidence": "InfoFieldDefinitionShape"
+    },
+    {
+     "id": 22,
+     "spec": "1.4.2",
+     "construct": "Number, lexical form",
+     "verdict": "full",
+     "terms": [
+      "fieldNumber"
+     ],
+     "evidence": "InfoFieldDefinitionShape"
+    },
+    {
+     "id": 23,
+     "spec": "1.4.2",
+     "construct": "Number, symbolic arity",
+     "verdict": "full",
+     "terms": [
+      "fieldArity"
+     ],
+     "evidence": "FieldAritySparqlShape"
+    },
+    {
+     "id": 24,
+     "spec": "1.4.2",
+     "construct": "Number, fixed count",
+     "verdict": "full",
+     "terms": [
+      "fieldNumberInteger"
+     ],
+     "evidence": "FieldAritySparqlShape"
+    },
+    {
+     "id": 25,
+     "spec": "1.4.2",
+     "construct": "Type",
+     "verdict": "full",
+     "terms": [
+      "fieldType"
+     ],
+     "evidence": "InfoFieldDefinitionShape"
+    },
+    {
+     "id": 26,
+     "spec": "1.4.2",
+     "construct": "Description",
+     "verdict": "full",
+     "terms": [
+      "fieldDescription"
+     ],
+     "evidence": "InfoFieldDefinitionShape"
+    },
+    {
+     "id": 27,
+     "spec": "1.4.2",
+     "construct": "Source (recommended)",
+     "verdict": "full",
+     "terms": [
+      "fieldSource"
+     ],
+     "evidence": "InfoFieldDefinitionShape warning"
+    },
+    {
+     "id": 28,
+     "spec": "1.4.2",
+     "construct": "Version (recommended)",
+     "verdict": "full",
+     "terms": [
+      "fieldVersion"
+     ],
+     "evidence": "InfoFieldDefinitionShape warning"
+    }
+   ]
+  },
+  {
+   "area": "Type and arity value sets",
+   "section": "1.3, 1.4.2, 1.4.4",
+   "constructs": [
+    {
+     "id": 29,
+     "spec": "1.3",
+     "construct": "Type Integer",
+     "verdict": "full",
+     "terms": [
+      "IntegerType"
+     ],
+     "evidence": "sh:in enumeration"
+    },
+    {
+     "id": 30,
+     "spec": "1.3",
+     "construct": "Type Float",
+     "verdict": "full",
+     "terms": [
+      "FloatType"
+     ],
+     "evidence": "sh:in enumeration"
+    },
+    {
+     "id": 31,
+     "spec": "1.3",
+     "construct": "Type Flag",
+     "verdict": "full",
+     "terms": [
+      "FlagType"
+     ],
+     "evidence": "sh:in enumeration"
+    },
+    {
+     "id": 32,
+     "spec": "1.3",
+     "construct": "Type Character",
+     "verdict": "full",
+     "terms": [
+      "CharacterType"
+     ],
+     "evidence": "sh:in enumeration"
+    },
+    {
+     "id": 33,
+     "spec": "1.3",
+     "construct": "Type String",
+     "verdict": "full",
+     "terms": [
+      "StringType"
+     ],
+     "evidence": "sh:in enumeration"
+    },
+    {
+     "id": 34,
+     "spec": "1.4.2",
+     "construct": "Number=A",
+     "verdict": "full",
+     "terms": [
+      "ArityPerAlt"
+     ],
+     "evidence": "FieldAritySparqlShape"
+    },
+    {
+     "id": 35,
+     "spec": "1.4.2",
+     "construct": "Number=R",
+     "verdict": "full",
+     "terms": [
+      "ArityPerAllele"
+     ],
+     "evidence": "FieldAritySparqlShape"
+    },
+    {
+     "id": 36,
+     "spec": "1.4.2",
+     "construct": "Number=G",
+     "verdict": "full",
+     "terms": [
+      "ArityPerGenotype"
+     ],
+     "evidence": "FieldAritySparqlShape"
+    },
+    {
+     "id": 37,
+     "spec": "1.4.2",
+     "construct": "Number=.",
+     "verdict": "full",
+     "terms": [
+      "ArityVariable"
+     ],
+     "evidence": "FieldAritySparqlShape"
+    },
+    {
+     "id": 38,
+     "spec": "1.4.4",
+     "construct": "Number=LA",
+     "verdict": "full",
+     "terms": [
+      "ArityPerLocalAlt"
+     ],
+     "evidence": "local cardinality checks"
+    },
+    {
+     "id": 39,
+     "spec": "1.4.4",
+     "construct": "Number=LR",
+     "verdict": "full",
+     "terms": [
+      "ArityPerLocalAllele"
+     ],
+     "evidence": "local cardinality checks"
+    },
+    {
+     "id": 40,
+     "spec": "1.4.4",
+     "construct": "Number=LG",
+     "verdict": "full",
+     "terms": [
+      "ArityPerLocalGenotype"
+     ],
+     "evidence": "local cardinality checks"
+    },
+    {
+     "id": 41,
+     "spec": "1.4.4",
+     "construct": "Number=P",
+     "verdict": "full",
+     "terms": [
+      "ArityPerGTAllele"
+     ],
+     "evidence": "phase set list checks"
+    },
+    {
+     "id": 42,
+     "spec": "1.4.4",
+     "construct": "Number=M",
+     "verdict": "full",
+     "terms": [
+      "ArityPerBaseModification"
+     ],
+     "evidence": "base modification site counts"
+    }
+   ]
+  },
+  {
+   "area": "Lexical and encoding rules",
+   "section": "1.2-1.3",
+   "constructs": [
+    {
+     "id": 43,
+     "spec": "1.3",
+     "construct": "Float lexical space incl. INF/NAN",
+     "verdict": "full",
+     "terms": [
+      "VCFFloat"
+     ],
+     "evidence": "lexical pattern check"
+    },
+    {
+     "id": 44,
+     "spec": "1.3",
+     "construct": "Integer 32-bit excluded range",
+     "verdict": "full",
+     "terms": [
+      "VCFInteger"
+     ],
+     "evidence": "decoded range check"
+    },
+    {
+     "id": 45,
+     "spec": "1.3",
+     "construct": "Character single value per item",
+     "verdict": "full",
+     "terms": [
+      "CharacterType"
+     ],
+     "evidence": "vcf-core-consistency.shacl.ttl"
+    },
+    {
+     "id": 46,
+     "spec": "1.6.2",
+     "construct": "GT lexical space",
+     "verdict": "full",
+     "terms": [
+      "GenotypeString"
+     ],
+     "evidence": "lexical pattern check"
+    },
+    {
+     "id": 47,
+     "spec": "5.4",
+     "construct": "Breakend ALT lexical space",
+     "verdict": "full",
+     "terms": [
+      "BreakendString"
+     ],
+     "evidence": "breakend fixtures"
+    },
+    {
+     "id": 48,
+     "spec": "1.2",
+     "construct": "Percent encoding of reserved characters",
+     "verdict": "full",
+     "terms": [
+      "percentEncodingPolicy",
+      "rawValue",
+      "decodedValue"
+     ],
+     "evidence": "raw/decoded agreement"
+    },
+    {
+     "id": 49,
+     "spec": "1.6",
+     "construct": "Missing value token",
+     "verdict": "full",
+     "terms": [
+      "Null",
+      "missingValuePolicy"
+     ],
+     "evidence": "missing token checks"
+    },
+    {
+     "id": 50,
+     "spec": "1.2",
+     "construct": "UTF-8 encoding and byte order mark state",
+     "verdict": "absent",
+     "terms": [],
+     "evidence": "no carrier; file-level byte state"
+    },
+    {
+     "id": 51,
+     "spec": "1.2",
+     "construct": "Line separator (LF vs CR+LF) state",
+     "verdict": "absent",
+     "terms": [],
+     "evidence": "no carrier; file-level byte state"
+    }
+   ]
+  },
+  {
+   "area": "Fixed fields and allele structure",
+   "section": "1.6.1",
+   "constructs": [
+    {
+     "id": 52,
+     "spec": "1.6.1",
+     "construct": "CHROM",
+     "verdict": "full",
+     "terms": [
+      "chrom",
+      "chromosome"
+     ],
+     "evidence": "VCFRecordShape"
+    },
+    {
+     "id": 53,
+     "spec": "1.6.1",
+     "construct": "CHROM angle-bracketed assembly contig form",
+     "verdict": "partial",
+     "terms": [
+      "assemblyUrl"
+     ],
+     "evidence": "assembly link only; no distinguishing marker"
+    },
+    {
+     "id": 54,
+     "spec": "1.6.1",
+     "construct": "POS",
+     "verdict": "full",
+     "terms": [
+      "pos"
+     ],
+     "evidence": "VCFRecordShape, contig bound check"
+    },
+    {
+     "id": 55,
+     "spec": "1.6.1",
+     "construct": "POS telomere 0 or N+1",
+     "verdict": "partial",
+     "terms": [
+      "pos"
+     ],
+     "evidence": "documented in term comment only"
+    },
+    {
+     "id": 56,
+     "spec": "1.6.1",
+     "construct": "ID raw column",
+     "verdict": "full",
+     "terms": [
+      "recordId"
+     ],
+     "evidence": "VCFRecordShape"
+    },
+    {
+     "id": 57,
+     "spec": "1.6.1",
+     "construct": "ID individual identifiers",
+     "verdict": "full",
+     "terms": [
+      "RecordIdentifier",
+      "hasIdentifier",
+      "identifierValue",
+      "componentIndex"
+     ],
+     "evidence": "duplicate ID probe"
+    },
+    {
+     "id": 58,
+     "spec": "1.6.1",
+     "construct": "REF",
+     "verdict": "full",
+     "terms": [
+      "ref"
+     ],
+     "evidence": "REF pattern check"
+    },
+    {
+     "id": 59,
+     "spec": "1.6.1",
+     "construct": "REF padding base convention",
+     "verdict": "partial",
+     "terms": [
+      "ref"
+     ],
+     "evidence": "documented in term comment only"
+    },
+    {
+     "id": 60,
+     "spec": "1.6.1",
+     "construct": "ALT raw column",
+     "verdict": "full",
+     "terms": [
+      "alt"
+     ],
+     "evidence": "VCFRecordShape"
+    },
+    {
+     "id": 61,
+     "spec": "1.6.1",
+     "construct": "ALT per-allele resource and order",
+     "verdict": "full",
+     "terms": [
+      "AltAllele",
+      "hasAltAllele",
+      "alleleIndex",
+      "alleleValue",
+      "ReferenceAllele",
+      "hasReferenceAllele"
+     ],
+     "evidence": "allele count/order rules"
+    },
+    {
+     "id": 62,
+     "spec": "1.6.1",
+     "construct": "ALT six lexical kinds",
+     "verdict": "full",
+     "terms": [
+      "AlleleKind",
+      "BaseSequenceAllele",
+      "OverlappingDeletionAllele",
+      "MissingAllele",
+      "SymbolicAllele",
+      "UnspecifiedAllele",
+      "BreakendAllele",
+      "alleleKind"
+     ],
+     "evidence": "sh:in enumeration"
+    },
+    {
+     "id": 63,
+     "spec": "1.6.1",
+     "construct": "QUAL",
+     "verdict": "full",
+     "terms": [
+      "qual"
+     ],
+     "evidence": "VariantCallShape"
+    },
+    {
+     "id": 64,
+     "spec": "1.6.1",
+     "construct": "FILTER raw column",
+     "verdict": "full",
+     "terms": [
+      "filter"
+     ],
+     "evidence": "VariantCallShape"
+    },
+    {
+     "id": 65,
+     "spec": "1.6.1",
+     "construct": "FILTER codes and PASS/not-applied status",
+     "verdict": "full",
+     "terms": [
+      "FilterCode",
+      "FilterStatus",
+      "FiltersPassed",
+      "FiltersFailed",
+      "FiltersNotApplied",
+      "hasFilterCode",
+      "filterStatus",
+      "filterCodeValue",
+      "declaredByFilter"
+     ],
+     "evidence": "raw-code agreement"
+    },
+    {
+     "id": 66,
+     "spec": "1.6.1",
+     "construct": "INFO raw column",
+     "verdict": "full",
+     "terms": [
+      "infoRaw"
+     ],
+     "evidence": "VariantCallShape"
+    },
+    {
+     "id": 67,
+     "spec": "1.6.1",
+     "construct": "INFO structured entries",
+     "verdict": "full",
+     "terms": [
+      "InfoFieldValue",
+      "hasInfoValue",
+      "declaredBy"
+     ],
+     "evidence": "IndexedInfoValueSparqlShape"
+    },
+    {
+     "id": 68,
+     "spec": "1.6.1",
+     "construct": "INFO per-allele/genotype value binding",
+     "verdict": "full",
+     "terms": [
+      "FieldValueItem",
+      "hasValueItem",
+      "valueIndex",
+      "itemValue",
+      "forAllele",
+      "forGenotypeIndex",
+      "forGTAlleleIndex",
+      "tupleArity"
+     ],
+     "evidence": "materialized item agreement"
+    },
+    {
+     "id": 69,
+     "spec": "1.6.1",
+     "construct": "INFO entry order",
+     "verdict": "full",
+     "terms": [
+      "fieldIndex"
+     ],
+     "evidence": "raw token sequence agreement"
+    }
+   ]
+  },
+  {
+   "area": "FORMAT and genotype",
+   "section": "1.6.2",
+   "constructs": [
+    {
+     "id": 70,
+     "spec": "1.6.2",
+     "construct": "Expanded per-sample profile",
+     "verdict": "full",
+     "terms": [
+      "SampleCall",
+      "FormatFieldValue",
+      "hasSampleCall",
+      "hasFormatValue",
+      "ExpandedRepresentation",
+      "forSample"
+     ],
+     "evidence": "examples/core"
+    },
+    {
+     "id": 71,
+     "spec": "1.6.2",
+     "construct": "Condensed cohort profile",
+     "verdict": "full",
+     "terms": [
+      "CohortCallMatrix",
+      "FormatValueVector",
+      "hasCallMatrix",
+      "hasFormatValueVector",
+      "appliesToSampleSet",
+      "encodedValues",
+      "valueEncoding",
+      "VCFTextVector",
+      "CondensedRepresentation"
+     ],
+     "evidence": "examples/profiles"
+    },
+    {
+     "id": 72,
+     "spec": "1.6.2",
+     "construct": "FORMAT column raw order",
+     "verdict": "full",
+     "terms": [
+      "formatRaw"
+     ],
+     "evidence": "VariantCallShape"
+    },
+    {
+     "id": 73,
+     "spec": "1.6.2",
+     "construct": "FORMAT key order as resources",
+     "verdict": "full",
+     "terms": [
+      "fieldIndex"
+     ],
+     "evidence": "raw token sequence agreement"
+    },
+    {
+     "id": 74,
+     "spec": "1.6.2",
+     "construct": "GT raw value",
+     "verdict": "full",
+     "terms": [
+      "genotypeString"
+     ],
+     "evidence": "GenotypeShape"
+    },
+    {
+     "id": 75,
+     "spec": "1.6.2",
+     "construct": "GT parsed allele calls",
+     "verdict": "full",
+     "terms": [
+      "Genotype",
+      "GenotypeAlleleCall",
+      "hasGenotype",
+      "hasAlleleCall",
+      "callIndex",
+      "calledAllele"
+     ],
+     "evidence": "ploidy/allele agreement"
+    },
+    {
+     "id": 76,
+     "spec": "1.6.2",
+     "construct": "GT phasing per allele",
+     "verdict": "full",
+     "terms": [
+      "PhasingStatus",
+      "Phased",
+      "Unphased",
+      "phasingStatus",
+      "phaseIndicator"
+     ],
+     "evidence": "phase indicator probe"
+    },
+    {
+     "id": 77,
+     "spec": "1.6.2",
+     "construct": "GT leading indicator and mixed phasing",
+     "verdict": "full",
+     "terms": [
+      "MixedPhasing"
+     ],
+     "evidence": "mixed triploid fixture"
+    },
+    {
+     "id": 78,
+     "spec": "1.6.2",
+     "construct": "Ploidy",
+     "verdict": "full",
+     "terms": [
+      "ploidy"
+     ],
+     "evidence": "ploidy agreement probe"
+    },
+    {
+     "id": 79,
+     "spec": "1.6.2",
+     "construct": "No-call allele",
+     "verdict": "full",
+     "terms": [
+      "isNoCall"
+     ],
+     "evidence": "GenotypeAlleleCallShape"
+    },
+    {
+     "id": 80,
+     "spec": "1.6.2",
+     "construct": "Genotype ordering index",
+     "verdict": "full",
+     "terms": [
+      "genotypeIndex"
+     ],
+     "evidence": "G/LG cardinality checks"
+    },
+    {
+     "id": 81,
+     "spec": "1.6.2",
+     "construct": "PS phase set",
+     "verdict": "full",
+     "terms": [
+      "PhaseSet",
+      "phaseSetId",
+      "inPhaseSet"
+     ],
+     "evidence": "PhaseSetShape"
+    },
+    {
+     "id": 82,
+     "spec": "1.6.2",
+     "construct": "PSL phase set list",
+     "verdict": "full",
+     "terms": [
+      "phaseSetName",
+      "allelePhaseSet"
+     ],
+     "evidence": "missing PS with populated PSL probe"
+    },
+    {
+     "id": 83,
+     "spec": "1.6.2",
+     "construct": "PSO phase set ordinal",
+     "verdict": "full",
+     "terms": [
+      "phaseSetOrdinal"
+     ],
+     "evidence": "PhaseSetShape"
+    },
+    {
+     "id": 84,
+     "spec": "1.6.2",
+     "construct": "PSQ phase set quality",
+     "verdict": "full",
+     "terms": [
+      "phaseSetQuality"
+     ],
+     "evidence": "PhaseSetShape"
+    },
+    {
+     "id": 85,
+     "spec": "1.6.2",
+     "construct": "LAA and local alleles",
+     "verdict": "full",
+     "terms": [
+      "LocalAlleleSet",
+      "LocalAlleleMembership",
+      "hasLocalAllele",
+      "hasLocalAlleleSet",
+      "hasLocalAlleleMembership",
+      "localAlleleIndex",
+      "localIndex",
+      "localAllele"
+     ],
+     "evidence": "LAA order and membership checks"
+    },
+    {
+     "id": 86,
+     "spec": "1.6.2",
+     "construct": "FT per-sample filter",
+     "verdict": "full",
+     "terms": [
+      "sampleFilter"
+     ],
+     "evidence": "decoded code syntax check"
+    },
+    {
+     "id": 87,
+     "spec": "5.5",
+     "construct": "LEN and reference blocks",
+     "verdict": "full",
+     "terms": [
+      "ReferenceBlock",
+      "referenceBlockLength",
+      "isReferenceBlockStart",
+      "blockAllele",
+      "hasReferenceBlock",
+      "endPosition"
+     ],
+     "evidence": "LEN/POS/end agreement"
+    },
+    {
+     "id": 88,
+     "spec": "1.4.4",
+     "construct": "Base modifications M/DPM/ADM",
+     "verdict": "full",
+     "terms": [
+      "BaseModification",
+      "modifiedResidue",
+      "modifiedBaseOffset",
+      "modificationFraction",
+      "modificationDepth",
+      "modificationAlleleDepth",
+      "forBaseModification"
+     ],
+     "evidence": "decoded site counts"
+    },
+    {
+     "id": 89,
+     "spec": "1.6.2",
+     "construct": "Dropped trailing fields and empty list tokens",
+     "verdict": "full",
+     "terms": [
+      "sampleFieldsRaw"
+     ],
+     "evidence": "retained raw sample fields"
+    },
+    {
+     "id": 90,
+     "spec": "1.6.2",
+     "construct": "Single missing token vs per-item missing list",
+     "verdict": "partial",
+     "terms": [
+      "sampleFieldsRaw",
+      "Null"
+     ],
+     "evidence": "retained raw only; not distinguished structurally"
+    }
+   ]
+  },
+  {
+   "area": "Structural variation, repeats, gVCF",
+   "section": "3, 5.4-5.7",
+   "constructs": [
+    {
+     "id": 91,
+     "spec": "1.4.5",
+     "construct": "Symbolic ALT type taxonomy",
+     "verdict": "full",
+     "terms": [
+      "SymbolicAlleleType",
+      "SymbolicDeletion",
+      "SymbolicInsertion",
+      "SymbolicDuplication",
+      "SymbolicInversion",
+      "SymbolicCopyNumberVariation",
+      "SymbolicTandemRepeat",
+      "SymbolicTandemDuplication",
+      "SymbolicMobileElementDeletion",
+      "SymbolicMobileElementInsertion",
+      "svType",
+      "svTypeCode"
+     ],
+     "evidence": "SymbolicAlleleTypeShape"
+    },
+    {
+     "id": 92,
+     "spec": "1.4.5",
+     "construct": "Symbolic type:subtype decomposition",
+     "verdict": "full",
+     "terms": [
+      "svSubtypeOf"
+     ],
+     "evidence": "SymbolicAlleleTypeShape"
+    },
+    {
+     "id": 93,
+     "spec": "1.4.5",
+     "construct": "IUPAC ambiguity symbolic alleles",
+     "verdict": "full",
+     "terms": [
+      "SymbolicAllele",
+      "AltDefinition"
+     ],
+     "evidence": "AltDefinitionShape"
+    },
+    {
+     "id": 94,
+     "spec": "3",
+     "construct": "SVCLAIM D/J/DJ",
+     "verdict": "full",
+     "terms": [
+      "SVClaim",
+      "AbundanceClaim",
+      "AdjacencyClaim",
+      "AbundanceAndAdjacencyClaim",
+      "svClaim",
+      "svClaimCode"
+     ],
+     "evidence": "version-scoped claim rules"
+    },
+    {
+     "id": 95,
+     "spec": "3",
+     "construct": "SVLEN",
+     "verdict": "full",
+     "terms": [
+      "svLength"
+     ],
+     "evidence": "version overlays"
+    },
+    {
+     "id": 96,
+     "spec": "3",
+     "construct": "IMPRECISE and NOVEL",
+     "verdict": "full",
+     "terms": [
+      "isImprecise",
+      "isNovel"
+     ],
+     "evidence": "feature fixture"
+    },
+    {
+     "id": 97,
+     "spec": "3",
+     "construct": "Confidence interval families",
+     "verdict": "full",
+     "terms": [
+      "ConfidenceInterval",
+      "ciLower",
+      "ciUpper",
+      "posConfidenceInterval",
+      "endConfidenceInterval",
+      "lenConfidenceInterval",
+      "copyNumberConfidenceInterval",
+      "rucConfidenceInterval",
+      "rbConfidenceInterval"
+     ],
+     "evidence": "tuple width and interval ordering rules"
+    },
+    {
+     "id": 98,
+     "spec": "5.4",
+     "construct": "Breakend bracket orientations",
+     "verdict": "full",
+     "terms": [
+      "BreakendOrientation",
+      "SequenceBeforeLeftBracket",
+      "SequenceBeforeRightBracket",
+      "SequenceAfterLeftBracket",
+      "SequenceAfterRightBracket",
+      "breakendOrientation"
+     ],
+     "evidence": "reciprocal pair fixture"
+    },
+    {
+     "id": 99,
+     "spec": "5.4",
+     "construct": "Breakend mate and partner links",
+     "verdict": "full",
+     "terms": [
+      "mateBreakend",
+      "partnerBreakend"
+     ],
+     "evidence": "mate query"
+    },
+    {
+     "id": 100,
+     "spec": "5.4",
+     "construct": "Single and telomere breakends",
+     "verdict": "full",
+     "terms": [
+      "isSingleBreakend",
+      "isTelomereBreakend"
+     ],
+     "evidence": "single breakend fixture"
+    },
+    {
+     "id": 101,
+     "spec": "5.4",
+     "construct": "Inserted sequence and replacement string",
+     "verdict": "full",
+     "terms": [
+      "insertedSequence",
+      "breakendReplacementString"
+     ],
+     "evidence": "breakend fixtures"
+    },
+    {
+     "id": 102,
+     "spec": "3",
+     "construct": "EVENT grouping and EVENTTYPE",
+     "verdict": "full",
+     "terms": [
+      "VariantEvent",
+      "inEvent",
+      "EventType",
+      "eventType",
+      "eventTypeCode"
+     ],
+     "evidence": "event fixtures"
+    },
+    {
+     "id": 103,
+     "spec": "5.7",
+     "construct": "Copy number",
+     "verdict": "full",
+     "terms": [
+      "copyNumber",
+      "copyNumberQuality",
+      "copyNumberLikelihood",
+      "copyNumberPosterior"
+     ],
+     "evidence": "versioned CN declarations"
+    },
+    {
+     "id": 104,
+     "spec": "5.6",
+     "construct": "Tandem repeats",
+     "verdict": "full",
+     "terms": [
+      "TandemRepeatAllele",
+      "RepeatSequence",
+      "RepeatUnit",
+      "repeatSequenceCount",
+      "repeatSequenceIndex",
+      "repeatUnitSequence",
+      "repeatUnitLength",
+      "repeatUnitCount",
+      "repeatBases",
+      "repeatUnitBases",
+      "hasRepeatSequence",
+      "hasRepeatUnit"
+     ],
+     "evidence": "sum(RN) decoded check"
+    },
+    {
+     "id": 105,
+     "spec": "5.3",
+     "construct": "Haplotype identifiers HAP/AHAP",
+     "verdict": "full",
+     "terms": [
+      "haplotypeId",
+      "ancestralHaplotypeId"
+     ],
+     "evidence": "feature fixture"
+    },
+    {
+     "id": 106,
+     "spec": "5.5",
+     "construct": "Unspecified allele <*> and <NON_REF> alias",
+     "verdict": "full",
+     "terms": [
+      "UnspecifiedAllele"
+     ],
+     "evidence": "reference block fixtures"
+    }
+   ]
+  }
+ ],
+ "out_of_scope": [
+  {
+   "item": "BCF 2.2 byte layout",
+   "reason": "explicit design decision; the vocabulary targets the VCF logical model, not the binary serialization"
+  },
+  {
+   "item": "Byte-for-byte source reconstruction",
+   "reason": "raw carriers preserve logical content, not file bytes"
+  },
+  {
+   "item": "VCF 4.0 conformance overlay",
+   "reason": "no overlay published; validator reports 4.0 as unsupported"
+  }
+ ]
+}

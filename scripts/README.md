@@ -5,6 +5,8 @@ Validation and regression checks live in `tests/`.
 
 - `build-ontology-bundle.mjs` combines the normative ontology modules for OCG.
 - `build-shacl-profiles.py` generates version-specific SHACL overlays.
+- `coverage-report.py` recomputes every published coverage statistic into `tests/coverage-report.json`.
+- `validation-gate.py` fingerprints the normative inputs so the slow suite only reruns when they change.
 - `convert-example-nt-to-ttl.mjs` formats the canonical N-Triples example as Turtle.
 - `generate-reserved-keys.mjs` creates the VCF 4.5 reserved-key registry.
 - `insert-class-hierarchy.mjs` adds the configured class-hierarchy extension after OCG builds the site.
