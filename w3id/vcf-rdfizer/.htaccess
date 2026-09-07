@@ -12,16 +12,7 @@
 # DELIBERATELY NOT A REDIRECT TO THE NEW NAMESPACE. Every IRI under this
 # namespace resolves to a legacy document in which that IRI is still defined,
 # deprecated, and linked to its successor with owl:equivalentClass,
-# owl:equivalentProperty or owl:sameAs. Redirecting to the new vocabulary would
-# resolve a legacy IRI to a document that does not define it, which is less
-# useful than a 404.
-#
-# The legacy document is generated once by scripts/migrate-namespace.mjs and is
-# not extended with new terms.
-#
-# BEFORE OPENING THE PULL REQUEST: replace every REPLACE-ME below with the real
-# publishing host, with no trailing slash, and confirm that host actually serves
-# legacy-vcf-rdfizer.ttl. Test the rules against a local checkout first.
+# owl:equivalentProperty or owl:sameAs.
 
 Options +FollowSymLinks
 RewriteEngine on
@@ -29,9 +20,9 @@ RewriteEngine on
 # ---------------------------------------------------------------------------
 # Retired vocabulary. Fragment IRIs such as .../vocab#VCFFile dereference here.
 # ---------------------------------------------------------------------------
-RewriteRule ^vocab/?$ REPLACE-ME/assets/legacy-vcf-rdfizer.ttl [R=302,L]
-RewriteRule ^vocab\.ttl$ REPLACE-ME/assets/legacy-vcf-rdfizer.ttl [R=302,L]
-RewriteRule ^vocab/[0-9]+\.[0-9]+\.[0-9]+/?$ REPLACE-ME/assets/legacy-vcf-rdfizer.ttl [R=302,L]
+RewriteRule ^vocab/?$ https://raw.githubusercontent.com/ecrum19/VCF-RDFizer-vocabulary/main/legacy/legacy-vcf-rdfizer.ttl [R=302,L]
+RewriteRule ^vocab\.ttl$ https://raw.githubusercontent.com/ecrum19/VCF-RDFizer-vocabulary/main/legacy/legacy-vcf-rdfizer.ttl [R=302,L]
+RewriteRule ^vocab/[0-9]+\.[0-9]+\.[0-9]+/?$ https://raw.githubusercontent.com/ecrum19/VCF-RDFizer-vocabulary/main/legacy/legacy-vcf-rdfizer.ttl [R=302,L]
 
 # ---------------------------------------------------------------------------
 # Retired instance IRI space. Never published; nothing to serve.
@@ -43,4 +34,4 @@ RewriteRule ^vcf/ - [R=410,L]
 # A human visiting the bare namespace is sent to the successor's documentation.
 # ---------------------------------------------------------------------------
 RewriteRule ^$ https://w3id.org/vcf-core/ [R=302,L]
-RewriteRule ^(.*)$ REPLACE-ME/assets/legacy-vcf-rdfizer.ttl [R=302,L]
+RewriteRule ^(.*)$ https://raw.githubusercontent.com/ecrum19/VCF-RDFizer-vocabulary/main/legacy/legacy-vcf-rdfizer.ttl [R=302,L]
