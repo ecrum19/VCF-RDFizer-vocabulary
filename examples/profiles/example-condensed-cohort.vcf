@@ -1,0 +1,13 @@
+##fileformat=VCFv4.1
+##source=1000GenomesPhase3Pipeline
+##reference=ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz
+##contig=<ID=20,assembly=b37,length=63025520>
+##subsetNote=Eight samples and three SNPs from 1000 Genomes Phase 3; AC AF AN recalculated for this subset.
+##INFO=<ID=AC,Number=A,Type=Integer,Description="Alternate allele count in the eight selected samples",Source="VCF-Core-subset",Version="1">
+##INFO=<ID=AF,Number=A,Type=Float,Description="Alternate allele frequency in the eight selected samples",Source="VCF-Core-subset",Version="1">
+##INFO=<ID=AN,Number=1,Type=Integer,Description="Number of called alleles in the eight selected samples",Source="VCF-Core-subset",Version="1">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	HG00096	HG00097	HG00099	HG00100	HG00101	HG00102	HG00103	HG00105
+20	61795	.	G	T	100	PASS	AC=4;AF=0.25;AN=16	GT	1|0	0|0	0|0	0|0	0|1	0|0	1|0	0|1
+20	68749	.	T	C	100	PASS	AC=9;AF=0.5625;AN=16	GT	1|1	0|0	0|0	0|1	1|1	0|0	1|1	1|1
+20	69094	.	G	A	100	PASS	AC=8;AF=0.5;AN=16	GT	1|0	0|1	0|0	1|0	1|1	1|1	0|0	0|1

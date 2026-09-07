@@ -24,15 +24,18 @@
 
 vcfc: a owl:Ontology ;
   rdfs:label "VCF Core Vocabulary"@en ;
-  dct:description "Vocabulary for representing VCF files, headers, records, and sample genotype data in RDF. It supports both an expanded per-sample representation and a condensed, sample-ordered vector representation for large multi-sample VCF files. Its VCF-facing terms document the VCF 4.5 syntax and semantics, while its alignment hooks can link calls to SB/gvar and other genomics ontologies. Version 3.0.0 is a corrective release: it carries no new terms, and changes only what could not be corrected without a major version bump. See the repository's VCF 4.5 coverage assessment for the planned additive work."@en ;
+  dct:description "Vocabulary for representing the logical VCF 4.5 model in RDF: files, headers, records, alleles, values, genotype data, and VCF-specific structural-variant syntax. It supports both expanded per-sample and condensed, sample-ordered representations, and delegates broader variation semantics through FALDO, VRS, SO, GENO, and ChEBI alignments. BCF 2.2 byte layout is out of scope."@en ;
   dct:license <https://creativecommons.org/licenses/by/4.0/> ;
   dct:creator "Elias Crum" ;
-  owl:versionIRI <https://w3id.org/vcf-core/vocab/3.0.0> ;
-  owl:versionInfo "3.0.0" ;
-  dct:issued "2026-02-10"^^xsd:date ;
+  owl:versionIRI <https://w3id.org/vcf-core/vocab/2.0.0> ;
+  owl:versionInfo "2.0.0" ;
   dct:modified "2026-09-07"^^xsd:date ;
-  owl:priorVersion <https://w3id.org/vcf-core/vocab/2.0.0> ;
+  owl:priorVersion <https://w3id.org/vcf-rdfizer/vocab> ;
   dct:replaces <https://w3id.org/vcf-rdfizer/vocab> ;
+  owl:imports <https://w3id.org/vcf-core/alleles>,
+              <https://w3id.org/vcf-core/genotypes>,
+              <https://w3id.org/vcf-core/sv>,
+              <https://w3id.org/vcf-core/reserved-keys> ;
   rdfs:seeAlso <https://samtools.github.io/hts-specs/VCFv4.5.pdf> ;
   rdfs:seeAlso <http://biohackathon.org/resource/faldo> ;
   rdfs:seeAlso <https://w3id.org/ga4gh/schema/vrs/2.0/json/> ;
@@ -51,6 +54,10 @@ vcfc:VCFFile a owl:Class ;
   rdfs:seeAlso hero:VCFFile ;
   rdfs:subClassOf dcat:Distribution, prov:Entity .
 
+vcfc:VCF45File a owl:Class ; rdfs:subClassOf vcfc:VCFFile ;
+  rdfs:label "VCF 4.5 file"@en ;
+  rdfs:comment "A VCF file explicitly declared for VCF 4.5 conformance. Use this optional subclass when the VCF 4.5-specific SHACL version gate is desired; VCFFile itself remains version-neutral."@en .
+
 vcfc:VCFHeader a owl:Class ;
   rdfs:label "VCF header"@en ;
   rdfs:comment "A resource that groups the VCF file's meta-information header lines. VCF 4.5 meta-information lines begin with '##' and occur before the mandatory '#CHROM' column-header line and all data records."@en ;
@@ -61,43 +68,43 @@ vcfc:HeaderLine a owl:Class ;
   rdfs:comment "A representation of one VCF meta-information line, such as '##fileformat=VCFv4.5' or '##INFO=<...>'. A line may have an unstructured value or a structured, angle-bracketed list of key-value pairs."@en ;
   vcfc:iriTemplate "file://{vcfFilePath}#header/line/{lineId}" .
 
-vcfc:FileFormatHeaderLine a owl:Class ; rdfs:subClassOf vcfc:HeaderLine ;
+vcfc:FileFormatHeaderLine a owl:Class ; rdfs:subClassOf vcfc:UnstructuredHeaderLine ;
   rdfs:label "fileformat header line"@en ;
   rdfs:comment "The required, first VCF meta-information line. Its value declares the VCF version, for example 'VCFv4.5'."@en .
 
-vcfc:FileDateHeaderLine a owl:Class ; rdfs:subClassOf vcfc:HeaderLine ;
+vcfc:FileDateHeaderLine a owl:Class ; rdfs:subClassOf vcfc:UnstructuredHeaderLine ;
   rdfs:label "fileDate header line"@en ;
   rdfs:comment "An optional producer-supplied '##fileDate' meta-information line. It is a commonly used unstructured header convention, rather than a required VCF 4.5 line."@en .
 
-vcfc:SourceHeaderLine a owl:Class ; rdfs:subClassOf vcfc:HeaderLine ;
+vcfc:SourceHeaderLine a owl:Class ; rdfs:subClassOf vcfc:UnstructuredHeaderLine ;
   rdfs:label "source header line"@en ;
   rdfs:comment "An optional producer-supplied '##source' meta-information line, typically identifying the program, pipeline, or source that generated the VCF."@en .
 
-vcfc:ReferenceHeaderLine a owl:Class ; rdfs:subClassOf vcfc:HeaderLine ;
+vcfc:ReferenceHeaderLine a owl:Class ; rdfs:subClassOf vcfc:UnstructuredHeaderLine ;
   rdfs:label "reference header line"@en ;
   rdfs:comment "An optional '##reference' meta-information line that identifies the reference genome or sequence resource used to interpret the records. Including reference and contig metadata is recommended by VCF 4.5."@en .
 
-vcfc:ContigHeaderLine a owl:Class ; rdfs:subClassOf vcfc:HeaderLine ;
+vcfc:ContigHeaderLine a owl:Class ; rdfs:subClassOf vcfc:StructuredHeaderLine ;
   rdfs:label "contig header line"@en ;
   rdfs:comment "A structured '##contig=<...>' declaration for a reference sequence used by records in the file. VCF 4.5 requires its ID and reserves optional attributes such as length, md5, and URL; contig declarations are recommended in VCF and required in BCF."@en ;
-  # 3.0.0: was skos:relatedMatch faldo:Reference, which does not exist -- FALDO
+  # 2.0.0: was skos:relatedMatch faldo:Reference, which does not exist -- FALDO
   # declares the object property faldo:reference and no Reference class.
   skos:relatedMatch vrs:SequenceReference ;
   rdfs:seeAlso faldo:reference, vrs:SequenceReference .
 
-vcfc:INFOHeaderLine a owl:Class ; rdfs:subClassOf vcfc:HeaderLine ;
+vcfc:INFOHeaderLine a owl:Class ; rdfs:subClassOf vcfc:StructuredHeaderLine, vcfc:InfoFieldDefinition ;
   rdfs:label "INFO header line"@en ;
   rdfs:comment "A structured '##INFO=<...>' declaration that defines the identifier, cardinality, type, and meaning of an annotation that may occur in the INFO column. ID, Number, Type, and Description are required by VCF 4.5."@en .
 
-vcfc:FORMATHeaderLine a owl:Class ; rdfs:subClassOf vcfc:HeaderLine ;
+vcfc:FORMATHeaderLine a owl:Class ; rdfs:subClassOf vcfc:StructuredHeaderLine, vcfc:FormatFieldDefinition ;
   rdfs:label "FORMAT header line"@en ;
   rdfs:comment "A structured '##FORMAT=<...>' declaration that defines the identifier, cardinality, type, and meaning of a field in a per-sample column. ID, Number, Type, and Description are required by VCF 4.5."@en .
 
-vcfc:FILTERHeaderLine a owl:Class ; rdfs:subClassOf vcfc:HeaderLine ;
+vcfc:FILTERHeaderLine a owl:Class ; rdfs:subClassOf vcfc:StructuredHeaderLine, vcfc:FilterDefinition ;
   rdfs:label "FILTER header line"@en ;
   rdfs:comment "A structured '##FILTER=<...>' declaration that defines a code which may appear in the FILTER column when a record does not pass that filter. ID and Description are required by VCF 4.5."@en .
 
-vcfc:ALTHeaderLine a owl:Class ; rdfs:subClassOf vcfc:HeaderLine ;
+vcfc:ALTHeaderLine a owl:Class ; rdfs:subClassOf vcfc:StructuredHeaderLine, vcfc:AltDefinition ;
   rdfs:label "ALT header line"@en ;
   rdfs:comment "A structured '##ALT=<...>' declaration that defines the meaning of a symbolic alternate-allele identifier. The identifier is used in the ALT column inside angle brackets, for example '<DEL>'."@en .
 
@@ -129,22 +136,21 @@ vcfc:SampleCall a owl:Class ;
 
 vcfc:FieldDefinition a owl:Class ;
   rdfs:label "field definition"@en ;
-  rdfs:comment "A common RDF superclass for header declarations that define reusable INFO, FORMAT, FILTER, or symbolic ALT identifiers. It is a vocabulary abstraction over the respective VCF structured meta-information lines."@en ;
-  rdfs:subClassOf vcfc:HeaderLine .
+  rdfs:comment "A reusable specification- or file-level definition of an INFO, FORMAT, FILTER, ALT, or META key. It is not itself a VCF header line: a concrete file declaration uses the corresponding *HeaderLine subclass."@en .
 
-vcfc:InfoFieldDefinition a owl:Class ; rdfs:subClassOf vcfc:FieldDefinition, vcfc:INFOHeaderLine ;
+vcfc:InfoFieldDefinition a owl:Class ; rdfs:subClassOf vcfc:FieldDefinition ;
   rdfs:label "INFO field definition"@en ;
   rdfs:comment "The definition of one INFO key, including its ID, Number, Type, and human-readable Description. It specifies how that key's site-level annotation values must be interpreted."@en .
 
-vcfc:FormatFieldDefinition a owl:Class ; rdfs:subClassOf vcfc:FieldDefinition, vcfc:FORMATHeaderLine ;
+vcfc:FormatFieldDefinition a owl:Class ; rdfs:subClassOf vcfc:FieldDefinition ;
   rdfs:label "FORMAT field definition"@en ;
   rdfs:comment "The definition of one FORMAT key, including its ID, Number, Type, and human-readable Description. It specifies how the corresponding per-sample values must be interpreted. Since version 1.1.0, it can also declare a condensed vcfc:FormatValueVector through vcfc:declaredBy."@en .
 
-vcfc:FilterDefinition a owl:Class ; rdfs:subClassOf vcfc:FieldDefinition, vcfc:FILTERHeaderLine ;
+vcfc:FilterDefinition a owl:Class ; rdfs:subClassOf vcfc:FieldDefinition ;
   rdfs:label "FILTER definition"@en ;
   rdfs:comment "The definition of one FILTER failure code. A VCF record that fails this criterion cites the code in its semicolon-separated FILTER value."@en .
 
-vcfc:AltDefinition a owl:Class ; rdfs:subClassOf vcfc:FieldDefinition, vcfc:ALTHeaderLine ;
+vcfc:AltDefinition a owl:Class ; rdfs:subClassOf vcfc:FieldDefinition ;
   rdfs:label "ALT definition"@en ;
   rdfs:comment "The definition of one symbolic ALT identifier. It provides the meaning of an angle-bracketed alternate allele such as '<DEL>' without asserting a particular variation model."@en .
 
@@ -331,6 +337,11 @@ vcfc:declaredBy a owl:ObjectProperty ;
   rdfs:comment "Links an INFO, FORMAT, FILTER, or ALT value/usage to its header definition line. Since version 1.1.0, a FormatValueVector uses this property to identify the FORMAT key that defines every position in the vector."@en ;
   rdfs:range vcfc:FieldDefinition .
 
+vcfc:declaredOnLine a owl:ObjectProperty ;
+  rdfs:label "declared on header line"@en ;
+  rdfs:comment "Links a reusable field definition to the concrete HeaderLine that declares it in one VCF file. This keeps specification-level registry definitions distinct from file-local header-line occurrences."@en ;
+  rdfs:domain vcfc:FieldDefinition ; rdfs:range vcfc:HeaderLine .
+
 vcfc:chromosome a owl:ObjectProperty ;
   rdfs:label "chromosome / contig reference"@en ;
   rdfs:comment "Links a record to the declared contig corresponding to its CHROM value. The CHROM column identifies a reference sequence (or, for breakpoint assemblies, an angle-bracketed assembly contig ID); a resolvable external reference may also be aligned to FALDO."@en ;
@@ -508,7 +519,7 @@ vcfc:ref a owl:DatatypeProperty ;
 
 vcfc:alt a owl:DatatypeProperty ;
   rdfs:label "ALT"@en ;
-  rdfs:comment "An alternate, non-reference allele from the ALT fixed field. The VCF source serializes ALT as an ordered comma-separated list; each item may be a base string, '*', '.', a symbolic '<ID>', '<*>', or a breakend expression. Multiple values may be represented by repeated assertions or an external rdf:List, while retaining source order for Number=A, R, and G fields."@en ;
+  rdfs:comment "A lossless raw ALT lexical value. The VCF source serializes ALT as an ordered comma-separated list whose items may be base strings, '*', '.', symbolic IDs, '<*>', or breakend expressions. Repeated vcfc:alt assertions are unsuitable for per-allele annotation or preserving ALT order; use hasAltAllele and alleleIndex for the structural form."@en ;
   rdfs:seeAlso vrs:LiteralSequenceExpression ;
   rdfs:domain vcfc:VCFRecord ;
   rdfs:range xsd:string .
@@ -602,3 +613,185 @@ vcfc:recommendedSequenceAlterationClass a owl:AnnotationProperty ;
   rdfs:comment "Documents a sequence-alteration class recommended as a target when a VCF-centric record or call is linked to a variation model. It is guidance for alignment and does not reclassify the VCF resource."@en .
 
 vcfc:recommendedSequenceAlterationClass vcfc:recommendedSequenceAlterationClass so:0001059 .
+
+#################################################################
+# VCF 4.5 additive core layer
+#################################################################
+
+vcfc:StructuredHeaderLine a owl:Class ; rdfs:subClassOf vcfc:HeaderLine ;
+  rdfs:label "structured header line"@en ;
+  rdfs:comment "A VCF meta-information line whose value is an angle-bracketed, comma-separated list of key-value attributes. Implementations must not rely on the source attribute order, but may preserve it with vcfc:attributeIndex."@en .
+
+vcfc:UnstructuredHeaderLine a owl:Class ; rdfs:subClassOf vcfc:HeaderLine ;
+  rdfs:label "unstructured header line"@en ;
+  rdfs:comment "A VCF meta-information line whose non-empty value is not an angle-bracketed attribute list."@en .
+
+vcfc:HeaderAttribute a owl:Class ;
+  rdfs:label "header attribute"@en ;
+  rdfs:comment "One key-value attribute from a structured VCF header line. It makes required, optional, and implementation-defined attributes queryable while headerValue retains the source form."@en ;
+  vcfc:iriTemplate "file://{vcfFilePath}#header/line/{lineId}/attribute/{attributeIndex}" .
+
+vcfc:ColumnHeaderLine a owl:Class ;
+  rdfs:label "column header line"@en ;
+  rdfs:comment "The mandatory tab-delimited #CHROM line. It declares the eight fixed VCF columns and, where genotype data occur, FORMAT followed by ordered sample columns. It is distinct from a ## meta-information HeaderLine."@en ;
+  vcfc:iriTemplate "file://{vcfFilePath}#header/columns" .
+
+vcfc:AssemblyHeaderLine a owl:Class ; rdfs:subClassOf vcfc:UnstructuredHeaderLine ;
+  rdfs:label "assembly header line"@en ;
+  rdfs:comment "The optional ##assembly line that locates a FASTA file containing breakpoint assemblies referenced by BKPTID."@en .
+
+vcfc:MetaHeaderLine a owl:Class ; rdfs:subClassOf vcfc:StructuredHeaderLine, vcfc:MetaDefinition ;
+  rdfs:label "META header line"@en ;
+  rdfs:comment "A structured ##META declaration that defines an implementation- or file-specific sample attribute key and optional allowed values."@en .
+
+vcfc:MetaDefinition a owl:Class ; rdfs:subClassOf vcfc:FieldDefinition ;
+  rdfs:label "META definition"@en ;
+  rdfs:comment "A ##META declaration represented as a reusable field definition. Its fieldId, fieldArity, and fieldType describe attributes used on ##SAMPLE lines."@en .
+
+vcfc:SampleHeaderLine a owl:Class ; rdfs:subClassOf vcfc:StructuredHeaderLine ;
+  rdfs:label "SAMPLE header line"@en ;
+  rdfs:comment "A structured ##SAMPLE declaration describing a sample or genome mapping through standard or META-declared attributes."@en .
+
+vcfc:SampleDeclaration a owl:Class ; rdfs:subClassOf prov:Entity ;
+  rdfs:label "sample declaration"@en ;
+  rdfs:comment "The declared subject of one ##SAMPLE header line. This is a header-level declaration and is distinct from a VCFSample, which identifies a #CHROM sample column."@en .
+
+vcfc:PedigreeHeaderLine a owl:Class ; rdfs:subClassOf vcfc:StructuredHeaderLine, vcfc:PedigreeRelation ;
+  rdfs:label "PEDIGREE header line"@en ;
+  rdfs:comment "A structured ##PEDIGREE declaration. Its HeaderAttribute resources retain arbitrary ancestor-role attributes; pedigreeMother and pedigreeFather provide direct links when those roles are represented as resources."@en .
+
+vcfc:PedigreeRelation a owl:Class ;
+  rdfs:label "pedigree relation"@en ;
+  rdfs:comment "A parent, ancestor, or clonal-origin relationship declared in VCF pedigree metadata."@en .
+
+vcfc:PedigreeDBHeaderLine a owl:Class ; rdfs:subClassOf vcfc:UnstructuredHeaderLine ;
+  rdfs:label "pedigreeDB header line"@en ;
+  rdfs:comment "The optional ##pedigreeDB line that identifies an external pedigree database."@en .
+
+vcfc:VCFFloat a rdfs:Datatype ;
+  rdfs:label "VCF Float"@en ;
+  rdfs:comment "A VCF Float lexical value: a finite decimal/scientific value or, case-insensitively, INF, INFINITY, or NAN. SHACL supplies the portable lexical check."@en .
+
+vcfc:VCFInteger a rdfs:Datatype ;
+  rdfs:label "VCF Integer"@en ;
+  rdfs:comment "A signed 32-bit VCF Integer excluding -2147483648 through -2147483641, which VCF 4.5 reserves because BCF cannot encode them."@en .
+
+vcfc:GenotypeString a rdfs:Datatype ;
+  rdfs:label "genotype string"@en ;
+  rdfs:comment "A VCF GT lexical value: allele indices or missing calls separated by phased (|) or unphased (/) indicators, optionally with a leading indicator for partial phasing."@en .
+
+vcfc:BreakendString a rdfs:Datatype ;
+  rdfs:label "breakend string"@en ;
+  rdfs:comment "A VCF breakend ALT lexical value. Use a Breakend resource for the queryable structural components while retaining this datatype for the lossless source expression."@en .
+
+vcfc:ArityPerAlt a owl:NamedIndividual, vcfc:VCFNumberArity ;
+  rdfs:label "one value per alternate allele (A)"@en ; vcfc:arityCode "A" .
+vcfc:ArityPerAllele a owl:NamedIndividual, vcfc:VCFNumberArity ;
+  rdfs:label "one value per allele (R)"@en ; vcfc:arityCode "R" .
+vcfc:ArityPerGenotype a owl:NamedIndividual, vcfc:VCFNumberArity ;
+  rdfs:label "one value per genotype (G)"@en ; vcfc:arityCode "G" .
+vcfc:ArityVariable a owl:NamedIndividual, vcfc:VCFNumberArity ;
+  rdfs:label "variable arity (.)"@en ; vcfc:arityCode "." .
+vcfc:ArityPerLocalAlt a owl:NamedIndividual, vcfc:VCFNumberArity ;
+  rdfs:label "one value per local alternate allele (LA)"@en ; vcfc:arityCode "LA" .
+vcfc:ArityPerLocalAllele a owl:NamedIndividual, vcfc:VCFNumberArity ;
+  rdfs:label "one value per local allele (LR)"@en ; vcfc:arityCode "LR" .
+vcfc:ArityPerLocalGenotype a owl:NamedIndividual, vcfc:VCFNumberArity ;
+  rdfs:label "one value per local genotype (LG)"@en ; vcfc:arityCode "LG" .
+vcfc:ArityPerGTAllele a owl:NamedIndividual, vcfc:VCFNumberArity ;
+  rdfs:label "one value per GT allele (P)"@en ; vcfc:arityCode "P" .
+vcfc:ArityPerBaseModification a owl:NamedIndividual, vcfc:VCFNumberArity ;
+  rdfs:label "one value per base modification (M)"@en ; vcfc:arityCode "M" .
+
+vcfc:fieldArity a owl:ObjectProperty ;
+  rdfs:label "field arity"@en ;
+  rdfs:comment "Links a field definition with a symbolic VCF Number arity. For a fixed count, use fieldNumberInteger; fieldNumber always preserves the exact source token."@en ;
+  rdfs:domain vcfc:FieldDefinition ; rdfs:range vcfc:VCFNumberArity .
+
+vcfc:hasAttribute a owl:ObjectProperty ;
+  rdfs:label "has attribute"@en ; rdfs:domain vcfc:StructuredHeaderLine ; rdfs:range vcfc:HeaderAttribute .
+vcfc:hasColumnHeader a owl:ObjectProperty ;
+  rdfs:label "has column header"@en ; rdfs:domain vcfc:VCFHeader ; rdfs:range vcfc:ColumnHeaderLine .
+vcfc:hasGenotypeColumns a owl:ObjectProperty ;
+  rdfs:label "has genotype columns"@en ; rdfs:domain vcfc:ColumnHeaderLine ; rdfs:range vcfc:VCFSample .
+vcfc:declaresSample a owl:ObjectProperty ;
+  rdfs:label "declares sample"@en ; rdfs:domain vcfc:SampleHeaderLine ; rdfs:range vcfc:SampleDeclaration .
+vcfc:pedigreeAncestor a owl:ObjectProperty ;
+  rdfs:label "pedigree ancestor"@en ; rdfs:domain vcfc:PedigreeRelation ; rdfs:range vcfc:SampleDeclaration .
+vcfc:pedigreeMother a owl:ObjectProperty ; rdfs:subPropertyOf vcfc:pedigreeAncestor ;
+  rdfs:label "pedigree mother"@en ; rdfs:domain vcfc:PedigreeRelation ; rdfs:range vcfc:SampleDeclaration .
+vcfc:pedigreeFather a owl:ObjectProperty ; rdfs:subPropertyOf vcfc:pedigreeAncestor ;
+  rdfs:label "pedigree father"@en ; rdfs:domain vcfc:PedigreeRelation ; rdfs:range vcfc:SampleDeclaration .
+vcfc:pedigreeOriginal a owl:ObjectProperty ; rdfs:subPropertyOf vcfc:pedigreeAncestor, prov:wasDerivedFrom ;
+  rdfs:label "pedigree original"@en ;
+  rdfs:comment "The clonal Original= relation in a ##PEDIGREE line. It is explicitly a PROV derivation relation; parent and generic ancestor links are not globally forced to that interpretation."@en ;
+  rdfs:domain vcfc:PedigreeRelation ; rdfs:range vcfc:SampleDeclaration .
+
+vcfc:arityCode a owl:DatatypeProperty ;
+  rdfs:label "arity code"@en ; rdfs:domain vcfc:VCFNumberArity ; rdfs:range xsd:string .
+vcfc:fieldNumberInteger a owl:DatatypeProperty ;
+  rdfs:label "field Number integer"@en ; rdfs:domain vcfc:FieldDefinition ; rdfs:range xsd:nonNegativeInteger .
+vcfc:lineIndex a owl:DatatypeProperty ;
+  rdfs:label "line index"@en ; rdfs:domain vcfc:HeaderLine ; rdfs:range xsd:positiveInteger .
+vcfc:recordIndex a owl:DatatypeProperty ;
+  rdfs:label "record index"@en ; rdfs:domain vcfc:VCFRecord ; rdfs:range xsd:positiveInteger .
+vcfc:attributeKey a owl:DatatypeProperty ;
+  rdfs:label "attribute key"@en ; rdfs:domain vcfc:HeaderAttribute ; rdfs:range xsd:string .
+vcfc:attributeValue a owl:DatatypeProperty ;
+  rdfs:label "attribute value"@en ; rdfs:domain vcfc:HeaderAttribute ; rdfs:range xsd:string .
+vcfc:attributeIndex a owl:DatatypeProperty ;
+  rdfs:label "attribute index"@en ; rdfs:domain vcfc:HeaderAttribute ; rdfs:range xsd:positiveInteger .
+vcfc:assemblyUrl a owl:DatatypeProperty ;
+  rdfs:label "assembly URL"@en ; rdfs:domain vcfc:AssemblyHeaderLine ; rdfs:range xsd:anyURI .
+vcfc:pedigreeDbUrl a owl:DatatypeProperty ;
+  rdfs:label "pedigree database URL"@en ; rdfs:domain vcfc:PedigreeDBHeaderLine ; rdfs:range xsd:anyURI .
+vcfc:metaAllowedValue a owl:DatatypeProperty ;
+  rdfs:label "META allowed value"@en ; rdfs:domain vcfc:MetaDefinition ; rdfs:range xsd:string .
+vcfc:ancestorRole a owl:DatatypeProperty ;
+  rdfs:label "ancestor role"@en ; rdfs:domain vcfc:PedigreeRelation ; rdfs:range xsd:string .
+vcfc:contigUrl a owl:DatatypeProperty ;
+  rdfs:label "contig URL"@en ; rdfs:domain vcfc:ContigHeaderLine ; rdfs:range xsd:anyURI .
+vcfc:fieldSource a owl:DatatypeProperty ;
+  rdfs:label "field source"@en ; rdfs:domain vcfc:INFOHeaderLine ; rdfs:range xsd:string .
+vcfc:fieldVersion a owl:DatatypeProperty ;
+  rdfs:label "field version"@en ; rdfs:domain vcfc:INFOHeaderLine ; rdfs:range xsd:string .
+vcfc:percentEncodingPolicy a owl:DatatypeProperty ;
+  rdfs:label "percent-encoding policy"@en ; rdfs:domain vcfc:VCFFile ; rdfs:range xsd:string .
+vcfc:rawValue a owl:DatatypeProperty ;
+  rdfs:label "raw value"@en ; rdfs:comment "The lossless source lexical value before optional percent decoding."@en ; rdfs:range rdfs:Literal .
+vcfc:decodedValue a owl:DatatypeProperty ;
+  rdfs:label "decoded value"@en ; rdfs:comment "A consumer-oriented value after applying the file's percent-encoding policy; rawValue remains authoritative for round-tripping."@en ; rdfs:range rdfs:Literal .
+
+# Parsed components retain their source order without changing raw columns.
+vcfc:RecordIdentifier a owl:Class ; rdfs:label "record identifier"@en ;
+  rdfs:comment "One component of the semicolon-separated ID column. The missing dot is represented by no identifier components."@en .
+vcfc:hasIdentifier a owl:ObjectProperty ; rdfs:label "has identifier"@en ;
+  rdfs:domain vcfc:VCFRecord ; rdfs:range vcfc:RecordIdentifier .
+vcfc:identifierValue a owl:DatatypeProperty ; rdfs:label "identifier value"@en ;
+  rdfs:domain vcfc:RecordIdentifier ; rdfs:range xsd:string .
+vcfc:componentIndex a owl:DatatypeProperty ; rdfs:label "component index"@en ;
+  rdfs:comment "One-based position of an ID or FILTER component in its source column."@en ; rdfs:range xsd:positiveInteger .
+vcfc:FilterCode a owl:Class ; rdfs:label "filter failure code"@en ;
+  rdfs:comment "One failed FILTER or FT code. PASS and missing are statuses, not failure codes."@en .
+vcfc:hasFilterCode a owl:ObjectProperty ; rdfs:label "has filter failure code"@en ; rdfs:range vcfc:FilterCode .
+vcfc:filterCodeValue a owl:DatatypeProperty ; rdfs:label "filter code value"@en ; rdfs:domain vcfc:FilterCode ; rdfs:range xsd:string .
+vcfc:declaredByFilter a owl:ObjectProperty ; rdfs:label "declared by filter"@en ; rdfs:domain vcfc:FilterCode ; rdfs:range vcfc:FilterDefinition .
+vcfc:FilterStatus a owl:Class ; rdfs:label "filter status"@en .
+vcfc:FiltersPassed a owl:NamedIndividual, vcfc:FilterStatus ; rdfs:label "filters passed"@en .
+vcfc:FiltersFailed a owl:NamedIndividual, vcfc:FilterStatus ; rdfs:label "filters failed"@en .
+vcfc:FiltersNotApplied a owl:NamedIndividual, vcfc:FilterStatus ; rdfs:label "filters not applied"@en .
+vcfc:filterStatus a owl:ObjectProperty ; rdfs:label "filter status"@en ;
+  rdfs:comment "Status of FILTER on a VariantCall or FT on a SampleCall."@en ; rdfs:range vcfc:FilterStatus .
+vcfc:fieldIndex a owl:DatatypeProperty ; rdfs:label "field index"@en ;
+  rdfs:comment "One-based source order of an INFO entry or FORMAT field value within its parent."@en ; rdfs:range xsd:positiveInteger .
+vcfc:sampleFieldsRaw a owl:DatatypeProperty ; rdfs:label "raw sample fields"@en ;
+  rdfs:comment "One expanded sample's original colon-separated fields, retaining omitted trailing fields and empty list tokens."@en ;
+  rdfs:domain vcfc:SampleCall ; rdfs:range xsd:string .
+
+vcfc:VCF41File a owl:Class ; rdfs:subClassOf vcfc:VCFFile ; rdfs:label "VCF 4.1 file"@en ; rdfs:comment "An optional explicit VCF 4.1 file type. The matching SHACL overlay also scopes its rules by fileFormat."@en .
+
+vcfc:VCF42File a owl:Class ; rdfs:subClassOf vcfc:VCFFile ; rdfs:label "VCF 4.2 file"@en ; rdfs:comment "An optional explicit VCF 4.2 file type. The matching SHACL overlay also scopes its rules by fileFormat."@en .
+
+vcfc:VCF43File a owl:Class ; rdfs:subClassOf vcfc:VCFFile ; rdfs:label "VCF 4.3 file"@en ; rdfs:comment "An optional explicit VCF 4.3 file type. The matching SHACL overlay also scopes its rules by fileFormat."@en .
+
+vcfc:VCF44File a owl:Class ; rdfs:subClassOf vcfc:VCFFile ; rdfs:label "VCF 4.4 file"@en ; rdfs:comment "An optional explicit VCF 4.4 file type. The matching SHACL overlay also scopes its rules by fileFormat."@en .

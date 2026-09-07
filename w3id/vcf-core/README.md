@@ -5,7 +5,7 @@ VCF 4.5 files, headers, records, call assessments, and genotype data, with expan
 cohort representations.
 
 - Namespace: `https://w3id.org/vcf-core/vocab#` (prefix `vcfc:`)
-- Source: <https://github.com/ecrum19/VCF-RDFizer-vocabulary>
+- Source: <https://github.com/ecrum19/vcf-core-vocabulary>
 - License: CC BY 4.0
 
 This namespace supersedes `https://w3id.org/vcf-rdfizer/`, which remains configured separately and serves a

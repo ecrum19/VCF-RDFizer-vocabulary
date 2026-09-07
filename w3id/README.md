@@ -5,19 +5,19 @@ pull request:
 
 | Directory | Path on w3id.org | Purpose |
 | --- | --- | --- |
-| `vcf-core/` | `https://w3id.org/vcf-core/` | New. Serves the VCF Core Vocabulary, its SHACL shapes, and the companion documentation, with content negotiation. |
+| `vcf-core/` | `https://w3id.org/vcf-core/` | New. Serves the VCF Core Vocabulary, VCF 4.5 modules, SHACL profiles, and companion documentation. |
 | `vcf-rdfizer/` | `https://w3id.org/vcf-rdfizer/` | Replaces the existing directory. Serves the legacy deprecation document for the retired namespace. |
 
 ## Before opening the pull request
 
 1. **Replace every `REPLACE-ME`** in both `.htaccess` files with the real publishing host, no trailing
    slash. If the companion site is published to GitHub Pages from this repository, that host is
-   `https://ecrum19.github.io/VCF-RDFizer-vocabulary`.
+   `https://ecrum19.github.io/vcf-core-vocabulary`.
 2. **Confirm the host actually serves the referenced files.** The rules point at
-   `assets/vcf-core-vocabulary.ttl`, `assets/vcf-core-vocabulary.shacl.ttl` and
-   `assets/legacy-vcf-rdfizer.ttl`. The OCG build copies repository sources into `site/assets/`, so
-   `legacy/legacy-vcf-rdfizer.ttl` must be added to `ocg.config.json` as an artifact (or copied into the
-   published `site/assets/` by the Pages workflow) before these rules resolve.
+   `assets/vcf-core-vocabulary.bundle.ttl`, four VCF 4.5 module Turtle files, both SHACL profiles, and
+   `assets/legacy-vcf-rdfizer.ttl`. The OCG
+   build copies configured artifacts into `site/assets/`; keep every module and profile registered in
+   `ocg.config.json` before publishing.
 3. **Test against a local checkout**, as the w3id maintainers ask.
 4. **Squash to one commit** and put the project name in the PR message. Merged changes go live
    immediately.

@@ -1,14 +1,13 @@
 cff-version: 1.2.0
 title: "VCF Core Vocabulary"
-version: 3.0.0
-date-released: 2026-09-07
+version: 2.0.0
 message: "If you use this vocabulary, please cite it."
 type: software
 authors:
   - family-names: Crum
     given-names: Elias
 license: CC-BY-4.0
-repository-code: "https://github.com/ecrum19/VCF-RDFizer-vocabulary"
+repository-code: "https://github.com/ecrum19/vcf-core-vocabulary"
 url: "https://w3id.org/vcf-core/"
 keywords:
   - VCF

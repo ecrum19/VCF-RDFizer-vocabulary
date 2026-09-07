@@ -1,0 +1,248 @@
+{
+  "version": "4.1",
+  "source": "https://raw.githubusercontent.com/samtools/hts-specs/master/VCFv4.1.tex",
+  "sha256": "7d29ef8f93745f246202da3e32107ea13b036bbefcb31f7971a3ce31f1045baa",
+  "scope": "Explicit reserved table rows and header declarations in the specification; earlier prose-only definitions remain producer-declared.",
+  "definitions": [
+    {
+      "kind": "FORMAT",
+      "id": "AHAP",
+      "number": "1",
+      "type": "Integer"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "CN",
+      "number": "1",
+      "type": "Integer"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "CNL",
+      "number": ".",
+      "type": "Float"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "CNQ",
+      "number": "1",
+      "type": "Float"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "DP",
+      "number": "1",
+      "type": "Integer"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "GQ",
+      "number": "1",
+      "type": "Integer"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "GT",
+      "number": "1",
+      "type": "String"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "HAP",
+      "number": "1",
+      "type": "Integer"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "HQ",
+      "number": "2",
+      "type": "Integer"
+    },
+    {
+      "kind": "FORMAT",
+      "id": "NQ",
+      "number": "1",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "AA",
+      "number": "1",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "AF",
+      "number": "A",
+      "type": "Float"
+    },
+    {
+      "kind": "INFO",
+      "id": "BKPTID",
+      "number": ".",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "CICN",
+      "number": "2",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "CICNADJ",
+      "number": ".",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "CIEND",
+      "number": "2",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "CILEN",
+      "number": "2",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "CIPOS",
+      "number": "2",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "CN",
+      "number": "1",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "CNADJ",
+      "number": ".",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "DB",
+      "number": "0",
+      "type": "Flag"
+    },
+    {
+      "kind": "INFO",
+      "id": "DBRIPID",
+      "number": "1",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "DBVARID",
+      "number": "1",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "DGVID",
+      "number": "1",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "DP",
+      "number": "1",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "DPADJ",
+      "number": ".",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "END",
+      "number": "1",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "EVENT",
+      "number": "1",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "H2",
+      "number": "0",
+      "type": "Flag"
+    },
+    {
+      "kind": "INFO",
+      "id": "HOMLEN",
+      "number": ".",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "HOMSEQ",
+      "number": ".",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "IMPRECISE",
+      "number": "0",
+      "type": "Flag"
+    },
+    {
+      "kind": "INFO",
+      "id": "MATEID",
+      "number": ".",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "MEINFO",
+      "number": "4",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "METRANS",
+      "number": "4",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "NOVEL",
+      "number": "0",
+      "type": "Flag"
+    },
+    {
+      "kind": "INFO",
+      "id": "NS",
+      "number": "1",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "PARID",
+      "number": "1",
+      "type": "String"
+    },
+    {
+      "kind": "INFO",
+      "id": "SVLEN",
+      "number": ".",
+      "type": "Integer"
+    },
+    {
+      "kind": "INFO",
+      "id": "SVTYPE",
+      "number": "1",
+      "type": "String"
+    }
+  ]
+}

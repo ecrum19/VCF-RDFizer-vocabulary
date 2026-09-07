@@ -1,0 +1,116 @@
+[
+  {
+    "fixture": "examples/core/example-headers.ttl",
+    "violations": 0,
+    "warnings": 0,
+    "passed": true
+  },
+  {
+    "fixture": "examples/core/example-minimal-record.ttl",
+    "violations": 0,
+    "warnings": 0,
+    "passed": true
+  },
+  {
+    "fixture": "examples/core/example-quickstart.ttl",
+    "violations": 0,
+    "warnings": 0,
+    "passed": true
+  },
+  {
+    "fixture": "examples/core/example.ttl",
+    "violations": 0,
+    "warnings": 0,
+    "passed": true
+  },
+  {
+    "fixture": "examples/profiles/example-condensed-cohort.ttl",
+    "violations": 0,
+    "warnings": 0,
+    "passed": true
+  },
+  {
+    "fixture": "examples/vcf-versions/vcf-4.1/example-vcf41.ttl",
+    "violations": 0,
+    "warnings": 0,
+    "passed": true
+  },
+  {
+    "fixture": "examples/vcf-versions/vcf-4.2/example-vcf42.ttl",
+    "violations": 0,
+    "warnings": 0,
+    "passed": true
+  },
+  {
+    "fixture": "examples/vcf-versions/vcf-4.3/example-vcf43.ttl",
+    "violations": 0,
+    "warnings": 0,
+    "passed": true
+  },
+  {
+    "fixture": "examples/vcf-versions/vcf-4.4/example-vcf44.ttl",
+    "violations": 0,
+    "warnings": 0,
+    "passed": true
+  },
+  {
+    "fixture": "examples/vcf-versions/vcf-4.5/example-vcf45-breakends.ttl",
+    "violations": 0,
+    "warnings": 0,
+    "passed": true
+  },
+  {
+    "fixture": "examples/vcf-versions/vcf-4.5/example-vcf45-features.ttl",
+    "violations": 0,
+    "warnings": 0,
+    "passed": true
+  },
+  {
+    "fixture": "examples/vcf-versions/vcf-4.5/example-vcf45-gvcf.ttl",
+    "violations": 0,
+    "warnings": 0,
+    "passed": true
+  },
+  {
+    "fixture": "examples/vcf-versions/vcf-4.5/example-vcf45-repeats.ttl",
+    "violations": 0,
+    "warnings": 0,
+    "passed": true
+  },
+  {
+    "fixture": "examples/core/example.nt",
+    "violations": 0,
+    "warnings": 0,
+    "passed": true
+  },
+  {
+    "fixture": "SWAT4HCLS_2027/evidence/condensed.ttl",
+    "violations": 0,
+    "warnings": 0,
+    "passed": true
+  },
+  {
+    "fixture": "SWAT4HCLS_2027/evidence/expanded.ttl",
+    "violations": 0,
+    "warnings": 0,
+    "passed": true
+  },
+  {
+    "fixture": "tests/shacl/generic-vcf44.ttl",
+    "violations": 0,
+    "warnings": 0,
+    "passed": true
+  },
+  {
+    "fixture": "headers + minimal merged",
+    "violations": 0,
+    "warnings": 0,
+    "passed": true
+  },
+  {
+    "fixture": "CONSTRUCT template",
+    "violations": 0,
+    "warnings": 0,
+    "passed": true
+  }
+]

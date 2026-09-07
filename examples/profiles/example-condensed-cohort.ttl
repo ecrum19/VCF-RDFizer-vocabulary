@@ -1,0 +1,536 @@
+@prefix ex: <file://example-condensed-cohort.vcf#> .
+@prefix vcfc: <https://w3id.org/vcf-core/vocab#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<file://example-condensed-cohort.vcf> a vcfc:VCF41File,
+        vcfc:VCFFile ;
+    vcfc:fileFormat "VCFv4.1" ;
+    vcfc:hasHeader ex:header ;
+    vcfc:hasRecord <file://example-condensed-cohort.vcf#record/1>,
+        <file://example-condensed-cohort.vcf#record/2>,
+        <file://example-condensed-cohort.vcf#record/3> ;
+    vcfc:hasSampleSet ex:samples ;
+    vcfc:referenceGenome "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz" ;
+    vcfc:representationProfile vcfc:CondensedRepresentation ;
+    vcfc:sourceSoftware "1000GenomesPhase3Pipeline" .
+
+<file://example-condensed-cohort.vcf#call/1> a vcfc:VariantCall ;
+    vcfc:filter "PASS" ;
+    vcfc:filterStatus vcfc:FiltersPassed ;
+    vcfc:formatRaw "GT" ;
+    vcfc:hasCallMatrix <file://example-condensed-cohort.vcf#call/1/matrix> ;
+    vcfc:hasInfoValue <file://example-condensed-cohort.vcf#call/1/info/AC>,
+        <file://example-condensed-cohort.vcf#call/1/info/AF>,
+        <file://example-condensed-cohort.vcf#call/1/info/AN> ;
+    vcfc:infoRaw "AC=4;AF=0.25;AN=16" ;
+    vcfc:qual "100"^^vcfc:VCFFloat .
+
+<file://example-condensed-cohort.vcf#call/1/info/AC> a vcfc:InfoFieldValue ;
+    vcfc:declaredBy <file://example-condensed-cohort.vcf#header/line/6> ;
+    vcfc:fieldIndex 1 ;
+    vcfc:fieldValue "4" ;
+    vcfc:fieldValueInteger 4 ;
+    vcfc:hasValueItem <file://example-condensed-cohort.vcf#call/1/info/AC/item/0> .
+
+<file://example-condensed-cohort.vcf#call/1/info/AC/item/0> a vcfc:FieldValueItem ;
+    vcfc:forAllele <file://example-condensed-cohort.vcf#record/1/allele/1> ;
+    vcfc:itemValue 4 ;
+    vcfc:valueIndex 0 .
+
+<file://example-condensed-cohort.vcf#call/1/info/AF> a vcfc:InfoFieldValue ;
+    vcfc:declaredBy <file://example-condensed-cohort.vcf#header/line/7> ;
+    vcfc:fieldIndex 2 ;
+    vcfc:fieldValue "0.25" ;
+    vcfc:fieldValueDecimal 0.25 ;
+    vcfc:hasValueItem <file://example-condensed-cohort.vcf#call/1/info/AF/item/0> .
+
+<file://example-condensed-cohort.vcf#call/1/info/AF/item/0> a vcfc:FieldValueItem ;
+    vcfc:forAllele <file://example-condensed-cohort.vcf#record/1/allele/1> ;
+    vcfc:itemValue "0.25"^^vcfc:VCFFloat ;
+    vcfc:valueIndex 0 .
+
+<file://example-condensed-cohort.vcf#call/1/info/AN> a vcfc:InfoFieldValue ;
+    vcfc:declaredBy <file://example-condensed-cohort.vcf#header/line/8> ;
+    vcfc:fieldIndex 3 ;
+    vcfc:fieldValue "16" ;
+    vcfc:fieldValueInteger 16 ;
+    vcfc:hasValueItem <file://example-condensed-cohort.vcf#call/1/info/AN/item/0> .
+
+<file://example-condensed-cohort.vcf#call/1/info/AN/item/0> a vcfc:FieldValueItem ;
+    vcfc:itemValue 16 ;
+    vcfc:valueIndex 0 .
+
+<file://example-condensed-cohort.vcf#call/1/matrix> a vcfc:CohortCallMatrix ;
+    vcfc:appliesToSampleSet ex:samples ;
+    vcfc:hasFormatValueVector <file://example-condensed-cohort.vcf#call/1/matrix/fmt/GT> ;
+    vcfc:sampleDataRaw "1|0	0|0	0|0	0|0	0|1	0|0	1|0	0|1" .
+
+<file://example-condensed-cohort.vcf#call/1/matrix/fmt/GT> a vcfc:FormatValueVector ;
+    vcfc:declaredBy <file://example-condensed-cohort.vcf#header/line/9> ;
+    vcfc:encodedValues "1|0	0|0	0|0	0|0	0|1	0|0	1|0	0|1" ;
+    vcfc:valueEncoding vcfc:VCFTextVector .
+
+<file://example-condensed-cohort.vcf#call/2> a vcfc:VariantCall ;
+    vcfc:filter "PASS" ;
+    vcfc:filterStatus vcfc:FiltersPassed ;
+    vcfc:formatRaw "GT" ;
+    vcfc:hasCallMatrix <file://example-condensed-cohort.vcf#call/2/matrix> ;
+    vcfc:hasInfoValue <file://example-condensed-cohort.vcf#call/2/info/AC>,
+        <file://example-condensed-cohort.vcf#call/2/info/AF>,
+        <file://example-condensed-cohort.vcf#call/2/info/AN> ;
+    vcfc:infoRaw "AC=9;AF=0.5625;AN=16" ;
+    vcfc:qual "100"^^vcfc:VCFFloat .
+
+<file://example-condensed-cohort.vcf#call/2/info/AC> a vcfc:InfoFieldValue ;
+    vcfc:declaredBy <file://example-condensed-cohort.vcf#header/line/6> ;
+    vcfc:fieldIndex 1 ;
+    vcfc:fieldValue "9" ;
+    vcfc:fieldValueInteger 9 ;
+    vcfc:hasValueItem <file://example-condensed-cohort.vcf#call/2/info/AC/item/0> .
+
+<file://example-condensed-cohort.vcf#call/2/info/AC/item/0> a vcfc:FieldValueItem ;
+    vcfc:forAllele <file://example-condensed-cohort.vcf#record/2/allele/1> ;
+    vcfc:itemValue 9 ;
+    vcfc:valueIndex 0 .
+
+<file://example-condensed-cohort.vcf#call/2/info/AF> a vcfc:InfoFieldValue ;
+    vcfc:declaredBy <file://example-condensed-cohort.vcf#header/line/7> ;
+    vcfc:fieldIndex 2 ;
+    vcfc:fieldValue "0.5625" ;
+    vcfc:fieldValueDecimal 0.5625 ;
+    vcfc:hasValueItem <file://example-condensed-cohort.vcf#call/2/info/AF/item/0> .
+
+<file://example-condensed-cohort.vcf#call/2/info/AF/item/0> a vcfc:FieldValueItem ;
+    vcfc:forAllele <file://example-condensed-cohort.vcf#record/2/allele/1> ;
+    vcfc:itemValue "0.5625"^^vcfc:VCFFloat ;
+    vcfc:valueIndex 0 .
+
+<file://example-condensed-cohort.vcf#call/2/info/AN> a vcfc:InfoFieldValue ;
+    vcfc:declaredBy <file://example-condensed-cohort.vcf#header/line/8> ;
+    vcfc:fieldIndex 3 ;
+    vcfc:fieldValue "16" ;
+    vcfc:fieldValueInteger 16 ;
+    vcfc:hasValueItem <file://example-condensed-cohort.vcf#call/2/info/AN/item/0> .
+
+<file://example-condensed-cohort.vcf#call/2/info/AN/item/0> a vcfc:FieldValueItem ;
+    vcfc:itemValue 16 ;
+    vcfc:valueIndex 0 .
+
+<file://example-condensed-cohort.vcf#call/2/matrix> a vcfc:CohortCallMatrix ;
+    vcfc:appliesToSampleSet ex:samples ;
+    vcfc:hasFormatValueVector <file://example-condensed-cohort.vcf#call/2/matrix/fmt/GT> ;
+    vcfc:sampleDataRaw "1|1	0|0	0|0	0|1	1|1	0|0	1|1	1|1" .
+
+<file://example-condensed-cohort.vcf#call/2/matrix/fmt/GT> a vcfc:FormatValueVector ;
+    vcfc:declaredBy <file://example-condensed-cohort.vcf#header/line/9> ;
+    vcfc:encodedValues "1|1	0|0	0|0	0|1	1|1	0|0	1|1	1|1" ;
+    vcfc:valueEncoding vcfc:VCFTextVector .
+
+<file://example-condensed-cohort.vcf#call/3> a vcfc:VariantCall ;
+    vcfc:filter "PASS" ;
+    vcfc:filterStatus vcfc:FiltersPassed ;
+    vcfc:formatRaw "GT" ;
+    vcfc:hasCallMatrix <file://example-condensed-cohort.vcf#call/3/matrix> ;
+    vcfc:hasInfoValue <file://example-condensed-cohort.vcf#call/3/info/AC>,
+        <file://example-condensed-cohort.vcf#call/3/info/AF>,
+        <file://example-condensed-cohort.vcf#call/3/info/AN> ;
+    vcfc:infoRaw "AC=8;AF=0.5;AN=16" ;
+    vcfc:qual "100"^^vcfc:VCFFloat .
+
+<file://example-condensed-cohort.vcf#call/3/info/AC> a vcfc:InfoFieldValue ;
+    vcfc:declaredBy <file://example-condensed-cohort.vcf#header/line/6> ;
+    vcfc:fieldIndex 1 ;
+    vcfc:fieldValue "8" ;
+    vcfc:fieldValueInteger 8 ;
+    vcfc:hasValueItem <file://example-condensed-cohort.vcf#call/3/info/AC/item/0> .
+
+<file://example-condensed-cohort.vcf#call/3/info/AC/item/0> a vcfc:FieldValueItem ;
+    vcfc:forAllele <file://example-condensed-cohort.vcf#record/3/allele/1> ;
+    vcfc:itemValue 8 ;
+    vcfc:valueIndex 0 .
+
+<file://example-condensed-cohort.vcf#call/3/info/AF> a vcfc:InfoFieldValue ;
+    vcfc:declaredBy <file://example-condensed-cohort.vcf#header/line/7> ;
+    vcfc:fieldIndex 2 ;
+    vcfc:fieldValue "0.5" ;
+    vcfc:fieldValueDecimal 0.5 ;
+    vcfc:hasValueItem <file://example-condensed-cohort.vcf#call/3/info/AF/item/0> .
+
+<file://example-condensed-cohort.vcf#call/3/info/AF/item/0> a vcfc:FieldValueItem ;
+    vcfc:forAllele <file://example-condensed-cohort.vcf#record/3/allele/1> ;
+    vcfc:itemValue "0.5"^^vcfc:VCFFloat ;
+    vcfc:valueIndex 0 .
+
+<file://example-condensed-cohort.vcf#call/3/info/AN> a vcfc:InfoFieldValue ;
+    vcfc:declaredBy <file://example-condensed-cohort.vcf#header/line/8> ;
+    vcfc:fieldIndex 3 ;
+    vcfc:fieldValue "16" ;
+    vcfc:fieldValueInteger 16 ;
+    vcfc:hasValueItem <file://example-condensed-cohort.vcf#call/3/info/AN/item/0> .
+
+<file://example-condensed-cohort.vcf#call/3/info/AN/item/0> a vcfc:FieldValueItem ;
+    vcfc:itemValue 16 ;
+    vcfc:valueIndex 0 .
+
+<file://example-condensed-cohort.vcf#call/3/matrix> a vcfc:CohortCallMatrix ;
+    vcfc:appliesToSampleSet ex:samples ;
+    vcfc:hasFormatValueVector <file://example-condensed-cohort.vcf#call/3/matrix/fmt/GT> ;
+    vcfc:sampleDataRaw "1|0	0|1	0|0	1|0	1|1	1|1	0|0	0|1" .
+
+<file://example-condensed-cohort.vcf#call/3/matrix/fmt/GT> a vcfc:FormatValueVector ;
+    vcfc:declaredBy <file://example-condensed-cohort.vcf#header/line/9> ;
+    vcfc:encodedValues "1|0	0|1	0|0	1|0	1|1	1|1	0|0	0|1" ;
+    vcfc:valueEncoding vcfc:VCFTextVector .
+
+ex:header a vcfc:VCFHeader ;
+    vcfc:hasColumnHeader <file://example-condensed-cohort.vcf#header/columns> ;
+    vcfc:hasHeaderLine <file://example-condensed-cohort.vcf#header/line/1>,
+        <file://example-condensed-cohort.vcf#header/line/2>,
+        <file://example-condensed-cohort.vcf#header/line/3>,
+        <file://example-condensed-cohort.vcf#header/line/4>,
+        <file://example-condensed-cohort.vcf#header/line/5>,
+        <file://example-condensed-cohort.vcf#header/line/6>,
+        <file://example-condensed-cohort.vcf#header/line/7>,
+        <file://example-condensed-cohort.vcf#header/line/8>,
+        <file://example-condensed-cohort.vcf#header/line/9> .
+
+<file://example-condensed-cohort.vcf#header/columns> a vcfc:ColumnHeaderLine ;
+    vcfc:hasGenotypeColumns <file://example-condensed-cohort.vcf#samples/HG00096>,
+        <file://example-condensed-cohort.vcf#samples/HG00097>,
+        <file://example-condensed-cohort.vcf#samples/HG00099>,
+        <file://example-condensed-cohort.vcf#samples/HG00100>,
+        <file://example-condensed-cohort.vcf#samples/HG00101>,
+        <file://example-condensed-cohort.vcf#samples/HG00102>,
+        <file://example-condensed-cohort.vcf#samples/HG00103>,
+        <file://example-condensed-cohort.vcf#samples/HG00105> .
+
+<file://example-condensed-cohort.vcf#header/line/1> a vcfc:FileFormatHeaderLine ;
+    vcfc:headerKey "fileformat" ;
+    vcfc:headerValue "VCFv4.1" ;
+    vcfc:lineIndex 1 .
+
+<file://example-condensed-cohort.vcf#header/line/2> a vcfc:SourceHeaderLine ;
+    vcfc:headerKey "source" ;
+    vcfc:headerValue "1000GenomesPhase3Pipeline" ;
+    vcfc:lineIndex 2 .
+
+<file://example-condensed-cohort.vcf#header/line/3> a vcfc:ReferenceHeaderLine ;
+    vcfc:headerKey "reference" ;
+    vcfc:headerValue "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz" ;
+    vcfc:lineIndex 3 .
+
+<file://example-condensed-cohort.vcf#header/line/4/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "20" .
+
+<file://example-condensed-cohort.vcf#header/line/4/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "assembly" ;
+    vcfc:attributeValue "b37" .
+
+<file://example-condensed-cohort.vcf#header/line/4/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "length" ;
+    vcfc:attributeValue "63025520" .
+
+<file://example-condensed-cohort.vcf#header/line/5> a vcfc:UnstructuredHeaderLine ;
+    vcfc:headerKey "subsetNote" ;
+    vcfc:headerValue "Eight samples and three SNPs from 1000 Genomes Phase 3; AC AF AN recalculated for this subset." ;
+    vcfc:lineIndex 5 .
+
+<file://example-condensed-cohort.vcf#header/line/6/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "AC" .
+
+<file://example-condensed-cohort.vcf#header/line/6/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "A" .
+
+<file://example-condensed-cohort.vcf#header/line/6/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "Integer" .
+
+<file://example-condensed-cohort.vcf#header/line/6/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Alternate allele count in the eight selected samples" .
+
+<file://example-condensed-cohort.vcf#header/line/6/attribute/5> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 5 ;
+    vcfc:attributeKey "Source" ;
+    vcfc:attributeValue "VCF-Core-subset" .
+
+<file://example-condensed-cohort.vcf#header/line/6/attribute/6> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 6 ;
+    vcfc:attributeKey "Version" ;
+    vcfc:attributeValue "1" .
+
+<file://example-condensed-cohort.vcf#header/line/7/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "AF" .
+
+<file://example-condensed-cohort.vcf#header/line/7/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "A" .
+
+<file://example-condensed-cohort.vcf#header/line/7/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "Float" .
+
+<file://example-condensed-cohort.vcf#header/line/7/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Alternate allele frequency in the eight selected samples" .
+
+<file://example-condensed-cohort.vcf#header/line/7/attribute/5> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 5 ;
+    vcfc:attributeKey "Source" ;
+    vcfc:attributeValue "VCF-Core-subset" .
+
+<file://example-condensed-cohort.vcf#header/line/7/attribute/6> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 6 ;
+    vcfc:attributeKey "Version" ;
+    vcfc:attributeValue "1" .
+
+<file://example-condensed-cohort.vcf#header/line/8/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "AN" .
+
+<file://example-condensed-cohort.vcf#header/line/8/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "1" .
+
+<file://example-condensed-cohort.vcf#header/line/8/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "Integer" .
+
+<file://example-condensed-cohort.vcf#header/line/8/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Number of called alleles in the eight selected samples" .
+
+<file://example-condensed-cohort.vcf#header/line/8/attribute/5> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 5 ;
+    vcfc:attributeKey "Source" ;
+    vcfc:attributeValue "VCF-Core-subset" .
+
+<file://example-condensed-cohort.vcf#header/line/8/attribute/6> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 6 ;
+    vcfc:attributeKey "Version" ;
+    vcfc:attributeValue "1" .
+
+<file://example-condensed-cohort.vcf#header/line/9/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "GT" .
+
+<file://example-condensed-cohort.vcf#header/line/9/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "1" .
+
+<file://example-condensed-cohort.vcf#header/line/9/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "String" .
+
+<file://example-condensed-cohort.vcf#header/line/9/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Genotype" .
+
+<file://example-condensed-cohort.vcf#record/1> a vcfc:VCFRecord ;
+    vcfc:alt "T" ;
+    vcfc:chrom "20" ;
+    vcfc:chromosome <file://example-condensed-cohort.vcf#header/line/4> ;
+    vcfc:hasAltAllele <file://example-condensed-cohort.vcf#record/1/allele/1> ;
+    vcfc:hasCall <file://example-condensed-cohort.vcf#call/1> ;
+    vcfc:hasReferenceAllele <file://example-condensed-cohort.vcf#record/1/allele/0> ;
+    vcfc:pos 61795 ;
+    vcfc:recordId "."^^vcfc:Null ;
+    vcfc:recordIndex 1 ;
+    vcfc:ref "G" .
+
+<file://example-condensed-cohort.vcf#record/1/allele/0> a vcfc:ReferenceAllele ;
+    vcfc:alleleIndex 0 ;
+    vcfc:alleleKind vcfc:BaseSequenceAllele ;
+    vcfc:alleleValue "G" .
+
+<file://example-condensed-cohort.vcf#record/2> a vcfc:VCFRecord ;
+    vcfc:alt "C" ;
+    vcfc:chrom "20" ;
+    vcfc:chromosome <file://example-condensed-cohort.vcf#header/line/4> ;
+    vcfc:hasAltAllele <file://example-condensed-cohort.vcf#record/2/allele/1> ;
+    vcfc:hasCall <file://example-condensed-cohort.vcf#call/2> ;
+    vcfc:hasReferenceAllele <file://example-condensed-cohort.vcf#record/2/allele/0> ;
+    vcfc:pos 68749 ;
+    vcfc:recordId "."^^vcfc:Null ;
+    vcfc:recordIndex 2 ;
+    vcfc:ref "T" .
+
+<file://example-condensed-cohort.vcf#record/2/allele/0> a vcfc:ReferenceAllele ;
+    vcfc:alleleIndex 0 ;
+    vcfc:alleleKind vcfc:BaseSequenceAllele ;
+    vcfc:alleleValue "T" .
+
+<file://example-condensed-cohort.vcf#record/3> a vcfc:VCFRecord ;
+    vcfc:alt "A" ;
+    vcfc:chrom "20" ;
+    vcfc:chromosome <file://example-condensed-cohort.vcf#header/line/4> ;
+    vcfc:hasAltAllele <file://example-condensed-cohort.vcf#record/3/allele/1> ;
+    vcfc:hasCall <file://example-condensed-cohort.vcf#call/3> ;
+    vcfc:hasReferenceAllele <file://example-condensed-cohort.vcf#record/3/allele/0> ;
+    vcfc:pos 69094 ;
+    vcfc:recordId "."^^vcfc:Null ;
+    vcfc:recordIndex 3 ;
+    vcfc:ref "G" .
+
+<file://example-condensed-cohort.vcf#record/3/allele/0> a vcfc:ReferenceAllele ;
+    vcfc:alleleIndex 0 ;
+    vcfc:alleleKind vcfc:BaseSequenceAllele ;
+    vcfc:alleleValue "G" .
+
+<file://example-condensed-cohort.vcf#samples/HG00096> a vcfc:VCFSample ;
+    vcfc:sampleIndex 1 ;
+    vcfc:sampleName "HG00096" .
+
+<file://example-condensed-cohort.vcf#samples/HG00097> a vcfc:VCFSample ;
+    vcfc:sampleIndex 2 ;
+    vcfc:sampleName "HG00097" .
+
+<file://example-condensed-cohort.vcf#samples/HG00099> a vcfc:VCFSample ;
+    vcfc:sampleIndex 3 ;
+    vcfc:sampleName "HG00099" .
+
+<file://example-condensed-cohort.vcf#samples/HG00100> a vcfc:VCFSample ;
+    vcfc:sampleIndex 4 ;
+    vcfc:sampleName "HG00100" .
+
+<file://example-condensed-cohort.vcf#samples/HG00101> a vcfc:VCFSample ;
+    vcfc:sampleIndex 5 ;
+    vcfc:sampleName "HG00101" .
+
+<file://example-condensed-cohort.vcf#samples/HG00102> a vcfc:VCFSample ;
+    vcfc:sampleIndex 6 ;
+    vcfc:sampleName "HG00102" .
+
+<file://example-condensed-cohort.vcf#samples/HG00103> a vcfc:VCFSample ;
+    vcfc:sampleIndex 7 ;
+    vcfc:sampleName "HG00103" .
+
+<file://example-condensed-cohort.vcf#samples/HG00105> a vcfc:VCFSample ;
+    vcfc:sampleIndex 8 ;
+    vcfc:sampleName "HG00105" .
+
+<file://example-condensed-cohort.vcf#record/1/allele/1> a vcfc:AltAllele ;
+    vcfc:alleleIndex 1 ;
+    vcfc:alleleKind vcfc:BaseSequenceAllele ;
+    vcfc:alleleValue "T" .
+
+<file://example-condensed-cohort.vcf#record/2/allele/1> a vcfc:AltAllele ;
+    vcfc:alleleIndex 1 ;
+    vcfc:alleleKind vcfc:BaseSequenceAllele ;
+    vcfc:alleleValue "C" .
+
+<file://example-condensed-cohort.vcf#record/3/allele/1> a vcfc:AltAllele ;
+    vcfc:alleleIndex 1 ;
+    vcfc:alleleKind vcfc:BaseSequenceAllele ;
+    vcfc:alleleValue "A" .
+
+<file://example-condensed-cohort.vcf#header/line/4> a vcfc:ContigHeaderLine ;
+    vcfc:contigId "20" ;
+    vcfc:contigLength 63025520 ;
+    vcfc:hasAttribute <file://example-condensed-cohort.vcf#header/line/4/attribute/1>,
+        <file://example-condensed-cohort.vcf#header/line/4/attribute/2>,
+        <file://example-condensed-cohort.vcf#header/line/4/attribute/3> ;
+    vcfc:headerKey "contig" ;
+    vcfc:headerValue "<ID=20,assembly=b37,length=63025520>" ;
+    vcfc:lineIndex 4 .
+
+<file://example-condensed-cohort.vcf#header/line/6> a vcfc:INFOHeaderLine ;
+    vcfc:fieldArity vcfc:ArityPerAlt ;
+    vcfc:fieldDescription "Alternate allele count in the eight selected samples" ;
+    vcfc:fieldId "AC" ;
+    vcfc:fieldNumber "A" ;
+    vcfc:fieldSource "VCF-Core-subset" ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:fieldVersion "1" ;
+    vcfc:hasAttribute <file://example-condensed-cohort.vcf#header/line/6/attribute/1>,
+        <file://example-condensed-cohort.vcf#header/line/6/attribute/2>,
+        <file://example-condensed-cohort.vcf#header/line/6/attribute/3>,
+        <file://example-condensed-cohort.vcf#header/line/6/attribute/4>,
+        <file://example-condensed-cohort.vcf#header/line/6/attribute/5>,
+        <file://example-condensed-cohort.vcf#header/line/6/attribute/6> ;
+    vcfc:headerKey "INFO" ;
+    vcfc:headerValue "<ID=AC,Number=A,Type=Integer,Description=\"Alternate allele count in the eight selected samples\",Source=\"VCF-Core-subset\",Version=\"1\">" ;
+    vcfc:lineIndex 6 .
+
+<file://example-condensed-cohort.vcf#header/line/7> a vcfc:INFOHeaderLine ;
+    vcfc:fieldArity vcfc:ArityPerAlt ;
+    vcfc:fieldDescription "Alternate allele frequency in the eight selected samples" ;
+    vcfc:fieldId "AF" ;
+    vcfc:fieldNumber "A" ;
+    vcfc:fieldSource "VCF-Core-subset" ;
+    vcfc:fieldType vcfc:FloatType ;
+    vcfc:fieldVersion "1" ;
+    vcfc:hasAttribute <file://example-condensed-cohort.vcf#header/line/7/attribute/1>,
+        <file://example-condensed-cohort.vcf#header/line/7/attribute/2>,
+        <file://example-condensed-cohort.vcf#header/line/7/attribute/3>,
+        <file://example-condensed-cohort.vcf#header/line/7/attribute/4>,
+        <file://example-condensed-cohort.vcf#header/line/7/attribute/5>,
+        <file://example-condensed-cohort.vcf#header/line/7/attribute/6> ;
+    vcfc:headerKey "INFO" ;
+    vcfc:headerValue "<ID=AF,Number=A,Type=Float,Description=\"Alternate allele frequency in the eight selected samples\",Source=\"VCF-Core-subset\",Version=\"1\">" ;
+    vcfc:lineIndex 7 .
+
+<file://example-condensed-cohort.vcf#header/line/8> a vcfc:INFOHeaderLine ;
+    vcfc:fieldDescription "Number of called alleles in the eight selected samples" ;
+    vcfc:fieldId "AN" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldNumberInteger 1 ;
+    vcfc:fieldSource "VCF-Core-subset" ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:fieldVersion "1" ;
+    vcfc:hasAttribute <file://example-condensed-cohort.vcf#header/line/8/attribute/1>,
+        <file://example-condensed-cohort.vcf#header/line/8/attribute/2>,
+        <file://example-condensed-cohort.vcf#header/line/8/attribute/3>,
+        <file://example-condensed-cohort.vcf#header/line/8/attribute/4>,
+        <file://example-condensed-cohort.vcf#header/line/8/attribute/5>,
+        <file://example-condensed-cohort.vcf#header/line/8/attribute/6> ;
+    vcfc:headerKey "INFO" ;
+    vcfc:headerValue "<ID=AN,Number=1,Type=Integer,Description=\"Number of called alleles in the eight selected samples\",Source=\"VCF-Core-subset\",Version=\"1\">" ;
+    vcfc:lineIndex 8 .
+
+<file://example-condensed-cohort.vcf#header/line/9> a vcfc:FORMATHeaderLine ;
+    vcfc:fieldDescription "Genotype" ;
+    vcfc:fieldId "GT" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldNumberInteger 1 ;
+    vcfc:fieldType vcfc:StringType ;
+    vcfc:hasAttribute <file://example-condensed-cohort.vcf#header/line/9/attribute/1>,
+        <file://example-condensed-cohort.vcf#header/line/9/attribute/2>,
+        <file://example-condensed-cohort.vcf#header/line/9/attribute/3>,
+        <file://example-condensed-cohort.vcf#header/line/9/attribute/4> ;
+    vcfc:headerKey "FORMAT" ;
+    vcfc:headerValue "<ID=GT,Number=1,Type=String,Description=\"Genotype\">" ;
+    vcfc:lineIndex 9 .
+
+ex:samples a vcfc:SampleSet ;
+    vcfc:hasSample <file://example-condensed-cohort.vcf#samples/HG00096>,
+        <file://example-condensed-cohort.vcf#samples/HG00097>,
+        <file://example-condensed-cohort.vcf#samples/HG00099>,
+        <file://example-condensed-cohort.vcf#samples/HG00100>,
+        <file://example-condensed-cohort.vcf#samples/HG00101>,
+        <file://example-condensed-cohort.vcf#samples/HG00102>,
+        <file://example-condensed-cohort.vcf#samples/HG00103>,
+        <file://example-condensed-cohort.vcf#samples/HG00105> .

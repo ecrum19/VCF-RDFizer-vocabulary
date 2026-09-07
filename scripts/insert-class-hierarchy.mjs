@@ -7,7 +7,7 @@ const repoRoot = process.cwd();
 const sitePath = path.resolve(repoRoot, process.argv[2] || "site");
 const hierarchyPath = path.join(sitePath, "assets", "ontology_hierarchy.ttl");
 const referencePath = path.join(sitePath, "ontology-reference.html");
-const ontologyPath = path.join(repoRoot, "ontology", "vcf-core-vocabulary.ttl");
+const ontologyPath = path.join(repoRoot, "ontology", "vcf-core-vocabulary.bundle.ttl");
 
 if (!fs.existsSync(hierarchyPath)) {
   throw new Error(`OCG did not generate the hierarchy asset: ${path.relative(repoRoot, hierarchyPath)}`);

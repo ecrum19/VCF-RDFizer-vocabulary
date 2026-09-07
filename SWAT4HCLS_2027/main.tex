@@ -16,7 +16,7 @@
   International (CC BY 4.0).}
 \conference{SWAT4HCLS 2027, February 1--4, 2027, Basel, Switzerland}
 
-\title{VCF Core: A Vocabulary Foundation for Expanded and Condensed RDF Representations of VCF}
+\title{VCF Core: A Semantic Foundation for RDF Representations of VCF}
 
 \author[1,2]{Elias Crum}[
 orcid=0009-0005-3991-754X,
@@ -39,28 +39,27 @@ email=ruben.taelman@ugent.be
 \address[2]{Flemish institute for Technological Research (VITO) Mol, Belgium}
 \cortext[1]{Corresponding author.}
 
-% Abstract structured as Context - Need - Task - Object - Findings -
-% Conclusion - Perspectives. Sentence-level map, for revision only:
-%   Context     s1  VCF is the interchange format; cohorts are large now.
-%   Need        s2  A record is not self-interpreting; naive cohort
-%                   materialization scales with records x samples x fields.
-%   Need        s3  What a reusable VCF-facing target must therefore do.
-%   Task/Object s4  What we built and what this paper presents.
-%   Findings    s5  Same cells and same selection under both profiles, but
-%                   condensed cells need decoding.
-%   Conclusion  s6  Granularity is a declarable trade, not an implicit one.
-%   Perspectives s7 What is left to measure.
+
 \begin{abstract}
-Medical applications of genomic data depend on integrating variant observations with clinical information and biomedical knowledge. 
-Semantic data linking offers a promising basis for this integration, but the widely used Variant Call Format (VCF) does not natively expose its contents as Linked Data. 
-We developed VCF Core with the goal of providing comprehensive semantic coverage of the VCF specification while allowing users to choose how sample-level data are represented. 
-This paper presents the VCF Core Vocabulary 2.0.0 and the design decisions underlying its RDF representation of file metadata, header declarations, variant records, annotations, and genotype information. 
+In recent years, medical uses of genomic data have become increasingly dependant on integrating variant observations with clinical information and biomedical knowledge.
+Semantic data linking offers a promising basis for this integration, but the widely used Variant Call Format (VCF) does not natively expose its contents as semantic Linked Data.
+We developed the VCF Core Vocabulary (vcfcv) with the goal of providing comprehensive semantic coverage of the VCF specification along with multiple options for sample-level data representation.
+
+This paper presents the VCF Core Vocabulary and the design decisions underlying its RDF representation of file metadata, header declarations, variant records, annotations, and genotype information.
+
 The model retains source context and supports field interpretation through links to header declarations, preservation of lexical values, and explicit treatment of missingness. 
 Two complementary profiles provide flexibility: an expanded representation exposes individual sample calls and FORMAT values, whereas a condensed representation groups these values into sample-ordered vectors. 
-Formal vocabulary definitions, SHACL shapes, and examples document the model and support its reuse independently of a particular converter. 
+Formal vocabulary definitions, SHACL shapes, and examples document the model and support its reuse independently of a particular converter.
 VCF Core thereby establishes a shared semantic target for VCF-to-RDF conversion and a foundation for subsequent linking to biomedical resources. 
 This work supports a longer-term vision in which genomic observations and clinical information can be integrated and queried together through a single query over Linked Data.
 \end{abstract}
+
+
+% Things to discuss:
+% VCF-4.5 spec coverage
+% SHACL shapes for previous VCF versions
+% ...
+
 
 
 \begin{keywords}

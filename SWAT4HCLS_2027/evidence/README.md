@@ -1,7 +1,7 @@
 # Reproducible synthetic illustration
 
 This fixture illustrates the two genotype representations in vocabulary version
-1.1.0. It is a manually authored, synthetic example, not a converter evaluation,
+2.0.0 working tree. It is a manually authored, synthetic example, not a converter evaluation,
 storage benchmark, scalability measurement, biological finding, or demonstration
 of lossless conversion for arbitrary VCF files. The three samples allow ordering
 and missingness to be inspected in one small record; they do not suggest that
@@ -26,12 +26,11 @@ node SWAT4HCLS_2027/evidence/verify.mjs
 ```
 
 The script exits nonzero on an assertion failure. The recorded run used Node.js
-24.16.0 and N3 2.3.0. Both graphs are standalone: header lines are explicitly also typed as
-`vcfc:HeaderLine`, profile/encoding resources have their required classes, and
-sample indices explicitly use `xsd:positiveInteger`. These explicit declarations
-avoid relying on loading the ontology for the class constraints in the current
-SHACL shapes. All example resource identifiers are file-scoped HTTPS IRIs under
-the reserved example domain; no external resource is fetched.
+24.16.0 and N3 2.3.0. Both graphs now have complete headers, column lines and reference/contig
+metadata. The complete repository suite validates them with the bundled ontology
+and RDFS inference. Their explicit `xsd:positiveInteger` sample indices are
+retained and accepted by the updated integer shapes. All instance IRIs use the
+reserved example domain; validation fetches no external resources.
 
 ## Executed checks and results
 
@@ -45,7 +44,7 @@ sample block is checked separately against that reconstruction.
 
 | Check | Expanded | Condensed |
 | --- | ---: | ---: |
-| Total triples in supplied graph | 94 | 71 |
+| Total triples in supplied graph | 172 | 149 |
 | `SampleCall` resources | 3 | 0 |
 | `FormatFieldValue` resources | 6 | 0 |
 | `CohortCallMatrix` resources | 0 | 1 |
@@ -61,15 +60,16 @@ is replaced with zero or omitted from a vector.
 
 The application-level depth predicate selects `SAMPLE1` in both decoded forms.
 The separate SPARQL query has expected output `SAMPLE1`, `42` on `expanded.ttl`.
-It was **not executed with a SPARQL engine**. Its graph pattern addresses the
+It is now executed by `tests/check_examples.py` with RDFLib and returns exactly `SAMPLE1`, `42`. Its graph pattern addresses the
 expanded profile; condensed cell access needs an application decoder, a
 materialized expansion, or an additional query mechanism. The Node test does
 not demonstrate SPARQL execution on vector contents.
 
-No general SHACL validator was available in the inspected environment, so
-**SHACL validation was not executed**. The fixture assertions check selected
-requirements and fixture invariants; they are not a replacement for running the
-repository's complete SHACL graph in a standards-compliant validator.
+Both graphs now pass the repository's combined SHACL profiles with **zero
+violations and zero warnings**, and the decoded-value checks pass. Run
+`npm run validate:shacl` and `npm run validate:examples` from the repository root.
+The Node-only `verification.json` records the narrower assertions executed by
+`verify.mjs`; the complete suite results are in `tests/validation-results.json`.
 
 ## Interpretation boundaries
 

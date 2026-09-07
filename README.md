@@ -1,14 +1,14 @@
 # VCF Core Vocabulary
 
-Vocabulary + SHACL shapes for representing **VCF files, headers, records, and genotype data** in RDF.
+Vocabulary + SHACL shapes for representing the **logical VCF 4.5 model** — files, headers, records, alleles, indexed values, genotypes, and VCF-specific SV syntax — in RDF.
 
 > **Renamed in 2.0.0.** This vocabulary was previously published as the *VCF-RDFizer Vocabulary* in the
 > `https://w3id.org/vcf-rdfizer/vocab#` namespace. It is a semantic target that any conversion system can
 > adopt, so its name and namespace no longer carry the name of one converter. See
-> [Migrating from 1.1.0](#migrating-from-110) below. The VCF-RDFizer converter is a separate project with
+> [v2.0.0 release notes and migration guide](RELEASE-NOTES-v2.0.0.md#migrating-from-v110). The VCF-RDFizer converter is a separate project with
 > its own version line; the two version numbers are unrelated.
 
-This repository is intentionally **VCF-centric** (file + header metadata + row/call provenance), and is designed to **link out** to established ontologies for representing the *sequence alteration itself*.
+This repository is intentionally **VCF-centric** (file + header metadata + row/call provenance), and is designed to **link out** to established ontologies for representing the *sequence alteration itself*. BCF 2.2's byte layout is deliberately out of scope: the RDF target is VCF's logical model.
 
 ## Why this exists
 
@@ -33,83 +33,22 @@ Persistent namespace, prefix `vcfc:`:
 
 The retired namespace `https://w3id.org/vcf-rdfizer/vocab#` is **not** redirected here. It serves
 `legacy/legacy-vcf-rdfizer.ttl`, a document in which every 1.1.0 term is present, deprecated, and linked to
-its successor. Redirecting instead would resolve each legacy IRI to a document that does not define it,
-which is less useful than a 404. Both `.htaccess` files for the [w3id.org](https://github.com/perma-id/w3id.org)
-pull request are in `w3id/`.
+its successor.
 
-## Migrating from 2.0.0
-
-Version 3.0.0 is a **corrective release with no new terms**. It changes only what could not be
-corrected without a major version bump, plus two SHACL bug fixes. See
-[`VCF45-COVERAGE-ASSESSMENT.md`](VCF45-COVERAGE-ASSESSMENT.md) for the planned additive work.
-
-Three changes need action from consumers:
-
-1. **The five VCF Type terms are now named individuals, not classes.** `vcfc:fieldType` has
-   `rdfs:range vcfc:VCFValueType`, so `vcfc:IntegerType`, `vcfc:FloatType`, `vcfc:FlagType`,
-   `vcfc:CharacterType` and `vcfc:StringType` were being used as instances while declared as
-   `owl:Class rdfs:subClassOf vcfc:VCFValueType` — class/individual punning, outside OWL 2 DL, and
-   inconsistent with how `vcfc:RepresentationProfile` and `vcfc:VectorEncoding` values are declared.
-   They are now `owl:NamedIndividual, vcfc:VCFValueType`.
-
-   *Instance data does not change.* A triple such as `?def vcfc:fieldType vcfc:IntegerType` was
-   already correct and stays correct — it is now also well-typed. Only consumers that queried these
-   IRIs *as classes* (`?t rdfs:subClassOf vcfc:VCFValueType`, or `?x a vcfc:IntegerType`) must
-   change to `?t a vcfc:VCFValueType`. `legacy/legacy-vcf-rdfizer.ttl` was updated to bridge them
-   with `owl:sameAs` instead of `owl:equivalentClass`.
-
-2. **The recommended IRI templates use `{recordKey}`, not `{recordId}`.** The placeholder named a
-   row key while `vcfc:recordId` is the datatype property carrying the ID column — two different
-   things under one name. Only the recommended template text changed; no minted IRI needs rewriting,
-   and generators that already substitute their own row key are unaffected.
-
-3. **`rdfs:domain rdf:Resource` was dropped** from `vcfc:fieldValue`, `vcfc:fieldValueInteger`,
-   `vcfc:fieldValueDecimal` and `vcfc:fieldValueBoolean` (`rdf:Resource` is not an OWL 2 class, so
-   its presence made the ontology non-DL). These properties are now domain-free, which is a
-   loosening: no existing graph becomes invalid.
-
-Also fixed, non-breaking, in `shacl/vcf-core-vocabulary.shacl.ttl`:
-
-- `vcfc:VCFRecordShape` required `vcfc:alt` to be `xsd:string`, so **every record with `ALT=.`**
-  — every REF-only and gVCF-style record — **failed validation**. It now accepts `xsd:string` or
-  `vcfc:Null`.
-- `vcfc:VariantCallShape` allowed QUAL only as `xsd:decimal` or `vcfc:Null`, rejecting the
-  `INF`/`INFINITY`/`NAN` spellings that the VCF Float lexical space permits. It now accepts the full
-  VCF Float space.
-
-## Migrating from 1.1.0
-
-Version 2.0.0 renames the vocabulary and moves it to a new namespace. The model is otherwise unchanged
-except for one term:
-
-| 1.1.0 | 2.0.0 |
-| --- | --- |
-| `https://w3id.org/vcf-rdfizer/vocab#` | `https://w3id.org/vcf-core/vocab#` |
-| prefix `vcfr:` | prefix `vcfc:` |
-| `vcfr:DenseRepresentation` | `vcfc:ExpandedRepresentation` |
-| every other `vcfr:X` | `vcfc:X`, same local name |
-
-The version number is a major bump because the namespace change is breaking, not because the model changed.
-
-To migrate a repository or a converter, run the two passes of `scripts/migrate-namespace.mjs` and review the
-diff:
-
-```sh
-node scripts/migrate-namespace.mjs rewrite .
-node scripts/migrate-namespace.mjs bridge <1.1.0-ontology.ttl> -o legacy/legacy-vcf-rdfizer.ttl
-```
-
-The `rewrite` pass performs the IRI and prefix substitution and reports any free-text occurrence of "dense"
-that a string replace cannot judge. The `bridge` pass regenerates the legacy document; it needs `n3`.
-
-Existing graphs do not have to be rewritten. Every 1.1.0 IRI keeps its meaning under a reasoner through the
-`owl:equivalentClass` / `owl:equivalentProperty` / `owl:sameAs` axioms in `legacy/legacy-vcf-rdfizer.ttl`.
 
 ## Canonical IRI Pattern
 
 Recommended base for VCF instance resources:
 
 - `file://{vcfFilePath}`
+
+The examples use the portable filename form, for example
+`file://example-file1.vcf#header` and
+`file://example-file1.vcf#record/var6/sample/SAMPLE2/fmt/DP`. These are local
+resource identifiers for demonstrating the pattern; they are not expected to
+resolve as web pages. When minting IRIs for a real absolute local path, use the
+corresponding absolute `file:///...` form, and use a stable project-specific
+HTTP(S) base when the RDF must be shared or dereferenced across systems.
 
 Recommended templates (also formalized in ontology via `vcfc:iriTemplate`):
 
@@ -144,6 +83,17 @@ FormatValueVector file://{vcfFilePath}#call/{recordKey}/matrix/fmt/{fieldKey}
   - `vcfc:FORMATHeaderLine` for `##FORMAT=<...>`
   - `vcfc:FILTERHeaderLine` for `##FILTER=<...>`
   - `vcfc:ALTHeaderLine` for `##ALT=<...>`
+- `vcfc:StructuredHeaderLine` / `vcfc:UnstructuredHeaderLine` distinguish the two VCF metadata forms; `vcfc:HeaderAttribute` exposes every structured attribute without discarding `vcfc:headerValue`.
+- `vcfc:ColumnHeaderLine` represents `#CHROM`; `vcfc:hasGenotypeColumns` retains ordered sample columns.
+- `vcfc:AssemblyHeaderLine`, `vcfc:MetaHeaderLine`, `vcfc:SampleHeaderLine`, `vcfc:PedigreeHeaderLine`, and `vcfc:PedigreeDBHeaderLine` cover the remaining VCF 4.5 line forms.
+
+### Content, arity, and syntax carriers
+
+- `vcfc:fieldArity` links symbolic `Number` values to `VCFNumberArity` individuals; `fieldNumberInteger` exposes fixed counts while `fieldNumber` remains lossless.
+- `vcfc:ReferenceAllele` and `vcfc:AltAllele` carry `alleleIndex` (0 for REF; 1…n in ALT order), kind, value, declaration, and FALDO location hooks.
+- `vcfc:FieldValueItem` indexes parsed comma-list entries and links them to the applicable allele, genotype, GT allele, or base modification.
+- `vcfc:Genotype`, `vcfc:GenotypeAlleleCall`, `vcfc:PhaseSet`, and `vcfc:LocalAlleleSet` expose GT, phase, PS/PSL/PSO/PSQ, LAA, and FT without replacing the raw FORMAT values.
+- The SV module supplies VCF syntax carriers for symbolic ALT types, SVCLAIM, breakends, EVENT/EVENTTYPE, confidence intervals, tandem repeats, copy number, gVCF reference blocks, and base modifications. FALDO, VRS, SO, GENO, and ChEBI provide the aligned external semantics.
 
 ### VCF records and calls
 
@@ -193,36 +143,60 @@ SB/gvar reference:
 
 ## Validation
 
-SHACL shapes are provided in `shacl/vcf-core-vocabulary.shacl.ttl`. They validate the required identifiers and links of `VCFSample`, `SampleSet`, `CohortCallMatrix`, and `FormatValueVector`; lexical payload cardinality and vector position parsing remain encoding-specific application responsibilities.
+The validator combines shared structural/consistency shapes with VCF **4.1–4.5**
+version overlays. See [SHACL profiles](shacl/README.md) for file selection,
+integer datatype policy, warnings and the boundary between SHACL and decoded
+Python checks. Historical reserved-key snapshots are under `ontology/versions/`.
+
+```sh
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements-dev.txt
+npm run validate
+# Validate another graph, allowing recommendation warnings:
+.venv/bin/python tests/validate_shacl.py input.ttl
+```
+
+`npm run ocg:check` runs RDF parsing, all complete example graphs through SHACL
+and decoded semantic validation, independent regression probes, paired VCF/RDF
+reconstruction and nine example queries. It runs on PR CI as well as before
+publishing. This is a maintained conformance corpus, not exhaustive VCF
+certification; [the checklist](tests/coverage.md) records remaining boundaries.
 
 ## Documentation
 
 The companion site is generated at publish time by [Ontology Companion Generator (OCG) v1.3.0](https://www.npmjs.com/package/ontology-companion-generator) from `ocg.config.json`. The generated Pages output is intentionally not tracked in this repository; the GitHub Pages workflow publishes the temporary `site/` directory created by OCG.
 
-OCG parses the source Turtle, generates the reference and term pages, and supplies the Sigma.js/Graphology relationship graph with predicate-node and predicate-edge modes, filtering, search, selection, hover details, draggable nodes, and fit-to-view controls. The configured hierarchy overview uses the current VCF concept roots and the ontology's `rdfs:subClassOf`, `rdfs:domain`, and `rdfs:range` relationships. `scripts/insert-class-hierarchy.mjs` is the only repository-specific Pages extension: it verifies that OCG inserted the hierarchy and makes the generated hierarchy Turtle asset self-contained by restoring source prefix declarations.
+OCG parses `ontology/vcf-core-vocabulary.bundle.ttl`, generated from the five normative modules, so the site contains one complete reference and graph. `scripts/insert-class-hierarchy.mjs` verifies that OCG inserted the hierarchy and makes the generated hierarchy Turtle asset self-contained by restoring source prefix declarations.
 
 Run `npm run ocg:check` to validate the configuration and source ontology, or `npm run ocg:build` to build the local companion site in `site/`.
 
-The formatted example graph (`examples/example.ttl`) is generated from `examples/example.nt` by `scripts/convert-example-nt-to-ttl.mjs`; run `npm run examples:ttl` when the N-Triples source changes.
+Regenerate the VCF 4.5 reserved-key registry from an authoritative source checkout with:
+
+```sh
+node scripts/generate-reserved-keys.mjs --source /path/to/VCFv4.5.tex
+npm run ontology:bundle
+```
+
+The formatted example graph (`examples/core/example.ttl`) is generated from `examples/core/example.nt` by `scripts/convert-example-nt-to-ttl.mjs`; run `npm run examples:ttl` when the N-Triples source changes.
 
 ## Quick example
 
-See:
-- `examples/example-headers.ttl`
-- `examples/example-minimal-record.ttl`
-- `examples/example-condensed-cohort.ttl` (condensed cohort profile; a partial illustration, not a standalone conforming graph)
-- `examples/example.ttl` (formatted from `example.nt`)
-- `examples/example.nt`
-- `examples/example.vcf`
+Start with [example-quickstart.ttl](examples/core/example-quickstart.ttl). The
+[example guide](examples/README.md) then covers both sample representations,
+structured metadata, alleles, mixed phasing, local alleles, base modifications,
+breakends, repeats, reference blocks and earlier VCF versions. Every advertised
+Turtle example is now complete; the header-only example represents a zero-record
+file and may also be merged with the single-record example.
 
-## Publishing
+For real sample calls, use the [eight-sample 1000 Genomes cohort](examples/profiles/example-condensed-cohort.vcf)
+or the [three-record HaplotypeCaller subset](examples/core/example.vcf).
+Their source calls are retained with documented reductions in
+[the provenance record](examples/provenance.json).
 
-- `.github/workflows/publish-pages.yml` is the OCG v1.3.0 publishing workflow. It builds `site/` and deploys it to GitHub Pages; no generated HTML, graph data, diagrams, or Pages assets are committed.
-- `docs/` and `site/` are ignored build directories. The vocabulary sources, SHACL shapes, mappings, examples, OCG configuration, and the one hierarchy post-build hook remain in the repository.
-- Register the w3id paths from `w3id/` in one [perma-id/w3id.org](https://github.com/perma-id/w3id.org) pull request:
-  - `/vcf-core/` serves this vocabulary and its documentation, with content negotiation.
-  - `/vcf-rdfizer/` keeps serving the legacy deprecation document; it is never redirected to `/vcf-core/`.
-  - Both files contain a `REPLACE-ME` host that must be set to the real publishing location before the PR.
+[manifest.json](examples/manifest.json) links source VCFs, saved RDF and executable
+queries with expected answers. Run `npm run examples:build` to regenerate the rich
+fixtures and `npm run validate:examples` to check their source agreement.
+
 
 ## License
 

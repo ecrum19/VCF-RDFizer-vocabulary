@@ -2,8 +2,11 @@
 *.swp
 *.tmp
 dist/
-/docs/
+/ontology/vcf-core-vocabulary.bundle.ttl
 node_modules/
+.venv/
+__pycache__/
+*.py[cod]
 /site/
 target/
 .idea/
@@ -14,7 +17,8 @@ SWAT4HCLS_2027/*
 !SWAT4HCLS_2027/main.tex
 !SWAT4HCLS_2027/sources.bib
 !SWAT4HCLS_2027/outline.md
-!SWAT4HCLS_2027/author-notes.md
 !SWAT4HCLS_2027/README.md
 !SWAT4HCLS_2027/Makefile
 !SWAT4HCLS_2027/evidence/
+VCF-COVERAGE-ASSESSMENT-2026-09-07.md
+

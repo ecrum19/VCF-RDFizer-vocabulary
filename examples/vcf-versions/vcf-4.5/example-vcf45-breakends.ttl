@@ -1,0 +1,431 @@
+@prefix ex: <file://example-vcf45-breakends.vcf#> .
+@prefix faldo: <http://biohackathon.org/resource/faldo#> .
+@prefix vcfc: <https://w3id.org/vcf-core/vocab#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<file://example-vcf45-breakends.vcf> a vcfc:VCF45File,
+        vcfc:VCFFile ;
+    vcfc:fileFormat "VCFv4.5" ;
+    vcfc:hasHeader ex:header ;
+    vcfc:hasRecord <file://example-vcf45-breakends.vcf#record/1>,
+        <file://example-vcf45-breakends.vcf#record/2>,
+        <file://example-vcf45-breakends.vcf#record/3> ;
+    vcfc:hasSampleSet ex:samples ;
+    vcfc:referenceGenome "https://example.org/reference.fa" ;
+    vcfc:representationProfile vcfc:ExpandedRepresentation ;
+    vcfc:sourceSoftware "VCF-Core-synthetic-examples" .
+
+<file://example-vcf45-breakends.vcf#call/1> a vcfc:VariantCall ;
+    vcfc:filter "PASS" ;
+    vcfc:filterStatus vcfc:FiltersPassed ;
+    vcfc:formatRaw "GT" ;
+    vcfc:hasInfoValue <file://example-vcf45-breakends.vcf#call/1/info/MATEID> ;
+    vcfc:hasSampleCall <file://example-vcf45-breakends.vcf#sample/1/S1> ;
+    vcfc:infoRaw "MATEID=bnd2" ;
+    vcfc:qual "60"^^vcfc:VCFFloat .
+
+<file://example-vcf45-breakends.vcf#call/1/info/MATEID> a vcfc:InfoFieldValue ;
+    vcfc:declaredBy <file://example-vcf45-breakends.vcf#header/line/6> ;
+    vcfc:fieldIndex 1 ;
+    vcfc:fieldValue "bnd2" ;
+    vcfc:hasValueItem <file://example-vcf45-breakends.vcf#call/1/info/MATEID/item/0> .
+
+<file://example-vcf45-breakends.vcf#call/1/info/MATEID/item/0> a vcfc:FieldValueItem ;
+    vcfc:forAllele <file://example-vcf45-breakends.vcf#record/1/allele/1> ;
+    vcfc:itemValue "bnd2" ;
+    vcfc:valueIndex 0 .
+
+<file://example-vcf45-breakends.vcf#call/2> a vcfc:VariantCall ;
+    vcfc:filter "PASS" ;
+    vcfc:filterStatus vcfc:FiltersPassed ;
+    vcfc:formatRaw "GT" ;
+    vcfc:hasInfoValue <file://example-vcf45-breakends.vcf#call/2/info/MATEID> ;
+    vcfc:hasSampleCall <file://example-vcf45-breakends.vcf#sample/2/S1> ;
+    vcfc:infoRaw "MATEID=bnd1" ;
+    vcfc:qual "60"^^vcfc:VCFFloat .
+
+<file://example-vcf45-breakends.vcf#call/2/info/MATEID> a vcfc:InfoFieldValue ;
+    vcfc:declaredBy <file://example-vcf45-breakends.vcf#header/line/6> ;
+    vcfc:fieldIndex 1 ;
+    vcfc:fieldValue "bnd1" ;
+    vcfc:hasValueItem <file://example-vcf45-breakends.vcf#call/2/info/MATEID/item/0> .
+
+<file://example-vcf45-breakends.vcf#call/2/info/MATEID/item/0> a vcfc:FieldValueItem ;
+    vcfc:forAllele <file://example-vcf45-breakends.vcf#record/2/allele/1> ;
+    vcfc:itemValue "bnd1" ;
+    vcfc:valueIndex 0 .
+
+<file://example-vcf45-breakends.vcf#call/3> a vcfc:VariantCall ;
+    vcfc:filter "PASS" ;
+    vcfc:filterStatus vcfc:FiltersPassed ;
+    vcfc:formatRaw "GT" ;
+    vcfc:hasSampleCall <file://example-vcf45-breakends.vcf#sample/3/S1> ;
+    vcfc:infoRaw "." ;
+    vcfc:qual "60"^^vcfc:VCFFloat .
+
+ex:header a vcfc:VCFHeader ;
+    vcfc:hasColumnHeader <file://example-vcf45-breakends.vcf#header/columns> ;
+    vcfc:hasHeaderLine <file://example-vcf45-breakends.vcf#header/line/1>,
+        <file://example-vcf45-breakends.vcf#header/line/2>,
+        <file://example-vcf45-breakends.vcf#header/line/3>,
+        <file://example-vcf45-breakends.vcf#header/line/4>,
+        <file://example-vcf45-breakends.vcf#header/line/5>,
+        <file://example-vcf45-breakends.vcf#header/line/6>,
+        <file://example-vcf45-breakends.vcf#header/line/7> .
+
+<file://example-vcf45-breakends.vcf#header/columns> a vcfc:ColumnHeaderLine ;
+    vcfc:hasGenotypeColumns <file://example-vcf45-breakends.vcf#samples/S1> .
+
+<file://example-vcf45-breakends.vcf#header/line/1> a vcfc:FileFormatHeaderLine ;
+    vcfc:headerKey "fileformat" ;
+    vcfc:headerValue "VCFv4.5" ;
+    vcfc:lineIndex 1 .
+
+<file://example-vcf45-breakends.vcf#header/line/2> a vcfc:SourceHeaderLine ;
+    vcfc:headerKey "source" ;
+    vcfc:headerValue "VCF-Core-synthetic-examples" ;
+    vcfc:lineIndex 2 .
+
+<file://example-vcf45-breakends.vcf#header/line/3> a vcfc:ReferenceHeaderLine ;
+    vcfc:headerKey "reference" ;
+    vcfc:headerValue "https://example.org/reference.fa" ;
+    vcfc:lineIndex 3 .
+
+<file://example-vcf45-breakends.vcf#header/line/4/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "chr1" .
+
+<file://example-vcf45-breakends.vcf#header/line/4/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "length" ;
+    vcfc:attributeValue "1000" .
+
+<file://example-vcf45-breakends.vcf#header/line/5/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "chr2" .
+
+<file://example-vcf45-breakends.vcf#header/line/5/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "length" ;
+    vcfc:attributeValue "1000" .
+
+<file://example-vcf45-breakends.vcf#header/line/6/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "MATEID" .
+
+<file://example-vcf45-breakends.vcf#header/line/6/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "A" .
+
+<file://example-vcf45-breakends.vcf#header/line/6/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "String" .
+
+<file://example-vcf45-breakends.vcf#header/line/6/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Example MATEID" .
+
+<file://example-vcf45-breakends.vcf#header/line/6/attribute/5> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 5 ;
+    vcfc:attributeKey "Source" ;
+    vcfc:attributeValue "VCF-Core-examples" .
+
+<file://example-vcf45-breakends.vcf#header/line/6/attribute/6> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 6 ;
+    vcfc:attributeKey "Version" ;
+    vcfc:attributeValue "1.0" .
+
+<file://example-vcf45-breakends.vcf#header/line/7/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "GT" .
+
+<file://example-vcf45-breakends.vcf#header/line/7/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "1" .
+
+<file://example-vcf45-breakends.vcf#header/line/7/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "String" .
+
+<file://example-vcf45-breakends.vcf#header/line/7/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Example GT" .
+
+<file://example-vcf45-breakends.vcf#record/1> a vcfc:VCFRecord ;
+    vcfc:alt "A[chr2:500[" ;
+    vcfc:chrom "chr1" ;
+    vcfc:chromosome <file://example-vcf45-breakends.vcf#header/line/4> ;
+    vcfc:hasAltAllele <file://example-vcf45-breakends.vcf#record/1/allele/1> ;
+    vcfc:hasCall <file://example-vcf45-breakends.vcf#call/1> ;
+    vcfc:hasIdentifier <file://example-vcf45-breakends.vcf#record/1/id/1> ;
+    vcfc:hasReferenceAllele <file://example-vcf45-breakends.vcf#record/1/allele/0> ;
+    vcfc:pos 400 ;
+    vcfc:recordId "bnd1" ;
+    vcfc:recordIndex 1 ;
+    vcfc:ref "A" .
+
+<file://example-vcf45-breakends.vcf#record/1/allele/1/remote> a faldo:ExactPosition ;
+    faldo:position 500 ;
+    faldo:reference <file://example-vcf45-breakends.vcf#header/line/5> .
+
+<file://example-vcf45-breakends.vcf#record/1/id/1> a vcfc:RecordIdentifier ;
+    vcfc:componentIndex 1 ;
+    vcfc:identifierValue "bnd1" .
+
+<file://example-vcf45-breakends.vcf#record/2> a vcfc:VCFRecord ;
+    vcfc:alt "]chr1:400]T" ;
+    vcfc:chrom "chr2" ;
+    vcfc:chromosome <file://example-vcf45-breakends.vcf#header/line/5> ;
+    vcfc:hasAltAllele <file://example-vcf45-breakends.vcf#record/2/allele/1> ;
+    vcfc:hasCall <file://example-vcf45-breakends.vcf#call/2> ;
+    vcfc:hasIdentifier <file://example-vcf45-breakends.vcf#record/2/id/1> ;
+    vcfc:hasReferenceAllele <file://example-vcf45-breakends.vcf#record/2/allele/0> ;
+    vcfc:pos 500 ;
+    vcfc:recordId "bnd2" ;
+    vcfc:recordIndex 2 ;
+    vcfc:ref "T" .
+
+<file://example-vcf45-breakends.vcf#record/2/allele/1/remote> a faldo:ExactPosition ;
+    faldo:position 400 ;
+    faldo:reference <file://example-vcf45-breakends.vcf#header/line/4> .
+
+<file://example-vcf45-breakends.vcf#record/2/id/1> a vcfc:RecordIdentifier ;
+    vcfc:componentIndex 1 ;
+    vcfc:identifierValue "bnd2" .
+
+<file://example-vcf45-breakends.vcf#record/3> a vcfc:VCFRecord ;
+    vcfc:alt ".C" ;
+    vcfc:chrom "chr2" ;
+    vcfc:chromosome <file://example-vcf45-breakends.vcf#header/line/5> ;
+    vcfc:hasAltAllele <file://example-vcf45-breakends.vcf#record/3/allele/1> ;
+    vcfc:hasCall <file://example-vcf45-breakends.vcf#call/3> ;
+    vcfc:hasIdentifier <file://example-vcf45-breakends.vcf#record/3/id/1> ;
+    vcfc:hasReferenceAllele <file://example-vcf45-breakends.vcf#record/3/allele/0> ;
+    vcfc:pos 600 ;
+    vcfc:recordId "single" ;
+    vcfc:recordIndex 3 ;
+    vcfc:ref "C" .
+
+<file://example-vcf45-breakends.vcf#record/3/id/1> a vcfc:RecordIdentifier ;
+    vcfc:componentIndex 1 ;
+    vcfc:identifierValue "single" .
+
+<file://example-vcf45-breakends.vcf#sample/1/S1> a vcfc:SampleCall ;
+    vcfc:forSample <file://example-vcf45-breakends.vcf#samples/S1> ;
+    vcfc:hasFormatValue <file://example-vcf45-breakends.vcf#sample/1/S1/fmt/GT> ;
+    vcfc:hasGenotype <file://example-vcf45-breakends.vcf#sample/1/S1/genotype> ;
+    vcfc:sampleFieldsRaw "0/1" ;
+    vcfc:sampleId "S1" .
+
+<file://example-vcf45-breakends.vcf#sample/1/S1/fmt/GT> a vcfc:FormatFieldValue ;
+    vcfc:declaredBy <file://example-vcf45-breakends.vcf#header/line/7> ;
+    vcfc:fieldIndex 1 ;
+    vcfc:fieldValue "0/1" ;
+    vcfc:hasValueItem <file://example-vcf45-breakends.vcf#sample/1/S1/fmt/GT/item/0> .
+
+<file://example-vcf45-breakends.vcf#sample/1/S1/fmt/GT/item/0> a vcfc:FieldValueItem ;
+    vcfc:itemValue "0/1" ;
+    vcfc:valueIndex 0 .
+
+<file://example-vcf45-breakends.vcf#sample/1/S1/genotype> a vcfc:Genotype ;
+    vcfc:genotypeString "0/1"^^vcfc:GenotypeString ;
+    vcfc:hasAlleleCall <file://example-vcf45-breakends.vcf#sample/1/S1/genotype/0>,
+        <file://example-vcf45-breakends.vcf#sample/1/S1/genotype/1> ;
+    vcfc:phasingStatus vcfc:Unphased ;
+    vcfc:ploidy 2 .
+
+<file://example-vcf45-breakends.vcf#sample/1/S1/genotype/0> a vcfc:GenotypeAlleleCall ;
+    vcfc:callIndex 0 ;
+    vcfc:calledAllele <file://example-vcf45-breakends.vcf#record/1/allele/0> ;
+    vcfc:isNoCall false ;
+    vcfc:phaseIndicator "/" .
+
+<file://example-vcf45-breakends.vcf#sample/1/S1/genotype/1> a vcfc:GenotypeAlleleCall ;
+    vcfc:callIndex 1 ;
+    vcfc:calledAllele <file://example-vcf45-breakends.vcf#record/1/allele/1> ;
+    vcfc:isNoCall false ;
+    vcfc:phaseIndicator "/" .
+
+<file://example-vcf45-breakends.vcf#sample/2/S1> a vcfc:SampleCall ;
+    vcfc:forSample <file://example-vcf45-breakends.vcf#samples/S1> ;
+    vcfc:hasFormatValue <file://example-vcf45-breakends.vcf#sample/2/S1/fmt/GT> ;
+    vcfc:hasGenotype <file://example-vcf45-breakends.vcf#sample/2/S1/genotype> ;
+    vcfc:sampleFieldsRaw "0/1" ;
+    vcfc:sampleId "S1" .
+
+<file://example-vcf45-breakends.vcf#sample/2/S1/fmt/GT> a vcfc:FormatFieldValue ;
+    vcfc:declaredBy <file://example-vcf45-breakends.vcf#header/line/7> ;
+    vcfc:fieldIndex 1 ;
+    vcfc:fieldValue "0/1" ;
+    vcfc:hasValueItem <file://example-vcf45-breakends.vcf#sample/2/S1/fmt/GT/item/0> .
+
+<file://example-vcf45-breakends.vcf#sample/2/S1/fmt/GT/item/0> a vcfc:FieldValueItem ;
+    vcfc:itemValue "0/1" ;
+    vcfc:valueIndex 0 .
+
+<file://example-vcf45-breakends.vcf#sample/2/S1/genotype> a vcfc:Genotype ;
+    vcfc:genotypeString "0/1"^^vcfc:GenotypeString ;
+    vcfc:hasAlleleCall <file://example-vcf45-breakends.vcf#sample/2/S1/genotype/0>,
+        <file://example-vcf45-breakends.vcf#sample/2/S1/genotype/1> ;
+    vcfc:phasingStatus vcfc:Unphased ;
+    vcfc:ploidy 2 .
+
+<file://example-vcf45-breakends.vcf#sample/2/S1/genotype/0> a vcfc:GenotypeAlleleCall ;
+    vcfc:callIndex 0 ;
+    vcfc:calledAllele <file://example-vcf45-breakends.vcf#record/2/allele/0> ;
+    vcfc:isNoCall false ;
+    vcfc:phaseIndicator "/" .
+
+<file://example-vcf45-breakends.vcf#sample/2/S1/genotype/1> a vcfc:GenotypeAlleleCall ;
+    vcfc:callIndex 1 ;
+    vcfc:calledAllele <file://example-vcf45-breakends.vcf#record/2/allele/1> ;
+    vcfc:isNoCall false ;
+    vcfc:phaseIndicator "/" .
+
+<file://example-vcf45-breakends.vcf#sample/3/S1> a vcfc:SampleCall ;
+    vcfc:forSample <file://example-vcf45-breakends.vcf#samples/S1> ;
+    vcfc:hasFormatValue <file://example-vcf45-breakends.vcf#sample/3/S1/fmt/GT> ;
+    vcfc:hasGenotype <file://example-vcf45-breakends.vcf#sample/3/S1/genotype> ;
+    vcfc:sampleFieldsRaw "0/1" ;
+    vcfc:sampleId "S1" .
+
+<file://example-vcf45-breakends.vcf#sample/3/S1/fmt/GT> a vcfc:FormatFieldValue ;
+    vcfc:declaredBy <file://example-vcf45-breakends.vcf#header/line/7> ;
+    vcfc:fieldIndex 1 ;
+    vcfc:fieldValue "0/1" ;
+    vcfc:hasValueItem <file://example-vcf45-breakends.vcf#sample/3/S1/fmt/GT/item/0> .
+
+<file://example-vcf45-breakends.vcf#sample/3/S1/fmt/GT/item/0> a vcfc:FieldValueItem ;
+    vcfc:itemValue "0/1" ;
+    vcfc:valueIndex 0 .
+
+<file://example-vcf45-breakends.vcf#sample/3/S1/genotype> a vcfc:Genotype ;
+    vcfc:genotypeString "0/1"^^vcfc:GenotypeString ;
+    vcfc:hasAlleleCall <file://example-vcf45-breakends.vcf#sample/3/S1/genotype/0>,
+        <file://example-vcf45-breakends.vcf#sample/3/S1/genotype/1> ;
+    vcfc:phasingStatus vcfc:Unphased ;
+    vcfc:ploidy 2 .
+
+<file://example-vcf45-breakends.vcf#sample/3/S1/genotype/0> a vcfc:GenotypeAlleleCall ;
+    vcfc:callIndex 0 ;
+    vcfc:calledAllele <file://example-vcf45-breakends.vcf#record/3/allele/0> ;
+    vcfc:isNoCall false ;
+    vcfc:phaseIndicator "/" .
+
+<file://example-vcf45-breakends.vcf#sample/3/S1/genotype/1> a vcfc:GenotypeAlleleCall ;
+    vcfc:callIndex 1 ;
+    vcfc:calledAllele <file://example-vcf45-breakends.vcf#record/3/allele/1> ;
+    vcfc:isNoCall false ;
+    vcfc:phaseIndicator "/" .
+
+ex:samples a vcfc:SampleSet ;
+    vcfc:hasSample <file://example-vcf45-breakends.vcf#samples/S1> .
+
+<file://example-vcf45-breakends.vcf#record/1/allele/0> a vcfc:ReferenceAllele ;
+    vcfc:alleleIndex 0 ;
+    vcfc:alleleKind vcfc:BaseSequenceAllele ;
+    vcfc:alleleValue "A" .
+
+<file://example-vcf45-breakends.vcf#record/2/allele/0> a vcfc:ReferenceAllele ;
+    vcfc:alleleIndex 0 ;
+    vcfc:alleleKind vcfc:BaseSequenceAllele ;
+    vcfc:alleleValue "T" .
+
+<file://example-vcf45-breakends.vcf#record/3/allele/0> a vcfc:ReferenceAllele ;
+    vcfc:alleleIndex 0 ;
+    vcfc:alleleKind vcfc:BaseSequenceAllele ;
+    vcfc:alleleValue "C" .
+
+<file://example-vcf45-breakends.vcf#record/3/allele/1> a vcfc:AltAllele,
+        vcfc:Breakend ;
+    vcfc:alleleIndex 1 ;
+    vcfc:alleleKind vcfc:BreakendAllele ;
+    vcfc:alleleValue ".C" ;
+    vcfc:breakendReplacementString ".C"^^vcfc:BreakendString ;
+    vcfc:isSingleBreakend true .
+
+<file://example-vcf45-breakends.vcf#header/line/4> a vcfc:ContigHeaderLine ;
+    vcfc:contigId "chr1" ;
+    vcfc:contigLength 1000 ;
+    vcfc:hasAttribute <file://example-vcf45-breakends.vcf#header/line/4/attribute/1>,
+        <file://example-vcf45-breakends.vcf#header/line/4/attribute/2> ;
+    vcfc:headerKey "contig" ;
+    vcfc:headerValue "<ID=chr1,length=1000>" ;
+    vcfc:lineIndex 4 .
+
+<file://example-vcf45-breakends.vcf#header/line/6> a vcfc:INFOHeaderLine ;
+    vcfc:fieldArity vcfc:ArityPerAlt ;
+    vcfc:fieldDescription "Example MATEID" ;
+    vcfc:fieldId "MATEID" ;
+    vcfc:fieldNumber "A" ;
+    vcfc:fieldSource "VCF-Core-examples" ;
+    vcfc:fieldType vcfc:StringType ;
+    vcfc:fieldVersion "1.0" ;
+    vcfc:hasAttribute <file://example-vcf45-breakends.vcf#header/line/6/attribute/1>,
+        <file://example-vcf45-breakends.vcf#header/line/6/attribute/2>,
+        <file://example-vcf45-breakends.vcf#header/line/6/attribute/3>,
+        <file://example-vcf45-breakends.vcf#header/line/6/attribute/4>,
+        <file://example-vcf45-breakends.vcf#header/line/6/attribute/5>,
+        <file://example-vcf45-breakends.vcf#header/line/6/attribute/6> ;
+    vcfc:headerKey "INFO" ;
+    vcfc:headerValue "<ID=MATEID,Number=A,Type=String,Description=\"Example MATEID\",Source=\"VCF-Core-examples\",Version=\"1.0\">" ;
+    vcfc:lineIndex 6 .
+
+<file://example-vcf45-breakends.vcf#header/line/5> a vcfc:ContigHeaderLine ;
+    vcfc:contigId "chr2" ;
+    vcfc:contigLength 1000 ;
+    vcfc:hasAttribute <file://example-vcf45-breakends.vcf#header/line/5/attribute/1>,
+        <file://example-vcf45-breakends.vcf#header/line/5/attribute/2> ;
+    vcfc:headerKey "contig" ;
+    vcfc:headerValue "<ID=chr2,length=1000>" ;
+    vcfc:lineIndex 5 .
+
+<file://example-vcf45-breakends.vcf#header/line/7> a vcfc:FORMATHeaderLine ;
+    vcfc:fieldDescription "Example GT" ;
+    vcfc:fieldId "GT" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldNumberInteger 1 ;
+    vcfc:fieldType vcfc:StringType ;
+    vcfc:hasAttribute <file://example-vcf45-breakends.vcf#header/line/7/attribute/1>,
+        <file://example-vcf45-breakends.vcf#header/line/7/attribute/2>,
+        <file://example-vcf45-breakends.vcf#header/line/7/attribute/3>,
+        <file://example-vcf45-breakends.vcf#header/line/7/attribute/4> ;
+    vcfc:headerKey "FORMAT" ;
+    vcfc:headerValue "<ID=GT,Number=1,Type=String,Description=\"Example GT\">" ;
+    vcfc:lineIndex 7 .
+
+<file://example-vcf45-breakends.vcf#record/1/allele/1> a vcfc:AltAllele,
+        vcfc:Breakend ;
+    faldo:location <file://example-vcf45-breakends.vcf#record/1/allele/1/remote> ;
+    vcfc:alleleIndex 1 ;
+    vcfc:alleleKind vcfc:BreakendAllele ;
+    vcfc:alleleValue "A[chr2:500[" ;
+    vcfc:breakendOrientation vcfc:SequenceBeforeLeftBracket ;
+    vcfc:breakendReplacementString "A[chr2:500["^^vcfc:BreakendString ;
+    vcfc:isSingleBreakend false ;
+    vcfc:mateBreakend <file://example-vcf45-breakends.vcf#record/2/allele/1> .
+
+<file://example-vcf45-breakends.vcf#record/2/allele/1> a vcfc:AltAllele,
+        vcfc:Breakend ;
+    faldo:location <file://example-vcf45-breakends.vcf#record/2/allele/1/remote> ;
+    vcfc:alleleIndex 1 ;
+    vcfc:alleleKind vcfc:BreakendAllele ;
+    vcfc:alleleValue "]chr1:400]T" ;
+    vcfc:breakendOrientation vcfc:SequenceAfterRightBracket ;
+    vcfc:breakendReplacementString "]chr1:400]T"^^vcfc:BreakendString ;
+    vcfc:isSingleBreakend false ;
+    vcfc:mateBreakend <file://example-vcf45-breakends.vcf#record/1/allele/1> .
+
+<file://example-vcf45-breakends.vcf#samples/S1> a vcfc:VCFSample ;
+    vcfc:sampleIndex 1 ;
+    vcfc:sampleName "S1" .

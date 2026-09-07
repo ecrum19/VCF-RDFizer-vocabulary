@@ -13,7 +13,7 @@ consumer than a 404.
 The legacy document is generated once and is not extended with new terms.
 
 - Successor: <https://w3id.org/vcf-core/>
-- Source: <https://github.com/ecrum19/VCF-RDFizer-vocabulary>
+- Source: <https://github.com/ecrum19/vcf-core-vocabulary>
 - License: CC BY 4.0
 
 ## Maintainer

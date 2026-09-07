@@ -4,11 +4,11 @@ import fs from "node:fs";
 import path from "node:path";
 
 const RDF_TYPE_URI = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
-const VCFR_NAMESPACE = "https://w3id.org/vcf-core/vocab#";
+const VCFC_NAMESPACE = "https://w3id.org/vcf-core/vocab#";
 const LEGACY_INSTANCE_NAMESPACE = "https://w3id.org/vcf-core/vcf/";
 const CANONICAL_BASE_IRI = "file://";
 const KNOWN_PREFIXES = [
-  { prefix: "vcfr", iri: VCFR_NAMESPACE },
+  { prefix: "vcfc", iri: VCFC_NAMESPACE },
   { prefix: "rdf", iri: "http://www.w3.org/1999/02/22-rdf-syntax-ns#" },
   { prefix: "xsd", iri: "http://www.w3.org/2001/XMLSchema#" },
 ];
@@ -455,7 +455,7 @@ function serializeTurtle(groupedTriples, baseIri) {
     "@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .",
     "@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .",
     "",
-    "# This file is generated from examples/example.nt.",
+    "# This file is generated from examples/core/example.nt.",
   ].filter(Boolean);
 
   const subjectBlocks = [];
@@ -493,20 +493,26 @@ function main() {
   const repoRoot = process.argv[2] ? path.resolve(process.argv[2]) : process.cwd();
   const inputPath = process.argv[3]
     ? path.resolve(process.argv[3])
-    : path.join(repoRoot, "examples", "example.nt");
+    : path.join(repoRoot, "examples", "core", "example.nt");
   const outputPath = process.argv[4]
     ? path.resolve(process.argv[4])
-    : path.join(repoRoot, "examples", "example.ttl");
+    : path.join(repoRoot, "examples", "core", "example.ttl");
 
   const ntContent = fs.readFileSync(inputPath, "utf8");
   const triples = parseNTriples(ntContent);
   const canonicalTriples = canonicalizeTriples(triples);
   const groupedTriples = buildGroupedTriples(canonicalTriples);
   assertFaithfulGraph(canonicalTriples, groupedTriples);
-  const turtleContent = serializeTurtle(groupedTriples, CANONICAL_BASE_IRI);
+  const fileBases = [...new Set(
+    canonicalTriples
+      .map(([subject]) => getIri(subject))
+      .filter((iri) => iri?.startsWith(CANONICAL_BASE_IRI) && !iri.includes("#")),
+  )];
+  const serializationBase = fileBases.length === 1 ? fileBases[0] : null;
+  const turtleContent = serializeTurtle(groupedTriples, serializationBase);
 
   fs.writeFileSync(outputPath, turtleContent, "utf8");
-  console.log(`Wrote ${outputPath} (${canonicalTriples.length} triples, base ${CANONICAL_BASE_IRI}).`);
+  console.log(`Wrote ${outputPath} (${canonicalTriples.length} triples, base ${serializationBase || "none"}).`);
 }
 
 main();

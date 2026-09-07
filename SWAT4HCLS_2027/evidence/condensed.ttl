@@ -1,59 +1,181 @@
+@prefix ex: <file://synthetic.vcf#> .
 @prefix vcfc: <https://w3id.org/vcf-core/vocab#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix ex: <https://example.org/vcf/synthetic.vcf#> .
 
-# Synthetic vocabulary v1.1.0 example. Types needed for standalone
-# validation are explicit; no vocabulary import or entailment is required.
-vcfc:CondensedRepresentation a vcfc:RepresentationProfile .
-vcfc:VCFTextVector a vcfc:VectorEncoding .
+<file://synthetic.vcf> a vcfc:VCFFile ;
+    vcfc:fileFormat "VCFv4.5" ;
+    vcfc:hasHeader ex:header ;
+    vcfc:hasRecord ex:record1 ;
+    vcfc:hasSampleSet ex:samples ;
+    vcfc:referenceGenome "https://example.org/reference.fa" ;
+    vcfc:representationProfile vcfc:CondensedRepresentation .
 
-<https://example.org/vcf/synthetic.vcf>
-  a vcfc:VCFFile ;
-  vcfc:fileFormat "VCFv4.5" ;
-  vcfc:representationProfile vcfc:CondensedRepresentation ;
-  vcfc:hasHeader ex:header ;
-  vcfc:hasSampleSet ex:samples ;
-  vcfc:hasRecord ex:record1 .
+ex:call1 a vcfc:VariantCall ;
+    vcfc:filter "PASS" ;
+    vcfc:formatRaw "GT:DP" ;
+    vcfc:hasCallMatrix ex:matrix1 ;
+    vcfc:infoRaw "." ;
+    vcfc:qual "60"^^vcfc:VCFFloat .
 
 ex:header a vcfc:VCFHeader ;
-  vcfc:hasHeaderLine ex:fileformat, ex:GT, ex:DP .
-ex:fileformat a vcfc:FileFormatHeaderLine, vcfc:HeaderLine ;
-  vcfc:headerKey "fileformat" ; vcfc:headerValue "VCFv4.5" .
-ex:GT a vcfc:FormatFieldDefinition, vcfc:HeaderLine ;
-  vcfc:headerKey "FORMAT" ;
-  vcfc:headerValue "<ID=GT,Number=1,Type=String,Description=\"Genotype\">" ;
-  vcfc:fieldId "GT" ; vcfc:fieldNumber "1" ;
-  vcfc:fieldType vcfc:StringType ; vcfc:fieldDescription "Genotype" .
-ex:DP a vcfc:FormatFieldDefinition, vcfc:HeaderLine ;
-  vcfc:headerKey "FORMAT" ;
-  vcfc:headerValue "<ID=DP,Number=1,Type=Integer,Description=\"Read depth\">" ;
-  vcfc:fieldId "DP" ; vcfc:fieldNumber "1" ;
-  vcfc:fieldType vcfc:IntegerType ; vcfc:fieldDescription "Read depth" .
+    vcfc:hasColumnHeader <file://synthetic.vcf#header/columns> ;
+    vcfc:hasHeaderLine ex:DP,
+        ex:GT,
+        <file://synthetic.vcf#header/line/1>,
+        <file://synthetic.vcf#header/line/2>,
+        <file://synthetic.vcf#header/line/3> .
 
-ex:samples a vcfc:SampleSet ;
-  vcfc:hasSample ex:SAMPLE1, ex:SAMPLE2, ex:SAMPLE3 .
-ex:SAMPLE1 a vcfc:VCFSample ; vcfc:sampleName "SAMPLE1" ;
-  vcfc:sampleIndex "1"^^xsd:positiveInteger .
-ex:SAMPLE2 a vcfc:VCFSample ; vcfc:sampleName "SAMPLE2" ;
-  vcfc:sampleIndex "2"^^xsd:positiveInteger .
-ex:SAMPLE3 a vcfc:VCFSample ; vcfc:sampleName "SAMPLE3" ;
-  vcfc:sampleIndex "3"^^xsd:positiveInteger .
+<file://synthetic.vcf#header/columns> a vcfc:ColumnHeaderLine ;
+    vcfc:hasGenotypeColumns ex:SAMPLE1,
+        ex:SAMPLE2,
+        ex:SAMPLE3 .
 
-ex:record1 a vcfc:VCFRecord ;
-  vcfc:chrom "1" ; vcfc:pos 100 ; vcfc:recordId "."^^vcfc:Null ;
-  vcfc:ref "A" ; vcfc:alt "G" ; vcfc:hasCall ex:call1 .
-ex:call1 a vcfc:VariantCall ;
-  vcfc:qual "60"^^xsd:decimal ; vcfc:filter "PASS" ;
-  vcfc:infoRaw "." ; vcfc:formatRaw "GT:DP" ;
-  vcfc:hasCallMatrix ex:matrix1 .
+<file://synthetic.vcf#header/line/1> a vcfc:FileFormatHeaderLine,
+        vcfc:HeaderLine ;
+    vcfc:headerKey "fileformat" ;
+    vcfc:headerValue "VCFv4.5" ;
+    vcfc:lineIndex 1 .
+
+<file://synthetic.vcf#header/line/2> a vcfc:HeaderLine,
+        vcfc:ReferenceHeaderLine ;
+    vcfc:headerKey "reference" ;
+    vcfc:headerValue "https://example.org/reference.fa" ;
+    vcfc:lineIndex 2 .
+
+<file://synthetic.vcf#header/line/3> a vcfc:ContigHeaderLine,
+        vcfc:HeaderLine ;
+    vcfc:contigId "1" ;
+    vcfc:contigLength 1000 ;
+    vcfc:hasAttribute <file://synthetic.vcf#header/line/3/attribute/1>,
+        <file://synthetic.vcf#header/line/3/attribute/2> ;
+    vcfc:headerKey "contig" ;
+    vcfc:headerValue "<ID=1,length=1000>" ;
+    vcfc:lineIndex 3 .
+
+<file://synthetic.vcf#header/line/3/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "1" .
+
+<file://synthetic.vcf#header/line/3/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "length" ;
+    vcfc:attributeValue "1000" .
+
+<file://synthetic.vcf#header/line/4/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "GT" .
+
+<file://synthetic.vcf#header/line/4/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "1" .
+
+<file://synthetic.vcf#header/line/4/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "String" .
+
+<file://synthetic.vcf#header/line/4/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Genotype" .
+
+<file://synthetic.vcf#header/line/5/attribute/1> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 1 ;
+    vcfc:attributeKey "ID" ;
+    vcfc:attributeValue "DP" .
+
+<file://synthetic.vcf#header/line/5/attribute/2> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 2 ;
+    vcfc:attributeKey "Number" ;
+    vcfc:attributeValue "1" .
+
+<file://synthetic.vcf#header/line/5/attribute/3> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 3 ;
+    vcfc:attributeKey "Type" ;
+    vcfc:attributeValue "Integer" .
+
+<file://synthetic.vcf#header/line/5/attribute/4> a vcfc:HeaderAttribute ;
+    vcfc:attributeIndex 4 ;
+    vcfc:attributeKey "Description" ;
+    vcfc:attributeValue "Read depth" .
 
 ex:matrix1 a vcfc:CohortCallMatrix ;
-  vcfc:appliesToSampleSet ex:samples ;
-  vcfc:hasFormatValueVector ex:matrix1_GT, ex:matrix1_DP ;
-  vcfc:sampleDataRaw "0/1:42\t0/0:18\t./.:." .
-ex:matrix1_GT a vcfc:FormatValueVector ;
-  vcfc:declaredBy ex:GT ; vcfc:valueEncoding vcfc:VCFTextVector ;
-  vcfc:encodedValues "0/1\t0/0\t./." .
+    vcfc:appliesToSampleSet ex:samples ;
+    vcfc:hasFormatValueVector ex:matrix1_DP,
+        ex:matrix1_GT ;
+    vcfc:sampleDataRaw "0/1:42	0/0:18	./.:." .
+
 ex:matrix1_DP a vcfc:FormatValueVector ;
-  vcfc:declaredBy ex:DP ; vcfc:valueEncoding vcfc:VCFTextVector ;
-  vcfc:encodedValues "42\t18\t." .
+    vcfc:declaredBy ex:DP ;
+    vcfc:encodedValues "42	18	." ;
+    vcfc:valueEncoding vcfc:VCFTextVector .
+
+ex:matrix1_GT a vcfc:FormatValueVector ;
+    vcfc:declaredBy ex:GT ;
+    vcfc:encodedValues "0/1	0/0	./." ;
+    vcfc:valueEncoding vcfc:VCFTextVector .
+
+ex:record1 a vcfc:VCFRecord ;
+    vcfc:alt "G" ;
+    vcfc:chrom "1" ;
+    vcfc:hasCall ex:call1 ;
+    vcfc:pos 100 ;
+    vcfc:recordId "."^^vcfc:Null ;
+    vcfc:recordIndex 1 ;
+    vcfc:ref "A" .
+
+vcfc:CondensedRepresentation a vcfc:RepresentationProfile .
+
+ex:DP a vcfc:FORMATHeaderLine,
+        vcfc:FormatFieldDefinition,
+        vcfc:HeaderLine ;
+    vcfc:fieldDescription "Read depth" ;
+    vcfc:fieldId "DP" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldNumberInteger 1 ;
+    vcfc:fieldType vcfc:IntegerType ;
+    vcfc:hasAttribute <file://synthetic.vcf#header/line/5/attribute/1>,
+        <file://synthetic.vcf#header/line/5/attribute/2>,
+        <file://synthetic.vcf#header/line/5/attribute/3>,
+        <file://synthetic.vcf#header/line/5/attribute/4> ;
+    vcfc:headerKey "FORMAT" ;
+    vcfc:headerValue "<ID=DP,Number=1,Type=Integer,Description=\"Read depth\">" ;
+    vcfc:lineIndex 5 .
+
+ex:GT a vcfc:FORMATHeaderLine,
+        vcfc:FormatFieldDefinition,
+        vcfc:HeaderLine ;
+    vcfc:fieldDescription "Genotype" ;
+    vcfc:fieldId "GT" ;
+    vcfc:fieldNumber "1" ;
+    vcfc:fieldNumberInteger 1 ;
+    vcfc:fieldType vcfc:StringType ;
+    vcfc:hasAttribute <file://synthetic.vcf#header/line/4/attribute/1>,
+        <file://synthetic.vcf#header/line/4/attribute/2>,
+        <file://synthetic.vcf#header/line/4/attribute/3>,
+        <file://synthetic.vcf#header/line/4/attribute/4> ;
+    vcfc:headerKey "FORMAT" ;
+    vcfc:headerValue "<ID=GT,Number=1,Type=String,Description=\"Genotype\">" ;
+    vcfc:lineIndex 4 .
+
+ex:SAMPLE1 a vcfc:VCFSample ;
+    vcfc:sampleIndex "1"^^xsd:positiveInteger ;
+    vcfc:sampleName "SAMPLE1" .
+
+ex:SAMPLE2 a vcfc:VCFSample ;
+    vcfc:sampleIndex "2"^^xsd:positiveInteger ;
+    vcfc:sampleName "SAMPLE2" .
+
+ex:SAMPLE3 a vcfc:VCFSample ;
+    vcfc:sampleIndex "3"^^xsd:positiveInteger ;
+    vcfc:sampleName "SAMPLE3" .
+
+ex:samples a vcfc:SampleSet ;
+    vcfc:hasSample ex:SAMPLE1,
+        ex:SAMPLE2,
+        ex:SAMPLE3 .
+
+vcfc:VCFTextVector a vcfc:VectorEncoding .

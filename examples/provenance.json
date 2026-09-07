@@ -1,0 +1,97 @@
+{
+  "updated": "2026-09-07",
+  "expanded": {
+    "source_file": "test-larger.vcf.gz",
+    "source_sha256": "8c6b030e2aaa2025e38d201d30362766e1a0a266e3dd127302b93e5e60853c50",
+    "vcf_version": "VCFv4.2",
+    "reference": "GRCh38",
+    "samples": [
+      "NG131FQA1I"
+    ],
+    "sites": [
+      {
+        "chrom": "chr1",
+        "pos": 13613,
+        "id": "rs879980801",
+        "ref": "T",
+        "alt": "A"
+      },
+      {
+        "chrom": "chr1",
+        "pos": 13684,
+        "id": "rs71260404",
+        "ref": "C",
+        "alt": "T"
+      },
+      {
+        "chrom": "chr1",
+        "pos": 15484,
+        "id": "rs1236891946",
+        "ref": "G",
+        "alt": "T"
+      }
+    ],
+    "retained_FORMAT": [
+      "GT",
+      "AD",
+      "DP",
+      "GQ",
+      "PL"
+    ],
+    "retained_INFO": [
+      "AC",
+      "AF",
+      "AN",
+      "DP"
+    ],
+    "changes": "Calls and selected record fields copied unchanged; other annotations and command-line metadata omitted; reference label normalized from the source hg38 FASTA path; minimal and header-only examples are smaller views. INFO Source/Version attributes identify the example provenance; source-fixture is not asserted to be a caller release number.",
+    "minimal_FORMAT": [
+      "GT",
+      "AD",
+      "DP"
+    ],
+    "minimal_INFO": []
+  },
+  "condensed": {
+    "source_url": "https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr20.phase3_shapeit2_mvncall_integrated_v5b.20130502.genotypes.vcf.gz",
+    "downloaded_byte_range": "0-2097151",
+    "downloaded_prefix_sha256": "6ffec0ae51f960394c0d0e9d36eec28bf1c81add1c90ccc3f9c239cdd7386ddc",
+    "source_sample_count": 2504,
+    "vcf_version": "VCFv4.1",
+    "reference": "b37 / hs37d5",
+    "samples": [
+      "HG00096",
+      "HG00097",
+      "HG00099",
+      "HG00100",
+      "HG00101",
+      "HG00102",
+      "HG00103",
+      "HG00105"
+    ],
+    "sites": [
+      {
+        "chrom": "20",
+        "pos": 61795,
+        "ref": "G",
+        "alt": "T"
+      },
+      {
+        "chrom": "20",
+        "pos": 68749,
+        "ref": "T",
+        "alt": "C"
+      },
+      {
+        "chrom": "20",
+        "pos": 69094,
+        "ref": "G",
+        "alt": "A"
+      }
+    ],
+    "retained_FORMAT": [
+      "GT"
+    ],
+    "changes": "First eight sample columns and three biallelic SNPs retained; CHROM POS ID REF ALT QUAL FILTER and phased GT copied unchanged; INFO reduced to AC AF AN recomputed from the selected samples; no depths or qualities invented."
+  }
+}

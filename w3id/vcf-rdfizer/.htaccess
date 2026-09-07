@@ -7,7 +7,7 @@
 #
 # Maintainer: Elias Crum <elias.crum@ugent.be>
 #             IDLab, Ghent University - imec, Belgium
-# Source:     https://github.com/ecrum19/VCF-RDFizer-vocabulary
+# Source:     https://github.com/ecrum19/vcf-core-vocabulary
 #
 # DELIBERATELY NOT A REDIRECT TO THE NEW NAMESPACE. Every IRI under this
 # namespace resolves to a legacy document in which that IRI is still defined,

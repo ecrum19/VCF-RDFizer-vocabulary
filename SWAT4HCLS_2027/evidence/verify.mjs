@@ -58,7 +58,7 @@ for (const profile of ['expanded', 'condensed']) {
   const header = one(store, file, 'hasHeader');
   assertType(store, header, 'VCFHeader');
   const headerLines = objects(store, header, 'hasHeaderLine');
-  assert.equal(headerLines.length, 3);
+  assert.equal(headerLines.length, lines.filter(line => line.startsWith('##')).length);
   headerLines.forEach(line => assertType(store, line, 'HeaderLine'));
   const sampleSet = one(store, file, 'hasSampleSet');
   assertType(store, sampleSet, 'SampleSet');

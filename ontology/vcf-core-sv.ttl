@@ -1,0 +1,184 @@
+@prefix vcfc:  <https://w3id.org/vcf-core/vocab#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix so:    <http://purl.obolibrary.org/obo/SO_> .
+@prefix faldo: <http://biohackathon.org/resource/faldo#> .
+@prefix vrs:   <https://w3id.org/ga4gh/schema/vrs/2.0/json/> .
+
+#################################################################
+# Structural variation, repeats, gVCF, and base modifications
+#################################################################
+
+<https://w3id.org/vcf-core/sv> a owl:Ontology ;
+  rdfs:label "VCF Core structural-variation module"@en ;
+  dct:description "VCF-specific structural-variant syntax carriers, tandem repeats, copy-number fields, reference blocks, and base modifications."@en ;
+  owl:imports <https://w3id.org/vcf-core/vocab>,
+              <https://w3id.org/vcf-core/alleles>,
+              <https://w3id.org/vcf-core/genotypes> ;
+  owl:versionInfo "2.0.0" .
+
+vcfc:SymbolicAlleleType a owl:Class ;
+  rdfs:label "symbolic allele type"@en ;
+  rdfs:comment "A reserved first-level symbolic ALT type or recommended subtype. It represents VCF syntax and points outward to SO rather than reclassifying an allele as an SO entity."@en .
+
+vcfc:SVClaim a owl:Class ;
+  rdfs:label "structural-variant claim"@en ;
+  rdfs:comment "The per-ALT SVCLAIM code indicating an abundance claim, adjacency claim, or both."@en .
+
+vcfc:Breakend a owl:Class ; rdfs:subClassOf vcfc:AltAllele ;
+  rdfs:label "breakend"@en ;
+  rdfs:comment "A parsed bracketed VCF ALT allele representing a novel adjacency or terminus. The source expression remains in alleleValue."@en ;
+  skos:relatedMatch so:0001021 ; rdfs:seeAlso vrs:Adjacency, vrs:Terminus .
+
+vcfc:BreakendOrientation a owl:Class ;
+  rdfs:label "breakend orientation"@en ;
+  rdfs:comment "One of the four bracket placements permitted by VCF breakend notation."@en .
+
+vcfc:VariantEvent a owl:Class ;
+  rdfs:label "variant event"@en ;
+  rdfs:comment "A named EVENT grouping records that jointly describe a complex rearrangement or another related variation event."@en .
+
+vcfc:EventType a owl:Class ;
+  rdfs:label "event type"@en ;
+  rdfs:comment "A reserved VCF EVENTTYPE code."@en .
+
+vcfc:ConfidenceInterval a owl:Class ;
+  rdfs:label "confidence interval"@en ;
+  rdfs:comment "A lower and upper VCF interval for CILEN, CICN, CIRUC, or CIRB. CILEN contains length bounds, not POS offsets. CIPOS and CIEND instead use FALDO InRangePosition."@en .
+
+vcfc:TandemRepeatAllele a owl:Class ; rdfs:subClassOf vcfc:AltAllele ;
+  rdfs:label "tandem-repeat allele"@en ;
+  rdfs:comment "A <CNV:TR> alternate allele whose repeat sequences and units are represented through the VCF tandem-repeat fields."@en .
+
+vcfc:RepeatSequence a owl:Class ;
+  rdfs:label "repeat sequence"@en ;
+  rdfs:comment "One repeat sequence within a tandem-repeat allele, indexed in VCF RN/RUS/RUL/RUC/RB order."@en .
+
+vcfc:RepeatUnit a owl:Class ;
+  rdfs:label "repeat unit"@en ;
+  rdfs:comment "One individually sized repeat unit used only when RUB distinguishes varying unit lengths."@en .
+
+vcfc:ReferenceBlock a owl:Class ;
+  rdfs:label "reference block"@en ;
+  rdfs:comment "A reference interval for one sample, linked to its unspecified ALT allele with blockAllele. Different samples may have different FORMAT LEN extents for the same record."@en .
+
+vcfc:BaseModification a owl:Class ;
+  rdfs:label "base modification"@en ;
+  rdfs:comment "A parsed base-modification carrier for VCF Number=M FORMAT fields. modifiedResidue links directly to the corresponding ChEBI resource; FALDO ForwardStrandPosition, ReverseStrandPosition, and BothStrandsPosition express the VCF strandedness convention without new VCF terms."@en .
+
+vcfc:SymbolicDeletion a owl:NamedIndividual, vcfc:SymbolicAlleleType ;
+  rdfs:label "DEL symbolic allele type"@en ; vcfc:svTypeCode "DEL" ; skos:exactMatch so:0000159 .
+vcfc:SymbolicInsertion a owl:NamedIndividual, vcfc:SymbolicAlleleType ;
+  rdfs:label "INS symbolic allele type"@en ; vcfc:svTypeCode "INS" ; skos:exactMatch so:0000667 .
+vcfc:SymbolicDuplication a owl:NamedIndividual, vcfc:SymbolicAlleleType ;
+  rdfs:label "DUP symbolic allele type"@en ; vcfc:svTypeCode "DUP" ; skos:exactMatch so:1000035 .
+vcfc:SymbolicInversion a owl:NamedIndividual, vcfc:SymbolicAlleleType ;
+  rdfs:label "INV symbolic allele type"@en ; vcfc:svTypeCode "INV" ; skos:exactMatch so:1000036 .
+vcfc:SymbolicCopyNumberVariation a owl:NamedIndividual, vcfc:SymbolicAlleleType ;
+  rdfs:label "CNV symbolic allele type"@en ; vcfc:svTypeCode "CNV" ; skos:exactMatch so:0001019 .
+vcfc:SymbolicTandemRepeat a owl:NamedIndividual, vcfc:SymbolicAlleleType ;
+  rdfs:label "CNV:TR symbolic allele subtype"@en ; vcfc:svTypeCode "CNV:TR" ;
+  vcfc:svSubtypeOf vcfc:SymbolicCopyNumberVariation ; skos:closeMatch so:0000705 ; skos:relatedMatch so:0002096 .
+vcfc:SymbolicTandemDuplication a owl:NamedIndividual, vcfc:SymbolicAlleleType ;
+  rdfs:label "DUP:TANDEM symbolic allele subtype"@en ; vcfc:svTypeCode "DUP:TANDEM" ;
+  vcfc:svSubtypeOf vcfc:SymbolicDuplication ; skos:exactMatch so:1000173 .
+vcfc:SymbolicMobileElementDeletion a owl:NamedIndividual, vcfc:SymbolicAlleleType ;
+  rdfs:label "DEL:ME symbolic allele subtype"@en ; vcfc:svTypeCode "DEL:ME" ;
+  vcfc:svSubtypeOf vcfc:SymbolicDeletion ; skos:exactMatch so:0002066 .
+vcfc:SymbolicMobileElementInsertion a owl:NamedIndividual, vcfc:SymbolicAlleleType ;
+  rdfs:label "INS:ME symbolic allele subtype"@en ; vcfc:svTypeCode "INS:ME" ;
+  vcfc:svSubtypeOf vcfc:SymbolicInsertion ; skos:exactMatch so:0001837 .
+
+vcfc:AbundanceClaim a owl:NamedIndividual, vcfc:SVClaim ;
+  rdfs:label "abundance claim (D)"@en ; vcfc:svClaimCode "D" .
+vcfc:AdjacencyClaim a owl:NamedIndividual, vcfc:SVClaim ;
+  rdfs:label "adjacency claim (J)"@en ; vcfc:svClaimCode "J" .
+vcfc:AbundanceAndAdjacencyClaim a owl:NamedIndividual, vcfc:SVClaim ;
+  rdfs:label "abundance and adjacency claim (DJ)"@en ; vcfc:svClaimCode "DJ" .
+
+vcfc:SequenceBeforeLeftBracket a owl:NamedIndividual, vcfc:BreakendOrientation ;
+  rdfs:label "sequence before left bracket"@en ; rdfs:comment "The t[p[ breakend form."@en .
+vcfc:SequenceBeforeRightBracket a owl:NamedIndividual, vcfc:BreakendOrientation ;
+  rdfs:label "sequence before right bracket"@en ; rdfs:comment "The t]p] breakend form."@en .
+vcfc:SequenceAfterLeftBracket a owl:NamedIndividual, vcfc:BreakendOrientation ;
+  rdfs:label "sequence after left bracket"@en ; rdfs:comment "The [p[t breakend form."@en .
+vcfc:SequenceAfterRightBracket a owl:NamedIndividual, vcfc:BreakendOrientation ;
+  rdfs:label "sequence after right bracket"@en ; rdfs:comment "The ]p]t breakend form."@en .
+
+vcfc:EventDeletion a owl:NamedIndividual, vcfc:EventType ; rdfs:label "DEL event type"@en ; vcfc:eventTypeCode "DEL" ; skos:exactMatch so:0000159 .
+vcfc:EventMobileElementDeletion a owl:NamedIndividual, vcfc:EventType ; rdfs:label "DEL:ME event type"@en ; vcfc:eventTypeCode "DEL:ME" ; skos:exactMatch so:0002066 .
+vcfc:EventInsertion a owl:NamedIndividual, vcfc:EventType ; rdfs:label "INS event type"@en ; vcfc:eventTypeCode "INS" ; skos:exactMatch so:0000667 .
+vcfc:EventMobileElementInsertion a owl:NamedIndividual, vcfc:EventType ; rdfs:label "INS:ME event type"@en ; vcfc:eventTypeCode "INS:ME" ; skos:exactMatch so:0001837 .
+vcfc:EventDuplication a owl:NamedIndividual, vcfc:EventType ; rdfs:label "DUP event type"@en ; vcfc:eventTypeCode "DUP" ; skos:exactMatch so:1000035 .
+vcfc:EventTandemDuplication a owl:NamedIndividual, vcfc:EventType ; rdfs:label "DUP:TANDEM event type"@en ; vcfc:eventTypeCode "DUP:TANDEM" ; skos:exactMatch so:1000173 .
+vcfc:EventDispersedDuplication a owl:NamedIndividual, vcfc:EventType ; rdfs:label "DUP:DISPERSED event type"@en ; vcfc:eventTypeCode "DUP:DISPERSED" .
+vcfc:EventInversion a owl:NamedIndividual, vcfc:EventType ; rdfs:label "INV event type"@en ; vcfc:eventTypeCode "INV" ; skos:exactMatch so:1000036 .
+vcfc:EventTranslocation a owl:NamedIndividual, vcfc:EventType ; rdfs:label "TRA event type"@en ; vcfc:eventTypeCode "TRA" ; skos:exactMatch so:0000199 .
+vcfc:EventBalancedTranslocation a owl:NamedIndividual, vcfc:EventType ; rdfs:label "TRA:BALANCED event type"@en ; vcfc:eventTypeCode "TRA:BALANCED" ; skos:exactMatch so:1000048 .
+vcfc:EventUnbalancedTranslocation a owl:NamedIndividual, vcfc:EventType ; rdfs:label "TRA:UNBALANCED event type"@en ; vcfc:eventTypeCode "TRA:UNBALANCED" .
+vcfc:EventChromothripsis a owl:NamedIndividual, vcfc:EventType ; rdfs:label "CHROMOTHRIPSIS event type"@en ; vcfc:eventTypeCode "CHROMOTHRIPSIS" ; skos:closeMatch so:0002062 .
+vcfc:EventChromoplexy a owl:NamedIndividual, vcfc:EventType ; rdfs:label "CHROMOPLEXY event type"@en ; vcfc:eventTypeCode "CHROMOPLEXY" .
+vcfc:EventBreakageFusionBridge a owl:NamedIndividual, vcfc:EventType ; rdfs:label "BFB event type"@en ; vcfc:eventTypeCode "BFB" .
+vcfc:EventDoubleMinute a owl:NamedIndividual, vcfc:EventType ; rdfs:label "DOUBLEMINUTE event type"@en ; vcfc:eventTypeCode "DOUBLEMINUTE" .
+
+vcfc:svType a owl:ObjectProperty ; rdfs:label "SV type"@en ; rdfs:domain vcfc:AltAllele ; rdfs:range vcfc:SymbolicAlleleType .
+vcfc:svSubtypeOf a owl:ObjectProperty ; rdfs:label "SV subtype of"@en ; rdfs:domain vcfc:SymbolicAlleleType ; rdfs:range vcfc:SymbolicAlleleType .
+vcfc:svClaim a owl:ObjectProperty ; rdfs:label "SV claim"@en ; rdfs:domain vcfc:AltAllele ; rdfs:range vcfc:SVClaim .
+vcfc:mateBreakend a owl:ObjectProperty ; rdfs:label "mate breakend"@en ; rdfs:domain vcfc:Breakend ; rdfs:range vcfc:Breakend .
+vcfc:partnerBreakend a owl:ObjectProperty ; rdfs:label "partner breakend"@en ; rdfs:domain vcfc:Breakend ; rdfs:range vcfc:Breakend .
+vcfc:breakendOrientation a owl:ObjectProperty ; rdfs:label "breakend orientation"@en ; rdfs:domain vcfc:Breakend ; rdfs:range vcfc:BreakendOrientation .
+vcfc:inEvent a owl:ObjectProperty ; rdfs:label "in event"@en ; rdfs:range vcfc:VariantEvent .
+vcfc:eventType a owl:ObjectProperty ; rdfs:label "event type"@en ; rdfs:domain vcfc:VariantEvent ; rdfs:range vcfc:EventType .
+vcfc:posConfidenceInterval a owl:ObjectProperty ;
+  rdfs:label "POS confidence interval"@en ; rdfs:domain vcfc:AltAllele ; rdfs:range faldo:InRangePosition ;
+  rdfs:comment "Represents CIPOS through FALDO InRangePosition rather than a VCF-specific ConfidenceInterval."@en .
+vcfc:endConfidenceInterval a owl:ObjectProperty ;
+  rdfs:label "END confidence interval"@en ; rdfs:domain vcfc:AltAllele ; rdfs:range faldo:InRangePosition ;
+  rdfs:comment "Represents CIEND through FALDO InRangePosition rather than a VCF-specific ConfidenceInterval."@en .
+vcfc:lenConfidenceInterval a owl:ObjectProperty ; rdfs:label "SVLEN confidence interval"@en ; rdfs:domain vcfc:AltAllele ; rdfs:range vcfc:ConfidenceInterval .
+vcfc:copyNumberConfidenceInterval a owl:ObjectProperty ; rdfs:label "copy-number confidence interval"@en ; rdfs:range vcfc:ConfidenceInterval .
+vcfc:rucConfidenceInterval a owl:ObjectProperty ; rdfs:label "RUC confidence interval"@en ; rdfs:domain vcfc:RepeatSequence ; rdfs:range vcfc:ConfidenceInterval .
+vcfc:rbConfidenceInterval a owl:ObjectProperty ; rdfs:label "RB confidence interval"@en ; rdfs:domain vcfc:RepeatSequence ; rdfs:range vcfc:ConfidenceInterval .
+vcfc:hasRepeatSequence a owl:ObjectProperty ; rdfs:label "has repeat sequence"@en ; rdfs:domain vcfc:TandemRepeatAllele ; rdfs:range vcfc:RepeatSequence .
+vcfc:hasRepeatUnit a owl:ObjectProperty ; rdfs:label "has repeat unit"@en ; rdfs:domain vcfc:RepeatSequence ; rdfs:range vcfc:RepeatUnit .
+vcfc:modifiedResidue a owl:ObjectProperty ; rdfs:label "modified residue"@en ; rdfs:domain vcfc:BaseModification ;
+  rdfs:comment "Links directly to the ChEBI class denoting the modified residue."@en .
+
+vcfc:svTypeCode a owl:DatatypeProperty ; rdfs:label "SV type code"@en ; rdfs:domain vcfc:SymbolicAlleleType ; rdfs:range xsd:string .
+vcfc:svClaimCode a owl:DatatypeProperty ; rdfs:label "SV claim code"@en ; rdfs:domain vcfc:SVClaim ; rdfs:range xsd:string .
+vcfc:svLength a owl:DatatypeProperty ; rdfs:label "SV length"@en ; rdfs:domain vcfc:AltAllele ; rdfs:range rdfs:Literal .
+vcfc:isImprecise a owl:DatatypeProperty ; rdfs:label "is imprecise"@en ; rdfs:domain vcfc:AltAllele ; rdfs:range xsd:boolean .
+vcfc:isNovel a owl:DatatypeProperty ; rdfs:label "is novel"@en ; rdfs:domain vcfc:AltAllele ; rdfs:range xsd:boolean .
+vcfc:isSingleBreakend a owl:DatatypeProperty ; rdfs:label "is single breakend"@en ; rdfs:domain vcfc:Breakend ; rdfs:range xsd:boolean .
+vcfc:isTelomereBreakend a owl:DatatypeProperty ; rdfs:label "is telomere breakend"@en ; rdfs:domain vcfc:Breakend ; rdfs:range xsd:boolean .
+vcfc:breakendReplacementString a owl:DatatypeProperty ; rdfs:label "breakend replacement string"@en ; rdfs:domain vcfc:Breakend ; rdfs:range vcfc:BreakendString .
+vcfc:insertedSequence a owl:DatatypeProperty ; rdfs:label "inserted sequence"@en ; rdfs:domain vcfc:Breakend ; rdfs:range xsd:string .
+vcfc:eventTypeCode a owl:DatatypeProperty ; rdfs:label "event type code"@en ; rdfs:domain vcfc:EventType ; rdfs:range xsd:string .
+vcfc:ciLower a owl:DatatypeProperty ; rdfs:label "confidence-interval lower bound"@en ; rdfs:domain vcfc:ConfidenceInterval ; rdfs:range rdfs:Literal .
+vcfc:ciUpper a owl:DatatypeProperty ; rdfs:label "confidence-interval upper bound"@en ; rdfs:domain vcfc:ConfidenceInterval ; rdfs:range rdfs:Literal .
+vcfc:repeatSequenceCount a owl:DatatypeProperty ; rdfs:label "repeat-sequence count"@en ; rdfs:domain vcfc:TandemRepeatAllele ; rdfs:range xsd:nonNegativeInteger .
+vcfc:repeatSequenceIndex a owl:DatatypeProperty ; rdfs:label "repeat-sequence index"@en ; rdfs:domain vcfc:RepeatSequence ; rdfs:range xsd:positiveInteger .
+vcfc:repeatUnitSequence a owl:DatatypeProperty ; rdfs:label "repeat-unit sequence"@en ; rdfs:domain vcfc:RepeatSequence ; rdfs:range rdfs:Literal .
+vcfc:repeatUnitLength a owl:DatatypeProperty ; rdfs:label "repeat-unit length"@en ; rdfs:domain vcfc:RepeatSequence ; rdfs:range rdfs:Literal .
+vcfc:repeatUnitCount a owl:DatatypeProperty ; rdfs:label "repeat-unit count"@en ; rdfs:domain vcfc:RepeatSequence ; rdfs:range rdfs:Literal .
+vcfc:repeatBases a owl:DatatypeProperty ; rdfs:label "repeat bases"@en ; rdfs:domain vcfc:RepeatSequence ; rdfs:range rdfs:Literal .
+vcfc:repeatUnitBases a owl:DatatypeProperty ; rdfs:label "repeat-unit bases"@en ; rdfs:domain vcfc:RepeatUnit ; rdfs:range rdfs:Literal .
+vcfc:copyNumber a owl:DatatypeProperty ; rdfs:label "copy number"@en ; rdfs:range rdfs:Literal .
+vcfc:copyNumberQuality a owl:DatatypeProperty ; rdfs:label "copy-number quality"@en ; rdfs:domain vcfc:SampleCall ; rdfs:range rdfs:Literal .
+vcfc:copyNumberLikelihood a owl:DatatypeProperty ; rdfs:label "copy-number likelihood"@en ; rdfs:domain vcfc:SampleCall ; rdfs:range rdfs:Literal .
+vcfc:copyNumberPosterior a owl:DatatypeProperty ; rdfs:label "copy-number posterior"@en ; rdfs:domain vcfc:SampleCall ; rdfs:range rdfs:Literal .
+vcfc:haplotypeId a owl:DatatypeProperty ; rdfs:label "haplotype ID"@en ; rdfs:domain vcfc:SampleCall ; rdfs:range xsd:integer .
+vcfc:ancestralHaplotypeId a owl:DatatypeProperty ; rdfs:label "ancestral haplotype ID"@en ; rdfs:domain vcfc:SampleCall ; rdfs:range xsd:integer .
+vcfc:referenceBlockLength a owl:DatatypeProperty ; rdfs:label "reference-block length"@en ; rdfs:domain vcfc:ReferenceBlock ; rdfs:range xsd:nonNegativeInteger .
+vcfc:endPosition a owl:DatatypeProperty ; rdfs:label "end position"@en ; rdfs:domain vcfc:ReferenceBlock ; rdfs:range xsd:integer .
+vcfc:isReferenceBlockStart a owl:DatatypeProperty ; rdfs:label "is reference-block start"@en ; rdfs:domain vcfc:ReferenceBlock ; rdfs:range xsd:boolean .
+vcfc:modifiedBaseOffset a owl:DatatypeProperty ; rdfs:label "modified-base offset"@en ; rdfs:domain vcfc:BaseModification ; rdfs:range xsd:nonNegativeInteger .
+vcfc:modificationFraction a owl:DatatypeProperty ; rdfs:label "modification fraction"@en ; rdfs:domain vcfc:BaseModification ; rdfs:range rdfs:Literal .
+vcfc:modificationDepth a owl:DatatypeProperty ; rdfs:label "modification depth"@en ; rdfs:domain vcfc:BaseModification ; rdfs:range rdfs:Literal .
+vcfc:modificationAlleleDepth a owl:DatatypeProperty ; rdfs:label "modification allele depth"@en ; rdfs:domain vcfc:BaseModification ; rdfs:range rdfs:Literal .
+
+vcfc:hasReferenceBlock a owl:ObjectProperty ; rdfs:label "has reference block"@en ; rdfs:range vcfc:ReferenceBlock .
+vcfc:blockAllele a owl:ObjectProperty ; rdfs:label "block allele"@en ; rdfs:domain vcfc:ReferenceBlock ; rdfs:range vcfc:AltAllele .

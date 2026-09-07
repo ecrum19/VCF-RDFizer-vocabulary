@@ -6,7 +6,7 @@
     "SAMPLE3"
   ],
   "expanded": {
-    "triples": 94,
+    "triples": 172,
     "rawFormatCellsRecovered": 6,
     "sampleCalls": 3,
     "formatFieldValues": 6,
@@ -17,7 +17,7 @@
     ]
   },
   "condensed": {
-    "triples": 71,
+    "triples": 149,
     "rawFormatCellsRecovered": 6,
     "sampleCalls": 0,
     "formatFieldValues": 0,

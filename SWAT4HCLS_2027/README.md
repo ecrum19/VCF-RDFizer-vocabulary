@@ -34,3 +34,8 @@ This checks the six represented GT/DP cells, sample ordering, missingness, and a
 The final PDF has five main-matter pages, including the acknowledgments and the AI declaration, and references start on page six. The revision of 6 September 2026 renamed the vocabulary to VCF Core 2.0.0 and added GFVO to related work; both additions were tightened to keep the five-page budget. BibTeX resolves all 14 citations; the final build has no undefined citations/references or missing-glyph warnings. CEURART produces internal title-box and PDF/A metadata warnings; the rendered title, authors, contact details, figure, body, and references are legible and unclipped. These checks do not constitute a formal PDF/A conformance certification.
 
 The venue information was checked on 6 September 2026 against the [official call](https://www.swat4ls.org/workshops/basel2027/call-for-papers/). Authors and FWO acknowledgments were retained as confirmed. The preparatory draft includes a truthful AI-use declaration and requires substantive human revision before submission under the current CEUR-WS policy; see `author-notes.md`.
+
+The current working-tree fixtures are additionally checked with the complete
+repository profiles (`npm run validate:shacl`) and independent VCF reconstruction
+and SPARQL execution (`npm run validate:examples`). See `evidence/README.md` for
+the updated counts and the distinction from the Node-only assertion run.

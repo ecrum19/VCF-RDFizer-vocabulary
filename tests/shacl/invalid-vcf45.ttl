@@ -1,0 +1,39 @@
+@prefix vcfc: <https://w3id.org/vcf-core/vocab#> .
+
+# Deliberately invalid: exercises the opt-in VCF 4.5 gate and SPARQL ordering
+# constraints in one compact graph.
+<invalid.vcf>
+  a vcfc:VCF45File ;
+  vcfc:fileFormat "VCFv4.4" ;
+  vcfc:representationProfile vcfc:ExpandedRepresentation ;
+  vcfc:referenceGenome "https://example.org/reference" ;
+  vcfc:hasHeader <invalid.vcf#header> ;
+  vcfc:hasRecord <invalid.vcf#record/1>, <invalid.vcf#record/2> .
+
+<invalid.vcf#header>
+  a vcfc:VCFHeader ;
+  vcfc:hasHeaderLine <invalid.vcf#header/fileformat>, <invalid.vcf#header/contig> .
+
+<invalid.vcf#header/fileformat>
+  a vcfc:FileFormatHeaderLine ;
+  vcfc:headerKey "fileformat" ;
+  vcfc:headerValue "VCFv4.4" ;
+  vcfc:lineIndex 2 .
+
+<invalid.vcf#header/contig>
+  a vcfc:ContigHeaderLine ;
+  vcfc:headerKey "contig" ;
+  vcfc:contigId "chr1" ;
+  vcfc:hasAttribute <invalid.vcf#header/contig/id> .
+
+<invalid.vcf#header/contig/id>
+  a vcfc:HeaderAttribute ;
+  vcfc:attributeIndex 1 ; vcfc:attributeKey "ID" ; vcfc:attributeValue "chr1" .
+
+<invalid.vcf#record/1>
+  a vcfc:VCFRecord ;
+  vcfc:recordIndex 1 ; vcfc:chrom "chr1" ; vcfc:pos 20 ; vcfc:ref "A" ; vcfc:alt "T" .
+
+<invalid.vcf#record/2>
+  a vcfc:VCFRecord ;
+  vcfc:recordIndex 2 ; vcfc:chrom "chr1" ; vcfc:pos 10 ; vcfc:ref "A" ; vcfc:alt "G" .

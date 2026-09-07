@@ -1,0 +1,18 @@
+##fileformat=VCFv4.2
+##source=HaplotypeCaller
+##reference=GRCh38
+##contig=<ID=chr1,length=248956422>
+##subsetNote=Subset of test-larger.vcf.gz; annotations reduced for the VCF Core tutorial; sample calls retained.
+##INFO=<ID=AC,Number=A,Type=Integer,Description="Allele count in genotypes, for each ALT allele, in the same order as listed",Source="HaplotypeCaller",Version="source-fixture">
+##INFO=<ID=AF,Number=A,Type=Float,Description="Allele Frequency, for each ALT allele, in the same order as listed",Source="HaplotypeCaller",Version="source-fixture">
+##INFO=<ID=AN,Number=1,Type=Integer,Description="Total number of alleles in called genotypes",Source="HaplotypeCaller",Version="source-fixture">
+##INFO=<ID=DP,Number=1,Type=Integer,Description="Approximate read depth; some reads may have been filtered",Source="HaplotypeCaller",Version="source-fixture">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##FORMAT=<ID=AD,Number=R,Type=Integer,Description="Allelic depths for the ref and alt alleles in the order listed">
+##FORMAT=<ID=DP,Number=1,Type=Integer,Description="Approximate read depth (reads with MQ=255 or with bad mates are filtered)">
+##FORMAT=<ID=GQ,Number=1,Type=Integer,Description="Genotype Quality">
+##FORMAT=<ID=PL,Number=G,Type=Integer,Description="Normalized, Phred-scaled likelihoods for genotypes as defined in the VCF specification">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	NG131FQA1I
+chr1	13613	rs879980801	T	A	84.77	PASS	AC=1;AF=0.500;AN=2;DP=7	GT:AD:DP:GQ:PL	0/1:2,5:7:32:113,0,32
+chr1	13684	rs71260404	C	T	106.90	PASS	AC=2;AF=1.00;AN=2;DP=5	GT:AD:DP:GQ:PL	1/1:0,5:5:15:135,15,0
+chr1	15484	rs1236891946	G	T	43.77	PASS	AC=1;AF=0.500;AN=2;DP=23	GT:AD:DP:GQ:PL	0/1:18,5:23:72:72,0,417

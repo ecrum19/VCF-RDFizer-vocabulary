@@ -1,0 +1,18 @@
+PREFIX vcfc: <https://w3id.org/vcf-core/vocab#>
+
+# Change the sample name to inspect another column of the condensed cohort.
+# This explicitly decodes one tab-separated cell using its one-based sampleIndex.
+SELECT ?chrom ?pos ?sampleName ?genotype WHERE {
+  ?file a vcfc:VCFFile ;
+        vcfc:hasSampleSet/vcfc:hasSample ?sample ;
+        vcfc:hasRecord ?record .
+  ?sample vcfc:sampleName ?sampleName ; vcfc:sampleIndex ?index .
+  FILTER (?sampleName = "HG00096")
+  ?record vcfc:chrom ?chrom ; vcfc:pos ?pos ;
+          vcfc:hasCall/vcfc:hasCallMatrix/vcfc:hasFormatValueVector ?vector .
+  ?vector vcfc:declaredBy/vcfc:fieldId "GT" ;
+          vcfc:valueEncoding vcfc:VCFTextVector ; vcfc:encodedValues ?values .
+  BIND(CONCAT("^(?:[^\\t]*\\t){", STR(?index - 1), "}([^\\t]*).*$") AS ?pattern)
+  BIND(REPLACE(?values, ?pattern, "$1") AS ?genotype)
+}
+ORDER BY ?chrom ?pos
