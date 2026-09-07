@@ -1,0 +1,46 @@
+# https://w3id.org/vcf-rdfizer/
+#
+# RETIRED namespace of the VCF-RDFizer Vocabulary, versions 1.0.x and 1.1.0.
+# The vocabulary continues as the VCF Core Vocabulary at
+# https://w3id.org/vcf-core/ so that the model is identified independently of
+# any one converter.
+#
+# Maintainer: Elias Crum <elias.crum@ugent.be>
+#             IDLab, Ghent University - imec, Belgium
+# Source:     https://github.com/ecrum19/VCF-RDFizer-vocabulary
+#
+# DELIBERATELY NOT A REDIRECT TO THE NEW NAMESPACE. Every IRI under this
+# namespace resolves to a legacy document in which that IRI is still defined,
+# deprecated, and linked to its successor with owl:equivalentClass,
+# owl:equivalentProperty or owl:sameAs. Redirecting to the new vocabulary would
+# resolve a legacy IRI to a document that does not define it, which is less
+# useful than a 404.
+#
+# The legacy document is generated once by scripts/migrate-namespace.mjs and is
+# not extended with new terms.
+#
+# BEFORE OPENING THE PULL REQUEST: replace every REPLACE-ME below with the real
+# publishing host, with no trailing slash, and confirm that host actually serves
+# legacy-vcf-rdfizer.ttl. Test the rules against a local checkout first.
+
+Options +FollowSymLinks
+RewriteEngine on
+
+# ---------------------------------------------------------------------------
+# Retired vocabulary. Fragment IRIs such as .../vocab#VCFFile dereference here.
+# ---------------------------------------------------------------------------
+RewriteRule ^vocab/?$ REPLACE-ME/assets/legacy-vcf-rdfizer.ttl [R=302,L]
+RewriteRule ^vocab\.ttl$ REPLACE-ME/assets/legacy-vcf-rdfizer.ttl [R=302,L]
+RewriteRule ^vocab/[0-9]+\.[0-9]+\.[0-9]+/?$ REPLACE-ME/assets/legacy-vcf-rdfizer.ttl [R=302,L]
+
+# ---------------------------------------------------------------------------
+# Retired instance IRI space. Never published; nothing to serve.
+# ---------------------------------------------------------------------------
+RewriteRule ^vcf/ - [R=410,L]
+
+# ---------------------------------------------------------------------------
+# Everything else under the retired namespace: the deprecation record.
+# A human visiting the bare namespace is sent to the successor's documentation.
+# ---------------------------------------------------------------------------
+RewriteRule ^$ https://w3id.org/vcf-core/ [R=302,L]
+RewriteRule ^(.*)$ REPLACE-ME/assets/legacy-vcf-rdfizer.ttl [R=302,L]

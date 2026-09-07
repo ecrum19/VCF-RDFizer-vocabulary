@@ -1,77 +1,77 @@
 @base <file://> .
-@prefix vcfr: <https://w3id.org/vcf-rdfizer/vocab#> .
+@prefix vcfc: <https://w3id.org/vcf-core/vocab#> .
 
 # Version 1.1.0 condensed representation of three VCF sample columns.
 <cohort.vcf>
-  a vcfr:VCFFile ;
-  vcfr:fileFormat "VCFv4.5" ;
-  vcfr:representationProfile vcfr:CondensedRepresentation ;
-  vcfr:hasSampleSet <cohort.vcf#samples> ;
-  vcfr:hasRecord <cohort.vcf#record/1> .
+  a vcfc:VCFFile ;
+  vcfc:fileFormat "VCFv4.5" ;
+  vcfc:representationProfile vcfc:CondensedRepresentation ;
+  vcfc:hasSampleSet <cohort.vcf#samples> ;
+  vcfc:hasRecord <cohort.vcf#record/1> .
 
 <cohort.vcf#samples>
-  a vcfr:SampleSet ;
-  vcfr:hasSample
+  a vcfc:SampleSet ;
+  vcfc:hasSample
     <cohort.vcf#samples/SAMPLE1>,
     <cohort.vcf#samples/SAMPLE2>,
     <cohort.vcf#samples/SAMPLE3> .
 
 <cohort.vcf#samples/SAMPLE1>
-  a vcfr:VCFSample ;
-  vcfr:sampleName "SAMPLE1" ;
-  vcfr:sampleIndex 1 .
+  a vcfc:VCFSample ;
+  vcfc:sampleName "SAMPLE1" ;
+  vcfc:sampleIndex 1 .
 
 <cohort.vcf#samples/SAMPLE2>
-  a vcfr:VCFSample ;
-  vcfr:sampleName "SAMPLE2" ;
-  vcfr:sampleIndex 2 .
+  a vcfc:VCFSample ;
+  vcfc:sampleName "SAMPLE2" ;
+  vcfc:sampleIndex 2 .
 
 <cohort.vcf#samples/SAMPLE3>
-  a vcfr:VCFSample ;
-  vcfr:sampleName "SAMPLE3" ;
-  vcfr:sampleIndex 3 .
+  a vcfc:VCFSample ;
+  vcfc:sampleName "SAMPLE3" ;
+  vcfc:sampleIndex 3 .
 
 <cohort.vcf#record/1>
-  a vcfr:VCFRecord ;
-  vcfr:chrom "1" ;
-  vcfr:pos 100 ;
-  vcfr:ref "A" ;
-  vcfr:alt "G" ;
-  vcfr:hasCall <cohort.vcf#call/1> .
+  a vcfc:VCFRecord ;
+  vcfc:chrom "1" ;
+  vcfc:pos 100 ;
+  vcfc:ref "A" ;
+  vcfc:alt "G" ;
+  vcfc:hasCall <cohort.vcf#call/1> .
 
 <cohort.vcf#call/1>
-  a vcfr:VariantCall ;
-  vcfr:formatRaw "GT:DP" ;
-  vcfr:hasCallMatrix <cohort.vcf#call/1/matrix> .
+  a vcfc:VariantCall ;
+  vcfc:formatRaw "GT:DP" ;
+  vcfc:hasCallMatrix <cohort.vcf#call/1/matrix> .
 
 <cohort.vcf#call/1/matrix>
-  a vcfr:CohortCallMatrix ;
-  vcfr:appliesToSampleSet <cohort.vcf#samples> ;
-  vcfr:hasFormatValueVector
+  a vcfc:CohortCallMatrix ;
+  vcfc:appliesToSampleSet <cohort.vcf#samples> ;
+  vcfc:hasFormatValueVector
     <cohort.vcf#call/1/matrix/fmt/GT>,
     <cohort.vcf#call/1/matrix/fmt/DP> ;
-  vcfr:sampleDataRaw "0/1:42\t0/0:18\t./.:." .
+  vcfc:sampleDataRaw "0/1:42\t0/0:18\t./.:." .
 
 <cohort.vcf#call/1/matrix/fmt/GT>
-  a vcfr:FormatValueVector ;
-  vcfr:declaredBy <cohort.vcf#header/format/GT> ;
-  vcfr:valueEncoding vcfr:VCFTextVector ;
-  vcfr:encodedValues "0/1\t0/0\t./." .
+  a vcfc:FormatValueVector ;
+  vcfc:declaredBy <cohort.vcf#header/format/GT> ;
+  vcfc:valueEncoding vcfc:VCFTextVector ;
+  vcfc:encodedValues "0/1\t0/0\t./." .
 
 <cohort.vcf#call/1/matrix/fmt/DP>
-  a vcfr:FormatValueVector ;
-  vcfr:declaredBy <cohort.vcf#header/format/DP> ;
-  vcfr:valueEncoding vcfr:VCFTextVector ;
-  vcfr:encodedValues "42\t18\t." .
+  a vcfc:FormatValueVector ;
+  vcfc:declaredBy <cohort.vcf#header/format/DP> ;
+  vcfc:valueEncoding vcfc:VCFTextVector ;
+  vcfc:encodedValues "42\t18\t." .
 
 <cohort.vcf#header/format/GT>
-  a vcfr:FormatFieldDefinition ;
-  vcfr:fieldId "GT" ;
-  vcfr:fieldNumber "1" ;
-  vcfr:fieldDescription "Genotype" .
+  a vcfc:FormatFieldDefinition ;
+  vcfc:fieldId "GT" ;
+  vcfc:fieldNumber "1" ;
+  vcfc:fieldDescription "Genotype" .
 
 <cohort.vcf#header/format/DP>
-  a vcfr:FormatFieldDefinition ;
-  vcfr:fieldId "DP" ;
-  vcfr:fieldNumber "1" ;
-  vcfr:fieldDescription "Read depth" .
+  a vcfc:FormatFieldDefinition ;
+  vcfc:fieldId "DP" ;
+  vcfc:fieldNumber "1" ;
+  vcfc:fieldDescription "Read depth" .

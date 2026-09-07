@@ -1,20 +1,20 @@
 @base <file://> .
-@prefix vcfr: <https://w3id.org/vcf-rdfizer/vocab#> .
+@prefix vcfc: <https://w3id.org/vcf-core/vocab#> .
 @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
 
 <example-file1.vcf>
-  a vcfr:VCFFile ;
-  vcfr:fileFormat "VCFv4.2" ;
-  vcfr:fileDate "2020-06-15"^^xsd:date ;
-  vcfr:sourceSoftware "CLC Genomics Grid Worker 20.9.9 Beta 1 build 209900" ;
-  vcfr:referenceGenome "/CLC_References/homo_sapiens/sequence/hg38_no_alt_analysis_set/Homo_sapiens_sequence_hg38_no_alt_analysis_set" ;
-  vcfr:contigCount 1 ;
-  vcfr:hasHeader <example-file1.vcf#header> ;
-  vcfr:hasRecord <example-file1.vcf#record/var1> .
+  a vcfc:VCFFile ;
+  vcfc:fileFormat "VCFv4.2" ;
+  vcfc:fileDate "2020-06-15"^^xsd:date ;
+  vcfc:sourceSoftware "CLC Genomics Grid Worker 20.9.9 Beta 1 build 209900" ;
+  vcfc:referenceGenome "/CLC_References/homo_sapiens/sequence/hg38_no_alt_analysis_set/Homo_sapiens_sequence_hg38_no_alt_analysis_set" ;
+  vcfc:contigCount 1 ;
+  vcfc:hasHeader <example-file1.vcf#header> ;
+  vcfc:hasRecord <example-file1.vcf#record/var1> .
 
 <example-file1.vcf#header>
-  a vcfr:VCFHeader ;
-  vcfr:hasHeaderLine
+  a vcfc:VCFHeader ;
+  vcfc:hasHeaderLine
     <example-file1.vcf#header/line/1>,
     <example-file1.vcf#header/line/2>,
     <example-file1.vcf#header/line/3>,
@@ -27,73 +27,73 @@
     <example-file1.vcf#header/line/10> .
 
 <example-file1.vcf#header/line/1>
-  a vcfr:FileFormatHeaderLine ;
-  vcfr:headerKey "fileformat" ;
-  vcfr:headerValue "VCFv4.2" .
+  a vcfc:FileFormatHeaderLine ;
+  vcfc:headerKey "fileformat" ;
+  vcfc:headerValue "VCFv4.2" .
 
 <example-file1.vcf#header/line/2>
-  a vcfr:FileDateHeaderLine ;
-  vcfr:headerKey "fileDate" ;
-  vcfr:headerValue "20200615" .
+  a vcfc:FileDateHeaderLine ;
+  vcfc:headerKey "fileDate" ;
+  vcfc:headerValue "20200615" .
 
 <example-file1.vcf#header/line/3>
-  a vcfr:SourceHeaderLine ;
-  vcfr:headerKey "source" ;
-  vcfr:headerValue "CLC Genomics Grid Worker 20.9.9 Beta 1 build 209900" .
+  a vcfc:SourceHeaderLine ;
+  vcfc:headerKey "source" ;
+  vcfc:headerValue "CLC Genomics Grid Worker 20.9.9 Beta 1 build 209900" .
 
 <example-file1.vcf#header/line/4>
-  a vcfr:ReferenceHeaderLine ;
-  vcfr:headerKey "reference" ;
-  vcfr:headerValue "/CLC_References/homo_sapiens/sequence/hg38_no_alt_analysis_set/Homo_sapiens_sequence_hg38_no_alt_analysis_set" .
+  a vcfc:ReferenceHeaderLine ;
+  vcfc:headerKey "reference" ;
+  vcfc:headerValue "/CLC_References/homo_sapiens/sequence/hg38_no_alt_analysis_set/Homo_sapiens_sequence_hg38_no_alt_analysis_set" .
 
 <example-file1.vcf#header/line/5>
-  a vcfr:ContigHeaderLine ;
-  vcfr:headerKey "contig" ;
-  vcfr:headerValue "<ID=chr1,length=248956422>" ;
-  vcfr:contigId "chr1" ;
-  vcfr:contigLength 248956422 .
+  a vcfc:ContigHeaderLine ;
+  vcfc:headerKey "contig" ;
+  vcfc:headerValue "<ID=chr1,length=248956422>" ;
+  vcfc:contigId "chr1" ;
+  vcfc:contigLength 248956422 .
 
 <example-file1.vcf#header/line/6>
-  a vcfr:InfoFieldDefinition ;
-  vcfr:headerKey "INFO" ;
-  vcfr:headerValue "<ID=DP,Number=1,Type=Integer,Description=\"Total Depth\">" ;
-  vcfr:fieldId "DP" ;
-  vcfr:fieldNumber "1" ;
-  vcfr:fieldType vcfr:IntegerType ;
-  vcfr:fieldDescription "Total Depth" .
+  a vcfc:InfoFieldDefinition ;
+  vcfc:headerKey "INFO" ;
+  vcfc:headerValue "<ID=DP,Number=1,Type=Integer,Description=\"Total Depth\">" ;
+  vcfc:fieldId "DP" ;
+  vcfc:fieldNumber "1" ;
+  vcfc:fieldType vcfc:IntegerType ;
+  vcfc:fieldDescription "Total Depth" .
 
 <example-file1.vcf#header/line/7>
-  a vcfr:InfoFieldDefinition ;
-  vcfr:headerKey "INFO" ;
-  vcfr:headerValue "<ID=AF,Number=A,Type=Float,Description=\"Allele Frequency\">" ;
-  vcfr:fieldId "AF" ;
-  vcfr:fieldNumber "A" ;
-  vcfr:fieldType vcfr:FloatType ;
-  vcfr:fieldDescription "Allele Frequency" .
+  a vcfc:InfoFieldDefinition ;
+  vcfc:headerKey "INFO" ;
+  vcfc:headerValue "<ID=AF,Number=A,Type=Float,Description=\"Allele Frequency\">" ;
+  vcfc:fieldId "AF" ;
+  vcfc:fieldNumber "A" ;
+  vcfc:fieldType vcfc:FloatType ;
+  vcfc:fieldDescription "Allele Frequency" .
 
 <example-file1.vcf#header/line/8>
-  a vcfr:FormatFieldDefinition ;
-  vcfr:headerKey "FORMAT" ;
-  vcfr:headerValue "<ID=GT,Number=1,Type=String,Description=\"Genotype\">" ;
-  vcfr:fieldId "GT" ;
-  vcfr:fieldNumber "1" ;
-  vcfr:fieldType vcfr:StringType ;
-  vcfr:fieldDescription "Genotype" .
+  a vcfc:FormatFieldDefinition ;
+  vcfc:headerKey "FORMAT" ;
+  vcfc:headerValue "<ID=GT,Number=1,Type=String,Description=\"Genotype\">" ;
+  vcfc:fieldId "GT" ;
+  vcfc:fieldNumber "1" ;
+  vcfc:fieldType vcfc:StringType ;
+  vcfc:fieldDescription "Genotype" .
 
 <example-file1.vcf#header/line/9>
-  a vcfr:FormatFieldDefinition ;
-  vcfr:headerKey "FORMAT" ;
-  vcfr:headerValue "<ID=DP,Number=1,Type=Integer,Description=\"Total number of filtered reads used to call variants at this position in this sample.\">" ;
-  vcfr:fieldId "DP" ;
-  vcfr:fieldNumber "1" ;
-  vcfr:fieldType vcfr:IntegerType ;
-  vcfr:fieldDescription "Total number of filtered reads used to call variants at this position in this sample." .
+  a vcfc:FormatFieldDefinition ;
+  vcfc:headerKey "FORMAT" ;
+  vcfc:headerValue "<ID=DP,Number=1,Type=Integer,Description=\"Total number of filtered reads used to call variants at this position in this sample.\">" ;
+  vcfc:fieldId "DP" ;
+  vcfc:fieldNumber "1" ;
+  vcfc:fieldType vcfc:IntegerType ;
+  vcfc:fieldDescription "Total number of filtered reads used to call variants at this position in this sample." .
 
 <example-file1.vcf#header/line/10>
-  a vcfr:FormatFieldDefinition ;
-  vcfr:headerKey "FORMAT" ;
-  vcfr:headerValue "<ID=AD,Number=R,Type=Integer,Description=\"Allele depth, number of filtered reads supporting the alleles, ordered as listed in REF and ALT.\">" ;
-  vcfr:fieldId "AD" ;
-  vcfr:fieldNumber "R" ;
-  vcfr:fieldType vcfr:IntegerType ;
-  vcfr:fieldDescription "Allele depth, number of filtered reads supporting the alleles, ordered as listed in REF and ALT." .
+  a vcfc:FormatFieldDefinition ;
+  vcfc:headerKey "FORMAT" ;
+  vcfc:headerValue "<ID=AD,Number=R,Type=Integer,Description=\"Allele depth, number of filtered reads supporting the alleles, ordered as listed in REF and ALT.\">" ;
+  vcfc:fieldId "AD" ;
+  vcfc:fieldNumber "R" ;
+  vcfc:fieldType vcfc:IntegerType ;
+  vcfc:fieldDescription "Allele depth, number of filtered reads supporting the alleles, ordered as listed in REF and ALT." .

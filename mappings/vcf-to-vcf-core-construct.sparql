@@ -1,42 +1,42 @@
-PREFIX vcfr: <https://w3id.org/vcf-rdfizer/vocab#>
+PREFIX vcfc: <https://w3id.org/vcf-core/vocab#>
 PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
 
-# TEMPLATE: construct vcfr:VCFRecord + vcfr:VariantCall from some staging graph
+# TEMPLATE: construct vcfc:VCFRecord + vcfc:VariantCall from some staging graph
 # Replace ?chrom ?pos ?id ?ref ?alt ?qual ?filter ?infoRaw ?formatRaw ?sample etc.
 
 CONSTRUCT {
-  ?vcfFile a vcfr:VCFFile ;
-    vcfr:fileFormat ?fileFormat ;
-    vcfr:referenceGenome ?referenceGenome ;
-    vcfr:fileDate ?fileDate ;
-    vcfr:sourceSoftware ?sourceSoftware ;
-    vcfr:hasRecord ?record ;
-    vcfr:hasHeader ?header .
+  ?vcfFile a vcfc:VCFFile ;
+    vcfc:fileFormat ?fileFormat ;
+    vcfc:referenceGenome ?referenceGenome ;
+    vcfc:fileDate ?fileDate ;
+    vcfc:sourceSoftware ?sourceSoftware ;
+    vcfc:hasRecord ?record ;
+    vcfc:hasHeader ?header .
 
-  ?header a vcfr:VCFHeader .
+  ?header a vcfc:VCFHeader .
 
-  ?record a vcfr:VCFRecord ;
-    vcfr:chrom ?chrom ;
-    vcfr:pos ?posInt ;
-    vcfr:recordId ?id ;
-    vcfr:ref ?ref ;
-    vcfr:alt ?alt ;
-    vcfr:hasCall ?call .
+  ?record a vcfc:VCFRecord ;
+    vcfc:chrom ?chrom ;
+    vcfc:pos ?posInt ;
+    vcfc:recordId ?id ;
+    vcfc:ref ?ref ;
+    vcfc:alt ?alt ;
+    vcfc:hasCall ?call .
 
-  ?call a vcfr:VariantCall ;
-    vcfr:qual ?qualDec ;
-    vcfr:filter ?filter ;
-    vcfr:infoRaw ?infoRaw ;
-    vcfr:formatRaw ?formatRaw ;
-    vcfr:hasSampleCall ?sampleCall .
+  ?call a vcfc:VariantCall ;
+    vcfc:qual ?qualDec ;
+    vcfc:filter ?filter ;
+    vcfc:infoRaw ?infoRaw ;
+    vcfc:formatRaw ?formatRaw ;
+    vcfc:hasSampleCall ?sampleCall .
 
-  ?sampleCall a vcfr:SampleCall ;
-    vcfr:sampleId ?sample ;
-    vcfr:hasFormatValue ?fmtValue .
+  ?sampleCall a vcfc:SampleCall ;
+    vcfc:sampleId ?sample ;
+    vcfc:hasFormatValue ?fmtValue .
 
-  ?fmtValue a vcfr:FormatFieldValue ;
-    vcfr:fieldValue ?fmtVal .
+  ?fmtValue a vcfc:FormatFieldValue ;
+    vcfc:fieldValue ?fmtVal .
 
 } WHERE {
   # --- Your staging model goes here ---

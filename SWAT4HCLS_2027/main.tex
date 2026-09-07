@@ -1,0 +1,193 @@
+\documentclass{ceurart}
+
+\usepackage{listings}
+\usepackage{tabularx}
+\newcommand{\term}[1]{\texttt{#1}}
+\lstset{basicstyle=\small\ttfamily,breaklines=true,columns=fullflexible,
+  keepspaces=true,showstringspaces=false,frame=single,aboveskip=6pt,belowskip=6pt}
+\emergencystretch=1em
+\sloppy
+
+\begin{document}
+
+\copyrightyear{2027}
+\copyrightclause{Copyright for this paper by its authors.
+  Use permitted under Creative Commons License Attribution 4.0
+  International (CC BY 4.0).}
+\conference{SWAT4HCLS 2027, February 1--4, 2027, Basel, Switzerland}
+
+\title{VCF Core: A Vocabulary Foundation for Expanded and Condensed RDF Representations of VCF}
+
+\author[1,2]{Elias Crum}[
+orcid=0009-0005-3991-754X,
+email=elias.crum@ugent.be
+]
+\cormark[1]
+\author[2]{Bart Buelens}[
+orcid=0000-0001-7734-3747,
+email=bart.buelens@vito.be
+]
+\author[2]{Gökhan Ertaylan}[
+orcid=0000-0001-5602-6435,
+email=gokhan.ertaylan@vito.be
+]
+\author[1]{Ruben Taelman}[
+orcid=0000-0001-5118-256X,
+email=ruben.taelman@ugent.be
+]
+\address[1]{IDLab, Department of Electronics and Information Systems, Ghent University -- imec, Belgium}
+\address[2]{Flemish institute for Technological Research (VITO) Mol, Belgium}
+\cortext[1]{Corresponding author.}
+
+% Abstract structured as Context - Need - Task - Object - Findings -
+% Conclusion - Perspectives. Sentence-level map, for revision only:
+%   Context     s1  VCF is the interchange format; cohorts are large now.
+%   Need        s2  A record is not self-interpreting; naive cohort
+%                   materialization scales with records x samples x fields.
+%   Need        s3  What a reusable VCF-facing target must therefore do.
+%   Task/Object s4  What we built and what this paper presents.
+%   Findings    s5  Same cells and same selection under both profiles, but
+%                   condensed cells need decoding.
+%   Conclusion  s6  Granularity is a declarable trade, not an implicit one.
+%   Perspectives s7 What is left to measure.
+\begin{abstract}
+Medical applications of genomic data depend on integrating variant observations with clinical information and biomedical knowledge. 
+Semantic data linking offers a promising basis for this integration, but the widely used Variant Call Format (VCF) does not natively expose its contents as Linked Data. 
+We developed VCF Core with the goal of providing comprehensive semantic coverage of the VCF specification while allowing users to choose how sample-level data are represented. 
+This paper presents the VCF Core Vocabulary 2.0.0 and the design decisions underlying its RDF representation of file metadata, header declarations, variant records, annotations, and genotype information. 
+The model retains source context and supports field interpretation through links to header declarations, preservation of lexical values, and explicit treatment of missingness. 
+Two complementary profiles provide flexibility: an expanded representation exposes individual sample calls and FORMAT values, whereas a condensed representation groups these values into sample-ordered vectors. 
+Formal vocabulary definitions, SHACL shapes, and examples document the model and support its reuse independently of a particular converter. 
+VCF Core thereby establishes a shared semantic target for VCF-to-RDF conversion and a foundation for subsequent linking to biomedical resources. 
+This work supports a longer-term vision in which genomic observations and clinical information can be integrated and queried together through a single query over Linked Data.
+\end{abstract}
+
+
+\begin{keywords}
+Variant Call Format\sep RDF\sep Genomic data\sep Vocabulary\sep SHACL
+\end{keywords}
+\maketitle
+
+\section{Introduction and related work}
+
+The Variant Call Format (VCF) is widely used to exchange genomic variant data~\cite{danecek2011vcf}. A VCF record is interpreted through more than its genomic position and alleles: header declarations describe annotations, the FORMAT column determines the contents of sample fields, and file metadata supplies reference and processing context~\cite{vcf45}. Consequently, a reusable RDF representation must address both the variation described and the source observations from which that description is derived.
+
+Two workloads make genotype representation especially consequential. For a single-sample VCF, explicit genotype and read-depth statements support focused inspection and integration. In a cohort VCF, the same representation creates resources across the product of records, samples, and FORMAT fields. A vocabulary should make this choice explicit so that different conversion systems can share a semantic target while selecting an appropriate degree of materialization.
+
+Existing work provides complementary foundations. GFVO harmonizes GFF3, GTF, GVF, and VCF concepts in one ontology and already renders VCF contents in RDF~\cite{baran2015gfvo}, where we instead retain what one file declares. VCF2RDF describes an isomorphic mapping from VCF to RDF~\cite{penha2017vcf2rdf}. HERO-Genomics integrates genomic entities with wider biomedical information and already models VCF files and records~\cite{cazzaro2025hero}. Semantic Beacons combines ontology-based mappings with federated queries over genomic variation and public knowledge graphs~\cite{bodrug2025semantic}. The separately maintained gvar schema describes genomic variants as Linked Data and explicitly distinguishes this purpose from representing VCF itself~\cite{gvar}. The Sequence Ontology (SO) and FALDO supply reusable concepts for sequence features and their locations~\cite{eilbeck2005so,bolleman2016faldo}. Our earlier conversion-framework paper proposed an ontology for single-sample VCF transformation~\cite{crum2025semantifying}.
+
+This paper develops that modeling direction through the VCF Core Vocabulary 2.0.0~\cite{vcfc200}, renamed from the VCF-RDFizer Vocabulary so that a shared semantic target is not identified by one converter's name; the retired \term{vcfr:} namespace resolves to a deprecation document. Its contribution is a concrete, versioned VCF-facing model with header-linked interpretation and two complementary genotype profiles: \term{vcfc:ExpandedRepresentation} for per-sample resources and \term{vcfc:CondensedRepresentation} for sample-ordered vectors. We explain their design rationale and establish a common foundation for subsequent empirical comparisons, with a bounded structural illustration rather than a cohort-scale benchmark.
+
+\section{Scope and design rationale}
+\label{sec:design}
+
+\subsection{Retaining the source context while reusing biological models}
+
+The vocabulary separates a \term{VCFFile}, its \term{VCFHeader} and header lines, individual \term{VCFRecord} resources, and the assessment associated with each record, represented by a \term{VariantCall}. The latter groups QUAL, FILTER, INFO, FORMAT, and genotype data; it is a modeling abstraction rather than an additional VCF line type. Figure~\ref{fig:model} summarizes the shared structure and genotype alternatives. Throughout, \term{vcfc:} denotes \url{https://w3id.org/vcf-core/vocab#}.
+
+This separation preserves distinctions between observations from different files. Records describing an equivalent alteration can have different quality scores, filters, annotations, or sample calls. Accordingly, the file is modeled as a \term{dcat:Distribution} and a \term{prov:Entity}; records and calls are also provenance entities, providing attachment points for provenance descriptions~\cite{prov2013}. The recommended file-based IRI templates retain the connection between source, record, call, and field. They identify source-local resources, rather than globally normalized biological variants. Producers must choose unambiguous record identifiers: neither position alone nor a potentially missing VCF ID guarantees row identity.
+
+The property \term{asSequenceAlteration} links a record or call to an independently modeled SO sequence alteration (\term{SO:0001059}). This choice allows biological interpretation and alignment with models such as gvar to evolve without replacing the source representation. Such links require appropriate reference and allele interpretation; their presence does not establish automatic cross-model equivalence. A \term{VCFSample} similarly identifies a sample column within a file, without assuming that the column is itself a biological individual.
+
+\begin{figure}[t]
+\centering
+\setlength{\fboxsep}{7pt}
+\fbox{\parbox{0.94\linewidth}{\centering
+\textbf{Shared VCF context}\\[2pt]
+\term{VCFFile} $\rightarrow$ \term{VCFRecord} $\rightarrow$ \term{VariantCall}\\
+\term{VCFHeader} contains header lines and field definitions}}
+\par\smallskip
+\begin{tabularx}{\linewidth}{@{}>{\centering\arraybackslash}X >{\centering\arraybackslash}X@{}}
+$\downarrow$ \textbf{Expanded} & $\downarrow$ \textbf{Condensed} \\
+\term{SampleCall} & \term{CohortCallMatrix} \\
+$\downarrow$ \term{hasFormatValue} & $\downarrow$ \term{hasFormatValueVector} \\
+\term{FormatFieldValue} & \term{FormatValueVector} \\
+One value resource per sample/key & One vector per key, ordered by \term{SampleSet}
+\end{tabularx}
+\caption{Selected conceptual structure. Both genotype branches attach to a \term{VariantCall}. Expanded values can link to FORMAT definitions through \term{declaredBy}; condensed vectors must do so. The file declares the chosen profile.}
+\label{fig:model}
+\end{figure}
+
+\subsection{Header-defined meaning and controlled interpretation}
+
+Header information is represented explicitly because it determines how values should be interpreted. The model includes line types for version, source, reference, contig, INFO, FORMAT, FILTER, and symbolic ALT declarations. INFO and FORMAT definitions expose \term{fieldId}, \term{fieldNumber}, \term{fieldType}, and \term{fieldDescription}. Structured values link to their definitions through \term{declaredBy}; condensed vectors use the same relation.
+
+Reusing a generic field-value pattern avoids introducing a vocabulary predicate for every producer-specific annotation. It also keeps identically named keys distinct when their declaration or scope differs: INFO/DP and FORMAT/DP need not describe the same measurement. Retaining the local definition supports interpretation, although harmonizing meanings across producers still requires additional mappings. \term{fieldNumber} is a string because VCF cardinalities include symbolic values, such as A, R, and G, whose interpretation depends on alleles or genotypes.
+
+Lexical and parsed values serve complementary purposes. \term{fieldValue} can retain a source token or comma-separated value list, while optional integer, decimal, and boolean properties expose suitable scalar interpretations. This makes numeric querying possible without forcing every lexical value into a datatype that cannot represent it. For example, a non-finite VCF floating-point token should not be coerced to \term{xsd:decimal}. Optional raw properties retain header values, INFO, FORMAT order, and condensed sample blocks where textual evidence is needed.
+
+Missingness is explicit: a standalone missing value is represented as \term{"."\textasciicircum{}\textasciicircum{}vcfc:Null}, whereas a genotype such as \term{./.} retains its internal allele separators. In vectors, the original missing token occupies its sample position. This avoids interpreting missing depth as zero or conflating an unapplied FILTER with PASS. The meaning of a dot remains context-dependent: \term{Number=.} is a cardinality declaration, not a missing observation. Expanded values may still contain lexical arrays; expansion concerns sample/field granularity, not mandatory decomposition of every VCF substructure.
+
+\section{Two complementary genotype representations}
+\label{sec:profiles}
+
+\subsection{Expanded access for single-sample analysis}
+
+With \term{vcfc:ExpandedRepresentation}, a call links through \term{hasSampleCall} to a \term{SampleCall} for each represented sample. Each sample call identifies the sample and links through \term{hasFormatValue} to individual \term{FormatFieldValue} resources. An optional \term{forSample} relation connects it to a reusable sample-column identity. Keeping these resources strictly per-sample preserves their meaning for consumers.
+
+For single-sample files, this structure makes genotype-level access a natural graph traversal. For example, retrieving calls with read depth at least 20 can join a FORMAT value to the definition whose \term{fieldId} is DP and filter its \term{fieldValueInteger}. Individual calls and values can also receive annotations. The profile remains applicable to larger files when this access pattern justifies the additional graph structure; the vocabulary does not prescribe a measured sample-count threshold.
+
+\subsection{Condensed access for multi-sample cohorts}
+
+The condensed profile factors out sample-column identity into one \term{SampleSet}, whose \term{VCFSample} members have an exact \term{sampleName} and a one-based \term{sampleIndex}. A genotype-bearing call links through \term{hasCallMatrix} to a \term{CohortCallMatrix}. This matrix identifies the sample set and groups one \term{FormatValueVector} per represented FORMAT key. Each vector declares its field definition, its \term{valueEncoding}, and its \term{encodedValues} payload.
+
+The initial encoding, \term{VCFTextVector}, stores tab-separated raw FORMAT values in sample-index order. Every sample occupies one position, including missing values. Commas within a value remain part of that value, preserving arrays such as allelic depths without confusing them with sample boundaries. The call's \term{formatRaw} can retain the order in which keys occur; \term{sampleDataRaw} optionally preserves the original sample blocks. Condensation therefore retains represented sample values rather than replacing them with cohort summaries.
+
+This explicit vector class makes the change in query access visible. A vector stores one RDF literal payload, not a collection of independently asserted sample values. A consumer must decode the relevant positions, using the sample order and field declaration, before performing per-sample comparisons. This can be implemented in application logic or query functions. Ordinary basic graph patterns alone do not expose those cells. Producers should use the declared profile consistently and document any deliberate redundant materialization of both forms.
+
+\subsection{Illustration and structural consequences}
+
+Consider a synthetic biallelic record at position 100 on contig 1, with REF=A, ALT=G, and FORMAT=GT:DP. Its three sample blocks are \term{0/1:42}, \term{0/0:18}, and \term{./.:.}. The condensed representation has the following two payloads, where \term{\textbackslash t} denotes a tab:
+
+\begin{lstlisting}
+GT: "0/1\t0/0\t./."
+DP: "42\t18\t."
+\end{lstlisting}
+
+Selecting position two in each vector recovers SAMPLE2's genotype \term{0/0} and depth 18. The third depth remains missing. An equal-content expanded graph instead has three sample-call resources and six FORMAT-value resources. A single-sample projection has one sample call and two values. The expanded depth pattern described above selects SAMPLE1; a condensed consumer obtains the same selection after decoding and excluding the missing depth. This is equivalence of the represented cells under the encoding, not identity of the two RDF graphs.
+
+The structural distinction can be stated independently of a storage engine. Assuming $R$ genotype-bearing records each represent the same $S$ samples and $F$ FORMAT keys, full expanded materialization creates $RS$ sample calls and $RSF$ field-value resources. Condensed materialization creates $S$ samples, one sample set, $R$ matrices, and $RF$ vectors. Excluding shared file, header, and record structures, the resource counts are therefore
+\[
+N_{\mathrm{expanded}}=RS+RSF,\qquad
+N_{\mathrm{condensed}}=S+1+R+RF.
+\]
+The optional reusable sample layer can also be added to the expanded profile. These counts explain the cohort-oriented design but do not imply a reduction in the number of genotype cells: the condensed payload still contains $RSF$ values. Serialized size, indexing overhead, and execution time depend on encoding and implementation and require measurement.
+
+\section{Implementation, validation, and research directions}
+
+The vocabulary is already used as the target model of VCF-RDFizer, an open-source VCF-to-RDF converter distributed under the MIT license~\cite{vcfrConverter2026}. Its default RML mappings construct file, header, record, and call resources in the vocabulary's namespace. Complementary streaming emitters produce per-sample \term{SampleCall} and \term{FormatFieldValue} resources or sample-ordered \term{CohortCallMatrix} and \term{FormatValueVector} resources, selected through the converter's \term{--sample-representation} option. Configurable mappings, documented execution paths, and regression tests for the two genotype structures provide concrete evidence that the model can guide an implemented conversion workflow. This use within the project supports implementation maturity and provides a practical setting for evaluating the vocabulary's design choices. Wider adoption, complete conformance, and comparative performance remain separate evaluation objectives. In particular, the converter's optional RDF compression stages operate on the resulting graph and should be evaluated separately from the vocabulary's choice of genotype granularity.
+
+Version 2.0.0 provides OWL/Turtle definitions, SHACL shapes, example graphs, illustrative mapping patterns, and documentation generated from the vocabulary source~\cite{vcfc200}. Together, these artifacts make the modeling decisions inspectable and reusable independently of a particular converter. The synthetic example accompanying this manuscript provides both profiles and an application-level check that recovers all six FORMAT cells and the same depth-based sample selection. This is a small representation check, not a performance or general conformance study.
+
+The condensed profile is an additive extension: existing per-sample terms retain their meanings, while new matrix and vector resources identify a different materialization choice. This supports continued use of expanded single-sample graphs as cohort-oriented tools develop. Declaring the encoding on each vector also separates the representation contract from a particular payload syntax. Future encodings could be investigated through this extension point, provided their ordering, missingness, and decoding rules are specified. The current vocabulary supplies the text-vector encoding; it does not establish the correctness or efficiency of additional encodings.
+
+SHACL supplies structural constraints for selected required fields, datatypes, and links~\cite{shacl2017}. For example, a vector must identify one FORMAT definition and encoding and have one string payload; a sample has a positive integer index. The supplied shapes do not enforce all documented producer obligations: unique and contiguous sample indices, vector length, field-specific arity, and profile/content consistency need further checks. Structural validation must therefore be distinguished from validation of the encoded VCF contents.
+
+The model's scope also bounds fidelity claims. Raw fields are optional, and repeated RDF assertions alone do not preserve alternate-allele order. An explicit ordering convention is necessary when interpreting multiallelic genotype indices or allele-dependent annotations. File-based identifiers provide local traceability but require a publication policy for stable global identification. Comprehensive VCF coverage, universal byte-for-byte reconstruction, and demonstrated interoperability are not established by the current artifacts.
+
+The vocabulary nevertheless fixes enough of the representation contract to support three concrete investigations. First, a fidelity suite can compare reconstructed values for phased and partially missing genotypes, variable ploidy, multiallelic and structural variants, and heterogeneous header declarations. It should distinguish semantic value recovery from exact source serialization. Second, equal-content conversion experiments can vary records, samples, FORMAT fields, and missingness, measuring triples, serialized and compressed bytes, peak memory, and conversion and loading time against VCF/BCF baselines. Third, query experiments can compare direct expanded access with vector decoding and selective expansion, checking identical answer sets before assessing execution time. These studies can identify workload-dependent tradeoffs while keeping the target vocabulary constant. External alignment experiments can then assess reference-aware variant joins and federated use separately from conversion fidelity.
+
+\section{Conclusion}
+
+The VCF Core Vocabulary establishes a versioned foundation for representing VCF observations together with their interpretation context. Its expanded profile supports direct access to individual sample calls, while its condensed profile makes cohort genotype structure explicit without materializing every sample/field intersection as a resource. Its use in the VCF-RDFizer converter provides a concrete implementation setting for comparing fidelity and computational behavior against this shared semantic foundation.
+
+\begin{acknowledgments}
+Project funding provided from the Research Foundation -- Flanders (FWO) (SB Fellowship 1S27825N).
+Ruben Taelman is a postdoctoral fellow of the Research Foundation -- Flanders (FWO) (1202124N).
+% KNoWS-IDLab project attribution template. Add the project name and grant
+% agreement number if this work is booked to a named KNoWS-IDLab project rather
+% than the first author's PhD; see ACKNOWLEDGEMENTS.md in the repository.
+%   This work was carried out at KNoWS, IDLab, Ghent University -- imec, within
+%   <KNoWS-IDLab project name> <grant agreement number>.
+\end{acknowledgments}
+
+\section*{Declaration on Generative AI}
+OpenAI Codex and Claude assisted with literature discovery and reference checking, outline development, text drafting, preparation of the schematic and synthetic example, the 2.0.0 rename, and LaTeX verification. This preparatory draft requires substantive review and revision by the human authors before submission.
+
+% Finalize this declaration after author revision; do not claim completed human
+% review prematurely. See author-notes.md for the current CEUR-WS restrictions.
+
+% References are excluded from the five-page main-matter limit.
+\clearpage
+\bibliography{sources}
+\end{document}

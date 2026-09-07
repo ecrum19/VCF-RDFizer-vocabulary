@@ -1,0 +1,65 @@
+# https://w3id.org/vcf-core/
+#
+# VCF Core Vocabulary - an RDF vocabulary and SHACL profile for VCF 4.5 files,
+# headers, records, calls, and genotype data.
+#
+# Maintainer: Elias Crum <elias.crum@ugent.be>
+#             IDLab, Ghent University - imec, Belgium
+# Source:     https://github.com/ecrum19/VCF-RDFizer-vocabulary
+#
+# BEFORE OPENING THE PULL REQUEST: replace every REPLACE-ME below with the real
+# publishing host, with no trailing slash. If the companion site is published to
+# GitHub Pages from this repository, that is
+#   https://ecrum19.github.io/VCF-RDFizer-vocabulary
+# and the generated site must actually serve the two Turtle files referenced
+# here. Test the rules against a local checkout before submitting.
+#
+# The predecessor namespace https://w3id.org/vcf-rdfizer/ is handled by a
+# SEPARATE .htaccess in this pull request. It is deliberately not redirected
+# here: legacy IRIs must resolve to a document in which they are defined.
+
+Options +FollowSymLinks
+RewriteEngine on
+
+# ---------------------------------------------------------------------------
+# Vocabulary. Fragment IRIs such as .../vocab#VCFFile dereference to /vocab.
+# ---------------------------------------------------------------------------
+RewriteCond %{HTTP_ACCEPT} text/turtle [OR]
+RewriteCond %{HTTP_ACCEPT} application/x-turtle [OR]
+RewriteCond %{HTTP_ACCEPT} text/n3 [OR]
+RewriteCond %{HTTP_ACCEPT} application/rdf\+xml [OR]
+RewriteCond %{HTTP_ACCEPT} application/n-triples [OR]
+RewriteCond %{HTTP_ACCEPT} application/ld\+json
+RewriteRule ^vocab/?$ REPLACE-ME/assets/vcf-core-vocabulary.ttl [R=302,L]
+
+RewriteRule ^vocab/?$ REPLACE-ME/ontology-reference.html [R=302,L]
+
+# Explicit file extensions bypass negotiation.
+RewriteRule ^vocab\.ttl$ REPLACE-ME/assets/vcf-core-vocabulary.ttl [R=302,L]
+RewriteRule ^vocab\.html$ REPLACE-ME/ontology-reference.html [R=302,L]
+
+# Versioned snapshots (owl:versionIRI).
+RewriteRule ^vocab/([0-9]+\.[0-9]+\.[0-9]+)/?$ https://github.com/ecrum19/VCF-RDFizer-vocabulary/releases/tag/v$1 [R=302,L]
+
+# ---------------------------------------------------------------------------
+# SHACL shapes
+# ---------------------------------------------------------------------------
+RewriteRule ^shapes/?$ REPLACE-ME/assets/vcf-core-vocabulary.shacl.ttl [R=302,L]
+RewriteRule ^shapes\.ttl$ REPLACE-ME/assets/vcf-core-vocabulary.shacl.ttl [R=302,L]
+
+# ---------------------------------------------------------------------------
+# Examples
+# ---------------------------------------------------------------------------
+RewriteRule ^examples/?$ REPLACE-ME/index.html#examples [R=302,L]
+RewriteRule ^examples/(.+)$ REPLACE-ME/assets/$1 [R=302,L]
+
+# ---------------------------------------------------------------------------
+# Instance IRI space, reserved. Nothing is published under it yet.
+# ---------------------------------------------------------------------------
+RewriteRule ^vcf/ - [R=404,L]
+
+# ---------------------------------------------------------------------------
+# Everything else: the companion documentation site.
+# ---------------------------------------------------------------------------
+RewriteRule ^$ REPLACE-ME/ [R=302,L]
+RewriteRule ^(.*)$ REPLACE-ME/$1 [R=302,L]

@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "samples": [
+    "SAMPLE1",
+    "SAMPLE2",
+    "SAMPLE3"
+  ],
+  "expanded": {
+    "triples": 94,
+    "rawFormatCellsRecovered": 6,
+    "sampleCalls": 3,
+    "formatFieldValues": 6,
+    "cohortCallMatrices": 0,
+    "formatValueVectors": 0,
+    "applicationDepthAtLeast20": [
+      "SAMPLE1"
+    ]
+  },
+  "condensed": {
+    "triples": 71,
+    "rawFormatCellsRecovered": 6,
+    "sampleCalls": 0,
+    "formatFieldValues": 0,
+    "cohortCallMatrices": 1,
+    "formatValueVectors": 2,
+    "applicationDepthAtLeast20": [
+      "SAMPLE1"
+    ]
+  },
+  "scope": "N3 parsing and fixture assertions; SPARQL and SHACL not executed"
+}

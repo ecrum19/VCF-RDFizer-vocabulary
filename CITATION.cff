@@ -1,7 +1,7 @@
 cff-version: 1.2.0
-title: "VCF-RDFizer-vocabulary"
-version: 1.1.0
-date-released: 2026-09-01
+title: "VCF Core Vocabulary"
+version: 3.0.0
+date-released: 2026-09-07
 message: "If you use this vocabulary, please cite it."
 type: software
 authors:
@@ -9,7 +9,7 @@ authors:
     given-names: Elias
 license: CC-BY-4.0
 repository-code: "https://github.com/ecrum19/VCF-RDFizer-vocabulary"
-url: "https://w3id.org/vcf-rdfizer/"
+url: "https://w3id.org/vcf-core/"
 keywords:
   - VCF
   - RDF

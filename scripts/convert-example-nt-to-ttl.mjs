@@ -4,8 +4,8 @@ import fs from "node:fs";
 import path from "node:path";
 
 const RDF_TYPE_URI = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
-const VCFR_NAMESPACE = "https://w3id.org/vcf-rdfizer/vocab#";
-const LEGACY_INSTANCE_NAMESPACE = "https://w3id.org/vcf-rdfizer/vcf/";
+const VCFR_NAMESPACE = "https://w3id.org/vcf-core/vocab#";
+const LEGACY_INSTANCE_NAMESPACE = "https://w3id.org/vcf-core/vcf/";
 const CANONICAL_BASE_IRI = "file://";
 const KNOWN_PREFIXES = [
   { prefix: "vcfr", iri: VCFR_NAMESPACE },
@@ -451,7 +451,7 @@ function assertFaithfulGraph(originalTriples, groupedTriples) {
 function serializeTurtle(groupedTriples, baseIri) {
   const header = [
     baseIri ? `@base <${baseIri}> .` : null,
-    "@prefix vcfr: <https://w3id.org/vcf-rdfizer/vocab#> .",
+    "@prefix vcfc: <https://w3id.org/vcf-core/vocab#> .",
     "@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .",
     "@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .",
     "",
