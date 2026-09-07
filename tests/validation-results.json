@@ -24,6 +24,12 @@
     "passed": true
   },
   {
+    "fixture": "examples/example-condensed-record.ttl",
+    "violations": 0,
+    "warnings": 0,
+    "passed": true
+  },
+  {
     "fixture": "examples/profiles/example-condensed-cohort.ttl",
     "violations": 0,
     "warnings": 0,

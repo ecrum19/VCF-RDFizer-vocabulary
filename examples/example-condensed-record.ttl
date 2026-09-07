@@ -1,0 +1,117 @@
+# The same record as example-minimal-record.ttl, in the condensed profile.
+#
+# Read the two side by side: the VCF facts are identical, and only the shape of
+# the genotype block differs. The expanded profile mints one SampleCall per
+# sample and one FormatFieldValue per sample and key - six resources here, and
+# records x samples x keys in general. The condensed profile declares the
+# samples once for the whole file and gives each record one vector per FORMAT
+# key, so its genotype cost is records x keys and does not grow with cohort
+# size.
+#
+# What that buys is size; what it costs is addressability. A per-sample value
+# is no longer an IRI-addressable resource: it is a field inside
+# vcfr:encodedValues, found at the position given by that sample's
+# vcfr:sampleIndex. Everything needed to do that resolution is in the graph -
+# the sample set the matrix applies to, each sample's index, and the encoding.
+
+@base <file://> .
+@prefix vcfr: <https://w3id.org/vcf-rdfizer/vocab#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+<example-file1.vcf>
+  a vcfr:VCFFile ;
+  vcfr:fileFormat "VCFv4.2" ;
+  vcfr:representationProfile vcfr:CondensedRepresentation ;
+  vcfr:hasSampleSet <example-file1.vcf#samples> ;
+  vcfr:hasRecord <example-file1.vcf#record/var1> .
+
+#################################################################
+# Sample set: declared once per file, not once per record
+#################################################################
+
+<example-file1.vcf#samples>
+  a vcfr:SampleSet ;
+  vcfr:hasSample
+    <example-file1.vcf#samples/SAMPLE1>,
+    <example-file1.vcf#samples/SAMPLE2> .
+
+<example-file1.vcf#samples/SAMPLE1>
+  a vcfr:VCFSample ;
+  vcfr:sampleName "SAMPLE1" ;
+  vcfr:sampleIndex "1"^^xsd:positiveInteger .
+
+<example-file1.vcf#samples/SAMPLE2>
+  a vcfr:VCFSample ;
+  vcfr:sampleName "SAMPLE2" ;
+  vcfr:sampleIndex "2"^^xsd:positiveInteger .
+
+#################################################################
+# Record and call: unchanged from the expanded profile
+#################################################################
+
+<example-file1.vcf#record/var1>
+  a vcfr:VCFRecord ;
+  vcfr:chrom "chr1" ;
+  vcfr:chromosome <example-file1.vcf#header/line/5> ;
+  vcfr:pos 123456 ;
+  vcfr:recordId "rs123" ;
+  vcfr:ref "A" ;
+  vcfr:alt "T" ;
+  vcfr:hasCall <example-file1.vcf#call/var1> .
+
+<example-file1.vcf#call/var1>
+  a vcfr:VariantCall ;
+  vcfr:qual 52.3 ;
+  vcfr:filter "PASS" ;
+  vcfr:infoRaw "DP=42;AF=0.2" ;
+  vcfr:formatRaw "GT:DP:AD" ;
+  vcfr:hasInfoValue
+    <example-file1.vcf#call/var1/info/AF>,
+    <example-file1.vcf#call/var1/info/DP> ;
+  # In place of hasSampleCall.
+  vcfr:hasCallMatrix <example-file1.vcf#call/var1/matrix> .
+
+<example-file1.vcf#call/var1/info/DP>
+  a vcfr:InfoFieldValue ;
+  vcfr:declaredBy <example-file1.vcf#header/line/6> ;
+  vcfr:fieldValueInteger 42 .
+
+<example-file1.vcf#call/var1/info/AF>
+  a vcfr:InfoFieldValue ;
+  vcfr:declaredBy <example-file1.vcf#header/line/7> ;
+  vcfr:fieldValueDecimal 0.2 .
+
+#################################################################
+# Genotype block: one matrix per record, one vector per FORMAT key
+#################################################################
+
+<example-file1.vcf#call/var1/matrix>
+  a vcfr:CohortCallMatrix ;
+  vcfr:appliesToSampleSet <example-file1.vcf#samples> ;
+  vcfr:hasFormatValueVector
+    <example-file1.vcf#call/var1/matrix/fmt/AD>,
+    <example-file1.vcf#call/var1/matrix/fmt/DP>,
+    <example-file1.vcf#call/var1/matrix/fmt/GT> .
+
+# Each vector holds one tab-separated field per sample, in sampleIndex order.
+# SAMPLE1 is index 1, so it is the first field; SAMPLE2 is the second.
+<example-file1.vcf#call/var1/matrix/fmt/GT>
+  a vcfr:FormatValueVector ;
+  vcfr:declaredBy <example-file1.vcf#header/line/8> ;
+  vcfr:valueEncoding vcfr:VCFTextVector ;
+  vcfr:encodedValues "0/1\t0/1" .
+
+<example-file1.vcf#call/var1/matrix/fmt/DP>
+  a vcfr:FormatValueVector ;
+  vcfr:declaredBy <example-file1.vcf#header/line/9> ;
+  vcfr:valueEncoding vcfr:VCFTextVector ;
+  vcfr:encodedValues "42\t6" .
+
+# A vector keeps the source lexical form. The typed value properties used by
+# FormatFieldValue have no vector equivalent, because one literal here stands
+# for the whole cohort rather than for a single parsed value.
+<example-file1.vcf#call/var1/matrix/fmt/AD>
+  a vcfr:FormatValueVector ;
+  vcfr:declaredBy <example-file1.vcf#header/line/10> ;
+  vcfr:valueEncoding vcfr:VCFTextVector ;
+  vcfr:encodedValues "30,12\t3,2" .

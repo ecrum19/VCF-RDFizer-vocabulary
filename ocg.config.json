@@ -88,6 +88,12 @@
         "description": "Linked modifications, mixed phasing, local alleles, filters and structural-variant length intervals."
       },
       {
+        "key": "example-condensed-record",
+        "label": "Condensed Record (TTL)",
+        "path": "examples/example-condensed-record.ttl",
+        "description": "The same record as the minimal example, in the condensed profile: a file-level sample set and one FORMAT value vector per key."
+      },
+      {
         "key": "example-ttl",
         "label": "Real HaplotypeCaller calls (Turtle)",
         "path": "examples/core/example.ttl",
